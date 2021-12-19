@@ -1,4 +1,4 @@
-name: Publish a new release
+name: Publish a new release if available
 
 on:
   schedule:
@@ -23,12 +23,13 @@ jobs:
 
       # See https://github.com/pandoc/pandoc-action-example
       # and https://stackoverflow.com/a/70212129/8583692
+      # NOTE: This step is NOT needed at all
       - name: Convert to markdown
       - uses: docker://pandoc/core:2.16.2
         if: steps.check-for-updates.outputs.result == "stale"
         with:
-          # Is appended to "pandoc" command exactly like in terminal
-          args: "--to=markdown_strict --output=release-notes.md release-notes.txt"
+          # These are appended to "pandoc" command exactly like in terminal
+          args: "--from=html --to=markdown_strict --output=release-notes.md release-notes.txt"
 
       - name: Create the release
         uses: softprops/action-gh-release@v1

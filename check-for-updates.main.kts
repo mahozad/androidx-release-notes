@@ -31,9 +31,11 @@ reader.use {
 
     // To log for debug
     // see https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#setting-a-debug-message
-    // To log a regular message, use the good old println() function
-    println("::debug::Last RSS publish date: $lastUpdated")
-    println("::debug::Current RSS publish date: $currentDate")
+    // Example: println("::debug::Last RSS publish date: $lastUpdated")
+    // To log a regular message, use the plain println() function without any format
+    println("Last RSS publish date: $lastUpdated")
+    println("Current RSS publish date: $currentDate")
+
     // To set output for a job step
     // see https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#setting-an-output-parameter
     // and https://stackoverflow.com/a/59201610

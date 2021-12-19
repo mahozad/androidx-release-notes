@@ -8,12 +8,13 @@
 @file:DependsOn("com.rometools:rome:1.16.0")
 @file:DependsOn("org.jsoup:jsoup:1.14.3")
 
-// jsoup does not work with Kotlin 1.6.x, for now.
-// See https://youtrack.jetbrains.com/issue/KT-50378
+// FIXME: Cannot use jsoup in scripts with Kotlin 1.6.x, for now.
+//  See https://youtrack.jetbrains.com/issue/KT-50378
 
 import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import java.io.File
 import java.net.URL
@@ -21,17 +22,16 @@ import kotlin.time.Duration.Companion.seconds
 
 val waitTime = 10.seconds
 val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
-val writer = File("release-notes.md").bufferedWriter()
+val writer = File("release-notes.txt").bufferedWriter()
 val reader = tryToGet(
     { XmlReader(feedUrl) },
-    5,
+    10,
     "Failed to initialize the feed reader",
     "All attempts to initialize the feed reader failed."
 )
 
-/**
- * Try for at most retryCount times to run the block without exception.
- */
+// TODO: Duplicate; use the try-to-get.main.kts script.
+//  See other scripts for example usage.
 fun <T> tryToGet(
     block: () -> T,
     retryCount: Int,
@@ -48,46 +48,50 @@ fun <T> tryToGet(
     error(errorMessage)
 }
 
-fun toLink(element: Element) = element.attr("href")
-
 reader.use { reader ->
     val feed = SyndFeedInput().build(reader)
-    val newReleases = feed.entries/*.first()*/[1]
-    val newReleaseUrls = newReleases.contents.first().value
-
-    val releaseLinks = Jsoup
-        .parse(newReleaseUrls, "UTF-8")
+    val newRelease = feed.entries/*.first()*/[1]
+    val newReleaseUrls = newRelease.contents.first().value
+    Jsoup
+        .parse(newReleaseUrls)
         .select("a")
         .map(::toLink)
-
-    for (releaseLink in releaseLinks) {
-        val document = tryToGet(
-            { Jsoup.connect(releaseLink).get() },
-            5,
-            "Failed to get $releaseLink",
-            "All attempts to get the document failed."
-        )
-
-        val name = document.select("h1").text()
-        val fragmentId = releaseLink.substringAfter("#")
-        val version = document
-            // .select("h3#$fragmentId") // Why this does not work?
-            .select("[id=$fragmentId]")
-            .takeIf { it.`is`("h3") }
-            ?.attr("data-text")
-            ?: document.firstElementSibling().attr("data-text")
-
-        val changelog = document
-            .select("h3[id=$fragmentId] ~ *")
-            .takeWhile { it.`is`(":not(h3)") && it.`is`(":not(h2)") }
-            .joinToString("\n")
-
-        val output = createEntry(name, version, changelog)
-        writer.write(output)
-    }
+        .map(::toDocument)
+        .map(::toReleaseNote)
+        .forEach(writer::write)
+        .also { writer.close() }
 }
 
-writer.close()
+fun toLink(element: Element) = element.attr("href")
+
+// FIXME: Use plain Jsoup.connect()... and remove Pair()
+//  See https://github.com/jhy/jsoup/issues/1686 for the reason.
+fun toDocument(link: String) = tryToGet(
+    { Pair(link, Jsoup.connect(link).get()) },
+    5,
+    "Failed to get $link",
+    "All attempts to get the document failed."
+)
+
+fun toReleaseNote(pair: Pair<String, Document>): String {
+    val document = pair.second
+    val fragmentId = pair.first.substringAfter("#")
+    val unitName = document.select("h1").text()
+    val version = document
+        // .select("h3#$fragmentId") // Why this does not work?
+        .select("[id=$fragmentId]")
+        .takeIf { it.`is`("h3") }
+        ?.attr("data-text")
+        ?: document.firstElementSibling().attr("data-text")
+
+    val changelog = document
+        .select("h3[id=$fragmentId] ~ *")
+        .takeWhile { it.`is`(":not(h2)") }
+        .takeWhile { it.`is`(":not(h3)") }
+        .joinToString("\n")
+
+    return createEntry(unitName, version, changelog)
+}
 
 fun createEntry(
     name: String,
