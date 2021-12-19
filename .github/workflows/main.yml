@@ -1,0 +1,36 @@
+name: Publish a new release
+
+on:
+  schedule:
+    # Run at minute 30 every 3 hours, starting from the hour 0 (12 midnight)
+    - cron:  '30 0/3 * * *'
+
+jobs:
+  create-github-release:
+    name: Create a new release in the GitHub repository if needed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Refer to https://stackoverflow.com/a/69116750 for running Kotlin scripts
+      - name: Check if there is new release
+        id: check-for-updates
+        run: kotlin check-for-updates.main.kts
+      - name: Create the new release notes
+        if: steps.check-for-updates.outputs.result == "stale"
+        run: kotlin *.main.kts
+      - name: Create the release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: release-notes.txt
+          files: showcase.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set RSS last update
+        run: kotlin set-rss-last-update.main.kts
+      - name: Commit the changes
+      - uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
+        with:
+          # The arguments for the `git add` command (see the paragraph below for more info)
+          # Default: '.'
+          add: 'src'
+          message: 'Your commit message'
