@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 
-@file:JvmName("ReleaseGenerator")
+@file:JvmName("ReleaseUpdateChecker")
 @file:CompilerOptions("-jvm-target", "11")
 @file:Repository("https://repo.maven.apache.org/maven2")
 @file:Repository("https://jcenter.bintray.com")
