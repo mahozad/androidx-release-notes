@@ -19,7 +19,9 @@ val feedReader = XmlReader(feedUrl).use {
     val currentDate = feed.publishedDate.toString()
     val result = if (currentDate == lastUpdated) "latest" else "stale"
 
-    // To log, see https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#setting-a-debug-message
+    // To log for debug
+    // see https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#setting-a-debug-message
+    // To log a regular message, use the good old println() function
     println("::debug::Last RSS publish date: $lastUpdated")
     println("::debug::Current RSS publish date: $currentDate")
     // To set output for a job step

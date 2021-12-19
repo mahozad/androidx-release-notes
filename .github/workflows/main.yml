@@ -12,16 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       # Refer to https://stackoverflow.com/a/69116750 for running Kotlin scripts
-      - name: Check if there is new release
+      - name: Check if there is a new release
         id: check-for-updates
         run: kotlin check-for-updates.main.kts
       - name: Create the new release notes
         if: steps.check-for-updates.outputs.result == "stale"
-        run: kotlin *.main.kts
+        run: kotlin create-new-release-notes.main.kts # or extract-new...
       - name: Create the release
         uses: softprops/action-gh-release@v1
         with:
-          body_path: release-notes.txt
+          body_path: release-notes.md
           files: showcase.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
