@@ -21,8 +21,7 @@ fun <T> tryToGet(
 ): T {
     repeat(retryCount) {
         val result = runCatching(block)
-        if (result.isSuccess)
-            return result.getOrThrow()
+        if (result.isSuccess) return result.getOrThrow()
         println("$failMessage; attempting again in $waitTime")
         Thread.sleep(waitTime.inWholeMilliseconds)
     }

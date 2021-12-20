@@ -40,8 +40,7 @@ fun <T> tryToGet(
 ): T {
     repeat(retryCount) {
         val result = runCatching(block)
-        if (result.isSuccess)
-            return result.getOrThrow()
+        if (result.isSuccess) return result.getOrThrow()
         println("$failMessage; attempting again in $waitTime")
         Thread.sleep(waitTime.inWholeMilliseconds)
     }
@@ -75,26 +74,11 @@ fun toDocument(link: String) = tryToGet(
 )
 
 fun toReleaseNote(pair: Pair<String, Document>): String {
-    val (link , document) = pair
+    val (link, document) = pair
     val id = link.substringAfter("#")
-    val name = document
-        .select("[id=$id]")
-        .prev("h2")
-        .text()
-        .substringBefore("Version")
-        .replace(Regex("""^\d+.*"""), "")
-        .ifBlank { document.select("h1").text() }
-        .trim()
-    val version = document
-        // See https://github.com/jhy/jsoup/issues/1055 and 1441
-        .select("[id=$id]")
-        .attr("data-text")
-        .replace(Regex(".*Version "), "v")
-    val changelog = document
-        .select("h3[id=$id] ~ *")
-        .takeWhile { it.`is`(":not(h2)") }
-        .takeWhile { it.`is`(":not(h3)") }
-        .joinToString("\n")
+    val name = document.extractName(id)
+    val version = document.extractVersion(id)
+    val changelog = document.extractChangelog(id)
     return createEntry(name, version, changelog)
 }
 
@@ -107,3 +91,26 @@ fun createEntry(
     appendLine(changelog)
     appendLine()
 }
+
+// See https://github.com/jhy/jsoup/issues/1055 and 1441
+fun Document.extractName(id: String) = this
+    .select("[id=$id]")
+    .prev("h2")
+    .text()
+    .substringBefore("Version")
+    .replace(Regex("""^\d+.*"""), "")
+    .ifBlank { select("h1").text() }
+    .trim()
+
+// See https://github.com/jhy/jsoup/issues/1055 and 1441
+fun Document.extractVersion(id: String) = this
+    .select("[id=$id]")
+    .attr("data-text")
+    .replace(Regex(".*Version "), "v")
+
+// See https://github.com/jhy/jsoup/issues/1055 and 1441
+fun Document.extractChangelog(id: String) = this
+    .select("h3[id=$id] ~ *")
+    .takeWhile { it.`is`(":not(h2)") }
+    .takeWhile { it.`is`(":not(h3)") }
+    .joinToString("\n")
