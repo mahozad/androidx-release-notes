@@ -50,10 +50,10 @@ fun <T> tryToGet(
 
 reader.use { reader ->
     val feed = SyndFeedInput().build(reader)
-    val newRelease = feed.entries/*.first()*/[1]
-    val newReleaseUrls = newRelease.contents.first().value
+    val latestRelease = feed.entries/*FIXME: .first()*/[1]
+    val latestReleaseUrls = latestRelease.contents.first().value
     Jsoup
-        .parse(newReleaseUrls)
+        .parse(latestReleaseUrls)
         .select("a")
         .asSequence()
         .map(::toLink)
@@ -76,21 +76,21 @@ fun toDocument(link: String) = tryToGet(
 
 fun toReleaseNote(pair: Pair<String, Document>): String {
     val (link , document) = pair
-    val fragmentId = link.substringAfter("#")
-    val unitName = document.select("h1").text()
+    val id = link.substringAfter("#")
+    val name = document.select("h1").text()
     val version = document
         // See https://github.com/jhy/jsoup/issues/1055 and 1441
-        .select("[id=$fragmentId]")
+        .select("[id=$id]")
         .attr("data-text")
         .replace(Regex(".*Version "), "v")
 
     val changelog = document
-        .select("h3[id=$fragmentId] ~ *")
+        .select("h3[id=$id] ~ *")
         .takeWhile { it.`is`(":not(h2)") }
         .takeWhile { it.`is`(":not(h3)") }
         .joinToString("\n")
 
-    return createEntry(unitName, version, changelog)
+    return createEntry(name, version, changelog)
 }
 
 fun createEntry(
