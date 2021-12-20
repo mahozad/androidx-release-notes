@@ -11,7 +11,7 @@ jobs:
     name: Create a new release in the GitHub repository if needed
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the code
+      - name: Checkout the main branch
         uses: actions/checkout@v2
 
       # Refer to https://stackoverflow.com/a/69116750 for running Kotlin scripts
@@ -54,9 +54,28 @@ jobs:
         run: kotlin set-rss-last-update.main.kts
 
       # Also see https://github.com/EndBug/add-and-commit
-      - name: Commit the changes
+      - name: Commit main changes
         uses: stefanzweifel/git-auto-commit-action@v4
         if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
         with:
           commit_message: Update last RSS update time
           file_pattern: last-rss-update.txt
+
+      # See https://github.community/t/how-to-commit-to-two-branches-from-an-action/17713
+      - name: Checkout the website branch
+        uses: actions/checkout@v2
+        with:
+          ref: website
+          clean: 'false'
+
+      - name: Update website content
+        if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
+        run: kotlin update-website-content.main.kts
+
+      - name: Commit website changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
+        with:
+          branch: website
+          commit_message: Update website content
+          file_pattern: docs/*
