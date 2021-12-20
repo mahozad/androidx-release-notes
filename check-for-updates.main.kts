@@ -40,4 +40,5 @@ reader.use {
     // see https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#setting-an-output-parameter
     // and https://stackoverflow.com/a/59201610
     println("::set-output name=result::$result")
+    println("::set-output name=date::$currentDate")
 }

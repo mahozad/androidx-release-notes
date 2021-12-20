@@ -39,6 +39,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: steps.check-for-updates.outputs.result == "stale"
         with:
+          name: steps.check-for-updates.outputs.date
           body_path: release-notes.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
