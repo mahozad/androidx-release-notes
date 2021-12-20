@@ -1,3 +1,10 @@
+<div align="center">
+
+![A fun picture of Android Jetpack](android-jetpack.svg)
+
+</div>
+<sup>Image credits: <a href="https://developer.android.com/jetpack">Android Developers</a></sup>
+
 This repository publishes [release notes] of [AndroidX (Jetpack) libraries].
 
 You can subscribe to GitHub release notifications by selecting
