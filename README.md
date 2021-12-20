@@ -15,7 +15,8 @@ This repository publishes [release notes] of [AndroidX (Jetpack) libraries].
 You can subscribe to GitHub release notifications by selecting
 *Watch* 🡲 *Custom* 🡲 *Releases*:
 
-![How to subscribe to GitHub release notification](how-to-subscribe.gif)
+<img width="100%" src="how-to-subscribe-light-plain.gif#gh-light-mode-only" alt="How to subscribe for notifications" />
+<img width="100%" src="how-to-subscribe-dark-plain.gif#gh-dark-mode-only" alt="How to subscribe for notifications" />
 
 The Markdown, HTML, and plain text version of the release notes can be downloaded
 in the *Assets* section at the bottom of the GitHub release page.
