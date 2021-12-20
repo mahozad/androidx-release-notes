@@ -10,10 +10,12 @@ jobs:
     name: Create a new release in the GitHub repository if needed
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout the code
+        uses: actions/checkout@v2
 
       # Refer to https://stackoverflow.com/a/69116750 for running Kotlin scripts
-      - uses: fwilhe2/setup-kotlin@main
+      - name: Use a specific Kotlin version
+        uses: fwilhe2/setup-kotlin@main
         with:
           version: 1.5.32
 
@@ -28,8 +30,8 @@ jobs:
       # See https://github.com/pandoc/pandoc-action-example
       # and https://stackoverflow.com/a/70212129/8583692
       # NOTE: This step is NOT needed at all
-      - name: Convert to markdown
-      - uses: docker://pandoc/core:2.16.2
+      - name: Convert from HTML to markdown
+        uses: docker://pandoc/core:2.16.2
         if: steps.check-for-updates.outputs.result == "stale"
         with:
           # These are appended to "pandoc" command exactly like in terminal
@@ -50,7 +52,7 @@ jobs:
 
       # Also see https://github.com/EndBug/add-and-commit
       - name: Commit the changes
-      - uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v4
         if: steps.check-for-updates.outputs.result == "stale"
         with:
           commit_message: Update last RSS update time
