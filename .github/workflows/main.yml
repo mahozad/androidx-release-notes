@@ -2,6 +2,8 @@ name: Publish a new release if available
 
 on:
   push:
+    branches:
+      - main
   schedule:
     # Run at minute 30 every 3 hours, starting from the hour 0 (12 midnight)
     - cron:  '30 0/3 * * *'
