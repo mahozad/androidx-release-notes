@@ -6,7 +6,7 @@ Image credits: [Android Developers]
 
 <div align="center">
 
-![A fun picture of Android Jetpack](android-jetpack.svg)
+![A fun picture of Android Jetpack](assets/android-jetpack.svg)
 
 </div>
 
@@ -15,8 +15,8 @@ This repository publishes [release notes] of [AndroidX (Jetpack) libraries].
 You can subscribe to GitHub release notifications by selecting
 *Watch* 🡲 *Custom* 🡲 *Releases*:
 
-<img width="100%" src="how-to-subscribe-light-plain.gif#gh-light-mode-only" alt="How to subscribe for notifications" />
-<img width="100%" src="how-to-subscribe-dark-plain.gif#gh-dark-mode-only" alt="How to subscribe for notifications" />
+<img width="100%" src="assets/how-to-subscribe-light-plain.gif#gh-light-mode-only" alt="How to subscribe for notifications" />
+<img width="100%" src="assets/how-to-subscribe-dark-plain.gif#gh-dark-mode-only" alt="How to subscribe for notifications" />
 
 The Markdown, HTML, and plain text version of the release notes can be downloaded
 in the *Assets* section at the bottom of the GitHub release page.
