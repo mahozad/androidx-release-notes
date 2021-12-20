@@ -120,7 +120,7 @@ fun Document.extractVersion(id: String) = this
 
 // See https://github.com/jhy/jsoup/issues/1055 and 1441
 fun Document.extractChangelog(id: String) = this
-    .select("h3[id=$id] ~ *")
+    .select("[id=$id] ~ *")
     .takeWhile { it.`is`(":not(h2)") }
     .takeWhile { it.`is`(":not(h3)") }
     .joinToString("\n")
