@@ -39,13 +39,13 @@ jobs:
           args: "--from=html --to=markdown_strict --output=release-notes.md release-notes.txt"
 
       - name: Create the release
-        uses: softprops/action-gh-release@v1
-        if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
+        uses: ncipollo/release-action@v1
         with:
-          name: steps.check-for-updates.outputs.date
-          body_path: release-notes.md
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: "main"
+          commit: "main"
+          artifacts: "release-notes.txt,release-notes.md"
+          bodyFile: "release-notes.md"
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set RSS last update time
         if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
