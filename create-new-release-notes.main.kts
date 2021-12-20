@@ -29,7 +29,7 @@ val writer = File("release-notes.html").bufferedWriter()
 //  and specifically, the first entry of the feed
 val reader = tryToGet(
     { XmlReader(feedUrl) },
-    10,
+    retryCount = 10,
     "Failed to initialize the feed reader",
     "All attempts to initialize the feed reader failed."
 )
@@ -78,7 +78,7 @@ fun toLink(element: Element) = element.attr("href")
 //  See https://github.com/jhy/jsoup/issues/1686 for the reason.
 fun toDocument(link: String) = tryToGet(
     { Pair(link, Jsoup.connect(link).get()) },
-    5,
+    retryCount = 5,
     "Failed to get $link",
     "All attempts to get the document failed."
 )

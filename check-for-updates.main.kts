@@ -22,7 +22,7 @@ val datesPattern = DateTimeFormatter.ofPattern("EEE LLL dd HH:mm:ss z yyyy")
 val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
 val reader = tryToGet(
     { XmlReader(feedUrl) },
-    5,
+    retryCount = 5,
     "Failed to initialize the feed reader",
     "All attempts to initialize the feed reader failed."
 )
