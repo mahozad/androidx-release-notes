@@ -1,9 +1,14 @@
+<sup>
+
+Image credits: [Android Developers]
+
+</sup>
+
 <div align="center">
 
 ![A fun picture of Android Jetpack](android-jetpack.svg)
 
 </div>
-<sup>Image credits: <a href="https://developer.android.com/jetpack">Android Developers</a></sup>
 
 This repository publishes [release notes] of [AndroidX (Jetpack) libraries].
 
@@ -17,6 +22,7 @@ in the *Assets* section at the bottom of the GitHub release page.
 
 You can find the [original AndroidX GitHub repository here].
 
+  [Android Developers]: https://developer.android.com/jetpack
   [release notes]: https://developer.android.com/jetpack/androidx/versions/all-channel
   [AndroidX (Jetpack) libraries]: https://developer.android.com/jetpack/androidx/versions
   [original AndroidX GitHub repository here]: https://github.com/androidx/androidx
