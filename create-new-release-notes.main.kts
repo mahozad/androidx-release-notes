@@ -23,7 +23,7 @@ import java.time.Duration
 // TODO: Use Kotlin Duration when switched to v1.6.x or higher
 val waitTime = Duration.ofSeconds(10)
 val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
-val writer = File("release-notes.txt").bufferedWriter()
+val writer = File("release-notes.html").bufferedWriter()
 val reader = tryToGet(
     { XmlReader(feedUrl) },
     10,
@@ -62,6 +62,12 @@ reader.use { reader ->
         .forEach(writer::write)
         .also { writer.close() }
 }
+
+// Create a raw text version as well just if someone needs it
+val text = Jsoup
+    .parse(File("release-notes.html"), "UTF-8")
+    .wholeText()
+File("release-notes.txt").writeText(text)
 
 fun toLink(element: Element) = element.attr("href")
 

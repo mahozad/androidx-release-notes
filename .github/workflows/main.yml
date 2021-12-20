@@ -36,7 +36,7 @@ jobs:
         if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
         with:
           # These are appended to "pandoc" command exactly like in terminal
-          args: "--from=html --to=markdown_strict --output=release-notes.md release-notes.txt"
+          args: "--from=html --to=markdown_strict --output=release-notes.md release-notes.html"
 
       - name: Create the release
         uses: ncipollo/release-action@v1
@@ -44,7 +44,7 @@ jobs:
         with:
           tag: ${{ steps.check-for-updates.outputs.dateTag }}
           commit: "main"
-          artifacts: "release-notes.txt,release-notes.md"
+          artifacts: "release-notes.md, release-notes.html, release-notes.txt"
           bodyFile: "release-notes.md"
           token: ${{ secrets.GITHUB_TOKEN }}
 
