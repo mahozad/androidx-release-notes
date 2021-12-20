@@ -14,7 +14,11 @@ import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
 import java.io.File
 import java.net.URL
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
+val datesPattern = DateTimeFormatter.ofPattern("EEE LLL dd HH:mm:ss z yyyy")
 val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
 val reader = tryToGet(
     { XmlReader(feedUrl) },
@@ -27,18 +31,26 @@ reader.use {
     val feed = SyndFeedInput().build(it)
     val lastUpdated = File("last-rss-update.txt").readText().trim()
     val currentDate = feed.publishedDate.toString()
-    val result = if (currentDate == lastUpdated) "latest" else "stale"
+    val freshness = if (currentDate == lastUpdated) "latest" else "stale"
+
+    val lastDateTime = lastUpdated.toLocalDate()
+    val currentDateTime = currentDate.toLocalDate()
+    val time = LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME)
+    val dateTag = if(lastDateTime == currentDateTime) "$currentDateTime$time" else "$currentDateTime"
 
     // To log for debug
     // see https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#setting-a-debug-message
     // Example: println("::debug::Last RSS publish date: $lastUpdated")
     // To log a regular message, use the plain println() function without any format
-    println("Last RSS publish date: $lastUpdated")
+    println("Last RSS publish date: ${lastUpdated.ifBlank { "::EMPTY::" }}")
     println("Current RSS publish date: $currentDate")
 
     // To set output for a job step
     // see https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#setting-an-output-parameter
     // and https://stackoverflow.com/a/59201610
-    println("::set-output name=result::$result")
-    println("::set-output name=date::$currentDate")
+    println("::set-output name=result::$freshness")
+    println("::set-output name=dateTag::$dateTag")
 }
+
+fun String.toLocalDate() = runCatching { LocalDate.parse(this, datesPattern) }
+    .getOrDefault(LocalDate.of(1900, 1, 1))

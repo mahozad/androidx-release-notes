@@ -41,7 +41,7 @@ jobs:
       - name: Create the release
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ steps.check-for-updates.outputs.date }}
+          tag: ${{ steps.check-for-updates.outputs.dateTag }}
           commit: "main"
           artifacts: "release-notes.txt,release-notes.md"
           bodyFile: "release-notes.md"
