@@ -66,6 +66,7 @@ jobs:
       # See https://github.community/t/how-to-commit-to-two-branches-from-an-action/17713
       - name: Checkout the website branch
         uses: actions/checkout@v2
+        if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
         with:
           ref: website
           clean: 'false'
