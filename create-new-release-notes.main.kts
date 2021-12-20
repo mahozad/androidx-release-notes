@@ -20,7 +20,7 @@ import java.io.File
 import java.net.URL
 import java.time.Duration
 
-// TODO: Use Kotlin Duration when switched to v1.6.x or higher
+// TODO: Use Kotlin Duration when/if switched to v1.6.x or higher
 val waitTime = Duration.ofSeconds(10)
 val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
 val writer = File("release-notes.html").bufferedWriter()
@@ -42,8 +42,8 @@ fun <T> tryToGet(
     repeat(retryCount) {
         val result = runCatching(block)
         if (result.isSuccess) return result.getOrThrow()
-        println("$failMessage; attempting again in $waitTime")
-        Thread.sleep(waitTime.seconds)
+        println("$failMessage; attempting again in ${waitTime.seconds} seconds")
+        Thread.sleep(waitTime.toMillis())
     }
     error(errorMessage)
 }
