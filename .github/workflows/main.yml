@@ -13,6 +13,10 @@ jobs:
       - uses: actions/checkout@v2
 
       # Refer to https://stackoverflow.com/a/69116750 for running Kotlin scripts
+      - uses: fwilhe2/setup-kotlin@main
+        with:
+          version: 1.5.32
+
       - name: Check if there is a new release
         id: check-for-updates
         run: kotlin check-for-updates.main.kts
