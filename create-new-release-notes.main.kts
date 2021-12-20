@@ -50,7 +50,7 @@ fun <T> tryToGet(
 
 reader.use { reader ->
     val feed = SyndFeedInput().build(reader)
-    val latestRelease = feed.entries/*FIXME: .first()*/[1]
+    val latestRelease = feed.entries.first()
     val latestReleaseUrls = latestRelease.contents.first().value
     Jsoup
         .parse(latestReleaseUrls)
