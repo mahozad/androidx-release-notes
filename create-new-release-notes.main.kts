@@ -24,6 +24,9 @@ import java.time.Duration
 val waitTime = Duration.ofSeconds(10)
 val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
 val writer = File("release-notes.html").bufferedWriter()
+// NOTE: To test for a complicated release notes, use
+//  `XmlReader(File("test-feed-result.xml"))` below
+//  and specifically, the first entry of the feed
 val reader = tryToGet(
     { XmlReader(feedUrl) },
     10,
