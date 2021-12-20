@@ -55,6 +55,7 @@ reader.use { reader ->
     Jsoup
         .parse(newReleaseUrls)
         .select("a")
+        .asSequence()
         .map(::toLink)
         .map(::toDocument)
         .map(::toReleaseNote)
@@ -74,15 +75,14 @@ fun toDocument(link: String) = tryToGet(
 )
 
 fun toReleaseNote(pair: Pair<String, Document>): String {
-    val document = pair.second
-    val fragmentId = pair.first.substringAfter("#")
+    val (link , document) = pair
+    val fragmentId = link.substringAfter("#")
     val unitName = document.select("h1").text()
     val version = document
-        // .select("h3#$fragmentId") // Why this does not work?
+        // See https://github.com/jhy/jsoup/issues/1055 and 1441
         .select("[id=$fragmentId]")
-        .takeIf { it.`is`("h3") }
-        ?.attr("data-text")
-        ?: document.firstElementSibling().attr("data-text")
+        .attr("data-text")
+        .replace(Regex(".*Version "), "v")
 
     val changelog = document
         .select("h3[id=$fragmentId] ~ *")
