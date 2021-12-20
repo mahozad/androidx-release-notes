@@ -2,9 +2,6 @@
 
 @file:JvmName("Retry")
 @file:CompilerOptions("-jvm-target", "11")
-@file:Repository("https://repo.maven.apache.org/maven2")
-@file:Repository("https://jcenter.bintray.com")
-@file:Repository("https://jitpack.io")
 
 import java.time.Duration
 
