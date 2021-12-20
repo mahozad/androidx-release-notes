@@ -18,9 +18,10 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import java.io.File
 import java.net.URL
-import kotlin.time.Duration.Companion.seconds
+import java.time.Duration
 
-val waitTime = 10.seconds
+// TODO: Use Kotlin Duration when switched to v1.6.x or higher
+val waitTime = Duration.ofSeconds(10)
 val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
 val writer = File("release-notes.txt").bufferedWriter()
 val reader = tryToGet(
@@ -42,7 +43,7 @@ fun <T> tryToGet(
         val result = runCatching(block)
         if (result.isSuccess) return result.getOrThrow()
         println("$failMessage; attempting again in $waitTime")
-        Thread.sleep(waitTime.inWholeMilliseconds)
+        Thread.sleep(waitTime.seconds)
     }
     error(errorMessage)
 }
