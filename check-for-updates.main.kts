@@ -36,7 +36,7 @@ reader.use {
     val lastDateTime = lastUpdated.toLocalDate()
     val currentDateTime = currentDate.toLocalDate()
     val time = LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME)
-    val dateTag = if(lastDateTime == currentDateTime) "$currentDateTime$time" else "$currentDateTime"
+    val dateTag = "$currentDateTime" + if (currentDateTime == lastDateTime) "T$time" else ""
 
     // To log for debug
     // see https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#setting-a-debug-message
