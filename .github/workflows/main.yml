@@ -31,6 +31,7 @@ jobs:
       # See https://github.com/pandoc/pandoc-action-example
       # and https://stackoverflow.com/a/70212129/8583692
       # NOTE: This step is NOT needed at all
+      # The html file could be used directly as release body as well
       - name: Convert from HTML to markdown
         uses: docker://pandoc/core:2.16.2
         if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
