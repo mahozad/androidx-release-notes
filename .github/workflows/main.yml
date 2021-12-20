@@ -1,6 +1,7 @@
 name: Publish a new release if available
 
 on:
+  push:
   schedule:
     # Run at minute 30 every 3 hours, starting from the hour 0 (12 midnight)
     - cron:  '30 0/3 * * *'
@@ -24,7 +25,7 @@ jobs:
         run: kotlin check-for-updates.main.kts
 
       - name: Create the new release notes
-        if: steps.check-for-updates.outputs.result == "stale"
+        if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
         run: kotlin create-new-release-notes.main.kts
 
       # See https://github.com/pandoc/pandoc-action-example
@@ -32,14 +33,14 @@ jobs:
       # NOTE: This step is NOT needed at all
       - name: Convert from HTML to markdown
         uses: docker://pandoc/core:2.16.2
-        if: steps.check-for-updates.outputs.result == "stale"
+        if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
         with:
           # These are appended to "pandoc" command exactly like in terminal
           args: "--from=html --to=markdown_strict --output=release-notes.md release-notes.txt"
 
       - name: Create the release
         uses: softprops/action-gh-release@v1
-        if: steps.check-for-updates.outputs.result == "stale"
+        if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
         with:
           name: steps.check-for-updates.outputs.date
           body_path: release-notes.md
@@ -47,13 +48,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set RSS last update time
-        if: steps.check-for-updates.outputs.result == "stale"
+        if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
         run: kotlin set-rss-last-update.main.kts
 
       # Also see https://github.com/EndBug/add-and-commit
       - name: Commit the changes
         uses: stefanzweifel/git-auto-commit-action@v4
-        if: steps.check-for-updates.outputs.result == "stale"
+        if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
         with:
           commit_message: Update last RSS update time
           file_pattern: last-rss-update.txt
