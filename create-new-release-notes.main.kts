@@ -36,10 +36,10 @@ val reader = tryTo("initialize the feed reader") {
 //  See other scripts for example usage.
 fun <T> tryTo(
     description: String,
-    retryCount: Int = 10,
+    forAtMost: Int = 5,
     block: () -> T
 ): T {
-    repeat(retryCount) {
+    repeat(forAtMost) {
         runCatching(block).onSuccess { return it }
         println("Failed to $description.")
         println("Trying again in $waitTime\n")

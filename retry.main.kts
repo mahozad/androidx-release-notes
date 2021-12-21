@@ -22,10 +22,10 @@ val waitTime = 10.toDuration(DurationUnit.SECONDS)
  */
 fun <T> tryTo(
     description: String,
-    retryCount: Int = 10,
+    forAtMost: Int = 5,
     block: () -> T
 ): T {
-    repeat(retryCount) {
+    repeat(forAtMost) {
         runCatching(block).onSuccess { return it }
         println("Failed to $description.")
         println("Trying again in $waitTime\n")
