@@ -30,7 +30,7 @@ val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xm
 val writer = resultFile.bufferedWriter()
 val reader = tryTo("initialize the feed reader") {
     // NOTE: Use this to test for a complicated release notes
-    // XmlReader(File("test-feed-result.xml"))
+    //  XmlReader(File("test-feed-result.xml"))
     XmlReader(feedUrl)
 }
 val feed = SyndFeedInput().build(reader)
