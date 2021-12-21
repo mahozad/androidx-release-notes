@@ -20,12 +20,7 @@ import java.time.format.DateTimeFormatter
 
 val datesPattern = DateTimeFormatter.ofPattern("EEE LLL dd HH:mm:ss z yyyy")
 val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
-val reader = tryToGet(
-    { XmlReader(feedUrl) },
-    retryCount = 5,
-    "Failed to initialize the feed reader",
-    "All attempts to initialize the feed reader failed."
-)
+val reader = tryTo("initialize the feed reader") { XmlReader(feedUrl) }
 
 reader.use {
     val feed = SyndFeedInput().build(it)

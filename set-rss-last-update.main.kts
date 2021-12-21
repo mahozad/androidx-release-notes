@@ -16,16 +16,8 @@ import java.io.File
 import java.net.URL
 
 val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
-
-val reader = tryToGet(
-    { XmlReader(feedUrl) },
-    retryCount = 5,
-    "Failed to initialize the feed reader",
-    "All attempts to initialize the feed reader failed."
-)
-
-reader.use {
-    val feed = SyndFeedInput().build(it)
-    val date = feed.publishedDate.toString()
-    File("last-rss-update.txt").writeText("$date\n")
-}
+val reader = tryTo("initialize the feed reader") { XmlReader(feedUrl) }
+val feed = SyndFeedInput().build(it)
+val date = feed.publishedDate.toString()
+File("last-rss-update.txt").writeText("$date\n")
+reader.close()

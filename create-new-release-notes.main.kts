@@ -25,39 +25,26 @@ val resultFile = File("release-notes.html")
 val waitTime = Duration.ofSeconds(10)
 val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
 val writer = resultFile.bufferedWriter()
-// NOTE: To test for a complicated release notes, use
-//  `XmlReader(File("test-feed-result.xml"))` below
-val reader = tryToGet(
-    // { XmlReader(File("test-feed-result.xml")) },
-    { XmlReader(feedUrl) },
-    retryCount = 10,
-    "Failed to initialize the feed reader",
-    "All attempts to initialize the feed reader failed."
-)
+val reader = tryTo("initialize the feed reader") {
+    // NOTE: Use this to test for a complicated release notes
+    // XmlReader(File("test-feed-result.xml"))
+    XmlReader(feedUrl)
+}
 
 // TODO: Duplicate; use the try-to-get.main.kts script.
 //  See other scripts for example usage.
-/**
- * We could also make subsequent runs wait
- * for an [exponential delay](https://en.wikipedia.org/wiki/Exponential_backoff).
- * See [this article](https://dzone.com/articles/understanding-retry-pattern-with-exponential-back).
- *
- * I wrote this function myself.
- * It is interesting that [this solution](https://stackoverflow.com/a/46890009)
- * proposed by Roman Elizarov is very similar to mine.
- */
-fun <T> tryToGet(
-    block: () -> T,
-    retryCount: Int,
-    failMessage: String,
-    errorMessage: String
+fun <T> tryTo(
+    description: String,
+    retryCount: Int = 10,
+    block: () -> T
 ): T {
     repeat(retryCount) {
         runCatching(block).onSuccess { return it }
-        println("$failMessage; attempting again in ${waitTime.seconds} seconds")
+        println("Failed to $description.")
+        println("Attempting again in ${waitTime.seconds} seconds...")
         Thread.sleep(waitTime.toMillis())
     }
-    error(errorMessage)
+    error("All attempts to $description failed.")
 }
 
 reader.use { reader ->
@@ -85,12 +72,9 @@ fun toLink(element: Element) = element.attr("href")
 
 // FIXME: Use plain Jsoup.connect()... and remove Pair()
 //  See https://github.com/jhy/jsoup/issues/1686 for the reason.
-fun toDocument(link: String) = tryToGet(
-    { Pair(link, Jsoup.connect(link).get()) },
-    retryCount = 5,
-    "Failed to get $link",
-    "All attempts to get the document failed."
-)
+fun toDocument(link: String) = tryTo("get $link") {
+    Pair(link, Jsoup.connect(link).get())
+}
 
 fun toReleaseNote(pair: Pair<String, Document>): String {
     val (link, document) = pair
