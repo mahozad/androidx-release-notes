@@ -47,20 +47,19 @@ fun <T> tryTo(
     error("All attempts to $description failed.")
 }
 
-reader.use { reader ->
-    val feed = SyndFeedInput().build(reader)
-    val latestRelease = feed.entries.first()
-    val latestReleaseItems = latestRelease.contents.first().value
-    Jsoup
-        .parse(latestReleaseItems)
-        .select("a")
-        .asSequence()
-        .map(::toLink)
-        .map(::toDocument)
-        .map(::toReleaseNote)
-        .forEach(writer::write)
-        .also { writer.close() }
-}
+val feed = SyndFeedInput().build(reader)
+val latestRelease = feed.entries.first()
+val latestReleaseItems = latestRelease.contents.first().value
+Jsoup
+    .parse(latestReleaseItems)
+    .select("a")
+    .asSequence()
+    .map(::toLink)
+    .map(::toDocument)
+    .map(::toReleaseNote)
+    .forEach(writer::write)
+    .also { writer.close() }
+    .also { reader.close() }
 
 // Create a raw text version as well just if someone needs it
 val text = Jsoup
