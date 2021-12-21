@@ -120,3 +120,76 @@ fun Document.extractChangelog(id: String) = this
     .takeWhile { it.`is`(":not(h2)") }
     .takeWhile { it.`is`(":not(h3)") }
     .joinToString("\n")
+
+
+
+/**
+ * This is a coroutine version of the code
+ * Needs the dependency `org.jetbrains.kotlinx:kotlinx-coroutines-core`
+ * which seems to not work in Kotlin scripts.
+ */
+/*
+fun main() = runBlocking {
+    val init = async(Dispatchers.IO) {
+        flow {
+            emit(XmlReader(javaClass.getResource("/test-feed-result.xml")))
+            // emit(XmlReader(feedUrl))
+        }.retry(10) {
+            println("Failed to create the reader. Retrying in $waitTime...")
+            delay(waitTime.inWholeMilliseconds)
+            it is Exception
+        }.single()
+    }
+    val reader = init.await()
+    val feed = SyndFeedInput().build(reader)
+    val latestRelease = feed.entries.first()
+    val latestReleaseItems = latestRelease.contents.first().value
+
+    var totalItems = 0
+    var processed = 0.0
+
+    // See https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/collect.html
+    val job = launch(Dispatchers.IO) {
+        Jsoup
+            .parse(latestReleaseItems)
+            .select("a")
+            .also { totalItems = it.size }
+            .asFlow()
+            .onStart { println("Downloading items started...") }
+            .map(::toLink)
+            .map(::toDocument)
+            // .catch {  }
+            // NOTE that retry will start the whole flow over again.
+            .retry(5) {
+                println("Some error happened. Starting over in $waitTime...")
+                delay(waitTime.inWholeMilliseconds)
+                it is Exception
+            }
+            .onEach { processed++ }
+            .onEach { println("Successful download: ${it.first}") }
+            .map(::toReleaseNote)
+            // .flowOn(Dispatchers.IO)
+            .onEmpty { emit("No libraries entries!") }
+            .onEach(writer::write)
+            .onCompletion { println("All items downloaded.") }
+            .collect()
+            .also { writer.close() }
+            .also { reader.close() }
+    }
+
+    var previousProgress = -1
+    while (!job.isCompleted) {
+        delay(100)
+        val progress = (processed / totalItems * 100).roundToInt()
+        if (progress != previousProgress) println("Progress: $progress%")
+        previousProgress = progress
+        // yield()
+    }
+
+    // Create a raw text version as well just if someone needs it
+    val text = Jsoup
+        .parse(resultFile, "UTF-8")
+        .wholeText()
+    File("release-notes.txt").writeText(text)
+}
+*/
