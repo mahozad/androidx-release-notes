@@ -51,9 +51,7 @@ Jsoup
 /**
  * Create a raw text version as well in case someone needs it
  */
-val text = Jsoup
-    .parse(resultFile, "UTF-8")
-    .wholeText()
+val text = Jsoup.parse(resultFile, null).wholeText()
 File("release-notes.txt").writeText(text)
 
 // TODO: Duplicate; use the retry.main.kts script.
@@ -87,10 +85,10 @@ fun toReleaseNote(pair: Pair<String, Document>): String {
     val name = document.extractName(id)
     val version = document.extractVersion(id)
     val changelog = document.extractChangelog(id)
-    return createEntry(name, version, changelog)
+    return createItemString(name, version, changelog)
 }
 
-fun createEntry(
+fun createItemString(
     name: String,
     version: String,
     changelog: String
