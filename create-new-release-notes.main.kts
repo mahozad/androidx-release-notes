@@ -20,14 +20,15 @@ import java.io.File
 import java.net.URL
 import java.time.Duration
 
+val resultFile = File("release-notes.html")
 // TODO: Use Kotlin Duration when/if switched to v1.6.x or higher
 val waitTime = Duration.ofSeconds(10)
 val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
-val writer = File("release-notes.html").bufferedWriter()
+val writer = resultFile.bufferedWriter()
 // NOTE: To test for a complicated release notes, use
 //  `XmlReader(File("test-feed-result.xml"))` below
-//  and specifically, the first entry of the feed
 val reader = tryToGet(
+    // { XmlReader(File("test-feed-result.xml")) },
     { XmlReader(feedUrl) },
     retryCount = 10,
     "Failed to initialize the feed reader",
@@ -43,8 +44,7 @@ fun <T> tryToGet(
     errorMessage: String
 ): T {
     repeat(retryCount) {
-        val result = runCatching(block)
-        if (result.isSuccess) return result.getOrThrow()
+        runCatching(block).onSuccess { return it }
         println("$failMessage; attempting again in ${waitTime.seconds} seconds")
         Thread.sleep(waitTime.toMillis())
     }
@@ -54,9 +54,9 @@ fun <T> tryToGet(
 reader.use { reader ->
     val feed = SyndFeedInput().build(reader)
     val latestRelease = feed.entries.first()
-    val latestReleaseUrls = latestRelease.contents.first().value
+    val latestReleaseItems = latestRelease.contents.first().value
     Jsoup
-        .parse(latestReleaseUrls)
+        .parse(latestReleaseItems)
         .select("a")
         .asSequence()
         .map(::toLink)
@@ -68,7 +68,7 @@ reader.use { reader ->
 
 // Create a raw text version as well just if someone needs it
 val text = Jsoup
-    .parse(File("release-notes.html"), "UTF-8")
+    .parse(resultFile, "UTF-8")
     .wholeText()
 File("release-notes.txt").writeText(text)
 
