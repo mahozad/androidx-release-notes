@@ -3,10 +3,11 @@
 @file:JvmName("Retry")
 @file:CompilerOptions("-jvm-target", "11")
 
-import java.time.Duration
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
-// TODO: Use Kotlin Duration when/if switched to v1.6.x or higher
-val waitTime = Duration.ofSeconds(10)
+// TODO: Use Int::seconds when/if switched to Kotlin v1.6.x or higher
+val waitTime = 10.toDuration(DurationUnit.SECONDS)
 
 /**
  * Try for at most [retryCount] times to run the block without exception.
@@ -27,8 +28,8 @@ fun <T> tryTo(
     repeat(retryCount) {
         runCatching(block).onSuccess { return it }
         println("Failed to $description.")
-        println("Attempting again in ${waitTime.seconds} seconds...")
-        Thread.sleep(waitTime.toMillis())
+        println("Trying again in $waitTime\n")
+        Thread.sleep(waitTime.inWholeMilliseconds)
     }
     error("All attempts to $description failed.")
 }

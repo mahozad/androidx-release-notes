@@ -18,11 +18,12 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import java.io.File
 import java.net.URL
-import java.time.Duration
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 val resultFile = File("release-notes.html")
-// TODO: Use Kotlin Duration when/if switched to v1.6.x or higher
-val waitTime = Duration.ofSeconds(10)
+// TODO: Use Int::seconds when/if switched to Kotlin v1.6.x or higher
+val waitTime = 10.toDuration(DurationUnit.SECONDS)
 val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
 val writer = resultFile.bufferedWriter()
 val reader = tryTo("initialize the feed reader") {
@@ -41,8 +42,8 @@ fun <T> tryTo(
     repeat(retryCount) {
         runCatching(block).onSuccess { return it }
         println("Failed to $description.")
-        println("Attempting again in ${waitTime.seconds} seconds...")
-        Thread.sleep(waitTime.toMillis())
+        println("Trying again in $waitTime\n")
+        Thread.sleep(waitTime.inWholeMilliseconds)
     }
     error("All attempts to $description failed.")
 }
