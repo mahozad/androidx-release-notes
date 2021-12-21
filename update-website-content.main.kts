@@ -5,7 +5,9 @@
 
 import java.io.File
 
-val body = File("release-notes.html").readText()
+val body = File("release-notes.html")
+    .readText()
+    .trimEnd()
 
 // language=HTML
 val html = """
@@ -16,8 +18,8 @@ val html = """
   <title>AndroidX latest release notes</title>
 </head>
 <body>
-  <h1>Latest update</h1>
-  $body
+<h1>Latest update</h1>
+$body
 </body>
 </html>
 """
