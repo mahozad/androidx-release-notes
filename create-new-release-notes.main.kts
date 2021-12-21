@@ -34,6 +34,7 @@ val reader = tryTo("initialize the feed reader") {
 
 // TODO: Duplicate; use the retry.main.kts script.
 //  See other scripts for example usage.
+//  NOTE that currently IntelliJ code features break when importing external script.
 fun <T> tryTo(
     description: String,
     forAtMost: Int = 5,
