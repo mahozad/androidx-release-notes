@@ -8,7 +8,7 @@
 @file:DependsOn("com.rometools:rome:1.16.0")
 
 // NOTE: See https://youtrack.jetbrains.com/issue/KT-42101
-@file:Import("try-to-get.main.kts")
+@file:Import("retry.main.kts")
 
 import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader

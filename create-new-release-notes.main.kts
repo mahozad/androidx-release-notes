@@ -31,7 +31,7 @@ val reader = tryTo("initialize the feed reader") {
     XmlReader(feedUrl)
 }
 
-// TODO: Duplicate; use the try-to-get.main.kts script.
+// TODO: Duplicate; use the retry.main.kts script.
 //  See other scripts for example usage.
 fun <T> tryTo(
     description: String,
