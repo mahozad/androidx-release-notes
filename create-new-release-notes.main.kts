@@ -33,6 +33,28 @@ val reader = tryTo("initialize the feed reader") {
     // XmlReader(File("test-feed-result.xml"))
     XmlReader(feedUrl)
 }
+val feed = SyndFeedInput().build(reader)
+val latestRelease = feed.entries.first()
+val latestReleaseItems = latestRelease.contents.first().value
+
+Jsoup
+    .parse(latestReleaseItems)
+    .select("a")
+    .asSequence()
+    .map(::toLink)
+    .map(::toDocument)
+    .map(::toReleaseNote)
+    .forEach(writer::write)
+    .also { writer.close() }
+    .also { reader.close() }
+
+/**
+ * Create a raw text version as well in case someone needs it
+ */
+val text = Jsoup
+    .parse(resultFile, "UTF-8")
+    .wholeText()
+File("release-notes.txt").writeText(text)
 
 // TODO: Duplicate; use the retry.main.kts script.
 //  See other scripts for example usage.
@@ -50,26 +72,6 @@ fun <T> tryTo(
     }
     error("All attempts to $description failed.")
 }
-
-val feed = SyndFeedInput().build(reader)
-val latestRelease = feed.entries.first()
-val latestReleaseItems = latestRelease.contents.first().value
-Jsoup
-    .parse(latestReleaseItems)
-    .select("a")
-    .asSequence()
-    .map(::toLink)
-    .map(::toDocument)
-    .map(::toReleaseNote)
-    .forEach(writer::write)
-    .also { writer.close() }
-    .also { reader.close() }
-
-// Create a raw text version as well just if someone needs it
-val text = Jsoup
-    .parse(resultFile, "UTF-8")
-    .wholeText()
-File("release-notes.txt").writeText(text)
 
 fun toLink(element: Element) = element.attr("href")
 
