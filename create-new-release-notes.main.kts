@@ -2,6 +2,8 @@
 
 @file:JvmName("ReleaseNotesGenerator")
 @file:CompilerOptions("-jvm-target", "11")
+@file:CompilerOptions("-Xopt-in", "kotlin.RequiresOptIn")
+@file:OptIn(kotlin.time.ExperimentalTime::class)
 @file:Repository("https://repo.maven.apache.org/maven2")
 @file:Repository("https://jcenter.bintray.com")
 @file:Repository("https://jitpack.io")
