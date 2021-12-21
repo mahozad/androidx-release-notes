@@ -16,6 +16,7 @@ val html = """
   <title>AndroidX latest release notes</title>
 </head>
 <body>
+  <h1>Latest update</h1>
   $body
 </body>
 </html>
