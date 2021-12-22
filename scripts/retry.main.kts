@@ -12,7 +12,7 @@ import kotlin.time.toDuration
 val waitTime = 10.toDuration(DurationUnit.SECONDS)
 
 /**
- * Try for at most [retryCount] times to run the block without exception.
+ * Try [forAtMost] times to run the block without exception.
  *
  * We could also make subsequent runs wait
  * for an [exponential delay](https://en.wikipedia.org/wiki/Exponential_backoff).

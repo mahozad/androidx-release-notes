@@ -55,6 +55,17 @@ File("release-notes.txt").writeText(text)
 // TODO: Duplicate; use the retry.main.kts script.
 //  See other scripts for example usage.
 //  NOTE that currently, IntelliJ code features break when importing external scripts.
+/**
+ * Try [forAtMost] times to run the block without exception.
+ *
+ * We could also make subsequent runs wait
+ * for an [exponential delay](https://en.wikipedia.org/wiki/Exponential_backoff).
+ * See [this article](https://dzone.com/articles/understanding-retry-pattern-with-exponential-back).
+ *
+ * I wrote this function myself.
+ * It is interesting that [this solution](https://stackoverflow.com/a/46890009)
+ * proposed by Roman Elizarov is very similar to mine.
+ */
 fun <T> tryTo(
     description: String,
     forAtMost: Int = 5,
