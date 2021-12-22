@@ -47,8 +47,8 @@ jobs:
         with:
           tag: ${{ steps.check-for-updates.outputs.dateTag }}
           commit: "main"
-          artifacts: "release-notes.md, release-notes.html, release-notes.txt"
           bodyFile: "release-notes.md"
+          artifacts: "release-notes.md, release-notes.html, release-notes.txt"
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set RSS last update time
@@ -80,5 +80,5 @@ jobs:
         if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
         with:
           branch: website
-          commit_message: Update website content
           file_pattern: docs/*
+          commit_message: Update website content
