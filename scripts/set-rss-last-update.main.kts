@@ -17,7 +17,7 @@ import java.net.URL
 
 val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
 val reader = tryTo("initialize the feed reader") { XmlReader(feedUrl) }
-val feed = SyndFeedInput().build(it)
+val feed = SyndFeedInput().build(reader)
 val date = feed.publishedDate.toString()
 File("last-rss-update.txt").writeText("$date\n")
 reader.close()
