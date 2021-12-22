@@ -121,13 +121,11 @@ fun Document.extractChangelog(id: String) = this
     .takeWhile { it.`is`(":not(h3)") }
     .joinToString("\n")
 
+/* -------------------------------------------------------------------------- */
 
-
-/**
- * This is a coroutine version of the code
- * Needs the dependency `org.jetbrains.kotlinx:kotlinx-coroutines-core`
- * which seems to not work in Kotlin scripts.
- */
+// This is a coroutine version of the code.
+// Needs `org.jetbrains.kotlinx:kotlinx-coroutines-core`
+// which seems to not work in Kotlin scripts.
 /*
 fun main() = runBlocking {
     val init = async(Dispatchers.IO) {
@@ -157,6 +155,7 @@ fun main() = runBlocking {
             .asFlow()
             .onStart { println("Downloading items started...") }
             .map(::toLink)
+            // Make toDocument and tryTo suspendable and use delay in tryTo?
             .map(::toDocument)
             // .catch {  }
             // NOTE that retry will start the whole flow over again.
@@ -187,9 +186,7 @@ fun main() = runBlocking {
     }
 
     // Create a raw text version as well just if someone needs it
-    val text = Jsoup
-        .parse(resultFile, "UTF-8")
-        .wholeText()
+    val text = Jsoup.parse(resultFile, null).wholeText()
     File("release-notes.txt").writeText(text)
 }
 */
