@@ -24,11 +24,15 @@ in the *Assets* section at the bottom of the GitHub release page.
 You can find the [original AndroidX GitHub repository here].  
 See the file *[generateReleaseNotes.py]* for how the release notes are generated.
 
-And [here is a similar repository] which seems to be discontinued.
+### Similar repositories and apps:
+  - [Separate release notes for each library]: It seems to be discontinued
+  - [Jetpack Release Tracker]: An application to track latest AndroidX library releases
+
 
   [Android Developers]: https://developer.android.com/jetpack
   [release notes]: https://developer.android.com/jetpack/androidx/versions/all-channel
   [AndroidX (Jetpack) libraries]: https://developer.android.com/jetpack/androidx/versions
   [original AndroidX GitHub repository here]: https://github.com/androidx/androidx
   [generateReleaseNotes.py]: https://github.com/androidx/androidx/blob/androidx-main/development/release-notes/
-  [here is a similar repository]: https://github.com/androidx-releases
+  [Separate release notes for each library]: https://github.com/androidx-releases
+  [Jetpack Release Tracker]: https://github.com/lmj0011/jetpack-release-tracker
