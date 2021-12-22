@@ -14,38 +14,36 @@ import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
 import java.io.File
 import java.net.URL
-import java.time.LocalDate
-import java.time.LocalTime
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter.ISO_LOCAL_TIME
 
 val datesPattern = DateTimeFormatter.ofPattern("EEE LLL dd HH:mm:ss z yyyy")
 val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
 val reader = tryTo("initialize the feed reader") { XmlReader(feedUrl) }
+val file = File("last-rss-update.txt")
+val feed = SyndFeedInput().build(reader)
+val ours = file.readText().trimEnd().parse()
+val theirs = feed.publishedDate.toString().parse()
+val theirDate = theirs.toLocalDate().toString()
+val theirTime = theirs.toLocalTime().format(ISO_LOCAL_TIME)
+val areTheSame = ours == theirs
+val freshness = if (areTheSame) "latest" else "stale"
+val dateTag = theirDate + if (areTheSame) "T$theirTime" else ""
+reader.close()
 
-reader.use {
-    val feed = SyndFeedInput().build(it)
-    val lastUpdated = File("last-rss-update.txt").readText().trim()
-    val currentDate = feed.publishedDate.toString()
-    val freshness = if (currentDate == lastUpdated) "latest" else "stale"
+// To log for debug
+// see https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#setting-a-debug-message
+// Example: println("::debug::Last RSS publish date: $lastDate")
+// To log a regular message, use the plain println() function without any format
+println("Our RSS publish date:   $ours")
+println("Their RSS publish date: $theirs")
 
-    val lastDateTime = lastUpdated.toLocalDate()
-    val currentDateTime = currentDate.toLocalDate()
-    val time = LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME)
-    val dateTag = "$currentDateTime" + if (currentDateTime == lastDateTime) "T$time" else ""
+// To set output for a job step
+// see https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#setting-an-output-parameter
+// and https://stackoverflow.com/a/59201610
+println("::set-output name=result::$freshness")
+println("::set-output name=dateTag::$dateTag")
 
-    // To log for debug
-    // see https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#setting-a-debug-message
-    // Example: println("::debug::Last RSS publish date: $lastUpdated")
-    // To log a regular message, use the plain println() function without any format
-    println("Last RSS publish date: ${lastUpdated.ifBlank { "::EMPTY::" }}")
-    println("Current RSS publish date: $currentDate")
-
-    // To set output for a job step
-    // see https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#setting-an-output-parameter
-    // and https://stackoverflow.com/a/59201610
-    println("::set-output name=result::$freshness")
-    println("::set-output name=dateTag::$dateTag")
-}
-
-fun String.toLocalDate() = runCatching { LocalDate.parse(this, datesPattern) }
-    .getOrDefault(LocalDate.of(1900, 1, 1))
+fun String.parse() = runCatching { LocalDateTime.parse(this, datesPattern) }
+    .getOrDefault(LocalDateTime.of(1, 1, 1, 1, 1))
