@@ -21,9 +21,14 @@ You can subscribe to GitHub release notifications by selecting
 The Markdown, HTML, and plain text version of the release notes can be downloaded
 in the *Assets* section at the bottom of the GitHub release page.
 
-You can find the [original AndroidX GitHub repository here].
+You can find the [original AndroidX GitHub repository here].  
+See the file *[generateReleaseNotes.py]* for how the release notes are generated.
+
+And [here is a similar repository] which seems to be discontinued.
 
   [Android Developers]: https://developer.android.com/jetpack
   [release notes]: https://developer.android.com/jetpack/androidx/versions/all-channel
   [AndroidX (Jetpack) libraries]: https://developer.android.com/jetpack/androidx/versions
   [original AndroidX GitHub repository here]: https://github.com/androidx/androidx
+  [generateReleaseNotes.py]: https://github.com/androidx/androidx/blob/androidx-main/development/release-notes/
+  [here is a similar repository]: https://github.com/androidx-releases
