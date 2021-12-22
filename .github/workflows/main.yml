@@ -24,11 +24,11 @@ jobs:
 
       - name: Check if there is a new release
         id: check-for-updates
-        run: kotlin check-for-updates.main.kts
+        run: kotlin scripts/check-for-updates.main.kts
 
       - name: Create the new release notes
         if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
-        run: kotlin create-new-release-notes.main.kts
+        run: kotlin scripts/create-new-release-notes.main.kts
 
       # See https://github.com/pandoc/pandoc-action-example
       # and https://stackoverflow.com/a/70212129/8583692
@@ -53,7 +53,7 @@ jobs:
 
       - name: Set RSS last update time
         if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
-        run: kotlin set-rss-last-update.main.kts
+        run: kotlin scripts/set-rss-last-update.main.kts
 
       # Also see https://github.com/EndBug/add-and-commit
       - name: Commit main changes
@@ -73,7 +73,7 @@ jobs:
 
       - name: Update website content
         if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
-        run: kotlin update-website-content.main.kts
+        run: kotlin scripts/update-website-content.main.kts
 
       - name: Commit website changes
         uses: stefanzweifel/git-auto-commit-action@v4
