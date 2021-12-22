@@ -165,6 +165,7 @@ fun main() = runBlocking {
             .onStart { println("Downloading items started...") }
             .map(::toLink)
             // Make toDocument and tryTo suspendable and use delay in tryTo?
+            // See https://stackoverflow.com/a/46890009
             .map(::toDocument)
             // .catch {  }
             // NOTE that retry will start the whole flow over again.
