@@ -32,8 +32,9 @@ jobs:
 
       # See https://github.com/pandoc/pandoc-action-example
       # and https://stackoverflow.com/a/70212129/8583692
-      # NOTE: This step is NOT needed at all
-      # The html file could be used directly as release body as well
+      # NOTE: This step produces the Markdown to be included as a release artifact.
+      # It could be used as the release body but had some minor formatting issues.
+      # For example, it contained unnecessary new lines in the body.
       - name: Convert from HTML to markdown
         uses: docker://pandoc/core:2.16.2
         if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
@@ -47,7 +48,7 @@ jobs:
         with:
           tag: ${{ steps.check-for-updates.outputs.dateTag }}
           commit: "main"
-          bodyFile: "release-notes.md"
+          bodyFile: "release-notes.html"
           artifacts: "release-notes.md, release-notes.html, release-notes.txt"
           token: ${{ secrets.GITHUB_TOKEN }}
 
