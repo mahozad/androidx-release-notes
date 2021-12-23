@@ -107,7 +107,7 @@ fun createItemString(
     appendLine()
 }
 
-// See https://github.com/jhy/jsoup/issues/1055 and 1441
+// See https://github.com/jhy/jsoup/issues/1055
 fun Document.extractName(id: String) = this
     .select("[id=$id]")
     .prev("h2")
@@ -117,13 +117,11 @@ fun Document.extractName(id: String) = this
     .ifBlank { select("h1").text() }
     .trim()
 
-// See https://github.com/jhy/jsoup/issues/1055 and 1441
 fun Document.extractVersion(id: String) = this
     .select("[id=$id]")
     .attr("data-text")
     .replace(Regex(".*Version "), "v")
 
-// See https://github.com/jhy/jsoup/issues/1055 and 1441
 fun Document.extractChangelog(id: String) = this
     .select("[id=$id] ~ *")
     .takeWhile { it.`is`(":not(h2)") }
