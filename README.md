@@ -1,6 +1,6 @@
 <sup>
 
-Image credits: [Android Developers]
+Image credit: [Android Developers]
 
 </sup>
 
