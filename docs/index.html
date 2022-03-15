@@ -7,182 +7,27 @@
 <body>
 <h1>Latest update</h1>
 <hr>
-<h2>Compose Animation: v1.2.0-alpha05</h2>
-<p>March 9, 2022</p>
-<p><code translate="no" dir="ltr">androidx.compose.animation:animation:1.2.0-alpha05</code>, <code translate="no" dir="ltr">androidx.compose.animation:animation-core:1.2.0-alpha05</code>, and <code translate="no" dir="ltr">androidx.compose.animation:animation-graphics:1.2.0-alpha05</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9b2b3d8efd5f00bd4af903bbaa926f6a712d0bd8..33cb12e8aba043a05b40470a5ef3be1b35114fd5/compose/animation">Version 1.2.0-alpha05 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
+<h2>Media3: v1.0.0-alpha03</h2>
+<p>March 14, 2022</p>
+<p><code translate="no" dir="ltr">androidx.media3:media3-*:1.0.0-alpha03</code> is released. <a href="https://github.com/androidx/media/commits/1.0.0-alpha03">Version 1.0.0-alpha03 contains these commits.</a></p>
+<p>This corresponds to the <a href="https://github.com/google/ExoPlayer/releases/tag/r2.17.1">ExoPlayer 2.17.1 release</a>.</p>
 <ul> 
- <li>Hooray! Compose animation now supports 'Animator duration scale' setting from Developer Options. (<a href="https://android-review.googlesource.com/#/q/I5a4fc779a3fbfbcb2926ac1624cd679bb9b912ce">I5a4fc</a>, <a href="https://issuetracker.google.com/issues/161675988">b/161675988</a>)</li> 
-</ul>
-
-<h2>Compose Compiler: v1.2.0-alpha05</h2>
-<p>March 9, 2022</p>
-<p><code translate="no" dir="ltr">androidx.compose.compiler:compiler:1.2.0-alpha05</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9b2b3d8efd5f00bd4af903bbaa926f6a712d0bd8..33cb12e8aba043a05b40470a5ef3be1b35114fd5/compose/compiler">Version 1.2.0-alpha05 contains these commits.</a></p>
-
-<h2>Compose Foundation: v1.2.0-alpha05</h2>
-<p>March 9, 2022</p>
-<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation:1.2.0-alpha05</code> and <code translate="no" dir="ltr">androidx.compose.foundation:foundation-layout:1.2.0-alpha05</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9b2b3d8efd5f00bd4af903bbaa926f6a712d0bd8..33cb12e8aba043a05b40470a5ef3be1b35114fd5/compose/foundation">Version 1.2.0-alpha05 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul> 
- <li><code translate="no" dir="ltr">LazyVerticalGrid</code> and <code translate="no" dir="ltr">LazyHorizontalGrid</code> are now stable. (<a href="https://android-review.googlesource.com/#/q/I307c0ce412c7bc762e334e429013c0442bd22fde">I307c0</a>)</li> 
- <li><code translate="no" dir="ltr">LazyGridItemInfo.Unknown</code> was replaced with separate <code translate="no" dir="ltr">LazyGridItemInfo.UnknownRow</code> and <code translate="no" dir="ltr">LazyGridItemInfo.UnknownColumn</code> (<a href="https://android-review.googlesource.com/#/q/I56d512212459f408a00cff1601d010f72184102d">I56d51</a>)</li> 
- <li><code translate="no" dir="ltr">LazyVerticalGrid</code>/<code translate="no" dir="ltr">LazyHorizontalGrid</code> and all related apis were moved into <code translate="no" dir="ltr">.grid</code> subpackage. Please update your imports from <code translate="no" dir="ltr">androidx.compose.foundation.lazy</code> to <code translate="no" dir="ltr">androidx.compose.foundation.lazy.grid</code>. (<a href="https://android-review.googlesource.com/#/q/I2d446e0bed6f27f0394b7dcab1152301e3404b0f">I2d446</a>, <a href="https://issuetracker.google.com/issues/219942574">b/219942574</a>)</li> 
- <li>Text: <code translate="no" dir="ltr">includeFontPadding</code> is now turned off by default. The clipping issues as a result of <code translate="no" dir="ltr">includeFontPadding=false</code> is handled and no clipping should occur for tall scripts. (<a href="https://android-review.googlesource.com/#/q/I31c84166ae5241fea3f49e8f293dd9d8a5d712cb">I31c84</a>, <a href="https://issuetracker.google.com/issues/171394808">b/171394808</a>)</li> 
- <li>Measured interface now exposes parentData property (<a href="https://android-review.googlesource.com/#/q/I3313f74c5eb4a75b91cb9d438c6691117b152a7d">I3313f</a>)</li> 
- <li>Introduced experimental <code translate="no" dir="ltr">Modifier.onFocusedBoundsChanged</code> to allow observing the bounds of child focusables. (<a href="https://android-review.googlesource.com/#/q/I14283393b5273527ab65f4aa1a2d4383321b0d95">I14283</a>, <a href="https://issuetracker.google.com/issues/220030968">b/220030968</a>, <a href="https://issuetracker.google.com/issues/190539358">b/190539358</a>, <a href="https://issuetracker.google.com/issues/192043120">b/192043120</a>, <a href="https://issuetracker.google.com/issues/216842427">b/216842427</a>)</li> 
- <li>LazyHorizontalGrid was added. (<a href="https://android-review.googlesource.com/#/q/I61ae7abe269fdb3776c301dd5c233762f9766f4d">I61ae7</a>, <a href="https://issuetracker.google.com/issues/191238807">b/191238807</a>)</li> 
- <li>Added a new <code translate="no" dir="ltr">LazyVerticalGrid</code> API to define cross axis sizes (<a href="https://android-review.googlesource.com/#/q/I17723fdc6302a345dd643fb637e1644168a2a321">I17723</a>)</li> 
- <li>Added FocusGroup modifier (<a href="https://android-review.googlesource.com/#/q/I64bc0b945bf172ad37b64d011d7055f4a99bfeca">I64bc0</a>, <a href="https://issuetracker.google.com/issues/213508274">b/213508274</a>, <a href="https://issuetracker.google.com/issues/184670295">b/184670295</a>)</li> 
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul> 
- <li><code translate="no" dir="ltr">WindowInsets.toString()</code> will now show the correct values. (<a href="https://android-review.googlesource.com/#/q/I1585d12df9b15b616ede0bda7db39a2cc4ead3d3">I1585d</a>)</li> 
-</ul>
-<p><strong>External Contribution</strong></p>
-<ul> 
- <li>Updated to use Kotlinx coroutines 1.6.0 (<a href="https://android-review.googlesource.com/#/q/I3366d5111b2fb830d619da5402c12ea4c929391a">I3366d</a>)</li> 
-</ul>
-
-<h2>Compose Material: v1.2.0-alpha05</h2>
-<p>March 9, 2022</p>
-<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.2.0-alpha05</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9b2b3d8efd5f00bd4af903bbaa926f6a712d0bd8..33cb12e8aba043a05b40470a5ef3be1b35114fd5/compose/material">Version 1.2.0-alpha05 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul> 
- <li><code translate="no" dir="ltr">LazyVerticalGrid</code> and <code translate="no" dir="ltr">LazyHorizontalGrid</code> are now stable. (<a href="https://android-review.googlesource.com/#/q/I307c0ce412c7bc762e334e429013c0442bd22fde">I307c0</a>)</li> 
- <li><code translate="no" dir="ltr">LazyVerticalGrid/LazyHorizontalGrid</code> and all related apis were moved into .grid subpackage. Please update your imports from androidx.compose.foundation.lazy to androidx.compose.foundation.lazy.grid. (<a href="https://android-review.googlesource.com/#/q/I2d446e0bed6f27f0394b7dcab1152301e3404b0f">I2d446</a>, <a href="https://issuetracker.google.com/issues/219942574">b/219942574</a>)</li> 
- <li>Reverted previous change of relying solely on a View for <code translate="no" dir="ltr">WindowInsetsControllerCompat</code>, and again require a Window which is required for managing some window flags. Deprecated <code translate="no" dir="ltr">ViewCompat.getWindowInsetsController</code> in favor of <code translate="no" dir="ltr">WindowCompat.getInsetsController</code> to ensure that the correct Window is used (such as if the View is in a dialog). (<a href="https://android-review.googlesource.com/#/q/I660aee32108b59516232b41e05b3f05ae2538554">I660ae</a>, <a href="https://issuetracker.google.com/issues/219572936">b/219572936</a>)</li> 
- <li>Text:<code translate="no" dir="ltr">includeFontPadding</code> is now turned off by default. The clipping issues as a result of <code translate="no" dir="ltr">includeFontPadding=false</code> is handled and no clipping should occur for tall scripts. (<a href="https://android-review.googlesource.com/#/q/I31c84166ae5241fea3f49e8f293dd9d8a5d712cb">I31c84</a>, <a href="https://issuetracker.google.com/issues/171394808">b/171394808</a>)</li> 
- <li>Added a new <code translate="no" dir="ltr">LazyVerticalGrid</code> API to define cross axis sizes (<a href="https://android-review.googlesource.com/#/q/I17723fdc6302a345dd643fb637e1644168a2a321">I17723</a>)</li> 
-</ul>
-
-<h2>Compose Material 3: v1.0.0-alpha07</h2>
-<p>March 9, 2022</p>
-<p><code translate="no" dir="ltr">androidx.compose.material3:material3:1.0.0-alpha07</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9b2b3d8efd5f00bd4af903bbaa926f6a712d0bd8..33cb12e8aba043a05b40470a5ef3be1b35114fd5/compose/material3/material3">Version 1.0.0-alpha07 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul> 
- <li>Updates to Material 3 Surface API that brings back the overloaded functions for clickable Surfaces, as well as adding a function to support selectable and toggleable Surfaces. (<a href="https://android-review.googlesource.com/#/q/I4bf182d38d4c503cc5f16f5c966294d9f042930d">I4bf18</a>)</li> 
- <li><code translate="no" dir="ltr">LazyVerticalGrid</code> and <code translate="no" dir="ltr">LazyHorizontalGrid</code> are now stable. (<a href="https://android-review.googlesource.com/#/q/I307c0ce412c7bc762e334e429013c0442bd22fde">I307c0</a>)</li> 
- <li><code translate="no" dir="ltr">LazyVerticalGrid/LazyHorizontalGrid</code> and all related apis were moved into .grid subpackage. Please update your imports from androidx.compose.foundation.lazy to androidx.compose.foundation.lazy.grid. (<a href="https://android-review.googlesource.com/#/q/I2d446e0bed6f27f0394b7dcab1152301e3404b0f">I2d446</a>)</li> 
- <li>Reverted previous change of relying solely on a View for <code translate="no" dir="ltr">WindowInsetsControllerCompat</code>, and again require a Window which is required for managing some window flags. Deprecated <code translate="no" dir="ltr">ViewCompat.getWindowInsetsController</code> in favor of <code translate="no" dir="ltr">WindowCompat.getInsetsController</code> to ensure that the correct Window is used (such as if the View is in a dialog). (<a href="https://android-review.googlesource.com/#/q/I660aee32108b59516232b41e05b3f05ae2538554">I660ae</a>, <a href="https://issuetracker.google.com/issues/219572936">b/219572936</a>)</li> 
- <li>Added a new <code translate="no" dir="ltr">LazyVerticalGrid</code> API to define cross axis sizes (<a href="https://android-review.googlesource.com/#/q/I17723fdc6302a345dd643fb637e1644168a2a321">I17723</a>)</li> 
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul> 
- <li>Updates to the Card API to follow changes at the Surface API (<a href="https://android-review.googlesource.com/#/q/I3c8b9adfb1ece2e8861f8646620c47772270c25c">I3c8b9</a>)</li> 
-</ul>
-
-<h2>Compose Runtime: v1.2.0-alpha05</h2>
-<p>March 9, 2022</p>
-<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.2.0-alpha05</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9b2b3d8efd5f00bd4af903bbaa926f6a712d0bd8..33cb12e8aba043a05b40470a5ef3be1b35114fd5/compose/runtime">Version 1.2.0-alpha05 contains these commits.</a></p>
-<p><strong>External Contribution</strong></p>
-<ul> 
- <li>Updated to use Kotlinx coroutines 1.6.0 (<a href="https://android-review.googlesource.com/#/q/I3366d5111b2fb830d619da5402c12ea4c929391a">I3366d</a>)</li> 
-</ul>
-
-<h2>Compose UI: v1.2.0-alpha05</h2>
-<p>March 9, 2022</p>
-<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.2.0-alpha05</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9b2b3d8efd5f00bd4af903bbaa926f6a712d0bd8..33cb12e8aba043a05b40470a5ef3be1b35114fd5/compose/ui">Version 1.2.0-alpha05 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul> 
- <li><code translate="no" dir="ltr">TextToolbar</code> now takes lambda arguments instead of <code translate="no" dir="ltr">ActionCallback</code>. (<a href="https://android-review.googlesource.com/#/q/Ib2eb9d370cd6a22bbfbdec0d2cb536302ea43d6a">Ib2eb9</a>, <a href="https://issuetracker.google.com/issues/197950089">b/197950089</a>)</li> 
- <li>Updated nullability in core and appcompat to match Tiramisu DP2 (<a href="https://android-review.googlesource.com/#/q/I0cbb7f22651e725a4bb36d20388a949a72cc5903">I0cbb7</a>)</li> 
- <li>Measured interface now exposes parentData property (<a href="https://android-review.googlesource.com/#/q/I3313f74c5eb4a75b91cb9d438c6691117b152a7d">I3313f</a>)</li> 
- <li><code translate="no" dir="ltr">Modifier.onPlaced</code> and the <code translate="no" dir="ltr">OnPlacedModifier</code> interface are now stable. (<a href="https://android-review.googlesource.com/#/q/Ib5482e5fc018d24324a7cedc647d13599b37e42a">Ib5482</a>)</li> 
- <li>Hooray! Compose animation now supports 'Animator duration scale' setting from Developer Options. (<a href="https://android-review.googlesource.com/#/q/I5a4fc779a3fbfbcb2926ac1624cd679bb9b912ce">I5a4fc</a>, <a href="https://issuetracker.google.com/issues/161675988">b/161675988</a>)</li> 
- <li>Added a <code translate="no" dir="ltr">BeyondBoundsLayout</code> modifier local (<a href="https://android-review.googlesource.com/#/q/If8b51c6e08a375d1c733588e53c9b07474c0855c">If8b51</a>, <a href="https://issuetracker.google.com/issues/184670295">b/184670295</a>)</li> 
- <li>Text: includeFontPadding is now turned off by default. The clipping issues as a result of <code translate="no" dir="ltr">includeFontPadding=false</code> is handled and no clipping should occur for tall scripts. (<a href="https://android-review.googlesource.com/#/q/I31c84166ae5241fea3f49e8f293dd9d8a5d712cb">I31c84</a>, <a href="https://issuetracker.google.com/issues/171394808">b/171394808</a>)</li> 
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul> 
- <li><code translate="no" dir="ltr">ComposeContentTestRule.setContent</code> will now throw an <code translate="no" dir="ltr">IllegalStateException</code> if you try to set content when there already is content. (<a href="https://android-review.googlesource.com/#/q/I888a5054c27d7884110415a812d0ac748be3f869">I888a5</a>, <a href="https://issuetracker.google.com/issues/199631334">b/199631334</a>)</li> 
- <li>Fix crash caused by clipboard content while reading from clipboard on Android. (<a href="https://android-review.googlesource.com/#/q/I0602066750e3fce55deceb709f8c04ee9a71dabf">I06020</a>, <a href="https://issuetracker.google.com/issues/197769306">b/197769306</a>)</li> 
- <li>Improve RSB scrolling samples. (<a href="https://android-review.googlesource.com/#/q/I6a59618ca5bd80f3198ddbaaccfdb09387d6039a">I6a596</a>)</li> 
-</ul>
-<p><strong>External Contribution</strong></p>
-<ul> 
- <li>Updated to use Kotlinx coroutines 1.6.0 (<a href="https://android-review.googlesource.com/#/q/I3366d5111b2fb830d619da5402c12ea4c929391a">I3366d</a>)</li> 
-</ul>
-
-<h2>Games-Memory-Advice version 1.0.0: v1.0.0-beta01</h2>
-<p>March 9, 2022</p>
-<p><code translate="no" dir="ltr">androidx.games:games-memory-advice:1.0.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/opt/gamesdk/+log/e6bb74379ccaa6df74c4e6dff9479c244e5e8249..1b8430a9c2955e29d8ea667cfcc0612a9896f01d/src/memory_advice">Version 1.0.0-beta01 contains these commits.</a></p>
-<ul> 
- <li>No changes since 1.0.0-alpha01.</li> 
-</ul>
-
-<h2>Lifecycle: v2.5.0-alpha04</h2>
-<p>March 9, 2022</p>
-<p><code translate="no" dir="ltr">androidx.lifecycle:lifecycle-*:2.5.0-alpha04</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9b2b3d8efd5f00bd4af903bbaa926f6a712d0bd8..33cb12e8aba043a05b40470a5ef3be1b35114fd5/lifecycle">Version 2.5.0-alpha04 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul> 
- <li><code translate="no" dir="ltr">SavedStateHandle</code> now offers a <code translate="no" dir="ltr">getStateFlow()</code> API that returns a <a href="/kotlin/flow/stateflow-and-sharedflow#stateflow">Kotlin <code translate="no" dir="ltr">StateFlow</code></a> for monitoring value changes as an alternative to using <code translate="no" dir="ltr">LiveData</code>. (<a href="https://android-review.googlesource.com/#/q/Iad3ab4826281fdd87077b23356e444d17bc19cf6">Iad3ab</a>, <a href="https://issuetracker.google.com/issues/178037961">b/178037961</a>)</li> 
-</ul>
-
-<h2>Mediarouter: v1.3.0-beta01</h2>
-<p>March 9, 2022</p>
-<p><code translate="no" dir="ltr">androidx.mediarouter:mediarouter:1.3.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/7b3f681a0464178e603cba3dce271b86b5de1234..33cb12e8aba043a05b40470a5ef3be1b35114fd5/mediarouter/mediarouter">Version 1.3.0-beta01 contains these commits.</a></p>
-<ul> 
- <li>No changes since the last alpha release.</li> 
-</ul>
-
-<h2>Paging: v3.1.1</h2>
-<p>March 9, 2022</p>
-<p><code translate="no" dir="ltr">androidx.paging:paging-*:3.1.1</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/04b73e954d139340d0ac8b00cdcef55b103ba393..65c8f2c53158200a61e0e1cc012cdbbadaee60ab/paging">Version 3.1.1 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
-<ul> 
- <li>Removed intermediate <code translate="no" dir="ltr">LoadState.NotLoading</code> events between generations that were incorrectly inserted by <code translate="no" dir="ltr">.cachedIn()</code>. This change makes it much easier to react on <code translate="no" dir="ltr">LoadState</code> changes by removing redundant <code translate="no" dir="ltr">LoadState.NotLoading</code> events that were produced between retrying failed loads, when refreshing or during invalidation.</li> 
-</ul>
-
-<h2>Wear Ongoing & Interactions: v1.1.0-alpha03</h2>
-<p>March 9, 2022</p>
-<p><code translate="no" dir="ltr">androidx.wear:wear-phone-interactions:1.1.0-alpha03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/301586664b5aad60548f21866cad502d524dbf9f..33cb12e8aba043a05b40470a5ef3be1b35114fd5/wear/wear-phone-interactions">Version 1.1.0-alpha03 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
-<ul> 
- <li><code translate="no" dir="ltr">redirectUrl</code> from <code translate="no" dir="ltr">OAuthRequest</code> now returns an empty String if there the redirect URL is not set in the given request URL. (<a href="https://android-review.googlesource.com/#/q/I44242b23fa434fbd845ec4aa2b1ef74ddc92f1e5">I44242</a>)</li> 
-</ul>
-
-<h2>Wear Compose: v1.0.0-alpha18</h2>
-<p>March 9, 2022</p>
-<p><code translate="no" dir="ltr">androidx.wear.compose:compose-foundation:1.0.0-alpha18</code>, <code translate="no" dir="ltr">androidx.wear.compose:compose-material:1.0.0-alpha18</code>, and <code translate="no" dir="ltr">androidx.wear.compose:compose-navigation:1.0.0-alpha18</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9b2b3d8efd5f00bd4af903bbaa926f6a712d0bd8..33cb12e8aba043a05b40470a5ef3be1b35114fd5/wear/compose">Version 1.0.0-alpha18 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul> 
- <li>Several improvements to PositionIndicator: ShowResult renamed PositionIndicatorVisibility. Some performance improvements to avoid recomputations when not needed (<a href="https://android-review.googlesource.com/#/q/Iaed9d031fd5e881936abf420f77708e8c34efa66">Iaed9d</a>)</li> 
- <li>The recommended coloring for the <code translate="no" dir="ltr">SplitToggleChip</code> has been updated. SplitToggleChip's now have a solid colored background when checked or unchecked with the coloring of the ToggleControl being the primary indication of whether the component is checked or not. We have added a new <code translate="no" dir="ltr">ToggleDefaults.splitToggleChipColors()</code> to support the new color scheme. We have also simplified the <code translate="no" dir="ltr">toggleChipColors()</code> methods removing the splitBackgroundOverlayColor (<a href="https://android-review.googlesource.com/#/q/I7e66e3c9a7c74b588edd7db9bca22f807aca68fc">I7e66e</a>)</li> 
- <li>We have added unadjustedSize to the <code translate="no" dir="ltr">ScalingLazyListItemInfo</code> as it is not safe to calculate the original item size using the scaled size and scaling factor due to float maths precision. (<a href="https://android-review.googlesource.com/#/q/I54657254014989469bed08b6ef3859cab814b826">I54657</a>, <a href="https://issuetracker.google.com/issues/221079441">b/221079441</a>)</li> 
- <li>Add <code translate="no" dir="ltr">HorizontalPageIndicator</code>. It represents a total number of pages and a selected page. Might be linear or curved, depending on the shape of the device. It also supports custom indicator shape, which defines how each indicator is visually represented. (<a href="https://android-review.googlesource.com/#/q/Iac8984eb938e64816850c494ffcaa7988e724cc8">Iac898</a>)</li> 
- <li>We have updated <code translate="no" dir="ltr">PickerState</code> so that the numberOfOptions can be updated. This supports use-cases such as a <code translate="no" dir="ltr">DatePicker</code>, when the number of days in the month changes depending on the month selected. The constructor parameter for PickerState has changed to initialNumberOfOptions accordingly. (<a href="https://android-review.googlesource.com/#/q/Iad066cbe48265179e09cf17401e4a42344e09f5d">Iad066</a>)</li> 
- <li>Hide the <code translate="no" dir="ltr">PositionIndicator</code> when is a scrollbar and can't scroll. (<a href="https://android-review.googlesource.com/#/q/Id0a7f131164666f81a95ca4ac1c98a68ec4f7b0f">Id0a7f</a>)</li> 
- <li>For consistency with Scaffold, our full-screen Dialog component now displays a <code translate="no" dir="ltr">PositionIndicator</code> and a <code translate="no" dir="ltr">Vignette</code>. We are also now using <code translate="no" dir="ltr">ScalingLazyColumn</code> instead of <code translate="no" dir="ltr">Column</code>, which means that the Dialog contents are now in <code translate="no" dir="ltr">ScalingLazyListScope</code> (and typically need to be enclosed by item { /* content */ }). Dialog supports the verticalArrangement parameter accordingly. (<a href="https://android-review.googlesource.com/#/q/Idea13159860bce107a0bf2bd492fabfc575038fb">Idea13</a>)</li> 
- <li>We have changed the name of <code translate="no" dir="ltr">ToggleChip</code> and <code translate="no" dir="ltr">SplitToggleChip</code> toggleIcon property to toggleControl to better align with Material Design in order to help designers and developers navigate the API. (<a href="https://android-review.googlesource.com/#/q/If59219f736c95c54c253f52217335204648364fa">If5921</a>, <a href="https://issuetracker.google.com/issues/220129803">b/220129803</a>)</li> 
- <li>We have added a new entry caption3 to the Wear Material Theme Typology.Caption3 is a small font used for the extra long-form writing like legal texts. (<a href="https://android-review.googlesource.com/#/q/I74b133e3dbb660adf576893cfedf7bec95042c9b">I74b13</a>, <a href="https://issuetracker.google.com/issues/220128356">b/220128356</a>)</li> 
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul> 
- <li>Stop the snapping animation when we are there. (<a href="https://android-review.googlesource.com/#/q/Idb69dab09b454f70e59c00492da5db90706f9198">Idb69d</a>)</li> 
- <li>Animate changes in PositionIndicator. (<a href="https://android-review.googlesource.com/#/q/I94cb921143f659c44dd166fe0882805ee5e809c5">I94cb9</a>)</li> 
- <li>Based on UI/UX feedback we have changed the <code translate="no" dir="ltr">ScalingLazyColumn</code> autoCentering so that it will provide only enough space to make sure the items with index <code translate="no" dir="ltr">ScalingLazyListState.initialCenterItemIndex</code> or higher will be able to be fully scrolled to the center of the viewport. This allows developers to place one or two items about the item initially in the center which are not scrollable into the middle. This will mean that an autoCenter'ing <code translate="no" dir="ltr">ScalingLazyColumn</code> will not be able to scroll above the <code translate="no" dir="ltr">initialCenterItemIndex/initialCenterItemScrollOffset</code> (<a href="https://android-review.googlesource.com/#/q/I22ee2c5d2218cb89b3abfcc474386c26a424430f">I22ee2</a>)</li> 
- <li>We have added a demo for a Date Picker and fixed a bug in <code translate="no" dir="ltr">PickerState</code> where the initiallySelectedOption was not applied until the Picker had been displayed. (<a href="https://android-review.googlesource.com/#/q/Id0d7efdace5625690e444432de7bc2416fce551b">Id0d7e</a>)</li> 
- <li>In order to reduce the clipping of wider <code translate="no" dir="ltr">ScalingLazyColumn</code> items on circular screens we have increased the default horizontal content padding from 8 to 10 dp. (<a href="https://android-review.googlesource.com/#/q/I0d6098cb6bb07ea9b0a1c3e1eac4348543ca24ab">I0d609</a>)</li> 
- <li>Ensure the <code translate="no" dir="ltr">PositionIndicator</code> is shown when scrolling. (<a href="https://android-review.googlesource.com/#/q/Ied9a23dfb565cefc46486ca3cd16bf0c5984a32e">Ied9a2</a>)</li> 
-</ul>
-
-<h2>Wear Watchface: v1.1.0-alpha04</h2>
-<p>March 9, 2022</p>
-<p><code translate="no" dir="ltr">androidx.wear.watchface:watchface-*:1.1.0-alpha04</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/db2ecbef194afcddfaede22e1d884a8959a9277c..33cb12e8aba043a05b40470a5ef3be1b35114fd5/wear/watchface">Version 1.1.0-alpha04 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul> 
- <li>Up to date <code translate="no" dir="ltr">ComplicationData</code> may not always be available (e.g. expired cached ComplicationData) so we've extended <code translate="no" dir="ltr">NoDataComplication</code> with an optional placeholder ComplicationData and added <code translate="no" dir="ltr">ComplicationText.PLACEHOLDER</code>, <code translate="no" dir="ltr">MonochromaticImage.PLACEHOLDER</code>, <code translate="no" dir="ltr">SmallImage.PLACEHOLDER</code>, <code translate="no" dir="ltr">PhotoImage.PLACEHOLDER</code> which are only allowed to be used inside the context of a <code translate="no" dir="ltr">NoDataComplicationData</code> placeholder. If selected these placeholders are suggested to be rendered with gray boxes/arcs. (<a href="https://android-review.googlesource.com/#/q/I6285d065676350564f74292337d982dd8e52da01">I6285d</a>)</li> 
- <li>We've added <code translate="no" dir="ltr">ComplicationData.getNextChangeInstant</code> which tells you the next Instant after the reference Instant at which any field of the complication may change. This is used internally to schedule frames for complication updates. E.g. if a watch face normally updates once per minute, setting the stop watch complication will cause it to update once per second. (<a href="https://android-review.googlesource.com/#/q/I7ceb222cb1f0abb5159c927ec846581365b9bfc7">I7ceb2</a>)</li> 
- <li><code translate="no" dir="ltr">EditorSession.watchFaceId</code> can now be used on all API levels. In addition its value will now always be consistent with <code translate="no" dir="ltr">WatchState.watchFaceInstanceId</code>. (<a href="https://android-review.googlesource.com/#/q/I323b949e624150437015cbe3bc522fba9fb4398a">I323b9</a>)</li> 
- <li>The <code translate="no" dir="ltr">getPendingIntentForTouchEvent</code> API is no longer necessary since the underlying issue has been fixed in the framework, so all the related APIs have been removed. Watchfaces do not need to do anything special for <code translate="no" dir="ltr">PendingIntents</code> to fire, even if the home button has recently been pressed. (<a href="https://android-review.googlesource.com/#/q/I1f2e88d00fb07953c46c7dd7768398165196d943">I1f2e8</a>)</li> 
- <li>We've added <code translate="no" dir="ltr">RendererParameters.isForScreenShot</code> which will be true if the render is for a screen shot. Some watch faces with animations need to know this in order to make adjustments to ensure the best results. (<a href="https://android-review.googlesource.com/#/q/I96d99f6d6548ac143961e8d785e16de4ecf1b7aa">I96d99</a>)</li> 
- <li>We've added <code translate="no" dir="ltr">WatchFaceExceptionReason</code> to <code translate="no" dir="ltr">WatchFaceException</code> to give some context to what went wrong. (<a href="https://android-review.googlesource.com/#/q/I01d1535242a5d5b580c6c748726341ce3ee5f640">I01d15</a>)</li> 
- <li><code translate="no" dir="ltr">ComplicationDataSourceService.onImmediateComplicationRequest</code> has been removed, instead <code translate="no" dir="ltr">ComplicationRequest.immediateResponseRequired</code> has been added to signal that the provider needs to respond quickly (ideally responding in &lt; 100ms). Note this functionality is guarded behind the privileged <code translate="no" dir="ltr">com.google.android.wearable.permission.USE_IMMEDIATE_COMPLICATION_UPDATE</code> permission. (<a href="https://android-review.googlesource.com/#/q/Ie6b236a3b92bc4cc671f7cf4a2d2744d5b0f9ed9">Ie6b23</a>)</li> 
- <li>Updated nullability in core and appcompat to match Tiramisu DP2 (<a href="https://android-review.googlesource.com/#/q/I0cbb7f22651e725a4bb36d20388a949a72cc5903">I0cbb7</a>)</li> 
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul> 
- <li>Now watchface app crashes with an exception if the schema validation fails (<a href="https://android-review.googlesource.com/#/q/Ia400f2a57baa8001ba60c27c9b96fa329b96a301">Ia400f</a>)</li> 
+ <li>Audio: 
+  <ul> 
+   <li>Fix error checking audio capabilities for Dolby Atmos (E-AC3-JOC) in HLS.</li> 
+  </ul></li> 
+ <li>Extractors: 
+  <ul> 
+   <li>FMP4: Fix issue where emsg sample metadata could be output in the wrong order for streams containing both v0 and v1 emsg atoms (<a href="https://github.com/google/ExoPlayer/issues/9996">#9996</a>).</li> 
+  </ul></li> 
+ <li>Text: 
+  <ul> 
+   <li>Fix the interaction of <code translate="no" dir="ltr">SingleSampleMediaSource.Factory.setTrackId</code> and <code translate="no" dir="ltr">MediaItem.SubtitleConfiguration.Builder.setId</code> to prioritise the <code translate="no" dir="ltr">SubtitleConfiguration</code> field and fall back to the <code translate="no" dir="ltr">Factory</code> value if it's not set (<a href="https://github.com/google/ExoPlayer/issues/10016">#10016</a>).</li> 
+  </ul></li> 
+ <li>Ad playback: 
+  <ul> 
+   <li>Fix audio underruns between ad periods in live HLS SSAI streams.</li> 
+  </ul></li> 
 </ul>
 </body>
 </html>
