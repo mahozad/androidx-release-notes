@@ -2,16 +2,11 @@
 
 @file:JvmName("ReleaseNotesGenerator")
 @file:CompilerOptions("-jvm-target", "11")
-@file:CompilerOptions("-Xopt-in", "kotlin.RequiresOptIn")
-@file:OptIn(kotlin.time.ExperimentalTime::class)
 @file:Repository("https://repo.maven.apache.org/maven2")
 @file:Repository("https://jcenter.bintray.com")
 @file:Repository("https://jitpack.io")
 @file:DependsOn("com.rometools:rome:1.16.0")
 @file:DependsOn("org.jsoup:jsoup:1.14.3")
-
-// FIXME: Cannot use jsoup in scripts with Kotlin 1.6.x, for now.
-//  See https://youtrack.jetbrains.com/issue/KT-50378
 
 import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
@@ -20,12 +15,10 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import java.io.File
 import java.net.URL
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration.Companion.seconds
 
 val resultFile = File("release-notes.html")
-// TODO: Use Int::seconds when/if switched to Kotlin v1.6.x or higher
-val waitTime = 10.toDuration(DurationUnit.SECONDS)
+val waitTime = 10.seconds
 val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
 val writer = resultFile.bufferedWriter()
 val reader = tryTo("initialize the feed reader") {
@@ -82,10 +75,10 @@ fun <T> tryTo(
 
 fun toLink(element: Element) = element.attr("href")
 
-// FIXME: Use plain Jsoup.connect()... and remove Pair()
+// FIXME: Use plain Jsoup.connect()... and remove Pair creation (to)
 //  See https://github.com/jhy/jsoup/issues/1686 for the reason.
 fun toDocument(link: String) = tryTo("get $link") {
-    Pair(link, Jsoup.connect(link).get())
+    link to Jsoup.connect(link).get()
 }
 
 fun toReleaseNote(pair: Pair<String, Document>): String {
@@ -133,6 +126,7 @@ fun Document.extractChangelog(id: String) = this
 // This is a coroutine version of the code.
 // Needs `org.jetbrains.kotlinx:kotlinx-coroutines-core`
 // which seems to not work in Kotlin scripts.
+// Probably fixed in Kotlin 1.7
 /*
 fun main() = runBlocking {
     val init = async(Dispatchers.IO) {
