@@ -49,7 +49,7 @@ Jsoup
     .also { reader.close() }
 
 // Create a raw text version as well in case someone needs it
-val text = Jsoup.parse(resultFile, null).wholeText()
+val text = Jsoup.parse(resultFile).wholeText()
 File("release-notes.txt").writeText(text)
 
 // TODO: Duplicate; use the retry.main.kts script.
