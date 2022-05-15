@@ -8,7 +8,7 @@
 @file:Repository("https://jcenter.bintray.com")
 @file:Repository("https://jitpack.io")
 @file:DependsOn("com.rometools:rome:1.16.0")
-@file:DependsOn("org.jsoup:jsoup:1.14.3")
+@file:DependsOn("org.jsoup:jsoup:1.15.1")
 
 // FIXME: Cannot use jsoup in scripts with Kotlin 1.6.x, for now.
 //  See https://youtrack.jetbrains.com/issue/KT-50378
