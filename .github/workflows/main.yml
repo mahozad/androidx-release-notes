@@ -36,7 +36,7 @@ jobs:
       # It could be used as the release body but had some minor formatting issues.
       # For example, it contained unnecessary new lines in the body.
       - name: Convert from HTML to markdown
-        uses: docker://pandoc/core:2.16.2
+        uses: docker://pandoc/core:2.18.0
         if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
         with:
           # These are appended to "pandoc" command exactly like in terminal
