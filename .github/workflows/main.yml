@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the main branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # Refer to https://stackoverflow.com/a/69116750 for running Kotlin scripts
       - name: Use a specific Kotlin version
@@ -66,7 +66,7 @@ jobs:
 
       # See https://github.community/t/how-to-commit-to-two-branches-from-an-action/17713
       - name: Checkout the website branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         if: ${{ steps.check-for-updates.outputs.result == 'stale' }}
         with:
           ref: website
