@@ -25,8 +25,10 @@ You can find the [original AndroidX GitHub repository here] (and [its AOSP sourc
 See the file *[generateReleaseNotes.py]* for how the release notes are generated.
 
 ### Similar repositories and apps:
-  - [Separate release notes for each library]: It seems to be discontinued
+  - [Now in Android]: Official application from Android's team; keep up-to-date with the world of Android
   - [Jetpack Release Tracker]: An application to track latest AndroidX library releases
+  - [Separate release notes for each library]: It seems to be discontinued
+
 
 
   [Android Developers]: https://developer.android.com/jetpack
@@ -35,5 +37,6 @@ See the file *[generateReleaseNotes.py]* for how the release notes are generated
   [original AndroidX GitHub repository here]: https://github.com/androidx/androidx
   [its AOSP source here]: https://android.googlesource.com/platform/frameworks/support/
   [generateReleaseNotes.py]: https://github.com/androidx/androidx/blob/androidx-main/development/release-notes/
-  [Separate release notes for each library]: https://github.com/androidx-releases
+  [Now in Android]: https://github.com/android/nowinandroid
   [Jetpack Release Tracker]: https://github.com/lmj0011/jetpack-release-tracker
+  [Separate release notes for each library]: https://github.com/androidx-releases
