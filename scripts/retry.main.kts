@@ -5,11 +5,9 @@
 @file:CompilerOptions("-Xopt-in", "kotlin.RequiresOptIn")
 @file:OptIn(kotlin.time.ExperimentalTime::class)
 
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration.Companion.seconds
 
-// TODO: Use Int::seconds when/if switched to Kotlin v1.6.x or higher
-val waitTime = 10.toDuration(DurationUnit.SECONDS)
+val waitTime = 10.seconds
 
 /**
  * Try [forAtMost] times to run the block without exception.

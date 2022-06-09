@@ -10,9 +10,6 @@
 @file:DependsOn("com.rometools:rome:1.16.0")
 @file:DependsOn("org.jsoup:jsoup:1.15.1")
 
-// FIXME: Cannot use jsoup in scripts with Kotlin 1.6.x, for now.
-//  See https://youtrack.jetbrains.com/issue/KT-50378
-
 import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
 import org.jsoup.Jsoup
@@ -20,12 +17,10 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import java.io.File
 import java.net.URL
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration.Companion.seconds
 
 val resultFile = File("release-notes.html")
-// TODO: Use Int::seconds when/if switched to Kotlin v1.6.x or higher
-val waitTime = 10.toDuration(DurationUnit.SECONDS)
+val waitTime = 10.seconds
 val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
 val writer = resultFile.bufferedWriter()
 val reader = tryTo("initialize the feed reader") {
