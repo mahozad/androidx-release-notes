@@ -64,127 +64,477 @@
 
 <h1>Latest update</h1>
 <hr>
-<h2>Media3: v1.0.0-beta01</h2>
-<p>June 16, 2022</p>
-<p><code translate="no" dir="ltr">androidx.media3:media3-*:1.0.0-beta01</code> is released. <a href="https://github.com/androidx/media/commits/1.0.0-beta01">Version 1.0.0-beta01 contains these commits.</a></p>
-<p>This corresponds to the <a href="https://github.com/google/ExoPlayer/releases/tag/r2.18.0">ExoPlayer 2.18.0 release</a>.</p>
+<h2>Activity: v1.5.0</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.activity:activity:1.5.0</code>, <code translate="no" dir="ltr">androidx.activity:activity-compose:1.5.0</code>, and <code translate="no" dir="ltr">androidx.activity:activity-ktx:1.5.0</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/49cd978b488ce31274b756058de8dc8b42ffbf4e..e047538e9c1a9b12afec093910a556017720cb13/activity">Version 1.5.0 contains these commits.</a></p>
+<p><strong>Important changes since 1.4.0</strong></p>
 <ul>
- <li>Core library: 
+ <li><strong>ComponentDialog</strong> - <code translate="no" dir="ltr">ComponentDialog</code> is a subclass of <code translate="no" dir="ltr">Dialog</code> that includes an <code translate="no" dir="ltr">OnBackPressedDispatcher</code> that will be called when the system back button is pressed and the dialog is visible. Importantly, this subclass also sets the <code translate="no" dir="ltr">ViewTreeOnBackPressedDispatcherOwner</code>, allowing views a generic way to retrieve the correct dispatcher whether it exists in a <code translate="no" dir="ltr">ComponentActivity</code> or a <code translate="no" dir="ltr">ComponentDialog</code>.</li>
+ <li><strong>Callback Interfaces</strong> - <code translate="no" dir="ltr">ComponentActivity</code> now implements a set of modular callback interfaces that can be used instead of the <code translate="no" dir="ltr">Activity</code> callbacks. These interfaces include the following: <code translate="no" dir="ltr">OnNewIntentProvider</code>, <code translate="no" dir="ltr">OnConfigurationChangedProvider</code>, <code translate="no" dir="ltr">OnTrimMemoryProvider</code>, <code translate="no" dir="ltr">OnPictureInPictureModeChangedProvider</code>, <code translate="no" dir="ltr">OnMultiWindowModeChangedProvider</code></li>
+ <li><strong>CreationExtras Integration</strong> - <code translate="no" dir="ltr">ComponentActivity</code> now has the ability to provide a stateless <code translate="no" dir="ltr">ViewModelProvider.Factory</code> via <a href="/jetpack/androidx/releases/lifecycle#2.5.0">Lifecycle <code translate="no" dir="ltr">2.5.0</code></a>’s <code translate="no" dir="ltr">CreationExtras</code>.</li>
+</ul>
+<p><strong>Other changes</strong></p>
+<ul>
+ <li>The no parameter constructor for <code translate="no" dir="ltr">ActivityResultContracts.CreateDocument</code> has been deprecated and replaced with a new constructor that takes a concrete mime type (e.g., "image/png") as is required by <code translate="no" dir="ltr">Intent.ACTION_CREATE_DOCUMENT</code>.</li>
+</ul>
+
+<h2>Camera-Camera2, Camera-Core, Camera-Lifecycle, & Camera-Video: v1.1.0</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.camera:camera-*:1.1.0</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/23746944e4ade5ba70e6d8e5f2bf4b543c99ea94..f066cfcb8ff63f32d0300623bf25da6baa10031e/camera">Version 1.1.0 contains these commits.</a></p>
+<p><strong>Important changes since 1.0.0</strong></p>
+<ul>
+ <li>Landed View, Extension and Video Capture libraries as their first RC version. From 1.1.0-beta01, all CameraX libraries will align the same version number. This will help developers track versions much easier and reduce the complexity of large version compatibility matrices.</li>
+ <li>Introduced new public APIs and features which including:</li>
+ <li>Add the official camera-video library to support video capture use cases.</li>
+ <li>YUV to RGB conversion and rotation capability (<code translate="no" dir="ltr">ImageAnalysis.Builder.setOutputImageRotationEnabled</code> and <code translate="no" dir="ltr">setOutputImageFormat</code>)</li>
+ <li>Support multi-window mode by allowing CameraX applications to resume the camera when the camera is interrupted by another app and focus is back.</li>
+ <li>Ensures CameraX works well in foldable devices by fixing some preview issues.</li>
+ <li>Added a <code translate="no" dir="ltr">CameraState</code> API that will be exposed through CameraInfo.</li>
+ <li>Added an API <code translate="no" dir="ltr">ProcessCameraProvider.getAvailableCameraInfos()</code> to directly retrieve information about the available cameras</li>
+ <li>Output JPEG format for <code translate="no" dir="ltr">ImageCapture#OnImageCapturedCallback</code> when Extensions are enabled.</li>
+ <li>Added a API <code translate="no" dir="ltr">isFocusMeteringSupported</code> in <code translate="no" dir="ltr">CameraInfo</code> which allows applications to check if the given <code translate="no" dir="ltr">FocusMeteringAction</code> is supported on current camera or not.</li>
+ <li>Exposed <code translate="no" dir="ltr">getResolutionInfo</code> API to provide the resolution information for Preview, <code translate="no" dir="ltr">ImageCapture</code> and <code translate="no" dir="ltr">ImageAnalysis</code>.</li>
+ <li>Added a new API <code translate="no" dir="ltr">ImageCapture.Builder#setJpegQuality</code> to allow changing the output JPEG image compression quality when taking pictures.</li>
+ <li>Added <code translate="no" dir="ltr">CameraSelector#filter</code> to the public API to filter a list of <code translate="no" dir="ltr">CameraInfos</code> based on a <code translate="no" dir="ltr">CameraSelector</code>.</li>
+ <li>Added <code translate="no" dir="ltr">Camera2CameraControl.clearCaptureRequestOptions</code> for clearing the existing capture request options.</li>
+ <li>Added an experimental API for using <code translate="no" dir="ltr">CameraController</code> with external image processing libraries. e.g. MLKit</li>
+ <li>Added experimental API <code translate="no" dir="ltr">CameraInfo#getCameraSelector()</code> which returns a <code translate="no" dir="ltr">CameraSelector</code> unique to its camera</li>
+ <li>Promoted several experimental APIs to formal public APIs</li>
+ <li>Replaced annotation <code translate="no" dir="ltr">@Experimental</code> with <code translate="no" dir="ltr">@RequiresOptIn</code> to experimental APIs. For calling experimental APIs, use androidx.annotation.OptIn instead of deprecated androidx.annotation.experimental.UseExperimental.</li>
+ <li>Promoted the following experimental APIs to official APIs: <code translate="no" dir="ltr">CameraXConfig.Builder#setAvailableCamerasLimiter()</code>, <code translate="no" dir="ltr">CameraXConfig.Builder#setMinimumLoggingLevel()</code>, <code translate="no" dir="ltr">CameraXconfig.Builder#setSchedulerHandler()</code>, <code translate="no" dir="ltr">CameraXConfig#getAvailableCamerasLimiter()</code>, <code translate="no" dir="ltr">CameraXConfig#getMinimumLoggingLevel()</code>, <code translate="no" dir="ltr">CameraXConfig#getCameraExecutor()</code>, <code translate="no" dir="ltr">CameraXConfig#getSchedulerHandler()</code>,</li>
+ <li><code translate="no" dir="ltr">@ExperimentalCameraFilter</code> APIs</li>
+ <li>experimental exposure compensation APIs.</li>
+ <li>Promoted the experimental <code translate="no" dir="ltr">UseCaseGroup</code> API for camera-core, camera-lifecycle and camera-video. Added <code translate="no" dir="ltr">ViewPort#getLayoutDirection</code>, <code translate="no" dir="ltr">ViewPort.Builder#setLayoutDirection</code> and <code translate="no" dir="ltr">ViewPort.Builder#setScaleType</code> for customizing viewport.</li>
+ <li>Promoted the <code translate="no" dir="ltr">ExperimentalUseCaseGroupLifecycle</code> to formal public APIs.</li>
+ <li>Changes to the existing APIs</li>
+ <li><code translate="no" dir="ltr">Renamed MediaStoreOutputOptions.getCollection</code> to <code translate="no" dir="ltr">MediaStoreOutputOptions.getCollectionUri</code>.</li>
+ <li><code translate="no" dir="ltr">ActiveRecording</code> has been renamed to "Recording" to reduce verbosity.</li>
+ <li>Changed <code translate="no" dir="ltr">QualitySelector</code> creator API to a list-based API</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed <code translate="no" dir="ltr">YuvToJpegProcessor</code> <code translate="no" dir="ltr">EOFException</code> issue when extension mode is enabled and <code translate="no" dir="ltr">ImageCapture#CAPTURE_MODE_MAX_QUALITY</code> mode is set.</li>
+ <li>Fixed codec configuration failed due to video recording is closing</li>
+ <li>Fixed stretched preview/video aspect ratio when recording at FHD</li>
+ <li>Fixed audio/video out of sync after pause and resume on some devices</li>
+ <li>Fixed the issue where flash is triggered during tap-to-focus (<code translate="no" dir="ltr">startFocusAndMetering</code>) when flash mode is auto or always_on in low-light environment.</li>
+</ul>
+
+<h2>CameraX: v1.2.0-alpha03</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.camera:camera-*:1.2.0-alpha03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/cf759a67ed7e4305c6e6cecac2070a5759bcf0cc..b4d156f56a79b410967a0d3c33aa4f6de430f770/camera">Version 1.2.0-alpha03 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Removed the experimental annotation for <code translate="no" dir="ltr">ImageAnalysis.Analyzer</code> and <code translate="no" dir="ltr">MLKitAnalyzer</code>. (<a href="https://android-review.googlesource.com/#/q/I0ff22e15401255677fc9f53ca6a9f1eea4ed378a">I0ff22</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Added auto focus default timeout 5000ms that will complete the AF part with <code translate="no" dir="ltr">isFocusSuccessful</code> false if the <code translate="no" dir="ltr">FocusMeteringAction</code> is not cancelled and the AF part is not converged in the duration. (<a href="https://android-review.googlesource.com/#/q/Ibc2e3839383f483e929a2ba8a0310df3c5e82d60">Ibc2e3</a>)</li>
+ <li>Fix the issue to take picture with unbind preview (<a href="https://android-review.googlesource.com/#/q/I1d3a2ac7a96e6692c7e3a939cac6e313311f3fc4">I1d3a2</a>, <a href="https://issuetracker.google.com/issues/235119898">b/235119898</a>)</li>
+ <li>Enabled advanced extender implementation and update the CameraX support extensions-interface version to 1.2 (<a href="https://android-review.googlesource.com/#/q/I92256bc6a260654f8f984ddd8fa5ebf50935ef77">I92256</a>)</li>
+</ul>
+
+<h2>Collection: v1.3.0-alpha01</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.collection:collection:1.3.0-alpha01</code> and <code translate="no" dir="ltr">androidx.collection:collection-ktx:1.3.0-alpha01</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/271a55ffaa9a85ba4f84c140c435906d088e79a0..8094b683499b4098092c01028b55a38b49e357f2/collection/collection">Version 1.3.0-alpha01 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">collection-ktx</code> extensions have been migrated into the main collections artifact, <code translate="no" dir="ltr">androidx.collection:collection</code>. This change makes the pre-existing -ktx extensions accessible to Kotlin users without requiring the -ktx dependency, while still maintaining compatibility for existing users. Maintaining these extensions in a separate -ktx artifact is no longer beneficial since the main artifact has moved to Kotlin. (<a href="https://android-review.googlesource.com/#/q/I6eef28fa8fcb929df5979a29a869ca8aa0828215">I6eef2</a>)</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">ArraySet</code> now extends <code translate="no" dir="ltr">AbstractMutableCollection</code> and no longer directly implements the Collection interface. (<a href="https://android-review.googlesource.com/#/q/If6da08d5a1a41257b0b79728796509e06efe9f35">If6da0</a>, <a href="https://issuetracker.google.com/issues/230860589">b/230860589</a>)</li>
+ <li>Converted <code translate="no" dir="ltr">ArraySet</code> to Kotlin. Due to stricter typing, some Kotlin calls may no longer compile. (<a href="https://android-review.googlesource.com/#/q/Id68c130a8451c916c1e85b8a59c76ba267297cc4">Id68c1</a>, <a href="https://issuetracker.google.com/issues/230860589">b/230860589</a>) 
   <ul>
-   <li>Enable support for Android platform diagnostics via <code translate="no" dir="ltr">MediaMetricsManager</code>. ExoPlayer will forward playback events and performance data to the platform, which helps to provide system performance and debugging information on the device. This data may also be collected by Google <a href="https://support.google.com/accounts/answer/6078260">if sharing usage and diagnostics data is enabled</a> by the user of the device. Apps can opt-out of contributing to platform diagnostics for ExoPlayer with <code translate="no" dir="ltr">ExoPlayer.Builder.setUsePlatformDiagnostics(false)</code>.</li>
-   <li>Fix bug that tracks are reset too often when using <code translate="no" dir="ltr">MergingMediaSource</code>, for example when side-loading subtitles and changing the selected subtitle mid-playback (<a href="https://github.com/google/ExoPlayer/issues/10248">#10248</a>).</li>
-   <li>Stop detecting 5G-NSA network type on API 29 and 30. These playbacks will assume a 4G network.</li>
-   <li>Disallow passing <code translate="no" dir="ltr">null</code> to <code translate="no" dir="ltr">MediaSource.Factory.setDrmSessionManagerProvider</code> and <code translate="no" dir="ltr">MediaSource.Factory.setLoadErrorHandlingPolicy</code>. Instances of <code translate="no" dir="ltr">DefaultDrmSessionManagerProvider</code> and <code translate="no" dir="ltr">DefaultLoadErrorHandlingPolicy</code> can be passed explicitly if required.</li>
-   <li>Add <code translate="no" dir="ltr">MediaItem.RequestMetadata</code> to represent metadata needed to play media when the exact <code translate="no" dir="ltr">LocalConfiguration</code> is not known. Also remove <code translate="no" dir="ltr">MediaMetadata.mediaUrl</code> as this is now included in <code translate="no" dir="ltr">RequestMetadata</code>.</li>
-   <li>Add <code translate="no" dir="ltr">Player.Command.COMMAND_SET_MEDIA_ITEM</code> to enable players to allow setting a single item.</li>
+   <li>The following calls have the argument type <code translate="no" dir="ltr">T</code>, not <code translate="no" dir="ltr">T?</code>: 
+    <ul>
+     <li><code translate="no" dir="ltr">ArraySet&lt;T&gt;.contains(null)</code></li>
+     <li><code translate="no" dir="ltr">ArraySet&lt;T&gt;.add(null)</code></li>
+     <li><code translate="no" dir="ltr">ArraySet&lt;T&gt;.remove(null)</code></li>
+    </ul></li>
+   <li>The following calls have the return type <code translate="no" dir="ltr">T?</code>, not <code translate="no" dir="ltr">T!</code>: 
+    <ul>
+     <li><code translate="no" dir="ltr">ArraySet&lt;T?&gt;.valueAt(n)</code></li>
+     <li><code translate="no" dir="ltr">ArraySet&lt;T?&gt;.removeAt(n)</code></li>
+     <li><code translate="no" dir="ltr">ArraySet&lt;T?&gt;().iterator().next()</code></li>
+    </ul></li>
+   <li>The following calls are no longer possible from Kotlin: 
+    <ul>
+     <li><code translate="no" dir="ltr">set.toArray()</code> - use <code translate="no" dir="ltr">set.toTypedArray()</code></li>
+     <li><code translate="no" dir="ltr">set.toArray(array)</code> - use <code translate="no" dir="ltr">set.forEachIndexed(array::set)</code></li>
+    </ul></li>
   </ul></li>
- <li>Track selection: 
+ <li>Combine overloaded constructor for <code translate="no" dir="ltr">SparseArrayCompat</code> as an optional argument for Kotlin users. (<a href="https://android-review.googlesource.com/#/q/If8407a9111227e7e7fb960f4065af07b5fbc1d99">If8407</a>, <a href="https://issuetracker.google.com/issues/227474719">b/227474719</a>)</li>
+ <li>Remove operator syntax for <code translate="no" dir="ltr">SparseArrayCompat.get(key, defaultValue).</code> Note this still allows operator syntax for <code translate="no" dir="ltr">.get(key)</code>, but better aligns the API surface of <code translate="no" dir="ltr">SparseArrayCompat</code> with the other classes in this library. (<a href="https://android-review.googlesource.com/#/q/I9a38dbed9008f1280e14bf8f12df304de1293447">I9a38d</a>)</li>
+ <li>Migrate <code translate="no" dir="ltr">LongSparseArray</code> extensions into the main artifact, androidx.collection:collection. This change makes the pre-existing -ktx extensions accessible to Kotlin users without requiring the -ktx dependency, while still maintaining compatibility for existing users. Maintaining these extensions in a separate -ktx artifact is no longer beneficial since the main artifact has moved to Kotlin. (<a href="https://android-review.googlesource.com/#/q/I8659ae3f23dd6c568b3a15f84cf1592ce7446774">I8659a</a>)</li>
+ <li>Convert <code translate="no" dir="ltr">LongSparseArray</code> to Kotlin. This change adds explicit nullity to its types, which is a binary compatible change, but may cause source incompatibilities. In particular: * <code translate="no" dir="ltr">.isEmpty</code> is no longer accessible as a property, it must be accessed as a function call in Kotlin - <code translate="no" dir="ltr">.isEmpty()</code> (<a href="https://android-review.googlesource.com/#/q/Idfd0f4592fa5a708ba90b41f88d0600690aa2896">Idfd0f</a>)</li>
+ <li>Convert <code translate="no" dir="ltr">SimpleArrayMap</code> to Kotlin. This change introduces a few incompatible changes, as a result of Java-Kotlin interop and the ability to correctly define nullity of types in the source. 
   <ul>
-   <li>Flatten <code translate="no" dir="ltr">TrackSelectionOverrides</code> class into <code translate="no" dir="ltr">TrackSelectionParameters</code>, and promote <code translate="no" dir="ltr">TrackSelectionOverride</code> to a top level class.</li>
-   <li>Rename <code translate="no" dir="ltr">TracksInfo</code> to <code translate="no" dir="ltr">Tracks</code> and <code translate="no" dir="ltr">TracksInfo.TrackGroupInfo</code> to <code translate="no" dir="ltr">Tracks.Group</code>. <code translate="no" dir="ltr">Player.getCurrentTracksInfo</code> and <code translate="no" dir="ltr">Player.Listener.onTracksInfoChanged</code> have also been renamed to <code translate="no" dir="ltr">Player.getCurrentTracks</code> and <code translate="no" dir="ltr">Player.Listener.onTracksChanged</code>.</li>
-   <li>Change <code translate="no" dir="ltr">DefaultTrackSelector.buildUponParameters</code> and <code translate="no" dir="ltr">DefaultTrackSelector.Parameters.buildUpon</code> to return <code translate="no" dir="ltr">DefaultTrackSelector.Parameters.Builder</code> instead of the deprecated <code translate="no" dir="ltr">DefaultTrackSelector.ParametersBuilder</code>.</li>
-   <li>Add <code translate="no" dir="ltr">DefaultTrackSelector.Parameters.constrainAudioChannelCountToDeviceCapabilities</code> which is enabled by default. When enabled, the <code translate="no" dir="ltr">DefaultTrackSelector</code> will prefer audio tracks whose channel count does not exceed the device output capabilities. On handheld devices, the <code translate="no" dir="ltr">DefaultTrackSelector</code> will prefer stereo/mono over multichannel audio formats, unless the multichannel format can be <a href="https://developer.android.com/reference/android/media/Spatializer">Spatialized</a> (Android 12L+) or is a Dolby surround sound format. In addition, on devices that support audio spatialization, the <code translate="no" dir="ltr">DefaultTrackSelector</code> will monitor for changes in the <a href="https://developer.android.com/reference/android/media/Spatializer.OnSpatializerStateChangedListener">Spatializer properties</a> and trigger a new track selection upon these. Devices with a <code translate="no" dir="ltr">television</code><a href="https://developer.android.com/guide/topics/resources/providing-resources#UiModeQualifier">UI mode</a> are excluded from these constraints and the format with the highest channel count will be preferred. To enable this feature, the <code translate="no" dir="ltr">DefaultTrackSelector</code> instance must be constructed with a <code translate="no" dir="ltr">Context</code>.</li>
+   <li>The package private APIs, <code translate="no" dir="ltr">.mSize</code>, <code translate="no" dir="ltr">.mArray</code>, <code translate="no" dir="ltr">.mHashes</code>, <code translate="no" dir="ltr">.indexOf()</code>, <code translate="no" dir="ltr">.indexOfNull()</code>, and <code translate="no" dir="ltr">.indexOfValue()</code>, were made private - this is technically a binary incompatible change, but reflects the intended visibility of these fields and is the closest we can achieve in Kotlin since it does not include a way to specify package-private visibility.</li>
+   <li>The nullity of some types are now properly defined, the affected methods are: <code translate="no" dir="ltr">.getOrDefault</code>, <code translate="no" dir="ltr">.keyAt</code>, <code translate="no" dir="ltr">.valueAt</code>, <code translate="no" dir="ltr">.setValueAt</code>, <code translate="no" dir="ltr">.put</code>, <code translate="no" dir="ltr">.putIfAbsent</code>, <code translate="no" dir="ltr">.removeAt</code>, <code translate="no" dir="ltr">.replace</code>.</li>
+   <li>For Kotlin users, <code translate="no" dir="ltr">.isEmpty()</code> is now only available as a function instead of also through property access. (<a href="https://android-review.googlesource.com/#/q/I271b70587e94ef166be71c5b60d8c6361b4b1849">I271b7</a>, <a href="https://issuetracker.google.com/issues/182813986">b/182813986</a>)</li>
   </ul></li>
- <li>Video: 
+ <li><p>Convert <code translate="no" dir="ltr">CircularArray</code> to Kotlin. Notable changes:</p>
   <ul>
-   <li>Rename <code translate="no" dir="ltr">DummySurface</code> to <code translate="no" dir="ltr">PlaceholderSurface</code>.</li>
-   <li>Add AV1 support to the <code translate="no" dir="ltr">MediaCodecVideoRenderer.getCodecMaxInputSize</code>.</li>
+   <li>Corrects the nullity of its generics to be non-null, which was previously impossible to declare, but was enforced in all of its public APIs.</li>
+   <li>Due to Kotlin's Java interop, it was previously possible to access certain methods as both properties or functions. However, to reduce duplication while maintaining binary compatibility, it was necessary to remove these, which is a source-incompatible change. The affectedn calls are: <code translate="no" dir="ltr">.isEmpty</code>, <code translate="no" dir="ltr">.getLast()</code> and <code translate="no" dir="ltr">.getFirst()</code>. (<a href="https://android-review.googlesource.com/#/q/Ifffac44a13ca2bc4eb652728ef2c412dd0425f7e">Ifffac</a>)</li>
   </ul></li>
- <li>Audio: 
+ <li><p>Convert <code translate="no" dir="ltr">CircularIntArray</code> to Kotlin. Due to Kotlin's Java interop, it was previously possible to access certain methods as both properties or functions. However, to reduce duplication while maintaining binary compatibility, it was necessary to remove these, which is a source-incompatible change. The affected calls are: <code translate="no" dir="ltr">.isEmpty</code>, <code translate="no" dir="ltr">.getLast()</code> and <code translate="no" dir="ltr">.getFirst()</code>. (<a href="https://android-review.googlesource.com/#/q/Ie36ce80725187227e054177d5bbe07f76ed5462a">Ie36ce</a>)</p></li>
+ <li><p>Convert <code translate="no" dir="ltr">LruCache</code> to Kotlin (<a href="https://android-review.googlesource.com/#/q/Ia2f190fa5e262dbb30204ab2a74ae8b91587e2d9">Ia2f19</a>)</p></li>
+ <li><p>Convert <code translate="no" dir="ltr">SparseArrayCompat</code> to Kotlin. (<a href="https://android-review.googlesource.com/#/q/If6fe8079f570d8e1a356c0d4a586d3c66d871d82">If6fe8</a>)</p><p>A small behavior change is added to <code translate="no" dir="ltr">SparseArrayCompat.valueAt()</code>, which no longer incorrectly returns <code translate="no" dir="ltr">null</code> for un-initialized calls out of bounds of <code translate="no" dir="ltr">size()</code> but within the provided initial capacity.</p><p>This change also introduces the correct nullity for some types which was previously missing.</p>
   <ul>
-   <li>Use LG AC3 audio decoder advertising non-standard MIME type.</li>
-   <li>Change the return type of <code translate="no" dir="ltr">AudioAttributes.getAudioAttributesV21()</code> from <code translate="no" dir="ltr">android.media.AudioAttributes</code> to a new <code translate="no" dir="ltr">AudioAttributesV21</code> wrapper class, to prevent slow ART verification on API &lt; 21.</li>
-   <li>Query the platform (API 29+) or assume the audio encoding channel count for audio passthrough when the format audio channel count is unset, which occurs with HLS chunkless preparation (<a href="https://github.com/google/ExoPlayer/issues/10204">10204</a>).</li>
-   <li>Configure <code translate="no" dir="ltr">AudioTrack</code> with channel mask <code translate="no" dir="ltr">AudioFormat.CHANNEL_OUT_7POINT1POINT4</code> if the decoder outputs 12 channel PCM audio (<a href="#https://github.com/google/ExoPlayer/pull/10322">#10322</a>.</li>
+   <li><code translate="no" dir="ltr">.get(): E?</code> -&gt; <code translate="no" dir="ltr">.get(): E</code></li>
+   <li><code translate="no" dir="ltr">.replace(Int, Int?): Int?</code> -&gt; <code translate="no" dir="ltr">.replace(Int, Int): Int?</code></li>
+   <li><code translate="no" dir="ltr">.replace(Int, Int?, Int?): Boolean</code> -&gt; <code translate="no" dir="ltr">.replace(Int, Int, Int): Boolean</code></li>
+   <li><code translate="no" dir="ltr">.put(Int, Int?)</code> -&gt; <code translate="no" dir="ltr">.put(Int, Int)</code></li>
+   <li><code translate="no" dir="ltr">.putIfAbsent(Int, Int?): Int?</code> -&gt; <code translate="no" dir="ltr">.putIfAbsent(Int, Int): Int?</code></li>
+   <li><code translate="no" dir="ltr">.setValueAt(index: Int, value: Int?)</code> -&gt; <code translate="no" dir="ltr">.setValueAt(index: Int, value: Int)</code></li>
+   <li><code translate="no" dir="ltr">.indexOfValue(value: Int?): Int</code> -&gt; <code translate="no" dir="ltr">.indexOfValue(value: Int): Int</code></li>
+   <li><code translate="no" dir="ltr">.containsValue(value: Int?): Boolean</code> -&gt; <code translate="no" dir="ltr">.containsValue(value: Int): Boolean</code></li>
+   <li><code translate="no" dir="ltr">.append(key: Int, value: Int?)</code> -&gt; <code translate="no" dir="ltr">.append(key: Int, value: Int)</code></li>
   </ul></li>
- <li>DRM 
+</ul>
+
+<h2>Compose Animation: v1.2.0-rc03</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.compose.animation:animation:1.2.0-rc03</code>, <code translate="no" dir="ltr">androidx.compose.animation:animation-core:1.2.0-rc03</code>, and <code translate="no" dir="ltr">androidx.compose.animation:animation-graphics:1.2.0-rc03</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/8328bd32e5ca96bc5a53d6369130e856cd2ca80b..e8af23f4f30713a3f6073d57558e7cde0f3056e9/compose/animation">Version 1.2.0-rc03 contains these commits.</a></p>
+<ul>
+ <li>No changes since 1.2.0-rc02.</li>
+</ul>
+
+<h2>Compose Animation: v1.3.0-alpha01</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.compose.animation:animation:1.3.0-alpha01</code>, <code translate="no" dir="ltr">androidx.compose.animation:animation-core:1.3.0-alpha01</code>, and <code translate="no" dir="ltr">androidx.compose.animation:animation-graphics:1.3.0-alpha01</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/8328bd32e5ca96bc5a53d6369130e856cd2ca80b..8094b683499b4098092c01028b55a38b49e357f2/compose/animation">Version 1.3.0-alpha01 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>New <code translate="no" dir="ltr">LookaheadLayout</code> that supports a lookahead pass before the actual measure/layout. This allows a pre-calculation of the layout when it changes, while permitting the post-lookahead measure/layout to use the pre-calculated size/position to animate the size and positions towards the target. <code translate="no" dir="ltr">SubcomposeLayouts</code> are not yet supported, but will be in an upcoming release. (<a href="https://android-review.googlesource.com/#/q/I477f57d1f9efeb0aafd9fb509a2cac0ad8edfaf8">I477f5</a>)</li>
+</ul>
+
+<h2>Compose Compiler: v1.2.0</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.compose.compiler:compiler:1.2.0</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/8328bd32e5ca96bc5a53d6369130e856cd2ca80b..b9dc511beb3d0b4b6289338b7dcc23852cd60d4e/compose/compiler">Version 1.2.0 contains these commits.</a></p>
+<p><strong>Important changes since 1.1.0</strong></p>
+<ul>
+ <li>Support for Kotlin 1.7.0</li>
+ <li>Check out our blog post explaining our <a href="https://android-developers.googleblog.com/2022/06/independent-versioning-of-Jetpack-Compose-libraries.html">new Compose Compiler Versioning strategy</a> in Compose.</li>
+</ul>
+
+<h2>Compose Foundation: v1.2.0-rc03</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation:1.2.0-rc03</code> and <code translate="no" dir="ltr">androidx.compose.foundation:foundation-layout:1.2.0-rc03</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/8328bd32e5ca96bc5a53d6369130e856cd2ca80b..e8af23f4f30713a3f6073d57558e7cde0f3056e9/compose/foundation">Version 1.2.0-rc03 contains these commits.</a></p>
+<ul>
+ <li>No changes since 1.2.0-rc02.</li>
+</ul>
+
+<h2>Compose Foundation: v1.3.0-alpha01</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation:1.3.0-alpha01</code> and <code translate="no" dir="ltr">androidx.compose.foundation:foundation-layout:1.3.0-alpha01</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/8328bd32e5ca96bc5a53d6369130e856cd2ca80b..8094b683499b4098092c01028b55a38b49e357f2/compose/foundation">Version 1.3.0-alpha01 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Introduced the <code translate="no" dir="ltr">UrlAnnotation</code> annotation type and associated methods to support <code translate="no" dir="ltr">TalkBack</code> link support in <code translate="no" dir="ltr">AnnotatedString</code>s. (<a href="https://android-review.googlesource.com/#/q/I1c754dfa0ce88a36989888b43816333dfc94b0aa">I1c754</a>, <a href="https://issuetracker.google.com/issues/231495122">b/231495122</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">BasicTextField</code> <code translate="no" dir="ltr">cursorBrush</code> may now be animated without restarting the cursor timer. (<a href="https://android-review.googlesource.com/#/q/I812e6d2fd1db29b16401e121a2132aa37f6d7b51">I812e6</a>, <a href="https://issuetracker.google.com/issues/236383522">b/236383522</a>)</li>
+ <li>When adding <code translate="no" dir="ltr">InputEventChange</code> events to Velocity Tracker we will consider now deltas instead of positions, this will guarantee the velocity is correctly calculated for all cases even if the target element moves (<a href="https://android-review.googlesource.com/#/q/If9ef3b9069e8f15b9b049bc3cd8b08bfd91edd49">If9ef3</a>, <a href="https://issuetracker.google.com/issues/216582726">b/216582726</a>, <a href="https://issuetracker.google.com/issues/223440806">b/223440806</a>, <a href="https://issuetracker.google.com/issues/227709803">b/227709803</a>)</li>
+</ul>
+
+<h2>Compose Material: v1.2.0-rc03</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.2.0-rc03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/8328bd32e5ca96bc5a53d6369130e856cd2ca80b..e8af23f4f30713a3f6073d57558e7cde0f3056e9/compose/material">Version 1.2.0-rc03 contains these commits.</a></p>
+<ul>
+ <li>No changes since 1.2.0-rc02.</li>
+</ul>
+
+<h2>Compose Material: v1.3.0-alpha01</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.3.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/8328bd32e5ca96bc5a53d6369130e856cd2ca80b..8094b683499b4098092c01028b55a38b49e357f2/compose/material">Version 1.3.0-alpha01 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Change parameter name from values to value in <code translate="no" dir="ltr">RangeSlider</code> (<a href="https://android-review.googlesource.com/#/q/I3b79aaaebf9b3080e9d775e10d287355c7d03ca5">I3b79a</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Update badge sample to provide more meaningful content description. (<a href="https://android-review.googlesource.com/#/q/I10b9d99db01ac3844fa8b84b70aae231512e9d99">I10b9d</a>)</li>
+</ul>
+
+<h2>Compose Material 3: v1.0.0-alpha14</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.compose.material3:material3:1.0.0-alpha14</code> and <code translate="no" dir="ltr">androidx.compose.material3:material3-window-size-class:1.0.0-alpha14</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/7cbb37cc779160b89644d03e042c129d0ce025d2..8094b683499b4098092c01028b55a38b49e357f2/compose/material3">Version 1.0.0-alpha14 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Added M3 list implementation, see the documentation for sample usage (<a href="https://android-review.googlesource.com/#/q/Id7a201348bf6d891a98263d05f9d2768627a333a">Id7a20</a>)</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Change parameter name from values to value in <code translate="no" dir="ltr">RangeSlider</code> (<a href="https://android-review.googlesource.com/#/q/I3b79aaaebf9b3080e9d775e10d287355c7d03ca5">I3b79a</a>)</li>
+ <li>API changes to the <code translate="no" dir="ltr">InputChip</code> implementation to support a selectable state per the Material Design spec. Additional support at the <code translate="no" dir="ltr">FilterChip</code> colors for selected disabled state. (<a href="https://android-review.googlesource.com/#/q/I552440f329616d514ea67c724b8aec6e985066e1">I55244</a>, <a href="https://issuetracker.google.com/issues/235792432">b/235792432</a>)</li>
+ <li>Add <code translate="no" dir="ltr">BottomAppBar</code> default FAB (<a href="https://android-review.googlesource.com/#/q/Ida4c8f2760e6476d5283b5b1df6b6608441da405">Ida4c8</a>)</li>
+ <li><code translate="no" dir="ltr">ColorScheme.surfaceColorAtElevation</code> was added (<a href="https://android-review.googlesource.com/#/q/Id41afb06b2df2cfbf2cb023a18ced47e8a5222b5">Id41af</a>)</li>
+ <li>Interfaces in compose libraries are now built using jdk8 default interface methods (<a href="https://android-review.googlesource.com/#/q/I5bcf197603f66ec66177c98c01c3fe4868d60997">I5bcf1</a>)</li>
+ <li><code translate="no" dir="ltr">WindowWidthSizeClass</code> and <code translate="no" dir="ltr">WindowHeightSizeClass</code> now implement Comparable, so they can be compared using operators (&lt;, &lt;=, &gt;=, &gt;) and other APIs. (<a href="https://android-review.googlesource.com/#/q/I747d0a41291662ae049e9188061b9a08fef3186c">I747d0</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Update badge sample to provide more meaningful content description. (<a href="https://android-review.googlesource.com/#/q/I10b9d99db01ac3844fa8b84b70aae231512e9d99">I10b9d</a>)</li>
+ <li>Adds option to use the system font size to the Material 3 catalog's theme picker. (<a href="https://android-review.googlesource.com/#/q/I106053e3243d09607c36d30bfb038aacfcc7cd79">I10605</a>)</li>
+ <li>Adds sample code for Badge and indeterminate progress indicators. (<a href="https://android-review.googlesource.com/#/q/I8fbe0c9d411928269761b4ac5ace64e26d05ceca">I8fbe0</a>)</li>
+</ul>
+
+<h2>Compose Runtime: v1.2.0-rc03</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.2.0-rc03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/8328bd32e5ca96bc5a53d6369130e856cd2ca80b..e8af23f4f30713a3f6073d57558e7cde0f3056e9/compose/runtime">Version 1.2.0-rc03 contains these commits.</a></p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Derived state observations were previously unconditionally removed from the recompose scope and composition together, which broke other scopes which might be still observing derived state. This change only removes derived state instances if it is no longer observed by other scopes. (<a href="https://issuetracker.google.com/236618362">b/236618362</a>)</li>
+</ul>
+
+<h2>Compose Runtime: v1.3.0-alpha01</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.3.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/8328bd32e5ca96bc5a53d6369130e856cd2ca80b..8094b683499b4098092c01028b55a38b49e357f2/compose/runtime">Version 1.3.0-alpha01 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Moving utility functionality to runtime (<a href="https://android-review.googlesource.com/#/q/I4f729ac5919a71218d89e8892ab9d96b8c76aa96">I4f729</a>)</li>
+</ul>
+
+<h2>Compose UI: v1.2.0-rc03</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.2.0-rc03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/8328bd32e5ca96bc5a53d6369130e856cd2ca80b..e8af23f4f30713a3f6073d57558e7cde0f3056e9/compose/ui">Version 1.2.0-rc03 contains these commits.</a></p>
+<ul>
+ <li>No changes since 1.2.0-rc02.</li>
+</ul>
+
+<h2>Compose UI: v1.3.0-alpha01</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.3.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/8328bd32e5ca96bc5a53d6369130e856cd2ca80b..8094b683499b4098092c01028b55a38b49e357f2/compose/ui">Version 1.3.0-alpha01 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>New <code translate="no" dir="ltr">LookaheadLayout</code> that supports a lookahead pass before the actual measure/layout. This allows a pre-calculation of the layout when it changes, while permitting the post-lookahead measure/layout to use the pre-calculated size/position to animate the size and positions towards the target. <code translate="no" dir="ltr">SubcomposeLayouts</code> are not yet supported, but will be in an upcoming release. (<a href="https://android-review.googlesource.com/#/q/I477f57d1f9efeb0aafd9fb509a2cac0ad8edfaf8">I477f5</a>)</li>
+ <li>Add optional alpha parameter to Brush flavor of <code translate="no" dir="ltr">TextStyle</code> and <code translate="no" dir="ltr">SpanStyle</code> to modify opacity of the whole <code translate="no" dir="ltr">Text</code>. (<a href="https://android-review.googlesource.com/#/q/Ic2facdfe451f6e0ec3d2961fb623ef30e4742e31">Ic2fac</a>, <a href="https://issuetracker.google.com/issues/234117635">b/234117635</a>)</li>
+ <li>Introduced the <code translate="no" dir="ltr">UrlAnnotation</code> annotation type and associated methods to support <code translate="no" dir="ltr">TalkBack</code> link support in <code translate="no" dir="ltr">AnnotatedString</code>s. (<a href="https://android-review.googlesource.com/#/q/I1c754dfa0ce88a36989888b43816333dfc94b0aa">I1c754</a>, <a href="https://issuetracker.google.com/issues/231495122">b/231495122</a>)</li>
+ <li>Moving utility functionality to runtime (<a href="https://android-review.googlesource.com/#/q/I4f729ac5919a71218d89e8892ab9d96b8c76aa96">I4f729</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>When adding <code translate="no" dir="ltr">InputEventChange</code> events to Velocity Tracker we will consider now deltas instead of positions, this will guarantee the velocity is correctly calculated for all cases even if the target element moves (<a href="https://android-review.googlesource.com/#/q/If9ef3b9069e8f15b9b049bc3cd8b08bfd91edd49">If9ef3</a>, <a href="https://issuetracker.google.com/issues/216582726">b/216582726</a>, <a href="https://issuetracker.google.com/issues/223440806">b/223440806</a>, <a href="https://issuetracker.google.com/issues/227709803">b/227709803</a>)</li>
+ <li><code translate="no" dir="ltr">TextLayoutResult.getLineForOffset</code> does not throw. (<a href="https://android-review.googlesource.com/#/q/Idc5d6d0721a0241b9992db60d0ddcf3fcc52ed44">Idc5d6</a>, <a href="https://issuetracker.google.com/issues/235876324">b/235876324</a>)</li>
+</ul>
+<p><strong>External Contribution</strong></p>
+<ul>
+ <li>Added a new API <code translate="no" dir="ltr">WindowInfo.keyboardModifiers</code> to observe its state within composable functions or via snapshotFlow (<a href="https://android-review.googlesource.com/#/q/Icdb8a0e53f5adb436662bc62c620543e77029f1a">Icdb8a</a>)</li>
+</ul>
+
+<h2>Core Remote Views: v1.0.0-beta01</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.core:core-remoteviews:1.0.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9b2b3d8efd5f00bd4af903bbaa926f6a712d0bd8..8094b683499b4098092c01028b55a38b49e357f2/core/core-remoteviews">Version 1.0.0-beta01 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Moves <code translate="no" dir="ltr">Core-RemoteViews</code> to beta.</li>
+</ul>
+
+<h2>Core Ultra Wideband (UWB): v1.0.0-alpha02</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.core.uwb:uwb-rxjava3:1.0.0-alpha02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/8094b683499b4098092c01028b55a38b49e357f2/core/uwb/uwb-rxjava3">Version 1.0.0-alpha02 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Introducing a java interoperable artifact for the uwb module. The new artifact depends on rxjava3 and will be consumable for java clients.</li>
+</ul>
+
+<h2>Fragment: v1.5.0</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.fragment:fragment:1.5.0</code>, <code translate="no" dir="ltr">androidx.fragment:fragment-ktx:1.5.0</code>, and <code translate="no" dir="ltr">androidx.fragment:fragment-testing:1.5.0</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/218ccafb21e861418ebb20936cad034ed012fb70..d5e5f4d57931a05bfd2dc75c09b3537e4d3ec976/fragment">Version 1.5.0 contains these commits.</a></p>
+<p><strong>Important changes since 1.4.0</strong></p>
+<ul>
+ <li><strong>CreationExtras Integration</strong> - <code translate="no" dir="ltr">Fragment</code> now has the ability to provide a stateless <code translate="no" dir="ltr">ViewModelProvider.Factory</code> via <a href="/jetpack/androidx/releases/lifecycle#2.5.0">Lifecycle <code translate="no" dir="ltr">2.5.0</code></a>’s <code translate="no" dir="ltr">CreationExtras</code>.</li>
+ <li><strong>Component Dialog Integration</strong> - <code translate="no" dir="ltr">DialogFragment</code> now uses <code translate="no" dir="ltr">ComponentDialog</code> via <a href="/jetpack/androidx/releases/activity#1.5.0">Activity <code translate="no" dir="ltr">1.5.0</code></a> as the default dialog returned by <code translate="no" dir="ltr">onCreateDialog()</code>.</li>
+ <li><strong>Saved Instance State Refactoring</strong> - Fragments have begun to change the way they save their instance state. This is an effort to help clearly identify what state has been saved in the fragment and the source of the state. The current changes include the following: 
   <ul>
-   <li>Ensure the DRM session is always correctly updated when seeking immediately after a format change (<a href="https://github.com/google/ExoPlayer/issues/10274">10274</a>).</li>
+   <li><code translate="no" dir="ltr">FragmentManager</code> now saves its saved instance state into a <code translate="no" dir="ltr">Bundle</code> instead of directly in a custom <code translate="no" dir="ltr">Parcelable</code>.</li>
+   <li>Results set via the <a href="/guide/fragments/communicate#fragment-result"><code translate="no" dir="ltr">Fragment Result APIs</code></a> that have not yet been delivered are now saved separately from the internal state of the <code translate="no" dir="ltr">FragmentManager</code>.</li>
+   <li>The state associated with each individual fragment is now saved separately from the internal state of the <code translate="no" dir="ltr">FragmentManager</code>, thus allowing you to correlate the amount of saved state associated with an individual fragment with the unique IDs present in the <code translate="no" dir="ltr">Fragment</code> debug logging.</li>
   </ul></li>
- <li>Text: 
+</ul>
+<p><strong>Other Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">FragmentStrictMode</code> now offers the ability for private third-party fragments to bypass specific violation penalties by using <code translate="no" dir="ltr">allowViolation()</code> with the class name.</li>
+ <li>The Fragment APIs for providing a menu to your activity’s <code translate="no" dir="ltr">ActionBar</code> have been deprecated. The <code translate="no" dir="ltr">MenuHost</code> and <code translate="no" dir="ltr">MenuProvider</code> APIs added in <a href="/jetpack/androidx/releases/activity#1.4.0">Activity <code translate="no" dir="ltr">1.4.0</code></a> provide a testable, lifecycle aware equivalent API surface that fragments should use.</li>
+</ul>
+
+<h2>Lifecycle: v2.5.0</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.lifecycle:lifecycle-*:2.5.0</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/414e5d56fe642e82b7a9926e3219cbd756e8c9af..74552ec00140b723c6c5b0253200a99d41cb3019/lifecycle">Version 2.5.0 contains these commits.</a></p>
+<p><strong>Important changes since 2.4.0</strong></p>
+<ul>
+ <li><p><code translate="no" dir="ltr">SavedStateHandle</code> now offers a <code translate="no" dir="ltr">getStateFlow()</code> API that returns a <a href="/kotlin/flow/stateflow-and-sharedflow#stateflow">Kotlin <code translate="no" dir="ltr">StateFlow</code></a> for monitoring value changes as an alternative to using <code translate="no" dir="ltr">LiveData</code>.</p></li>
+ <li><p><strong>ViewModel CreationExtras</strong> - when writing a custom <code translate="no" dir="ltr">ViewModelProvider.Factory</code>, it is no longer required to extend <code translate="no" dir="ltr">AndroidViewModelFactory</code> or <code translate="no" dir="ltr">AbstractSavedStateViewModelFactory</code> to gain access to an <code translate="no" dir="ltr">Application</code> or <code translate="no" dir="ltr">SavedStateHandle</code>, respectively. Instead, these fields are provided to <strong>every</strong> <code translate="no" dir="ltr">ViewModelProvider.Factory</code> subclass as <code translate="no" dir="ltr">CreationExtras</code> via the new overload of <code translate="no" dir="ltr">create</code>: <code translate="no" dir="ltr">create(Class&lt;T&gt;, CreationExtras)</code>. These extras are provided automatically by your Activity or Fragment when using <a href="/jetpack/androidx/releases/activity#1.5.0">Activity <code translate="no" dir="ltr">1.5.0</code></a> and <a href="/jetpack/androidx/releases/fragment#1.5.0">Fragment <code translate="no" dir="ltr">1.5.0</code></a>, respectively.</p><pre class="prettyprint lang-kotlin" translate="no" dir="ltr"><code translate="no" dir="ltr">class CustomFactory : ViewModelProvider.Factory {
+    override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;, extras: CreationExtras): T {
+        return when (modelClass) {
+            HomeViewModel::class -&gt; {
+                // Get the Application object from extras
+                val application = checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY])
+                // Pass it directly to HomeViewModel
+                HomeViewModel(application)
+            }
+            DetailViewModel::class -&gt; {
+                // Create a SavedStateHandle for this ViewModel from extras
+                val savedStateHandle = extras.createSavedStateHandle()
+                DetailViewModel(savedStateHandle)
+            }
+            else -&gt; throw IllegalArgumentException("Unknown class $modelClass")
+        } as T
+    }
+}
+</code></pre></li>
+ <li><p><code translate="no" dir="ltr">lifecycle-viewmodel</code> now provides a <code translate="no" dir="ltr">viewModelFactory</code> Kotlin DSL that allows you define your <code translate="no" dir="ltr">ViewModelProvider.Factory</code> in terms of one or more lambda initializers, one for each particular <code translate="no" dir="ltr">ViewModel</code> class your custom factory supports, using <code translate="no" dir="ltr">CreationExtras</code> as the primary data source.</p><pre class="prettyprint lang-kotlin" translate="no" dir="ltr"><code translate="no" dir="ltr">val customFactory = viewModelFactory {
+    // The return type of the lambda automatically sets what class this lambda handles
+    initializer {
+        // Get the Application object from extras provided to the lambda
+        val application = checkNotNull(get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY))
+        HomeViewModel(application)
+    }
+    initializer {
+        val savedStateHandle = createSavedStateHandle()
+        DetailViewModel(savedStateHandle)
+    }
+}
+</code></pre></li>
+ <li><p><code translate="no" dir="ltr">lifecycle-viewmodel-compose</code> now offers a <code translate="no" dir="ltr">viewModel()</code> API that takes a lambda factory for creating a <code translate="no" dir="ltr">ViewModel</code> instance without requiring the creation of a custom <code translate="no" dir="ltr">ViewModelProvider.Factory</code>.</p><pre class="prettyprint lang-kotlin" translate="no" dir="ltr"><code translate="no" dir="ltr">// Within a @Composable, you can now skip writing a custom Factory
+// and instead write a lambda to do the initialization of your ViewModel
+val detailViewModel = viewModel {
+  // This lambda is only called the first time the ViewModel is created
+  // and all CreationExtras are available inside the lambda
+  val savedStateHandle = createSavedStateHandle()
+  DetailViewModel(savedStateHandle)
+}
+</code></pre></li>
+ <li><p><strong>SavedStateHandle Compose Saver Integration</strong> - the <code translate="no" dir="ltr">lifecycle-viewmodel-compose</code> artifact now contains new experimental APIs in <code translate="no" dir="ltr">SavedStateHandle.saveable</code> that allow <code translate="no" dir="ltr">rememberSaveable</code> like behavior backed by the <code translate="no" dir="ltr">SavedStateHandle</code> of a `ViewModel.</p><pre class="prettyprint lang-kotlin" translate="no" dir="ltr"><code translate="no" dir="ltr">class ListScreenViewModel(handle: SavedStateHandle): ViewModel() {
+    // This value survives both configuration changes and process death and recreation
+    val editMode by handle.saveable { mutableStateOf(false) }
+}
+</code></pre></li>
+ <li><p>Added an <code translate="no" dir="ltr">addCloseable()</code> API and a new constructor overload that allow you to add one or more <code translate="no" dir="ltr">Closeable</code> objects to the <code translate="no" dir="ltr">ViewModel</code> that will be closed when the <code translate="no" dir="ltr">ViewModel</code> is cleared without requiring any manual work in <code translate="no" dir="ltr">onCleared()</code>.</p><p>For instance, to create a coroutine scope that you can inject into a ViewModel, but control via testing, you can create a <code translate="no" dir="ltr">CoroutineScope</code> that implements <code translate="no" dir="ltr">Closeable</code>:</p><pre class="prettyprint lang-kotlin" translate="no" dir="ltr"><code translate="no" dir="ltr">class CloseableCoroutineScope(
+    context: CoroutineContext = SupervisorJob() + Dispatchers.Main.immediate
+) : Closeable, CoroutineScope {
+    override val coroutineContext: CoroutineContext = context
+    override fun close() {
+        coroutineContext.cancel()
+   }
+}
+</code></pre><p>Which can then be used in your <code translate="no" dir="ltr">ViewModel</code> constructor while maintaining the same lifetime as <code translate="no" dir="ltr">viewModelScope</code>:</p><pre class="prettyprint lang-kotlin" translate="no" dir="ltr"><code translate="no" dir="ltr">class TestScopeViewModel(
+    val customScope: CoroutineScope = CloseableCoroutineScope()
+) : ViewModel(customScope) {
+    // You can now use customScope in the same way as viewModelScope
+}
+</code></pre></li>
+</ul>
+<p><strong>Behavior changes</strong></p>
+<ul>
+ <li>Attempting to move the <code translate="no" dir="ltr">Lifecycle.State</code> from <code translate="no" dir="ltr">INITIALIZED</code> to <code translate="no" dir="ltr">DESTROYED</code> will now always throw an <code translate="no" dir="ltr">IllegalStateException</code> regardless of whether the <code translate="no" dir="ltr">Lifecycle</code> has an attached observer.</li>
+ <li><code translate="no" dir="ltr">LifecycleRegistry</code> will now clear their observers when they reach the <code translate="no" dir="ltr">DESTROYED</code> state.</li>
+</ul>
+
+<h2>Lifecycle: v2.6.0-alpha01</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.lifecycle:lifecycle-*:2.6.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/414e5d56fe642e82b7a9926e3219cbd756e8c9af..8094b683499b4098092c01028b55a38b49e357f2/lifecycle">Version 2.6.0-alpha01 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Added a new extension on <code translate="no" dir="ltr">StateFlow</code> and <code translate="no" dir="ltr">Flow</code> of <code translate="no" dir="ltr">collectAsStateWithLifecycle</code> that collect from flows and represents its latest value as Compose State in a lifecycle-aware manner. The flow is collected and the new emission is set to the State's value when the lifecycle is at least in a certain <code translate="no" dir="ltr">Lifecycle.State</code>. When the lifecycle falls below that <code translate="no" dir="ltr">Lifecycle.State</code>, the flow collection stops and the State's value is not updated. (<a href="https://android-review.googlesource.com/#/q/I1856e689232fedf11c133907a63bc08b690d2ce9">I1856e</a>, <a href="https://issuetracker.google.com/issues/230557927">b/230557927</a>)</li>
+</ul>
+
+<h2>Metrics: v1.0.0-alpha02</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.metrics:metrics-performance:1.0.0-alpha02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/db2ecbef194afcddfaede22e1d884a8959a9277c..8094b683499b4098092c01028b55a38b49e357f2/metrics/metrics-performance">Version 1.0.0-alpha02 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Renamed <code translate="no" dir="ltr">MetricsStateHolder</code> to just Holder (within <code translate="no" dir="ltr">PerformanceMetricsState</code>): (<a href="https://android-review.googlesource.com/#/q/I5a4d9095520399a146e6fd78eb50c86a7051738b">I5a4d9</a>, <a href="https://issuetracker.google.com/issues/226565716">b/226565716</a>, <a href="https://issuetracker.google.com/issues/213499234">b/213499234</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed timing issue where states could be replaced with new values before the frames had been processed where the old state would have been correct (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2061892/">aosp/2061892</a>, <a href="https://issuetracker.google.com/issues/213499234">b/213499234</a>)</li>
+ <li>Fixed concurrent modification exception in adding/removing listeners (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2092714/">aosp/2092714</a>, <a href="https://issuetracker.google.com/issues/230388846">b/213499234</a>)</li>
+ <li>Made startTime calculations more accurate (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2027704/">aosp/2027704</a>, <a href="https://issuetracker.google.com/issues/213245198">b/213245198</a>)</li>
+ <li>Fixed bug in <code translate="no" dir="ltr">FrameData.equals()</code> implementation (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2025866/">aosp/2025866</a>, <a href="https://issuetracker.google.com/issues/218296544">b/218296544</a>)</li>
+</ul>
+
+<h2>Navigation: v2.5.0</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.navigation:navigation-*:2.5.0</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/d4d9ac459e2261cd015398c13a79548e4d10f5bf..56365a25722236a5e107d81e22ce0d3c80861802/navigation">Version 2.5.0 contains these commits.</a></p>
+<p><strong>Important changes since 2.4.0</strong></p>
+<ul>
+ <li><strong>CreationExtras Integration</strong> - <code translate="no" dir="ltr">Navigation</code> now has the ability to provide a stateless <code translate="no" dir="ltr">ViewModelProvider.Factory</code> via <a href="/jetpack/androidx/releases/lifecycle#2.5.0">Lifecycle <code translate="no" dir="ltr">2.5.0</code></a>’s <code translate="no" dir="ltr">CreationExtras</code>.</li>
+</ul>
+<p><strong>Navigation SafeArgs</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">Navigation Safe Args</code> has upgraded the <code translate="no" dir="ltr">Android Gradle Plugin</code> dependency to rely on <code translate="no" dir="ltr">7.0.4</code>, dropping compatibility for AGP versions before <code translate="no" dir="ltr">7.0</code>.</li>
+ <li>Added support for the namespace build.gradle attribute to be used instead of applicationId.</li>
+</ul>
+<p><strong>Other Changes</strong></p>
+<ul>
+ <li>The <code translate="no" dir="ltr">visibleEntries</code> API is no longer experimental and provides a function to retrieve all of the entries whose destination is currently visible according to the <code translate="no" dir="ltr">NavController</code>.</li>
+</ul>
+
+<h2>Recyclerview: </h2>
+
+
+<h2>Savedstate: v1.2.0</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.savedstate:savedstate:1.2.0</code> and <code translate="no" dir="ltr">androidx.savedstate:savedstate-ktx:1.2.0</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/441d1e30254495bca43af4b5d3b13906babd74c7..3329ffac761570981343cb9fb84e087782d3403e/savedstate">Version 1.2.0 contains these commits.</a></p>
+<p><strong>Important changes since 1.1.0</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">SavedStateRegistryController</code> now allows early attachment of the <code translate="no" dir="ltr">SavedStateRegistry</code> via <code translate="no" dir="ltr">performAttach()</code>.</li>
+ <li>You can now retrieve a previously registered <code translate="no" dir="ltr">SavedStateProvider</code> from a <code translate="no" dir="ltr">SavedStateRegistry</code> via <code translate="no" dir="ltr">getSavedStateProvider()</code>.</li>
+ <li>The <code translate="no" dir="ltr">SavedState</code> library has been rewritten in Kotlin. 
   <ul>
-   <li>Change <code translate="no" dir="ltr">Player.getCurrentCues()</code> to return <code translate="no" dir="ltr">CueGroup</code> instead of <code translate="no" dir="ltr">List&lt;Cue&gt;</code>.</li>
-   <li>SSA: Support <code translate="no" dir="ltr">OutlineColour</code> style setting when <code translate="no" dir="ltr">BorderStyle == 3</code> (i.e. <code translate="no" dir="ltr">OutlineColour</code> sets the background of the cue) (<a href="https://github.com/google/ExoPlayer/issues/8435">#8435</a>).</li>
-   <li>CEA-708: Parse data into multiple service blocks and ignore blocks not associated with the currently selected service number.</li>
-   <li>Remove <code translate="no" dir="ltr">RawCcExtractor</code>, which was only used to handle a Google-internal subtitle format.</li>
+   <li>For <code translate="no" dir="ltr">SavedStateRegistryOwner</code>, this is a <strong>source incompatible change</strong> for those classes written in Kotlin - you must now override the <code translate="no" dir="ltr">savedStateRegistry</code> property rather than implement the previous <code translate="no" dir="ltr">getSavedStateRegistry()</code> function.</li>
+   <li>For <code translate="no" dir="ltr">ViewTreeSavedStateRegistryOwner</code>, this is a <strong>source incompatible change</strong> for those classes written in Kotlin - you must now directly import and use the Kotlin extension methods on <code translate="no" dir="ltr">View</code> of <code translate="no" dir="ltr">androidx.savedstate.setViewTreeSavedStateRegistryOwner</code> and <code translate="no" dir="ltr">androidx.savedstate.findViewTreeSavedStateRegistryOwner</code> to set and find a previously set owner. This replaces the <code translate="no" dir="ltr">savedstate-ktx</code> API of <code translate="no" dir="ltr">findViewTreeSavedStateRegistryOwner</code>.</li>
   </ul></li>
- <li>Extractors: 
-  <ul>
-   <li>Matroska: Parse <code translate="no" dir="ltr">DiscardPadding</code> for Opus tracks.</li>
-   <li>MP4: Parse bitrates from <code translate="no" dir="ltr">esds</code> boxes.</li>
-   <li>Ogg: Allow duplicate Opus ID and comment headers (<a href="https://github.com/google/ExoPlayer/issues/10038">#10038</a>).</li>
-  </ul></li>
- <li>UI: 
-  <ul>
-   <li>Fix delivery of events to <code translate="no" dir="ltr">OnClickListener</code>s set on <code translate="no" dir="ltr">PlayerView</code> in the case that <code translate="no" dir="ltr">useController=false</code> (<a href="https://github.com/google/ExoPlayer/issues/9605">#9605</a>). Also fix delivery of events to <code translate="no" dir="ltr">OnLongClickListener</code> for all view configurations.</li>
-   <li>Fix incorrectly treating a sequence of touch events that exit the bounds of <code translate="no" dir="ltr">PlayerView</code> before <code translate="no" dir="ltr">ACTION_UP</code> as a click (<a href="https://github.com/google/ExoPlayer/issues/9861">#9861</a>).</li>
-   <li>Fix <code translate="no" dir="ltr">PlayerView</code> accessibility issue where tapping might toggle playback rather than hiding the controls (<a href="https://github.com/google/ExoPlayer/issues/8627">#8627</a>).</li>
-   <li>Rewrite <code translate="no" dir="ltr">TrackSelectionView</code> and <code translate="no" dir="ltr">TrackSelectionDialogBuilder</code> to work with the <code translate="no" dir="ltr">Player</code> interface rather than <code translate="no" dir="ltr">ExoPlayer</code>. This allows the views to be used with other <code translate="no" dir="ltr">Player</code> implementations, and removes the dependency from the UI module to the ExoPlayer module. This is a breaking change.</li>
-   <li>Don't show forced text tracks in the <code translate="no" dir="ltr">PlayerView</code> track selector, and keep a suitable forced text track selected if "None" is selected (<a href="https://github.com/google/ExoPlayer/issues/9432">#9432</a>).</li>
-  </ul></li>
- <li>DASH: 
-  <ul>
-   <li>Parse channel count from DTS <code translate="no" dir="ltr">AudioChannelConfiguration</code> elements. This re-enables audio passthrough for DTS streams (<a href="https://github.com/google/ExoPlayer/issues/10159">#10159</a>).</li>
-   <li>Disallow passing <code translate="no" dir="ltr">null</code> to <code translate="no" dir="ltr">DashMediaSource.Factory.setCompositeSequenceableLoaderFactory</code>. Instances of <code translate="no" dir="ltr">DefaultCompositeSequenceableLoaderFactory</code> can be passed explicitly if required.</li>
-  </ul></li>
- <li>HLS: 
-  <ul>
-   <li>Fallback to chunkful preparation if the playlist CODECS attribute does not contain the audio codec (<a href="https://github.com/google/ExoPlayer/issues/10065">#10065</a>).</li>
-   <li>Disallow passing <code translate="no" dir="ltr">null</code> to <code translate="no" dir="ltr">HlsMediaSource.Factory.setCompositeSequenceableLoaderFactory</code>, <code translate="no" dir="ltr">HlsMediaSource.Factory.setPlaylistParserFactory</code>, and <code translate="no" dir="ltr">HlsMediaSource.Factory.setPlaylistTrackerFactory</code>. Instances of <code translate="no" dir="ltr">DefaultCompositeSequenceableLoaderFactory</code>, <code translate="no" dir="ltr">DefaultHlsPlaylistParserFactory</code>, or a reference to <code translate="no" dir="ltr">DefaultHlsPlaylistTracker.FACTORY</code> can be passed explicitly if required.</li>
-  </ul></li>
- <li>Smooth Streaming: 
-  <ul>
-   <li>Disallow passing <code translate="no" dir="ltr">null</code> to <code translate="no" dir="ltr">SsMediaSource.Factory.setCompositeSequenceableLoaderFactory</code>. Instances of <code translate="no" dir="ltr">DefaultCompositeSequenceableLoaderFactory</code> can be passed explicitly if required.</li>
-  </ul></li>
- <li>RTSP: 
-  <ul>
-   <li>Add RTP reader for MPEG4 (<a href="https://github.com/androidx/media/pull/35">#35</a>).</li>
-   <li>Add RTP reader for HEVC (<a href="https://github.com/androidx/media/pull/36">#36</a>).</li>
-   <li>Add RTP reader for AMR. Currently only mono-channel, non-interleaved AMR streams are supported. Compound AMR RTP payload is not supported. (<a href="https://github.com/androidx/media/pull/46">#46</a>)</li>
-   <li>Add RTP reader for VP8 (<a href="https://github.com/androidx/media/pull/47">#47</a>).</li>
-   <li>Add RTP reader for WAV (<a href="https://github.com/androidx/media/pull/56">#56</a>).</li>
-   <li>Fix RTSP basic authorization header. (<a href="https://github.com/google/ExoPlayer/issues/9544">#9544</a>).</li>
-   <li>Stop checking mandatory SDP fields as ExoPlayer doesn't need them (<a href="https://github.com/google/ExoPlayer/issues/10049">#10049</a>).</li>
-   <li>Throw checked exception when parsing RTSP timing (<a href="https://github.com/google/ExoPlayer/issues/10165">#10165</a>).</li>
-   <li>Add RTP reader for VP9 (<a href="https://github.com/androidx/media/pull/64">#47</a>).</li>
-   <li>Add RTP reader for OPUS (<a href="https://github.com/androidx/media/pull/53">#53</a>).</li>
-  </ul></li>
- <li>Data sources: 
-  <ul>
-   <li>Rename <code translate="no" dir="ltr">DummyDataSource</code> to <code translate="no" dir="ltr">PlaceholderDataSource</code>.</li>
-   <li>Workaround OkHttp interrupt handling.</li>
-  </ul></li>
- <li>Session: 
-  <ul>
-   <li>Replace <code translate="no" dir="ltr">MediaSession.MediaItemFiller</code> with <code translate="no" dir="ltr">MediaSession.Callback.onAddMediaItems</code> to allow asynchronous resolution of requests.</li>
-   <li>Support <code translate="no" dir="ltr">setMediaItems(s)</code> methods when <code translate="no" dir="ltr">MediaController</code> connects to a legacy media session.</li>
-   <li>Remove <code translate="no" dir="ltr">MediaController.setMediaUri</code> and <code translate="no" dir="ltr">MediaSession.Callback.onSetMediaUri</code>. The same functionality can be achieved by using <code translate="no" dir="ltr">MediaController.setMediaItem</code> and <code translate="no" dir="ltr">MediaSession.Callback.onAddMediaItems</code>.</li>
-   <li>Forward legacy <code translate="no" dir="ltr">MediaController</code> calls to play media to <code translate="no" dir="ltr">MediaSession.Callback.onAddMediaItems</code> instead of <code translate="no" dir="ltr">onSetMediaUri</code>.</li>
-   <li>Add <code translate="no" dir="ltr">MediaNotification.Provider</code> and <code translate="no" dir="ltr">DefaultMediaNotificationProvider</code> to provide customization of the notification.</li>
-   <li>Add <code translate="no" dir="ltr">BitmapLoader</code> and <code translate="no" dir="ltr">SimpleBitmapLoader</code> for downloading artwork images.</li>
-   <li>Add <code translate="no" dir="ltr">MediaSession.setCustomLayout()</code> to provide backwards compatibility with the legacy session.</li>
-   <li>Add <code translate="no" dir="ltr">MediaSession.setSessionExtras()</code> to provide feature parity with legacy session.</li>
-   <li>Rename <code translate="no" dir="ltr">MediaSession.MediaSessionCallback</code> to <code translate="no" dir="ltr">MediaSession.Callback</code>, <code translate="no" dir="ltr">MediaLibrarySession.MediaLibrarySessionCallback</code> to <code translate="no" dir="ltr">MediaLibrarySession.Callback</code> and <code translate="no" dir="ltr">MediaSession.Builder.setSessionCallback</code> to <code translate="no" dir="ltr">setCallback</code>.</li>
-   <li>Fix NPE in <code translate="no" dir="ltr">MediaControllerImplLegacy</code> (<a href="https://github.com/androidx/media/pull/59">#59</a>).</li>
-   <li>Update session position info on timeline change(<a href="https://github.com/androidx/media/issues/51">#51</a>).</li>
-   <li>Fix NPE in <code translate="no" dir="ltr">MediaControllerImplBase</code> after releasing controller (<a href="https://github.com/androidx/media/issues/74">#74</a>).</li>
-  </ul></li>
- <li>Ad playback / IMA: 
-  <ul>
-   <li>Decrease ad polling rate from every 100ms to every 200ms, to line up with Media Rating Council (MRC) recommendations.</li>
-  </ul></li>
- <li>FFmpeg extension: 
-  <ul>
-   <li>Update CMake version to <code translate="no" dir="ltr">3.21.0+</code> to avoid a CMake bug causing AndroidStudio's gradle sync to fail (<a href="https://github.com/google/ExoPlayer/issues/9933">#9933</a>).</li>
-  </ul></li>
- <li>Remove deprecated symbols: 
-  <ul>
-   <li>Remove <code translate="no" dir="ltr">Player.Listener.onTracksChanged</code>. Use <code translate="no" dir="ltr">Player.Listener.onTracksInfoChanged</code> instead.</li>
-   <li>Remove <code translate="no" dir="ltr">Player.getCurrentTrackGroups</code> and <code translate="no" dir="ltr">Player.getCurrentTrackSelections</code>. Use <code translate="no" dir="ltr">Player.getCurrentTracksInfo</code> instead. You can also continue to use <code translate="no" dir="ltr">ExoPlayer.getCurrentTrackGroups</code> and <code translate="no" dir="ltr">ExoPlayer.getCurrentTrackSelections</code>, although these methods remain deprecated.</li>
-   <li>Remove <code translate="no" dir="ltr">DownloadHelper</code><code translate="no" dir="ltr">DEFAULT_TRACK_SELECTOR_PARAMETERS_WITHOUT_VIEWPORT</code> and <code translate="no" dir="ltr">DEFAULT_TRACK_SELECTOR_PARAMETERS</code> constants. Use <code translate="no" dir="ltr">getDefaultTrackSelectorParameters(Context)</code> instead when possible, and <code translate="no" dir="ltr">DEFAULT_TRACK_SELECTOR_PARAMETERS_WITHOUT_CONTEXT</code> otherwise.</li>
-   <li>Remove constructor <code translate="no" dir="ltr">DefaultTrackSelector(ExoTrackSelection.Factory)</code>. Use <code translate="no" dir="ltr">DefaultTrackSelector(Context, ExoTrackSelection.Factory)</code> instead.</li>
-   <li>Remove <code translate="no" dir="ltr">Transformer.Builder.setContext</code>. The <code translate="no" dir="ltr">Context</code> should be passed to the <code translate="no" dir="ltr">Transformer.Builder</code> constructor instead.</li>
-  </ul></li>
+</ul>
+<p><strong>Behavior Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">SavedStateRegistry</code> no longer saves an empty Bundle if there is no state to save.</li>
+</ul>
+
+<h2>Wear Compose: v1.1.0-alpha01</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.wear.compose:compose-foundation:1.1.0-alpha01</code>, <code translate="no" dir="ltr">androidx.wear.compose:compose-material:1.1.0-alpha01</code>, and <code translate="no" dir="ltr">androidx.wear.compose:compose-navigation:1.1.0-alpha01</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/aa660d501ab7cf1ffb63464e855e86e650838fb6..8094b683499b4098092c01028b55a38b49e357f2/wear/compose">Version 1.1.0-alpha01 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Picker's <code translate="no" dir="ltr">contentDescription</code> parameter is now used only for the selected Picker option and takes a nullable String (previously, it was necessary to pass a mapping from option to the content description, but only the selected option was used). (<a href="https://android-review.googlesource.com/#/q/Ife6a7cb095c8e76ae2e6b7715e7efada12d971ec">Ife6a7</a>)</li>
+ <li>We have made accessibility improvements to Picker so that multi-picker screens are navigable with screen readers and the content description is accessible (<a href="https://android-review.googlesource.com/#/q/I64edb15386b8e92e4cc33b6a0bb816d333dba961">I64edb</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>We have updated the baseline profile rules packaged with the Wear Compose library (<a href="https://android-review.googlesource.com/#/q/I9c69474e05395bb28ec62355714700b58923ba07">I9c694</a>)</li>
+ <li>We have corrected the direction of the gradient for Chips in right to left mode. Was top left-&gt;bottom right, is now top right-&gt;bottom left. (<a href="https://android-review.googlesource.com/#/q/Ic2e77f4712f21f6b57cb7bbde63136b70769523e">Ic2e77</a>)</li>
+ <li>We have updated the default gradients for <code translate="no" dir="ltr">Chip/ToggleChip/Card</code> to bring them in line with latest UX spec. <code translate="no" dir="ltr">ChipDefaults.gradientBackgroundChipColors</code> has been updated to start from 50% of primary rather than 32.5%. <code translate="no" dir="ltr">CardDefaults.cardBackgroundPainter</code> has been updated to start from 30% of primary and end at 20% of <code translate="no" dir="ltr">onSurfaceVariant</code> (was previously 20% to 10% <code translate="no" dir="ltr">onSurfaceVariant</code>). <code translate="no" dir="ltr">ToggleChip.toggleChipColors</code> changes from a linear gradient of 75% surface to 32.5% primary to 0% surface to 50% primary. (<a href="https://android-review.googlesource.com/#/q/I43bbd9804f53013ea65f570bfdd91f9c5d2016f3">I43bbd</a>)</li>
+ <li>We have added a background color (<code translate="no" dir="ltr">MaterialTheme.color.surface</code>) behind <code translate="no" dir="ltr">Chip/ToggleChips</code> that have gradient backgrounds in order to ensure that they are properly visible in the unlikely event that a light color is used behind them. (<a href="https://android-review.googlesource.com/#/q/Ibe1a442812a48a6d39912b4bbf399a2f4b11ae5b">Ibe1a4</a>, <a href="https://issuetracker.google.com/issues/235937657">b/235937657</a>)</li>
+ <li>Picker items are now always center-aligned, fixing a bug when setting <code translate="no" dir="ltr">gradientRatio</code> to zero had the side-effect of changing the alignment. (<a href="https://android-review.googlesource.com/#/q/I712b872a76103fa3365a2a8ef651394a2a0eab32">I712b8</a>)</li>
+</ul>
+
+<h2>Wear Tiles: v1.1.0-alpha09</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.wear.tiles:tiles-*:1.1.0-alpha09</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/7cbb37cc779160b89644d03e042c129d0ce025d2..8094b683499b4098092c01028b55a38b49e357f2/wear/tiles">Version 1.1.0-alpha09 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>We have added support for adding optional labels in <code translate="no" dir="ltr">ProgressIndicatorLayout</code>. (<a href="https://android-review.googlesource.com/#/q/I30788aff8001fb8c2477dee8b115f51d88781af1">I30788</a>)</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Helper methods for <code translate="no" dir="ltr">ElementMetadata</code> now accept <code translate="no" dir="ltr">ElementMetadata</code> instead of Modifiers. (<a href="https://android-review.googlesource.com/#/q/I5a70f5b81462fc8bd1a48c96149bfef5abbdb509">I5a70f</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>The limitation of 9 characters on <code translate="no" dir="ltr">CompactChip</code> was removed. If text is too big to fit into the screen in <code translate="no" dir="ltr">PrimaryLayout</code>, it will be ellipsized. (<a href="https://android-review.googlesource.com/#/q/Id56eca1d31999330657ce8a4ad3d260ab039c16b">Id56ec</a>)</li>
+ <li>Getters in <code translate="no" dir="ltr">Chip</code> now have <em>Content</em> suffix. (<a href="https://android-review.googlesource.com/#/q/Iba43761adfdb2fe1a6694a87cf5ccc402b9d5d54">Iba437</a>)</li>
+ <li>Javadoc clarification across Tiles Material classes. (<a href="https://android-review.googlesource.com/#/q/I56e41ee4f0eb9c096f2def7e4daad9a36b740bcf">I56e41</a>), (<a href="https://android-review.googlesource.com/#/q/I80f31a7efe8b45dfc8be733d82217c8ab23f8ba0">I80f31</a>), (<a href="https://android-review.googlesource.com/#/q/Iba43761adfdb2fe1a6694a87cf5ccc402b9d5d54">Iba437</a>)</li>
+</ul>
+
+<h2>Webkit: v1.5.0-beta01</h2>
+<p>June 29, 2022</p>
+<p><code translate="no" dir="ltr">androidx.webkit:webkit:1.5.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/6266a22ad9adaed6fa88fe98aa8adaa46eb96ccc..8094b683499b4098092c01028b55a38b49e357f2/webkit/webkit">Version 1.5.0-beta01 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Alogrithimic Darkening related APIs are now annotated to require API level Q. The API will not have any effect on API levels &lt; Q, since dark theme is not an option on these devices. (<a href="https://android-review.googlesource.com/#/q/I0905e1bc33fe8b1862549f8e741841b2d487d590">I0905e</a>)</li>
 </ul>
 </body>
 </html>
