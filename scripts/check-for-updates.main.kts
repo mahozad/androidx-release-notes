@@ -24,12 +24,13 @@ val reader = tryTo("initialize the feed reader") { XmlReader(feedUrl) }
 val file = File("last-rss-update.txt")
 val feed = SyndFeedInput().build(reader)
 val ours = file.readText().trimEnd().parse()
+val ourDate = ours.toLocalDate().toString()
 val theirs = feed.publishedDate.toString().parse()
 val theirDate = theirs.toLocalDate().toString()
-val theirTime = theirs.toLocalTime().format(ISO_LOCAL_TIME)
+val theirTime = theirs.toLocalTime().format(DateTimeFormatter.ofPattern("hha"))
 val areTheSame = ours == theirs
 val freshness = if (areTheSame) "latest" else "stale"
-val dateTag = theirDate + if (areTheSame) "T$theirTime" else ""
+val dateTag = theirDate + if (ourDate == theirDate) "@$theirTime" else ""
 reader.close()
 
 // To log for debug
