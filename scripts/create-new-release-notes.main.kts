@@ -30,6 +30,10 @@ val feed = SyndFeedInput().build(reader)
 val latestRelease = feed.entries.first()
 val latestReleaseItems = latestRelease.contents.first().value
 
+// Specifies the base URL for relative links in the document
+writer.write("""<base href="https://developer.android.com/" target="_blank"/>""")
+writer.write("\n\n")
+
 Jsoup
     .parse(latestReleaseItems)
     .select("a")
