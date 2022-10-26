@@ -43,8 +43,10 @@ println("Their RSS publish date: $theirs")
 // To set output for a job step
 // see https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#setting-an-output-parameter
 // and https://stackoverflow.com/a/59201610
-println("::set-output name=result::$freshness")
-println("::set-output name=dateTag::$dateTag")
+val stepsOutputFile = File(System.getenv("GITHUB_OUTPUT"))
+val lineFeed: String = System.lineSeparator()
+stepsOutputFile.appendText("result=$freshness$lineFeed")
+stepsOutputFile.appendText("dateTag=$dateTag$lineFeed")
 
 fun String.parse() = runCatching { LocalDateTime.parse(this, datesPattern) }
     .getOrDefault(LocalDateTime.of(1, 1, 1, 1, 1))
