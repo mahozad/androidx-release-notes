@@ -66,54 +66,207 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Annotation 1.0.1: Annotation 1.0.1-rc01</h2>
-<p>October 26, 2022</p>
-<p><code translate="no" dir="ltr">androidx.test:annotation:1.0.1-rc01</code> is released.</p>
+<h2>Annotation 1.0.1: Annotation 1.0.1</h2>
+<p>November 8, 2022</p>
+<p><code translate="no" dir="ltr">androidx.test:annotation:1.0.1</code> is released.</p>
+<p>Changes since 1.0.0 include:</p>
+<p><strong>Dependency changes</strong></p>
+<ul>
+ <li>Update to kotlin stdlib 1.7.10</li>
+</ul>
 
-<h2>Runner 1.5.0: runner 1.5.0-rc01</h2>
-<p>October 26, 2022</p>
-<p><code translate="no" dir="ltr">androidx.test:runner:1.5.0-rc01</code> is released.</p>
+<h2>Runner 1.5.0: runner 1.5.0</h2>
+<p>November 8, 2022</p>
+<p><code translate="no" dir="ltr">androidx.test:runner:1.5.0</code> is released.</p>
+<p>Changes since 1.4.0 include:</p>
+<p><strong>New features</strong></p>
+<ul>
+ <li>Record android Trace spans for test lifecycle events</li>
+</ul>
+<p><strong>API changes</strong></p>
+<ul>
+ <li>Denote the long standing @Beta/@ExperimentalTestApi androidx.test.runner.screenshot as stable but deprecated (in favor of new androidx.test.core/espresso screenshot APIs)</li>
+ <li>Deprecate the '-e timeout' runtime parameter in favor of JUnit's Timeout rule. </li>
+ <li>Add an AbstractFilter class.</li>
+ <li>Add AndroidClasspathSuite and experimental PackagePrefixClasspathSuite</li>
+ <li>No-op and deprecate Google Analytics</li>
+</ul>
+<p><strong>Bug fixes</strong></p>
+<ul>
+ <li>Add support for reading from TestStorage in -e testFile</li>
+ <li>Handle case where app crashes before instrumentationResultPrinter is set.</li>
+ <li>Report the process crash immediately in the orchestrator instrumentation listener.</li>
+ <li>Support parameterized test names with commas and hashes.</li>
+ <li>Improve error handling during test discovery phase in orchestrator</li>
+ <li>Enhance error handling in exception scenarios (app crashes, etc)</li>
+</ul>
+<p><strong>Dependency Changes</strong></p>
+<ul>
+ <li>Update to 
+  <ul>
+   <li>org.junit:junit:4.13.2</li>
+  </ul></li>
+</ul>
 
 <h2>Test: </h2>
 
 
-<h2>Monitor aka Platform 1.6.0: monitor 1.6.0-rc01</h2>
-<p>October 26, 2022</p>
-<p><code translate="no" dir="ltr">androidx.test:monitor:1.6.0-rc01</code> is released.</p>
-
-<h2>Espresso 3.5.0: Espresso 3.5.0-rc01</h2>
-<p>October 26, 2022</p>
-<p>The following artifacts were released:</p>
+<h2>Monitor aka Platform 1.6.0: monitor 1.6.0</h2>
+<p>November 8, 2022</p>
+<p><code translate="no" dir="ltr">androidx.test:monitor:1.6.0</code> is released.</p>
+<p>Changes since 1.5.0 include:</p>
+<p><strong>API changes</strong></p>
 <ul>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-accessibility:3.5.0-rc01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-core:3.5.0-rc01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-contrib:3.5.0-rc01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-idling-resource:3.5.0-rc01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-intents:3.5.0-rc01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-remote:3.5.0-rc01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-web:3.5.0-rc01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-concurrent:3.5.0-rc01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-net:3.5.0-rc01</code></li>
+ <li>Internal API changes to support ActivityScenario#launchActivityForResult</li>
+ <li>Add internal API for supporting different tracing libraries.</li>
+</ul>
+<p><strong>Bug fixes</strong></p>
+<ul>
+ <li>Remove 'Activities that are still in CREATED to STOPPED' log spam</li>
+</ul>
+<p><strong>Dependency Changes</strong></p>
+<ul>
+ <li>Add dependency on androidx.tracing</li>
 </ul>
 
-<h2>Core 1.5.0: Core Core-ktx 1.5.0-rc01</h2>
-<p>October 26, 2022</p>
-<p><code translate="no" dir="ltr">androidx.test:core:1.5.0-rc01</code> and <code translate="no" dir="ltr">androidx.test:core-ktx:1.5.0-rc01</code> are released.</p>
+<h2>Espresso 3.5.0: Espresso 3.5.0</h2>
+<p>November 8, 2022</p>
+<p>The following artifacts were released:</p>
+<ul>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-accessibility:3.5.0</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-core:3.5.0</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-contrib:3.5.0</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-idling-resource:3.5.0</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-intents:3.5.0</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-remote:3.5.0</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-web:3.5.0</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-concurrent:3.5.0</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-net:3.5.0</code></li>
+</ul>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Record android Trace spans for Espresso actions</li>
+ <li>Espresso's DefaultFailureHandler now saves a screenshot on test failures to TestStorage</li>
+ <li>Add experimental ViewInteraction.captureToBitmap extension function</li>
+ <li>Save view hierarchy to a file on failures</li>
+</ul>
+<p><strong>API changes</strong></p>
+<ul>
+ <li>Promote ViewMatchers hasTextColor and hasBackground as stable APIs</li>
+ <li>Add IntentsRule </li>
+ <li>Add inverted matchers for IntentMatchers.hasExtraWithKey() and BundleMatchers.hasKey()</li>
+ <li>Add a ViewAction that scrolls to the last position in a RecyclerView.</li>
+ <li>Add IntentMatcher.hasExtra API</li>
+</ul>
+<p><strong>Bug fixes</strong></p>
+<ul>
+ <li>Preserve tool type on up event</li>
+ <li>Make IdlingRegistry more thread-safe.</li>
+ <li>Support other views for scrollTo()</li>
+ <li>Remove unnecessary <code translate="no" dir="ltr">interruptEspressoTasks</code> warning logs for each Espresso interaction on Robolectric.</li>
+ <li>Remove timeout in CloseKeyboardAction when running under Robolectric</li>
+ <li>Use consistent InputDevice source for input gesture injection</li>
+ <li>Support simulating ActivityNotFoundExceptions in Espresso Intents.</li>
+ <li>Truncate view hierarchy in exception messages when it gets too large.</li>
+ <li>Display number and list of ambiguously matched views.</li>
+ <li>Validate that onView.check/perform() is invoked on the UI thread</li>
+</ul>
+<p><strong>Dependency changes</strong></p>
+<ul>
+ <li>Update to 
+  <ul>
+   <li>kotlin stdlib 1.7.10</li>
+   <li>jsr305:2.0.2 </li>
+   <li>tagsoup:1.2.1 </li>
+   <li>androidx.annotation:1.2.0</li>
+  </ul></li>
+ <li>contrib: 
+  <ul>
+   <li>update to drawer 1.1.1, recycler view 1.2.1, material 1.4.0 </li>
+  </ul></li>
+</ul>
 
-<h2>JUnit Extensions 1.1.4: ext.junit 1.1.4-rc01</h2>
-<p>October 26, 2022</p>
-<p><code translate="no" dir="ltr">androidx.test.ext:junit:1.1.4-rc01</code> and <code translate="no" dir="ltr">androidx.test.ext:junit-ktx:1.1.4-rc01</code> are released.</p>
+<h2>Core 1.5.0: Core Core-ktx 1.5.0</h2>
+<p>November 8, 2022</p>
+<p><code translate="no" dir="ltr">androidx.test:core:1.5.0</code> and <code translate="no" dir="ltr">androidx.test:core-ktx:1.5.0</code> are released.</p>
+<p>Changes since 1.4.0 include:</p>
+<p><strong>New features</strong></p>
+<ul>
+ <li>Record android Trace spans for ActivityScenario launch and close.</li>
+ <li>Add new experimental APIs for screenshots. These APIs will automatically select the highest fidelity for taking screenshots based on platform API level, and support the Automated Test Device (ATD) emulator images. 
+  <ul>
+   <li>View.captureToBitmap extension function</li>
+   <li>Window.captureRegionToBitmap extension function</li>
+   <li>takeScreenshot()</li>
+  </ul></li>
+ <li>Add experimental Bitmap.writeToTestStorage API</li>
+</ul>
+<p><strong>API changes</strong></p>
+<ul>
+ <li>Add ActivityScenario#launchActivityForResult API and modify ActivityScenario#launch to remove use of Bootstrap Activity API. This change should improve performance and stability of ActivityScenario#launch. ActivityScenario#getResult will now enforce that it can only be used with ActivityScenario#launchActivityForResult </li>
+</ul>
+<p><strong>Bug fixes</strong></p>
+<ul>
+ <li>Fix ActivityScenario#launch when targeting and running on Android 33</li>
+ <li>Use elapsedRealtime instead of currentTimeMillis to track ActivityScenario timeouts.</li>
+ <li>Fix ActivityScenario's issue with starting an Activity from intent with package name in self-instrumenting tests.</li>
+ <li>Reduce ActivityScenario overhead by using plain whitebackground and disabling transition animations in internal Activities</li>
+</ul>
+<p><strong>Dependency changes</strong></p>
+<ul>
+ <li>Update to 
+  <ul>
+   <li>kotlin stdlib 1.7.10</li>
+   <li>androidx.lifecycle:lifecycle-common:2.3.1</li>
+   <li>androidx.annotation:annotation:1.2.0</li>
+  </ul></li>
+ <li>Add 
+  <ul>
+   <li>androidx.test.services:storage:1.4.2</li>
+   <li>com.google.guava:listenablefuture:1.0</li>
+   <li>androidx.concurrent:concurrent-futures:1.1.0</li>
+  </ul></li>
+</ul>
 
-<h2>Truth Extensions 1.5.0: ext.truth 1.5.0-rc01</h2>
-<p>October 26, 2022</p>
-<p><code translate="no" dir="ltr">androidx.test.ext:truth:1.5.0-rc01</code> is released.</p>
+<h2>JUnit Extensions 1.1.4: ext.junit 1.1.4</h2>
+<p>November 8, 2022</p>
+<p><code translate="no" dir="ltr">androidx.test.ext:junit:1.1.4</code> and <code translate="no" dir="ltr">androidx.test.ext:junit-ktx:1.1.4</code> are released.</p>
+<p>Changes since 1.1.3 include:</p>
+<p><strong>Dependency changes</strong></p>
+<ul>
+ <li>Update to kotlin stdlib 1.7.10</li>
+ <li>Update to org.junit:junit:4.13.2</li>
+</ul>
 
-<h2>Services 1.4.2: services 1.4.2-rc01</h2>
-<p>October 26, 2022</p>
-<p><code translate="no" dir="ltr">androidx.test.services:test-services:1.4.2-rc01</code> <code translate="no" dir="ltr">androidx.test.services:storage:1.4.2-rc01</code> are released.</p>
+<h2>Truth Extensions 1.5.0: ext.truth 1.5.0</h2>
+<p>November 8, 2022</p>
+<p><code translate="no" dir="ltr">androidx.test.ext:truth:1.5.0</code> is released.</p>
+<p>Changes since 1.4.0 include:</p>
+<p><strong>API changes</strong></p>
+<ul>
+ <li>Add BundleSubject#stringArray</li>
+ <li>Add ParcelableSubject.marshallsEquallyTo()</li>
+ <li>Add BundleSubject#doubleFloat</li>
+</ul>
+<p><strong>Bug fixes</strong></p>
+<ul>
+ <li>Make Intent matchers fail explicitly for null intent</li>
+</ul>
+<p><strong>Dependency Changes</strong></p>
+<ul>
+ <li>Update to 
+  <ul>
+   <li>com.google.guava:guava:30.1.1-android</li>
+   <li>com.google.truth:truth:1.1.3</li>
+  </ul></li>
+</ul>
 
-<h2>Orchestrator 1.4.2: orchestrator 1.4.2-rc01</h2>
-<p>October 26, 2022</p>
-<p><code translate="no" dir="ltr">androidx.test:orchestrator:1.4.2-rc01</code> is released.</p>
+<h2>Services 1.4.2: services 1.4.2</h2>
+<p>November 8, 2022</p>
+<p><code translate="no" dir="ltr">androidx.test.services:test-services:1.4.2</code> <code translate="no" dir="ltr">androidx.test.services:storage:1.4.2</code> are released.</p>
+
+<h2>Orchestrator 1.4.2: orchestrator 1.4.2</h2>
+<p>November 8, 2022</p>
+<p><code translate="no" dir="ltr">androidx.test:orchestrator:1.4.2</code> is released.</p>
 </body>
 </html>
