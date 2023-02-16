@@ -66,26 +66,80 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Mediarouter: v1.6.0-alpha01</h2>
-<p>February 10, 2023</p>
-<p><code translate="no" dir="ltr">androidx.mediarouter:mediarouter:1.6.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/6baf17024ccdfc27531f3b18b534341162885d1a..6d22a07c33e6f53eafa5be1ef0b4aa27b1c7080a/">Version 1.6.0-alpha01 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
+<h2>Media3: v1.0.0-rc01</h2>
+<p>February 16, 2023</p>
+<p><code translate="no" dir="ltr">androidx.media3:media3-*:1.0.0-rc01</code> is released. <a href="https://github.com/androidx/media/commits/1.0.0-rc01">Version 1.0.0-rc01 contains these commits.</a></p>
+<p>This release corresponds to the <a href="https://github.com/google/ExoPlayer/releases/tag/r2.18.3">ExoPlayer 2.18.3 release</a>.</p>
 <ul>
- <li>Route Listing preferences for output switcher</li>
+ <li>Core library: 
+  <ul>
+   <li>Tweak the renderer's decoder ordering logic to uphold the <code translate="no" dir="ltr">MediaCodecSelector</code>'s preferences, even if a decoder reports it may not be able to play the media performantly. For example with default selector, hardware decoder with only functional support will be preferred over software decoder that fully supports the format (<a href="https://github.com/google/ExoPlayer/issues/10604">#10604</a>).</li>
+   <li>Add <code translate="no" dir="ltr">ExoPlayer.Builder.setPlaybackLooper</code> that sets a pre-existing playback thread for a new ExoPlayer instance.</li>
+   <li>Allow download manager helpers to be cleared (<a href="https://github.com/google/ExoPlayer/issues/10776">#10776</a>).</li>
+   <li>Add parameter to <code translate="no" dir="ltr">BasePlayer.seekTo</code> to also indicate the command used for seeking.</li>
+   <li>Use theme when loading drawables on API 21+ (<a href="https://github.com/androidx/media/issues/220">#220</a>).</li>
+   <li>Add <code translate="no" dir="ltr">ConcatenatingMediaSource2</code> that allows combining multiple media items into a single window (<a href="https://github.com/androidx/media/issues/247">#247</a>).</li>
+  </ul></li>
+ <li>Extractors: 
+  <ul>
+   <li>Throw a <code translate="no" dir="ltr">ParserException</code> instead of a <code translate="no" dir="ltr">NullPointerException</code> if the sample table (stbl) is missing a required sample description (stsd) when parsing trak atoms.</li>
+   <li>Correctly skip samples when seeking directly to a sync frame in fMP4 (<a href="https://github.com/google/ExoPlayer/issues/10941">#10941</a>).</li>
+  </ul></li>
+ <li>Audio: 
+  <ul>
+   <li>Use the compressed audio format bitrate to calculate the min buffer size for <code translate="no" dir="ltr">AudioTrack</code> in direct playbacks (passthrough).</li>
+  </ul></li>
+ <li>Text: 
+  <ul>
+   <li>Fix <code translate="no" dir="ltr">TextRenderer</code> passing an invalid (negative) index to <code translate="no" dir="ltr">Subtitle.getEventTime</code> if a subtitle file contains no cues.</li>
+   <li>SubRip: Add support for UTF-16 files if they start with a byte order mark.</li>
+  </ul></li>
+ <li>Metadata: 
+  <ul>
+   <li>Parse multiple null-separated values from ID3 frames, as permitted by ID3 v2.4.</li>
+   <li>Add <code translate="no" dir="ltr">MediaMetadata.mediaType</code> to denote the type of content or the type of folder described by the metadata.</li>
+   <li>Add <code translate="no" dir="ltr">MediaMetadata.isBrowsable</code> as a replacement for <code translate="no" dir="ltr">MediaMetadata.folderType</code>. The folder type will be deprecated in the next release.</li>
+  </ul></li>
+ <li>DASH: 
+  <ul>
+   <li>Add full parsing for image adaptation sets, including tile counts (<a href="https://github.com/google/ExoPlayer/issues/3752">#3752</a>).</li>
+  </ul></li>
+ <li>UI: 
+  <ul>
+   <li>Fix the deprecated <code translate="no" dir="ltr">PlayerView.setControllerVisibilityListener(PlayerControlView.VisibilityListener)</code> to ensure visibility changes are passed to the registered listener (<a href="https://github.com/androidx/media/issues/229">#229</a>).</li>
+   <li>Fix the ordering of the center player controls in <code translate="no" dir="ltr">PlayerView</code> when using a right-to-left (RTL) layout (<a href="https://github.com/androidx/media/issues/227">#227</a>).</li>
+  </ul></li>
+ <li>Session: 
+  <ul>
+   <li>Add abstract <code translate="no" dir="ltr">SimpleBasePlayer</code> to help implement the <code translate="no" dir="ltr">Player</code> interface for custom players.</li>
+   <li>Add helper method to convert platform session token to Media3 <code translate="no" dir="ltr">SessionToken</code> (<a href="https://github.com/androidx/media/issues/171">#171</a>).</li>
+   <li>Use <code translate="no" dir="ltr">onMediaMetadataChanged</code> to trigger updates of the platform media session (<a href="https://github.com/androidx/media/issues/219">#219</a>).</li>
+   <li>Add the media session as an argument of <code translate="no" dir="ltr">getMediaButtons()</code> of the <code translate="no" dir="ltr">DefaultMediaNotificationProvider</code> and use immutable lists for clarity (<a href="https://github.com/androidx/media/issues/216">#216</a>).</li>
+   <li>Add <code translate="no" dir="ltr">onSetMediaItems</code> callback listener to provide means to modify/set <code translate="no" dir="ltr">MediaItem</code> list, starting index and position by session before setting onto Player (<a href="https://github.com/androidx/media/issues/156">#156</a>).</li>
+   <li>Avoid double tap detection for non-Bluetooth media button events (<a href="https://github.com/androidx/media/issues/233">#233</a>).</li>
+   <li>Make <code translate="no" dir="ltr">QueueTimeline</code> more robust in case of a shady legacy session state (<a href="https://github.com/androidx/media/issues/241">#241</a>).</li>
+  </ul></li>
+ <li>Metadata: 
+  <ul>
+   <li>Parse multiple null-separated values from ID3 frames, as permitted by ID3 v2.4.</li>
+   <li>Add <code translate="no" dir="ltr">MediaMetadata.mediaType</code> to denote the type of content or the type of folder described by the metadata.</li>
+   <li>Add <code translate="no" dir="ltr">MediaMetadata.isBrowsable</code> as a replacement for <code translate="no" dir="ltr">MediaMetadata.folderType</code>. The folder type will be deprecated in the next release.</li>
+  </ul></li>
+ <li>Cast extension: 
+  <ul>
+   <li>Bump Cast SDK version to 21.2.0.</li>
+  </ul></li>
+ <li>IMA extension: 
+  <ul>
+   <li>Remove player listener of the <code translate="no" dir="ltr">ImaServerSideAdInsertionMediaSource</code> on the application thread to avoid threading issues.</li>
+   <li>Add a property <code translate="no" dir="ltr">focusSkipButtonWhenAvailable</code> to the <code translate="no" dir="ltr">ImaServerSideAdInsertionMediaSource.AdsLoader.Builder</code> to request focusing the skip button on TV devices and set it to true by default.</li>
+   <li>Add a method <code translate="no" dir="ltr">focusSkipButton()</code> to the <code translate="no" dir="ltr">ImaServerSideAdInsertionMediaSource.AdsLoader</code> to programmatically request to focus the skip button.</li>
+   <li>Bump IMA SDK version to 3.29.0.</li>
+  </ul></li>
+ <li>Demo app: 
+  <ul>
+   <li>Request notification permission for download notifications at runtime (<a href="https://github.com/google/ExoPlayer/issues/10884">#10884</a>).</li>
+  </ul></li>
 </ul>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Mechanism for the app to configure the output switcher. </li>
-</ul>
-
-<h2>Tracing: v1.0.0-alpha09</h2>
-<p>February 10, 2023</p>
-<p><code translate="no" dir="ltr">androidx.tracing:tracing-perfetto-binary:1.0.0-alpha09</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/4a2f5e696614339c1ac21f706c1a17c0285780e7..adf1c279a86ab3886e1666c08e2c3efba783367b/tracing/tracing-perfetto-binary">Version 1.0.0-alpha09 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Version bump release to allow other <code translate="no" dir="ltr">androidx.tracing:tracing-perfetto*: 1.0.0-alpha09</code> libraries to work together.</li>
-</ul>
-<p>January 11, 2023</p>
-<p><code translate="no" dir="ltr">androidx.tracing:tracing-perfetto:1.0.0-alpha09</code> and <code translate="no" dir="ltr">androidx.tracing:tracing-perfetto-common:1.0.0-alpha09</code> are released with no changes. <a href="https://android.googlesource.com/platform/frameworks/support/+log/4a2f5e696614339c1ac21f706c1a17c0285780e7..adf1c279a86ab3886e1666c08e2c3efba783367b/tracing">Version 1.0.0-alpha09 contains these commits.</a></p>
 </body>
 </html>
