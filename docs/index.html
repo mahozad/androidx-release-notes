@@ -66,12 +66,58 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Runner 1.6.0: runner 1.6.0-alpha03</h2>
-<p>June 27, 2023</p>
-<p><code translate="no" dir="ltr">androidx.test:runner:1.6.0-alpha03</code> is released.</p>
-<p><strong>Bug fixes</strong></p>
+<h2>Compose Animation: v1.5.0-beta03</h2>
+<p>June 28, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.5.0-beta03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9eb2d144f9209cb9c4205ad1f981eb7ddf29b96e..24dc7b0781cb908b2385ec207ca1b3a72cb90093/compose/animation">Version 1.5.0-beta03 contains these commits.</a></p>
+
+<h2>Compose Compiler: v1.4.8</h2>
+<p>June 28, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.compiler:compiler:1.4.8</code>, <code translate="no" dir="ltr">androidx.compose.compiler:compiler-daemon:1.4.8</code>, and <code translate="no" dir="ltr">androidx.compose.compiler:compiler-hosted:1.4.8</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/2fe7d40c0deea40f58e95e1e709fc55c5d5ad477..a0c8102678bd6a0e2f5cf2df3d220b4fe85cba5e/compose/compiler">Version 1.4.8 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
 <ul>
- <li>Attempt to avoid outputting a test result summary which exceeds binder transaction limit.</li>
+ <li>Target Kotlin compiler version is bumped to 1.8.22.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Improved error message for <code translate="no" dir="ltr">@Composable</code> overrides. Now it correctly points out annotation mismatch.</li>
+ <li>Warn about redundant <code translate="no" dir="ltr">@Composable</code> annotation on inline lambdas that should not be marked as composable. This feature will not be supported with K2 compiler.</li>
+</ul>
+
+<h2>Compose Foundation: v1.5.0-beta03</h2>
+<p>June 28, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.5.0-beta03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9eb2d144f9209cb9c4205ad1f981eb7ddf29b96e..24dc7b0781cb908b2385ec207ca1b3a72cb90093/compose/foundation">Version 1.5.0-beta03 contains these commits.</a></p>
+
+<h2>Compose Material: v1.5.0-beta03</h2>
+<p>June 28, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.5.0-beta03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9eb2d144f9209cb9c4205ad1f981eb7ddf29b96e..24dc7b0781cb908b2385ec207ca1b3a72cb90093/compose/material">Version 1.5.0-beta03 contains these commits.</a></p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">BottomSheetState</code>, <code translate="no" dir="ltr">ModalBottomSheetState</code> and <code translate="no" dir="ltr">BottomDrawerState</code> now expose a progress property indicating the progress between the current (settled) anchor and the closest anchor in the swipe direction. (<a href="https://android-review.googlesource.com/#/q/I1b31727b4f56df890e336bea9f4de526733aaacc">I1b317</a>, <a href="https://issuetracker.google.com/issues/271169225">b/271169225</a>, <a href="https://issuetracker.google.com/issues/276375124">b/276375124</a>, <a href="https://issuetracker.google.com/issues/276776071">b/276776071</a>, <a href="https://issuetracker.google.com/issues/270066861">b/270066861</a>)</li>
+</ul>
+
+<h2>Compose Runtime: v1.5.0-beta03</h2>
+<p>June 28, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.5.0-beta03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9eb2d144f9209cb9c4205ad1f981eb7ddf29b96e..24dc7b0781cb908b2385ec207ca1b3a72cb90093/compose/runtime">Version 1.5.0-beta03 contains these commits.</a></p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Skip recomposition of subcompositions that will be removed. (<a href="https://android-review.googlesource.com/#/q/Ieeb9919897a9f9b4274ddc77e66608a673cd1112">Ieeb99</a>, <a href="https://issuetracker.google.com/issues/254645321">b/254645321</a>)</li>
+</ul>
+
+<h2>Compose UI: v1.5.0-beta03</h2>
+<p>June 28, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.5.0-beta03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9eb2d144f9209cb9c4205ad1f981eb7ddf29b96e..24dc7b0781cb908b2385ec207ca1b3a72cb90093/compose/ui">Version 1.5.0-beta03 contains these commits.</a></p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Added FocusTargetModifierNode interface that can be used to create a custom FocusTarget. (<a href="https://android-review.googlesource.com/#/q/Ifb1d6a93af9292ec159b72513cb3f40b62c643e0">Ifb1d6</a>)</li>
+ <li>Fixed an issue with Dialog and Popup composables that could result in the child window not resizing as expected when <code translate="no" dir="ltr">usePlatformDefaultWidth=true</code>. (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2616362">I112ee</a>)</li>
+</ul>
+
+<h2>Navigation: v2.7.0-beta02</h2>
+<p>June 28, 2023</p>
+<p><code translate="no" dir="ltr">androidx.navigation:navigation-*:2.7.0-beta02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/6e6b38595c10b8edd5d40a9bc9d4e294fc4f8160/navigation">Version 2.7.0-beta02 contains these commits.</a></p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Navigation Compose now has the right z-order for custom transitions that use navigate with the <code translate="no" dir="ltr">popUpTo</code> option.(<a href="https://android-review.googlesource.com/#/q/Ib1c3a329755b2cbec3d28568d03d73e5aa9b9128">/Ib1c3a</a>, <a href="https://issuetracker.google.com/285153947">b/285153947</a>)</li>
 </ul>
 </body>
 </html>
