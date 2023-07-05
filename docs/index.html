@@ -66,58 +66,171 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Compose Animation: v1.5.0-beta03</h2>
-<p>June 28, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.5.0-beta03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9eb2d144f9209cb9c4205ad1f981eb7ddf29b96e..24dc7b0781cb908b2385ec207ca1b3a72cb90093/compose/animation">Version 1.5.0-beta03 contains these commits.</a></p>
-
-<h2>Compose Compiler: v1.4.8</h2>
-<p>June 28, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.compiler:compiler:1.4.8</code>, <code translate="no" dir="ltr">androidx.compose.compiler:compiler-daemon:1.4.8</code>, and <code translate="no" dir="ltr">androidx.compose.compiler:compiler-hosted:1.4.8</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/2fe7d40c0deea40f58e95e1e709fc55c5d5ad477..a0c8102678bd6a0e2f5cf2df3d220b4fe85cba5e/compose/compiler">Version 1.4.8 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
+<h2>Media3: v1.1.0</h2>
 <ul>
- <li>Target Kotlin compiler version is bumped to 1.8.22.</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Improved error message for <code translate="no" dir="ltr">@Composable</code> overrides. Now it correctly points out annotation mismatch.</li>
- <li>Warn about redundant <code translate="no" dir="ltr">@Composable</code> annotation on inline lambdas that should not be marked as composable. This feature will not be supported with K2 compiler.</li>
-</ul>
-
-<h2>Compose Foundation: v1.5.0-beta03</h2>
-<p>June 28, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.5.0-beta03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9eb2d144f9209cb9c4205ad1f981eb7ddf29b96e..24dc7b0781cb908b2385ec207ca1b3a72cb90093/compose/foundation">Version 1.5.0-beta03 contains these commits.</a></p>
-
-<h2>Compose Material: v1.5.0-beta03</h2>
-<p>June 28, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.5.0-beta03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9eb2d144f9209cb9c4205ad1f981eb7ddf29b96e..24dc7b0781cb908b2385ec207ca1b3a72cb90093/compose/material">Version 1.5.0-beta03 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li><code translate="no" dir="ltr">BottomSheetState</code>, <code translate="no" dir="ltr">ModalBottomSheetState</code> and <code translate="no" dir="ltr">BottomDrawerState</code> now expose a progress property indicating the progress between the current (settled) anchor and the closest anchor in the swipe direction. (<a href="https://android-review.googlesource.com/#/q/I1b31727b4f56df890e336bea9f4de526733aaacc">I1b317</a>, <a href="https://issuetracker.google.com/issues/271169225">b/271169225</a>, <a href="https://issuetracker.google.com/issues/276375124">b/276375124</a>, <a href="https://issuetracker.google.com/issues/276776071">b/276776071</a>, <a href="https://issuetracker.google.com/issues/270066861">b/270066861</a>)</li>
-</ul>
-
-<h2>Compose Runtime: v1.5.0-beta03</h2>
-<p>June 28, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.5.0-beta03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9eb2d144f9209cb9c4205ad1f981eb7ddf29b96e..24dc7b0781cb908b2385ec207ca1b3a72cb90093/compose/runtime">Version 1.5.0-beta03 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Skip recomposition of subcompositions that will be removed. (<a href="https://android-review.googlesource.com/#/q/Ieeb9919897a9f9b4274ddc77e66608a673cd1112">Ieeb99</a>, <a href="https://issuetracker.google.com/issues/254645321">b/254645321</a>)</li>
-</ul>
-
-<h2>Compose UI: v1.5.0-beta03</h2>
-<p>June 28, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.5.0-beta03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9eb2d144f9209cb9c4205ad1f981eb7ddf29b96e..24dc7b0781cb908b2385ec207ca1b3a72cb90093/compose/ui">Version 1.5.0-beta03 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Added FocusTargetModifierNode interface that can be used to create a custom FocusTarget. (<a href="https://android-review.googlesource.com/#/q/Ifb1d6a93af9292ec159b72513cb3f40b62c643e0">Ifb1d6</a>)</li>
- <li>Fixed an issue with Dialog and Popup composables that could result in the child window not resizing as expected when <code translate="no" dir="ltr">usePlatformDefaultWidth=true</code>. (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2616362">I112ee</a>)</li>
-</ul>
-
-<h2>Navigation: v2.7.0-beta02</h2>
-<p>June 28, 2023</p>
-<p><code translate="no" dir="ltr">androidx.navigation:navigation-*:2.7.0-beta02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/6e6b38595c10b8edd5d40a9bc9d4e294fc4f8160/navigation">Version 2.7.0-beta02 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Navigation Compose now has the right z-order for custom transitions that use navigate with the <code translate="no" dir="ltr">popUpTo</code> option.(<a href="https://android-review.googlesource.com/#/q/Ib1c3a329755b2cbec3d28568d03d73e5aa9b9128">/Ib1c3a</a>, <a href="https://issuetracker.google.com/285153947">b/285153947</a>)</li>
+ <li>Common Library: 
+  <ul>
+   <li>Add suppression reason for unsuitable audio route and play when ready change reason for suppressed too long. (<a href="https://github.com/androidx/media/issues/15">#15</a>).</li>
+   <li>Add commands to Player: 
+    <ul>
+     <li><code translate="no" dir="ltr">COMMAND_GET_METADATA</code></li>
+     <li><code translate="no" dir="ltr">COMMAND_SET_PLAYLIST_METADATA</code></li>
+     <li><code translate="no" dir="ltr">COMMAND_SET_DEVICE_VOLUME_WITH_FLAGS</code></li>
+     <li><code translate="no" dir="ltr">COMMAND_ADJUST_DEVICE_VOLUME_WITH_FLAGS</code></li>
+    </ul></li>
+   <li>Add overloaded methods to Player which allow users to specify volume flags: 
+    <ul>
+     <li><code translate="no" dir="ltr">void setDeviceVolume(int, int)</code></li>
+     <li><code translate="no" dir="ltr">void increaseDeviceVolume(int)</code></li>
+     <li><code translate="no" dir="ltr">void decreaseDeviceVolume(int)</code></li>
+     <li><code translate="no" dir="ltr">void setDeviceMuted(boolean, int)</code></li>
+    </ul></li>
+   <li>Add <code translate="no" dir="ltr">Builder</code> for <code translate="no" dir="ltr">DeviceInfo</code> and deprecate existing constructor.</li>
+   <li>Add <code translate="no" dir="ltr">DeviceInfo.routingControllerId</code> to specify the routing controller ID for remote playbacks.</li>
+   <li>Add <code translate="no" dir="ltr">Player.replaceMediaItem(s)</code> as a shortcut to adding and removing items at the same position (<a href="https://github.com/google/ExoPlayer/issues/8046">#8046</a>).</li>
+  </ul></li>
+ <li>ExoPlayer: 
+  <ul>
+   <li>Allow ExoPlayer to have control of device volume methods only if explicitly opted in. Use <code translate="no" dir="ltr">ExoPlayer.Builder.setDeviceVolumeControlEnabled</code> to have access to: 
+    <ul>
+     <li><code translate="no" dir="ltr">getDeviceVolume()</code></li>
+     <li><code translate="no" dir="ltr">isDeviceMuted()</code></li>
+     <li><code translate="no" dir="ltr">setDeviceVolume(int)</code> and <code translate="no" dir="ltr">setDeviceVolume(int, int)</code></li>
+     <li><code translate="no" dir="ltr">increaseDeviceVolume(int)</code> and <code translate="no" dir="ltr">increaseDeviceVolume(int, int)</code></li>
+     <li><code translate="no" dir="ltr">decreaseDeviceVolume(int)</code> and <code translate="no" dir="ltr">decreaseDeviceVolume(int, int)</code></li>
+    </ul></li>
+   <li>Add <code translate="no" dir="ltr">FilteringMediaSource</code> that allows to filter available track types from a <code translate="no" dir="ltr">MediaSource</code>.</li>
+   <li>Add support for including Common Media Client Data (CMCD) in the outgoing requests of adaptive streaming formats DASH, HLS, and SmoothStreaming. The following fields, <code translate="no" dir="ltr">br</code>, <code translate="no" dir="ltr">bl</code>, <code translate="no" dir="ltr">cid</code>, <code translate="no" dir="ltr">rtp</code>, and <code translate="no" dir="ltr">sid</code>, have been incorporated (<a href="https://github.com/google/ExoPlayer/issues/8699">#8699</a>). API structure and API methods: 
+    <ul>
+     <li>CMCD logging is disabled by default, use <code translate="no" dir="ltr">MediaSource.Factory.setCmcdConfigurationFactory(CmcdConfiguration.Factory cmcdConfigurationFactory)</code> to enable it.</li>
+     <li>All keys are enabled by default, override <code translate="no" dir="ltr">CmcdConfiguration.RequestConfig.isKeyAllowed(String key)</code> to filter out which keys are logged.</li>
+     <li>Override <code translate="no" dir="ltr">CmcdConfiguration.RequestConfig.getCustomData()</code> to enable custom key logging.</li>
+    </ul></li>
+   <li>Add additional action to manifest of main demo to make it easier to start the demo app with a custom <code translate="no" dir="ltr">*.exolist.json</code> file (<a href="https://github.com/androidx/media/pull/439">#439</a>).</li>
+   <li>Add <code translate="no" dir="ltr">ExoPlayer.setVideoEffects()</code> for using <code translate="no" dir="ltr">Effect</code> during video playback.</li>
+   <li>Update <code translate="no" dir="ltr">SampleQueue</code> to store <code translate="no" dir="ltr">sourceId</code> as a <code translate="no" dir="ltr">long</code> rather than an <code translate="no" dir="ltr">int</code>. This changes the signatures of public methods <code translate="no" dir="ltr">SampleQueue.sourceId</code> and <code translate="no" dir="ltr">SampleQueue.peekSourceId</code>.</li>
+   <li>Add parameters to <code translate="no" dir="ltr">LoadControl</code> methods <code translate="no" dir="ltr">shouldStartPlayback</code> and <code translate="no" dir="ltr">onTracksSelected</code> that allow associating these methods with the relevant <code translate="no" dir="ltr">MediaPeriod</code>.</li>
+   <li>Change signature of <code translate="no" dir="ltr">ServerSideAdInsertionMediaSource.setAdPlaybackStates(Map&lt;Object, AdPlaybackState&gt;)</code> by adding a timeline parameter that contains the periods with the UIDs used as keys in the map. This is required to avoid concurrency issues with multi-period live streams.</li>
+   <li>Deprecate <code translate="no" dir="ltr">EventDispatcher.withParameters(int windowIndex, @Nullable MediaPeriodId mediaPeriodId, long mediaTimeOffsetMs)</code> and <code translate="no" dir="ltr">BaseMediaSource.createEventDispatcher(..., long mediaTimeOffsetMs)</code>. The variant of the methods without the <code translate="no" dir="ltr">mediaTimeOffsetUs</code> can be called instead. Note that even for the deprecated variants, the offset is not anymore added to <code translate="no" dir="ltr">startTimeUs</code> and <code translate="no" dir="ltr">endTimeUs</code> of the <code translate="no" dir="ltr">MediaLoadData</code> objects that are dispatched by the dispatcher.</li>
+   <li>Rename <code translate="no" dir="ltr">ExoTrackSelection.blacklist</code> to <code translate="no" dir="ltr">excludeTrack</code> and <code translate="no" dir="ltr">isBlacklisted</code> to <code translate="no" dir="ltr">isTrackExcluded</code>.</li>
+   <li>Fix inconsistent behavior between <code translate="no" dir="ltr">ExoPlayer.setMediaItem(s)</code> and <code translate="no" dir="ltr">addMediaItem(s)</code> when called on an empty playlist.</li>
+  </ul></li>
+ <li>Transformer: 
+  <ul>
+   <li>Remove <code translate="no" dir="ltr">Transformer.Builder.setMediaSourceFactory(MediaSource.Factory)</code>. Use <code translate="no" dir="ltr">ExoPlayerAssetLoader.Factory(MediaSource.Factory)</code> and <code translate="no" dir="ltr">Transformer.Builder.setAssetLoaderFactory(AssetLoader.Factory)</code> instead.</li>
+   <li>Remove <code translate="no" dir="ltr">Transformer.startTransformation(MediaItem, ParcelFileDescriptor)</code>.</li>
+   <li>Fix a bug where transformation could get stuck (leading to muxer timeout) if the end of the video stream was signaled at the moment when an input frame was pending processing.</li>
+   <li>Query codecs via <code translate="no" dir="ltr">MediaCodecList</code> instead of using <code translate="no" dir="ltr">findDecoder/EncoderForFormat</code> utilities, to expand support.</li>
+   <li>Remove B-frame configuration in <code translate="no" dir="ltr">DefaultEncoderFactory</code> because it doesn't work on some devices.</li>
+  </ul></li>
+ <li>Track selection: 
+  <ul>
+   <li>Add <code translate="no" dir="ltr">DefaultTrackSelector.Parameters.allowInvalidateSelectionsForRendererCapabilitiesChange</code> which is disabled by default. When enabled, the <code translate="no" dir="ltr">DefaultTrackSelector</code> will trigger a new track selection when the renderer capabilities changed.</li>
+  </ul></li>
+ <li>Extractors: 
+  <ul>
+   <li>Ogg: Fix bug when seeking in files with a long duration (<a href="https://github.com/androidx/media/issues/391">#391</a>).</li>
+   <li>FMP4: Fix issue where <code translate="no" dir="ltr">TimestampAdjuster</code> initializes a wrong timestamp offset with metadata sample time from emsg atom (<a href="https://github.com/androidx/media/issues/356">#356</a>).</li>
+  </ul></li>
+ <li>Audio: 
+  <ul>
+   <li>Fix bug where some playbacks fail when tunneling is enabled and <code translate="no" dir="ltr">AudioProcessors</code> are active, e.g. for gapless trimming (<a href="https://github.com/google/ExoPlayer/issues/10847">#10847</a>).</li>
+   <li>Encapsulate Opus frames in Ogg packets in direct playbacks (offload).</li>
+   <li>Extrapolate current position during sleep with offload scheduling.</li>
+   <li>Add <code translate="no" dir="ltr">Renderer.release()</code> and <code translate="no" dir="ltr">AudioSink.release()</code> for releasing the resources at the end of player's lifecycle.</li>
+   <li>Listen to audio capabilities changes in <code translate="no" dir="ltr">DefaultAudioSink</code>. Add a required parameter <code translate="no" dir="ltr">context</code> in the constructor of <code translate="no" dir="ltr">DefaultAudioSink</code>, with which the <code translate="no" dir="ltr">DefaultAudioSink</code> will register as the listener to the <code translate="no" dir="ltr">AudioCapabilitiesReceiver</code> and update its <code translate="no" dir="ltr">audioCapabilities</code> property when informed with a capabilities change.</li>
+   <li>Propagate audio capabilities changes via a new event <code translate="no" dir="ltr">onAudioCapabilitiesChanged</code> in <code translate="no" dir="ltr">AudioSink.Listener</code> interface, and a new interface <code translate="no" dir="ltr">RendererCapabilities.Listener</code> which triggers <code translate="no" dir="ltr">onRendererCapabilitiesChanged</code> events.</li>
+   <li>Add <code translate="no" dir="ltr">ChannelMixingAudioProcessor</code> for applying scaling/mixing to audio channels.</li>
+   <li>Add new int value <code translate="no" dir="ltr">DISCARD_REASON_AUDIO_BYPASS_POSSIBLE</code> to <code translate="no" dir="ltr">DecoderDiscardReasons</code> to discard audio decoder when bypass mode is possible after audio capabilities change.</li>
+   <li>Add direct playback support for DTS Express and DTS:X (<a href="https://github.com/androidx/media/pull/335">#335</a>).</li>
+  </ul></li>
+ <li>Video: 
+  <ul>
+   <li>Make <code translate="no" dir="ltr">MediaCodecVideoRenderer</code> report a <code translate="no" dir="ltr">VideoSize</code> with a width and height of 0 when the renderer is disabled. <code translate="no" dir="ltr">Player.Listener.onVideoSizeChanged</code> is called accordingly when <code translate="no" dir="ltr">Player.getVideoSize()</code> changes. With this change, ExoPlayer's video size with <code translate="no" dir="ltr">MediaCodecVideoRenderer</code> has a width and height of 0 when <code translate="no" dir="ltr">Player.getCurrentTracks</code> does not support video, or the size of the supported video track is not yet determined.</li>
+  </ul></li>
+ <li>DRM: 
+  <ul>
+   <li>Reduce the visibility of several internal-only methods on <code translate="no" dir="ltr">DefaultDrmSession</code> that aren't expected to be called from outside the DRM package: 
+    <ul>
+     <li><code translate="no" dir="ltr">void onMediaDrmEvent(int)</code></li>
+     <li><code translate="no" dir="ltr">void provision()</code></li>
+     <li><code translate="no" dir="ltr">void onProvisionCompleted()</code></li>
+     <li><code translate="no" dir="ltr">onProvisionError(Exception, boolean)</code></li>
+    </ul></li>
+  </ul></li>
+ <li>Muxer: 
+  <ul>
+   <li>Add a new muxer library which can be used to create an MP4 container file.</li>
+  </ul></li>
+ <li>IMA extension: 
+  <ul>
+   <li>Enable multi-period live DASH streams for DAI. Please note that the current implementation does not yet support seeking in live streams (<a href="https://github.com/google/ExoPlayer/issues/10912">#10912</a>).</li>
+   <li>Fix a bug where a new ad group is inserted in live streams because the calculated content position in consecutive timelines varies slightly.</li>
+  </ul></li>
+ <li>Session: 
+  <ul>
+   <li>Add helper method <code translate="no" dir="ltr">MediaSession.getControllerForCurrentRequest</code> to obtain information about the controller that is currently calling a<code translate="no" dir="ltr">Player</code> method.</li>
+   <li>Add <code translate="no" dir="ltr">androidx.media3.session.MediaButtonReceiver</code> to enable apps to implement playback resumption with media button events sent by, for example, a Bluetooth headset (<a href="https://github.com/androidx/media/issues/167">#167</a>).</li>
+   <li>Add default implementation to <code translate="no" dir="ltr">MediaSession.Callback.onAddMediaItems</code> to allow requested <code translate="no" dir="ltr">MediaItems</code> to be passed onto <code translate="no" dir="ltr">Player</code> if they have <code translate="no" dir="ltr">LocalConfiguration</code> (e.g. URI) (<a href="https://github.com/androidx/media/issues/282">#282</a>).</li>
+   <li>Add "seek to previous" and "seek to next" command buttons on compact media notification view by default for Android 12 and below (<a href="https://github.com/androidx/media/issues/410">#410</a>).</li>
+   <li>Add default implementation to <code translate="no" dir="ltr">MediaSession.Callback.onAddMediaItems</code> to allow requested <code translate="no" dir="ltr">MediaItems</code> to be passed onto <code translate="no" dir="ltr">Player</code> if they have <code translate="no" dir="ltr">LocalConfiguration</code> (e.g. URI) (<a href="https://github.com/androidx/media/issues/282">#282</a>).</li>
+   <li>Add "seek to previous" and "seek to next" command buttons on compact media notification view by default for Android 12 and below (<a href="https://github.com/androidx/media/issues/410">#410</a>).</li>
+  </ul></li>
+ <li>UI: 
+  <ul>
+   <li>Add Util methods <code translate="no" dir="ltr">shouldShowPlayButton</code> and <code translate="no" dir="ltr">handlePlayPauseButtonAction</code> to write custom UI elements with a play/pause button.</li>
+  </ul></li>
+ <li>RTSP Extension: 
+  <ul>
+   <li>For MPEG4-LATM, use default profile-level-id value if absent in Describe Response SDP message (<a href="https://github.com/androidx/media/issues/302">#302</a>).</li>
+   <li>Use base Uri for relative path resolution from the RTSP session if present in DESCRIBE response header (<a href="https://github.com/google/ExoPlayer/issues/11160">#11160</a>).</li>
+  </ul></li>
+ <li>DASH Extension: 
+  <ul>
+   <li>Remove the media time offset from <code translate="no" dir="ltr">MediaLoadData.startTimeMs</code> and <code translate="no" dir="ltr">MediaLoadData.endTimeMs</code> for multi period DASH streams.</li>
+   <li>Fix a bug where re-preparing a multi-period live Dash media source produced a <code translate="no" dir="ltr">IndexOutOfBoundsException</code> (<a href="https://github.com/google/ExoPlayer/issues/10838">#10838</a>).</li>
+  </ul></li>
+ <li>HLS Extension: 
+  <ul>
+   <li>Add <code translate="no" dir="ltr">HlsMediaSource.Factory.setTimestampAdjusterInitializationTimeoutMs(long)</code> to set a timeout for the loading thread to wait for the <code translate="no" dir="ltr">TimestampAdjuster</code> to initialize. If the initialization doesn't complete before the timeout, a <code translate="no" dir="ltr">PlaybackException</code> is thrown to avoid the playback endless stalling. The timeout is set to zero by default (<a href="https://github.com/androidx/media/issues//323">#323</a>).</li>
+  </ul></li>
+ <li>Test Utilities: 
+  <ul>
+   <li>Check for URI scheme case insensitivity in <code translate="no" dir="ltr">DataSourceContractTest</code>.</li>
+  </ul></li>
+ <li>Remove deprecated symbols: 
+  <ul>
+   <li>Remove <code translate="no" dir="ltr">DefaultAudioSink</code> constructors, use <code translate="no" dir="ltr">DefaultAudioSink.Builder</code> instead.</li>
+   <li>Remove <code translate="no" dir="ltr">HlsMasterPlaylist</code>, use <code translate="no" dir="ltr">HlsMultivariantPlaylist</code> instead.</li>
+   <li>Remove <code translate="no" dir="ltr">Player.stop(boolean)</code>. Use <code translate="no" dir="ltr">Player.stop()</code> and <code translate="no" dir="ltr">Player.clearMediaItems()</code> (if <code translate="no" dir="ltr">reset</code> is <code translate="no" dir="ltr">true</code>) instead.</li>
+   <li>Remove two deprecated <code translate="no" dir="ltr">SimpleCache</code> constructors, use a non-deprecated constructor that takes a <code translate="no" dir="ltr">DatabaseProvider</code> instead for better performance.</li>
+   <li>Remove <code translate="no" dir="ltr">DefaultBandwidthMeter</code> constructor, use <code translate="no" dir="ltr">DefaultBandwidthMeter.Builder</code> instead.</li>
+   <li>Remove <code translate="no" dir="ltr">DefaultDrmSessionManager</code> constructors, use <code translate="no" dir="ltr">DefaultDrmSessionManager.Builder</code> instead.</li>
+   <li>Remove two deprecated <code translate="no" dir="ltr">HttpDataSource.InvalidResponseCodeException</code> constructors, use a non-deprecated constructor that accepts additional fields(<code translate="no" dir="ltr">cause</code>, <code translate="no" dir="ltr">responseBody</code>) to enhance error logging.</li>
+   <li>Remove <code translate="no" dir="ltr">DownloadHelper.forProgressive</code>, <code translate="no" dir="ltr">DownloadHelper.forHls</code>, <code translate="no" dir="ltr">DownloadHelper.forDash</code>, and <code translate="no" dir="ltr">DownloadHelper.forSmoothStreaming</code>, use <code translate="no" dir="ltr">DownloadHelper.forMediaItem</code> instead.</li>
+   <li>Remove deprecated <code translate="no" dir="ltr">DownloadService</code> constructor, use a non deprecated constructor that includes the option to provide a <code translate="no" dir="ltr">channelDescriptionResourceId</code> parameter.</li>
+   <li>Remove deprecated String constants for Charsets (<code translate="no" dir="ltr">ASCII_NAME</code>, <code translate="no" dir="ltr">UTF8_NAME</code>, <code translate="no" dir="ltr">ISO88591_NAME</code>, <code translate="no" dir="ltr">UTF16_NAME</code> and <code translate="no" dir="ltr">UTF16LE_NAME</code>), use Kotlin Charsets from the <code translate="no" dir="ltr">kotlin.text</code> package, the <code translate="no" dir="ltr">java.nio.charset.StandardCharsets</code> or the <code translate="no" dir="ltr">com.google.common.base.Charsets</code> instead.</li>
+   <li>Remove deprecated <code translate="no" dir="ltr">WorkManagerScheduler</code> constructor, use a non deprecated constructor that includes the option to provide a <code translate="no" dir="ltr">Context</code> parameter instead.</li>
+   <li>Remove the deprecated methods <code translate="no" dir="ltr">createVideoSampleFormat</code>, <code translate="no" dir="ltr">createAudioSampleFormat</code>, <code translate="no" dir="ltr">createContainerFormat</code>, and <code translate="no" dir="ltr">createSampleFormat</code>, which were used to instantiate the <code translate="no" dir="ltr">Format</code> class. Instead use <code translate="no" dir="ltr">Format.Builder</code> for creating instances of <code translate="no" dir="ltr">Format</code>.</li>
+   <li>Remove the deprecated methods <code translate="no" dir="ltr">copyWithMaxInputSize</code>, <code translate="no" dir="ltr">copyWithSubsampleOffsetUs</code>, <code translate="no" dir="ltr">copyWithLabel</code>, <code translate="no" dir="ltr">copyWithManifestFormatInfo</code>, <code translate="no" dir="ltr">copyWithGaplessInfo</code>, <code translate="no" dir="ltr">copyWithFrameRate</code>, <code translate="no" dir="ltr">copyWithDrmInitData</code>, <code translate="no" dir="ltr">copyWithMetadata</code>, <code translate="no" dir="ltr">copyWithBitrate</code> and <code translate="no" dir="ltr">copyWithVideoSize</code>, use <code translate="no" dir="ltr">Format.buildUpon()</code> and setter methods instead.</li>
+   <li>Remove deprecated <code translate="no" dir="ltr">ExoPlayer.retry()</code>, use <code translate="no" dir="ltr">prepare()</code> instead.</li>
+   <li>Remove deprecated zero-arg <code translate="no" dir="ltr">DefaultTrackSelector</code> constructor, use <code translate="no" dir="ltr">DefaultTrackSelector(Context)</code> instead.</li>
+   <li>Remove deprecated <code translate="no" dir="ltr">OfflineLicenseHelper</code> constructor, use <code translate="no" dir="ltr">OfflineLicenseHelper(DefaultDrmSessionManager, DrmSessionEventListener.EventDispatcher)</code> instead.</li>
+   <li>Remove deprecated <code translate="no" dir="ltr">DownloadManager</code> constructor, use the constructor that takes an <code translate="no" dir="ltr">Executor</code> instead.</li>
+   <li>Remove deprecated <code translate="no" dir="ltr">Cue</code> constructors, use <code translate="no" dir="ltr">Cue.Builder</code> instead.</li>
+   <li>Remove deprecated <code translate="no" dir="ltr">OfflineLicenseHelper</code> constructor, use <code translate="no" dir="ltr">OfflineLicenseHelper(DefaultDrmSessionManager, DrmSessionEventListener.EventDispatcher)</code> instead.</li>
+   <li>Remove four deprecated <code translate="no" dir="ltr">AnalyticsListener</code> methods: 
+    <ul>
+     <li><code translate="no" dir="ltr">onDecoderEnabled</code>, use <code translate="no" dir="ltr">onAudioEnabled</code> and/or <code translate="no" dir="ltr">onVideoEnabled</code> instead.</li>
+     <li><code translate="no" dir="ltr">onDecoderInitialized</code>, use <code translate="no" dir="ltr">onAudioDecoderInitialized</code> and/or <code translate="no" dir="ltr">onVideoDecoderInitialized</code> instead.</li>
+     <li><code translate="no" dir="ltr">onDecoderInputFormatChanged</code>, use <code translate="no" dir="ltr">onAudioInputFormatChanged</code> and/or <code translate="no" dir="ltr">onVideoInputFormatChanged</code> instead.</li>
+     <li><code translate="no" dir="ltr">onDecoderDisabled</code>, use <code translate="no" dir="ltr">onAudioDisabled</code> and/or <code translate="no" dir="ltr">onVideoDisabled</code> instead.</li>
+    </ul></li>
+   <li>Remove the deprecated <code translate="no" dir="ltr">Player.Listener.onSeekProcessed</code> and <code translate="no" dir="ltr">AnalyticsListener.onSeekProcessed</code>, use <code translate="no" dir="ltr">onPositionDiscontinuity</code> with <code translate="no" dir="ltr">DISCONTINUITY_REASON_SEEK</code> instead.</li>
+   <li>Remove <code translate="no" dir="ltr">ExoPlayer.setHandleWakeLock(boolean)</code>, use <code translate="no" dir="ltr">setWakeMode(int)</code> instead.</li>
+   <li>Remove deprecated <code translate="no" dir="ltr">DefaultLoadControl.Builder.createDefaultLoadControl()</code>, use <code translate="no" dir="ltr">build()</code> instead.</li>
+   <li>Remove deprecated <code translate="no" dir="ltr">MediaItem.PlaybackProperties</code>, use <code translate="no" dir="ltr">MediaItem.LocalConfiguration</code> instead. Deprecated field <code translate="no" dir="ltr">MediaItem.playbackProperties</code> is now of type <code translate="no" dir="ltr">MediaItem.LocalConfiguration</code>.</li>
+  </ul></li>
 </ul>
 </body>
 </html>
