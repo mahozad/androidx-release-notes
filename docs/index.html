@@ -66,33 +66,71 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Compose Animation: v1.5.2</h2>
-<p>September 27, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.5.2</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/0a2cac855f7723e1e485c20ac68d34dc8bb68d1e..2bc777611812ef8ef7329a332fbaf8348af05ec7/compose/animation">Version 1.5.2 contains these commits.</a></p>
-
-<h2>Compose Foundation: v1.5.2</h2>
-<p>September 27, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.5.2</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/0a2cac855f7723e1e485c20ac68d34dc8bb68d1e..2bc777611812ef8ef7329a332fbaf8348af05ec7/compose/foundation">Version 1.5.2 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
+<h2>Media3: v1.2.0-alpha02</h2>
 <ul>
- <li>Fixed a bug in text that led to crashes in certain circumstances when semantics were invalidated.</li>
-</ul>
-
-<h2>Compose Material: v1.5.2</h2>
-<p>September 27, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.5.2</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/0a2cac855f7723e1e485c20ac68d34dc8bb68d1e..2bc777611812ef8ef7329a332fbaf8348af05ec7/compose/material">Version 1.5.2 contains these commits.</a></p>
-
-<h2>Compose Runtime: v1.5.2</h2>
-<p>September 27, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.5.2</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/0a2cac855f7723e1e485c20ac68d34dc8bb68d1e..2bc777611812ef8ef7329a332fbaf8348af05ec7/compose/runtime">Version 1.5.2 contains these commits.</a></p>
-
-<h2>Compose UI: v1.5.2</h2>
-<p>September 27, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.5.2</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/0a2cac855f7723e1e485c20ac68d34dc8bb68d1e..2bc777611812ef8ef7329a332fbaf8348af05ec7/compose/ui">Version 1.5.2 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Added workaround for crashes when accessibility scroll API was accessed from background thread.</li>
- <li>Fix unattached nodes being added to the semantics tree.</li>
+ <li>Common Library: 
+  <ul>
+   <li>Upgrade <code translate="no" dir="ltr">androidx.annotation:annotation-experimental</code> to <code translate="no" dir="ltr">1.3.1</code>. This also introduces a transitive dependency on the Kotlin standard library from <code translate="no" dir="ltr">media3-common</code>. Apps can <a href="/guide/topics/media/exoplayer/shrinking#remove-kotlin-dep">downgrade to remove this dependency if they want</a>. Fixes https://issuetracker.google.com/251172715.</li>
+   <li>Move <code translate="no" dir="ltr">ExoPlayer.setAudioAttributes</code> to the <code translate="no" dir="ltr">Player</code> interface.</li>
+  </ul></li>
+ <li>ExoPlayer: 
+  <ul>
+   <li>Add additional fields to Common Media Client Data (CMCD) logging: next object request (<code translate="no" dir="ltr">nor</code>) and next range request (<code translate="no" dir="ltr">nrr</code>) (<a href="https://github.com/google/ExoPlayer/issues/8699">#8699</a>).</li>
+   <li>Add functionality to transmit Common Media Client Data (CMCD) data using query parameters (<a href="https://github.com/androidx/media/issues/553">#553</a>).</li>
+   <li>Fix <code translate="no" dir="ltr">ConcurrentModificationException</code> in <code translate="no" dir="ltr">ExperimentalBandwidthMeter</code> (<a href="https://github.com/androidx/media/issues/612">#612</a>).</li>
+   <li>Add <code translate="no" dir="ltr">MediaPeriodId</code> parameter to <code translate="no" dir="ltr">CompositeMediaSource.getMediaTimeForChildMediaTime</code>.</li>
+   <li>Support <code translate="no" dir="ltr">ClippingMediaSource</code> (and other sources with period/window time offsets) in <code translate="no" dir="ltr">ConcatenatingMediaSource2</code> (<a href="https://github.com/google/ExoPlayer/issues/11226">#11226</a>).</li>
+   <li>Change <code translate="no" dir="ltr">BaseRenderer.onStreamChanged()</code> to also receive a <code translate="no" dir="ltr">MediaPeriodId</code> argument.</li>
+  </ul></li>
+ <li>Transformer: 
+  <ul>
+   <li>Changed <code translate="no" dir="ltr">frameRate</code> and <code translate="no" dir="ltr">durationUs</code> parameters of <code translate="no" dir="ltr">SampleConsumer.queueInputBitmap</code> to <code translate="no" dir="ltr">TimestampIterator</code>.</li>
+  </ul></li>
+ <li>Extractors: 
+  <ul>
+   <li>Add <code translate="no" dir="ltr">BmpExtractor</code>.</li>
+   <li>Add <code translate="no" dir="ltr">WebpExtractor</code>.</li>
+   <li>Add <code translate="no" dir="ltr">HeifExtractor</code>.</li>
+   <li>Add <a href="https://developer.apple.com/standards/qtff-2001.pdf">QuickTime classic</a> support to <code translate="no" dir="ltr">Mp4Extractor</code>.</li>
+  </ul></li>
+ <li>Audio: 
+  <ul>
+   <li>Add support for Opus gapless metadata during offload playback.</li>
+   <li>Allow renderer recovery by disabling offload if failed at first write (<a href="https://github.com/androidx/media/issues/627">#627</a>).</li>
+   <li>Enable Offload Scheduling by default for audio-only offloaded playback.</li>
+   <li>Delete <code translate="no" dir="ltr">ExoPlayer.experimentalSetOffloadSchedulingEnabled</code> and <code translate="no" dir="ltr">AudioOffloadListener.onExperimentalOffloadSchedulingEnabledChanged</code>.</li>
+   <li>Renamed <code translate="no" dir="ltr">onExperimentalSleepingForOffloadChanged</code> as <code translate="no" dir="ltr">onSleepingForOffloadChanged</code> and <code translate="no" dir="ltr">onExperimentalOffloadedPlayback</code> as <code translate="no" dir="ltr">onOffloadedPlayback</code>.</li>
+  </ul></li>
+ <li>Effect: 
+  <ul>
+   <li>Changed <code translate="no" dir="ltr">frameRate</code> and <code translate="no" dir="ltr">durationUs</code> parameters of <code translate="no" dir="ltr">VideoFrameProcessor.queueInputBitmap</code> to <code translate="no" dir="ltr">TimestampIterator</code>.</li>
+  </ul></li>
+ <li>IMA extension: 
+  <ul>
+   <li>Fix bug where a multi-period DASH live stream that is not the first item in a playlist can throw an exception (<a href="https://github.com/androidx/media/issues/571">#571</a>).</li>
+   <li>Release StreamManager before calling <code translate="no" dir="ltr">AdsLoader.destroy()</code></li>
+   <li>Bump IMA SDK version to 3.31.0.</li>
+  </ul></li>
+ <li>Session: 
+  <ul>
+   <li>Set the notifications foreground service behavior to <code translate="no" dir="ltr">FOREGROUND_SERVICE_IMMEDIATE</code> in <code translate="no" dir="ltr">DefaultMediaNotificationProvider</code> (<a href="https://github.com/androidx/media/issues/167">#167</a>).</li>
+   <li>Use only <code translate="no" dir="ltr">android.media.session.MediaSession.setMediaButtonBroadcastReceiver()</code> above API 31 to avoid problems with deprecated API on Samsung devices (<a href="https://github.com/androidx/media/issues/167">#167</a>).</li>
+   <li>Use the media notification controller as proxy to set available commands and custom layout used to populate the notification and the platform session.</li>
+   <li>Convert media button events that are received by <code translate="no" dir="ltr">MediaSessionService.onStartCommand()</code> within Media3 instead of routing them to the platform session and back to Media3. With this, the caller controller is always the media notification controller and apps can easily recognize calls coming from the notification in the same way on all supported API levels.</li>
+   <li>Fix bug where <code translate="no" dir="ltr">MediaController.getCurrentPosition()</code> is not advancing when connected to a legacy <code translate="no" dir="ltr">MediaSessionCompat</code>.</li>
+   <li>Add <code translate="no" dir="ltr">MediaLibrarySession.getSubscribedControllers(mediaId)</code> for convenience.</li>
+   <li>Override <code translate="no" dir="ltr">MediaLibrarySession.Callback.onSubscribe()</code> to assert the availability of the <code translate="no" dir="ltr">parentId</code> for which the controller subscribes. If successful, the subscription is accepted and <code translate="no" dir="ltr">notifyChildrenChanged()</code> is called immediately to inform the browser (<a href="https://github.com/androidx/media/issues/561">#561</a>).</li>
+  </ul></li>
+ <li>RTSP Extension: 
+  <ul>
+   <li>Fix a race condition that could lead to <code translate="no" dir="ltr">IndexOutOfBoundsException</code> when falling back to TCP, or playback hanging in some situations.</li>
+   <li>Check state in RTSP setup when returning loading state of <code translate="no" dir="ltr">RtspMediaPeriod</code> (<a href="https://github.com/androidx/media/issues/577">#577</a>).</li>
+   <li>Ignore custom RTSP request methods in Options response public header (<a href="https://github.com/androidx/media/issues/613">#613</a>).</li>
+  </ul></li>
+ <li>Leanback extension: 
+  <ul>
+   <li>Fix bug where disabling a surface can cause an <code translate="no" dir="ltr">ArithmeticException</code> in Leanback code (<a href="https://github.com/androidx/media/issues/617">#617</a>).</li>
+  </ul></li>
 </ul>
 </body>
 </html>
