@@ -66,13 +66,445 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Benchmark: v1.2.0-rc02</h2>
-<p>October 6, 2023</p>
-<p><code translate="no" dir="ltr">androidx.benchmark:benchmark-*:1.2.0-rc02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/fc9d0ceb0cf1daabde110d9965d3dd87319b575c..c65e8e30c0edf5bb898c705ceab72d04ffbc0de7/benchmark">Version 1.2.0-rc02 contains these commits.</a></p>
+<h2>Benchmark: v1.2.0</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.benchmark:benchmark-*:1.2.0</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/c65e8e30c0edf5bb898c705ceab72d04ffbc0de7..02ee67f42727c99060859cf146f7a61c8db1fe96/benchmark">Version 1.2.0 contains these commits.</a></p>
+<p><strong>Important changes since 1.1.0</strong></p>
+<p><strong>Baseline Profiles</strong></p>
+<ul>
+ <li>New <a href="/topic/performance/baselineprofiles/create-baselineprofile#android%20studio%20hedgehot">Baseline Profile Gradle Plugin</a> automates capturing and including baseline profiles in your test and build workflow.</li>
+ <li><code translate="no" dir="ltr">BaselineProfileRule.collect</code> now stable, a streamlined and simplified version of the previous experimental <code translate="no" dir="ltr">BaselineProfileRule.collectBaselineProfile</code> API 
+  <ul>
+   <li>Just specify <code translate="no" dir="ltr">packageName</code>, and drive your app</li>
+  </ul></li>
+ <li>For libraries generating baseline profiles, you can now filter the rules generated either in code (<code translate="no" dir="ltr">BaselineProfileRule.collect</code> argument), or even more simply in the gradle plugin</li>
+ <li>Fixes 
+  <ul>
+   <li>Fixed baseline profile collection on Android U+ (<a href="https://android-review.googlesource.com/#/q/Id1392207ec545dc4b095c4b435a92bb2a1ff0c66">Id1392</a>, <a href="https://issuetracker.google.com/issues/277645214">b/277645214</a>)</li>
+  </ul></li>
+</ul>
+<p><strong>Macrobenchmark</strong></p>
+<ul>
+ <li>Compilation 
+  <ul>
+   <li>Macrobenchmark now correctly fully resets compilation state for each compile - this requires reinstalling the APK prior to Android 14, so benchmarking on Android 14+ is strongly recommended if you want to persist state (like user login) in what's being measured.</li>
+   <li>You can also work around this by controlling app compilation separately, and skipping compilation with <a href="/reference/androidx/benchmark/macro/CompilationMode.Ignore"><code translate="no" dir="ltr">CompilationMode.Ignore()</code></a> or <a href="/topic/performance/benchmarking/macrobenchmark-instrumentation-args#compilation-enabled">instrumentation argument</a></li>
+  </ul></li>
+ <li><p>Instrumentation Arguments</p>
+  <ul>
+   <li>Support for <a href="/topic/performance/benchmarking/macrobenchmark-instrumentation-args#dryrunmode-enable"><code translate="no" dir="ltr">androidx.benchmark.dryRunMode.enable</code></a> instrumentation argument, (already available in microbenchmark) for quicker validation runs (e.g. when creating the benchmark, or in presubmit)</li>
+   <li>Support for <code translate="no" dir="ltr">androidx.benchmark.profiling.mode=StackSampling</code> and <code translate="no" dir="ltr">MethodTracing</code>.</li>
+   <li>Added <a href="/topic/performance/benchmarking/macrobenchmark-instrumentation-args#enabled-rules"><code translate="no" dir="ltr">androidx.benchmark.enabledRules</code></a> to allow runtime filtering baseline profile vs macrobenchmark rule tests</li>
+   <li>Added <a href="/topic/performance/benchmarking/macrobenchmark-instrumentation-args#perfettoSdkTracing"><code translate="no" dir="ltr">androidx.benchmark.perfettoSdkTracing.enable</code></a> argument to enable tracing with tracing-perfetto, e.g. Compose recomposition tracing. Note that when used with <code translate="no" dir="ltr">StartupMode.COLD</code>, timing will be significantly affected as the tracing library is loaded and enabled during app startup.</li>
+  </ul></li>
+ <li><p>Requirements</p>
+  <ul>
+   <li>Macrobenchmark now requires <code translate="no" dir="ltr">ProfileInstaller</code> 1.3.0 or greater in the target app, to enable profile capture / reset, and shader cache clearing.</li>
+  </ul></li>
+ <li><p>New Experimental <a href="/topic/performance/benchmarking/macrobenchmark-metrics">Metric APIs</a></p>
+  <ul>
+   <li>Added experimental <a href="/reference/kotlin/androidx/benchmark/macro/TraceSectionMetric"><code translate="no" dir="ltr">TraceSectionMetric</code></a>, which allows for extracting simple timing from <a href="/topic/performance/tracing/custom-events"><code translate="no" dir="ltr">trace("") {}</code></a> blocks in your app, or <a href="/reference/androidx/benchmark/macro/TraceMetric">TraceMetric</a> for leveraging the full query capability of Perfetto <code translate="no" dir="ltr">TraceProcessor</code>.</li>
+   <li>Added experimental <a href="/reference/androidx/benchmark/macro/PowerMetric"><code translate="no" dir="ltr">PowerMetric</code></a> to capture power usage information</li>
+   <li>Added experimental <a href="/reference/androidx/benchmark/macro/MemoryCountersMetric"><code translate="no" dir="ltr">MemoryCountersMetric</code></a> to count page faults</li>
+   <li>Added experimental <a href="/reference/androidx/benchmark/perfetto/PerfettoTraceProcessor"><code translate="no" dir="ltr">PerfettoTraceProcessor</code></a> API, which is used internally to extract metrics from System traces (aka Perfetto traces)</li>
+  </ul></li>
+ <li><p>Fixes</p>
+  <ul>
+   <li>Fixed crashes when installing or extracting profiles from an app installed from multiple APKs (e.g. from app bundle).</li>
+   <li>Fixed <code translate="no" dir="ltr">FrameTimingMetric</code> ignoring frames with inconsistent frame IDs (generally, frames during ripples on API 31+) (<a href="https://android-review.googlesource.com/#/q/I747d23e6f5f38eda2c51ee3d26929fa4130e297c">I747d2</a>, <a href="https://issuetracker.google.com/issues/279088460">b/279088460</a>)</li>
+   <li>Fixed parsing errors on traces &gt; 64MB (<a href="https://android-review.googlesource.com/#/q/Ief831b2c58ebfeac3ae5cb2bfcb8623b920ad356">Ief831</a>, <a href="https://issuetracker.google.com/issues/269949822">b/269949822</a>)</li>
+   <li>Clarified errors when device (especially emulator) OS image not correctly configured for tracing, or compilation</li>
+   <li>Skip battery level check for devices without battery (micro and macro)</li>
+   <li>Improved file output, with more clear errors for invalid output directories, and safer defaults</li>
+   <li>Improved stability of <code translate="no" dir="ltr">StartupMode.COLD</code> by consistently dropping the shader cache (also exposed via <code translate="no" dir="ltr">MacrobenchmarkScope.dropShaderCache</code>)</li>
+   <li>Fixed leanback fallback for <code translate="no" dir="ltr">startActivityAndWait</code>.</li>
+  </ul></li>
+</ul>
+<p><strong>Microbenchmark</strong></p>
+<ul>
+ <li>Features 
+  <ul>
+   <li>Profiling was moved to a separate phase, after other metrics, so one test run can display both accurate timing <em>and</em> profiling results.</li>
+  </ul></li>
+ <li>Experimental APIs 
+  <ul>
+   <li>Added experimental <a href="/reference/kotlin/androidx/benchmark/MicrobenchmarkConfig"><code translate="no" dir="ltr">MicrobenchmarkConfig</code></a> API for defining custom metrics and configuring tracing and profiling. Can be used to capture method traces, or capture tracepoints (but be aware of tracing overhead).</li>
+   <li>Added experimental APIs for controlling <a href="/reference/kotlin/androidx/benchmark/BenchmarkState"><code translate="no" dir="ltr">BenchmarkState</code></a> separately from <code translate="no" dir="ltr">BenchmarkRule</code>, without JUnit</li>
+   <li>Added experimental <a href="/reference/androidx/benchmark/perfetto/PerfettoTrace"><code translate="no" dir="ltr">PerfettoTrace</code></a> record to enable capturing Perfetto traces, with custom configuration, separate from benchmark APIs.</li>
+  </ul></li>
+ <li>Fixes 
+  <ul>
+   <li>Workaround missing leading whitespaces in Android Studio benchmark output.</li>
+   <li>Fix issue where warnings could fail to print in Android Studio benchmark output.</li>
+   <li>Fixed <code translate="no" dir="ltr">SampledProfiling</code> crash on Android 13 (API 33) and higher.</li>
+   <li>Massively improved performance of <code translate="no" dir="ltr">dryRunMode</code> by skipping <code translate="no" dir="ltr">IsolationActivity</code> and Perfetto tracing (Up to 10x faster dry run mode on older OS versions).</li>
+  </ul></li>
+</ul>
+
+<h2>Browser: v1.7.0-beta01</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.browser:browser:1.7.0-beta01</code> is released with no changes. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f7407d4293384a1b91bc142880e3525048b3443..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/browser/browser">Version 1.7.0-beta01 contains these commits.</a></p>
+
+<h2>CameraX: v1.3.0</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.camera:camera-*:1.3.0</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/85bee35bbcfa3c5f457a3ae3da014e0c8eea0a02..ef36c63f9e8f6ac59ad44c45496c271d6cb2a3cc/camera">Version 1.3.0 contains these commits.</a></p>
+<p><strong>Important changes since 1.2.0</strong></p>
+<ul>
+ <li>Video features including <a href="https://developer.android.com/reference/androidx/camera/video/VideoCapture.Builder#setDynamicRange%28androidx.camera.core.DynamicRange%29">10-bit HDR</a>, <a href="https://developer.android.com/reference/androidx/camera/core/ViewPort.Builder#Builder%28android.util.Rational,int%29">cropping</a>, <a href="https://developer.android.com/reference/androidx/camera/video/VideoCapture.Builder#setMirrorMode%28int%29">mirror/non-mirror</a>, <a href="https://developer.android.com/reference/androidx/camera/video/Recording#mute%28boolean%29">mute/unmute</a>, <a href="https://developer.android.com/reference/androidx/camera/video/VideoCapture.Builder#setTargetFrameRate%28android.util.Range%3Cjava.lang.Integer%3E%29">set framerate</a>, and more.</li>
+ <li><a href="https://developer.android.com/reference/androidx/camera/lifecycle/ProcessCameraProvider#getAvailableConcurrentCameraInfos%28%29">Dual Concurrent Camera</a></li>
+ <li><a href="https://developer.android.com/reference/androidx/camera/core/CameraEffect">Effect library</a></li>
+ <li><a href="https://developer.android.com/reference/androidx/camera/core/resolutionselector/ResolutionSelector">Resolution Selector</a></li>
+ <li><a href="https://developer.android.com/reference/androidx/camera/core/CameraInfo#getIntrinsicZoomRatio%28%29">Ultra-Wide &amp; Telescopic camera selection</a></li>
+ <li><a href="https://developer.android.com/reference/androidx/camera/video/PendingRecording#asPersistentRecording%28%29">Camera switching during video recording</a> (experimental feature)</li>
+</ul>
+
+<h2>CameraX: v1.4.0-alpha02</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.camera:camera-*:1.4.0-alpha02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/c46c913e821a8f47c1376abbe688af1a9e8558cd..fca6737d0d4b9dda7d8ea4168cf8c85771227653/camera">Version 1.4.0-alpha02 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Rename the API to <code translate="no" dir="ltr">setCameraOpenRetryMaxTimeoutInMillisWhileResuming</code> and rename the argument. (<a href="https://android-review.googlesource.com/#/q/I7237035a800667b39433164b7b833788686c0b03">I72370</a>)</li>
+ <li>Adding APIs to query the device capability and enable video/preview stabilization. (<a href="https://android-review.googlesource.com/#/q/I87544680620842990ce95ac226160126368547a2">I87544</a>)</li>
+ <li>Provide API to customize the camera open retrying max timeout time. (<a href="https://android-review.googlesource.com/#/q/I0c6424622a239c65a1e5687e1843b619b4824b64">I0c642</a>)</li>
+ <li>Released <code translate="no" dir="ltr">ProcessCameraProvider.shutdownAsync</code> as a public testing API to allow process camera provider to be used in test suites which may need to initialize CameraX in different ways in between tests. (<a href="https://android-review.googlesource.com/#/q/I9eca7edd77a7dcb74f28786c830f5c3f5b5bcf22">I9eca7</a>)</li>
+ <li>Add APIs for configuring video capture dynamic range, frame rate and mirror mode. (<a href="https://android-review.googlesource.com/#/q/Ifb8f76e2f0bbb3235c8735134fe2dcd44f85188c">Ifb8f7</a>)</li>
+ <li>Deprecate <code translate="no" dir="ltr">OutputSize</code> and replace it with <code translate="no" dir="ltr">ResolutionSelector</code>. <code translate="no" dir="ltr">ResolutionSelector</code> is a more comprehensive way to select resolutions, and it's consistent with the camera-core API. (<a href="https://android-review.googlesource.com/#/q/I93abdb2472d82de5af890fccdd253d629f9111e7">I93abd</a>, <a href="https://issuetracker.google.com/issues/286801438">b/286801438</a>)</li>
+</ul>
 <p><strong>Bug Fixes</strong></p>
 <ul>
- <li>Fix Benchmark file output to no longer break <code translate="no" dir="ltr">BaselineProfile</code> Plugin file copying. Files were generated and copied off device, but had been renamed such that the gradle plugin wouldn't see them. (<a href="https://android-review.googlesource.com/#/q/I8dbccc5a11b4c391169cff6dfbd2a0001fd41001">I8dbcc</a>, <a href="https://issuetracker.google.com/issues/303034735">b/303034735</a>, <a href="https://issuetracker.google.com/issues/296453339">b/296453339</a>)</li>
- <li>Clarified <code translate="no" dir="ltr">tracing-perfetto</code> loading error messages when injecting from macrobenchmark module into target application.</li>
+ <li>Fixed the black preview issue on Samsung Galaxy S23 Ultra 5G when Extensions Bokeh or Face-Retouch is enabled with <code translate="no" dir="ltr">ImageAnalysis</code> on the rear camera. (<a href="https://android-review.googlesource.com/#/q/I2e8b1c5bc42da2443299a0d89343bed82249da71">I2e8b1</a>)</li>
+ <li>Fixed Preview and <code translate="no" dir="ltr">VideoCapture</code> stretched issues on Moto E5 Play. (<a href="https://android-review.googlesource.com/#/q/73dce2dd644138870bda6cf61227b8dfd69c02bc">73dce2</a>)</li>
+</ul>
+
+<h2>Collection: v1.4.0-alpha02</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.collection:collection-*:1.4.0-alpha02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/b4a3474b543fec681c14700d322e9d2ed8f2cce6..d01dc8c0d7a84bfca831a38146dccc49111668f2/collection">Version 1.4.0-alpha02 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Added overload for <code translate="no" dir="ltr">put</code> that returns the previous value when it is replaced to all primitive collections, such as <code translate="no" dir="ltr">FloatFloatMap</code>.</li>
+ <li>Convert <code translate="no" dir="ltr">removeIf</code> methods on primitive collections, such as <code translate="no" dir="ltr">MutableFloatFloatMap</code> to inline. This ensures that the lambda for <code translate="no" dir="ltr">removeIf</code> is not allocated.</li>
+</ul>
+
+<h2>Compose Animation: v1.5.4</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.5.4</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/4ed495b997a532cc4cbe39abdbaa98b8fc6f3764..b6d5e6e62e40f6938bdbcfef1d6c8a79e25006f8/compose/animation">Version 1.5.4 contains these commits.</a></p>
+
+<h2>Compose Animation: v1.6.0-alpha08</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.6.0-alpha08</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f7407d4293384a1b91bc142880e3525048b3443..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/compose/animation">Version 1.6.0-alpha08 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Deprecated <code translate="no" dir="ltr">KeyframesSpecConfig#with</code> in favor <code translate="no" dir="ltr">KeyframesSpecConfig#using</code> which preserves the builder pattern. (<a href="https://android-review.googlesource.com/#/q/I1d76980eee35ded738ac185a96857fdb048f7b22">I1d769</a>)</li>
+</ul>
+
+<h2>Compose Foundation: v1.5.4</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.5.4</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/4ed495b997a532cc4cbe39abdbaa98b8fc6f3764..b6d5e6e62e40f6938bdbcfef1d6c8a79e25006f8/compose/foundation">Version 1.5.4 contains these commits.</a></p>
+
+<h2>Compose Foundation: v1.6.0-alpha08</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.6.0-alpha08</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f7407d4293384a1b91bc142880e3525048b3443..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/compose/foundation">Version 1.6.0-alpha08 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">Modifier.draggable2D</code> is the new modifier that allows for easy 2d dragging support. See <a href="https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:compose/foundation/foundation/samples/src/main/java/androidx/compose/foundation/samples/Draggable2DSamples.kt">Sample</a> (<a href="https://android-review.googlesource.com/#/q/Id95f5706cb31e2c0d4bbd17bb127f527a313df6f">Id95f5</a>, <a href="https://issuetracker.google.com/issues/214412658">b/214412658</a>)</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">Modifier.dragAndDrawSource</code> has had the <code translate="no" dir="ltr">onDrawDragShadow</code> lambda renamed to <code translate="no" dir="ltr">drawDragDecoration</code> and <code translate="no" dir="ltr">DragAndDropInfo</code> has had the size parameter renamed to <code translate="no" dir="ltr">dragDecorationSize</code>. (<a href="https://android-review.googlesource.com/#/q/Id0e3037697efad03dcf74c2c9393a733e6ab0489">Id0e30</a>, <a href="https://issuetracker.google.com/issues/303904810">b/303904810</a>)</li>
+ <li><code translate="no" dir="ltr">BasicTextField2</code>'s <code translate="no" dir="ltr">decorationBox</code> parameter is renamed to <code translate="no" dir="ltr">decorator</code>. Its type is also changed to an equivalent fun interface <code translate="no" dir="ltr">TextFieldDecorator</code>. (<a href="https://android-review.googlesource.com/#/q/I23c1cbb759aa823d100689bba3375166686573b4">I23c1c</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Improved documentation on <code translate="no" dir="ltr">BasicTextField</code> regarding <code translate="no" dir="ltr">onValueChange</code> requirements. (<a href="https://android-review.googlesource.com/#/q/I90fc9dea845dafbf35fd439fe7813b2a752d9189">I90fc9</a>, <a href="https://issuetracker.google.com/issues/160257648">b/160257648</a>)</li>
+</ul>
+
+<h2>Compose Material: v1.5.4</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.5.4</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/4ed495b997a532cc4cbe39abdbaa98b8fc6f3764..b6d5e6e62e40f6938bdbcfef1d6c8a79e25006f8/compose/material">Version 1.5.4 contains these commits.</a></p>
+
+<h2>Compose Material: v1.6.0-alpha08</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.6.0-alpha08</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f7407d4293384a1b91bc142880e3525048b3443..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/compose/material">Version 1.6.0-alpha08 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Deprecate a <code translate="no" dir="ltr">materialIcon</code> function in favor of its overload that takes an <code translate="no" dir="ltr">autoMirror</code> parameter. (<a href="https://android-review.googlesource.com/#/q/Ia338d719d9bf0c053bf41cc4f8f4acb714240ff9">Ia338d</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong> - Auto-increase height of nav item for large content. (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2768305">0c4ecc</a>, <a href="https://issuetracker.google.com/issues/272336962">b/272336962</a>)</p>
+
+<h2>Compose Material 3: v1.2.0-alpha10</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.material3:material3-*:1.2.0-alpha10</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/80156d02f56222d46dbad403c3adb812faaf62d6..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/compose/material3">Version 1.2.0-alpha10 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Promoting <code translate="no" dir="ltr">Badge</code> and <code translate="no" dir="ltr">BadgedBox</code> to stable. (<a href="https://android-review.googlesource.com/#/q/I67f1626a474c5c043f27c277a1dea8df8ae8a439">I67f16</a>, <a href="https://issuetracker.google.com/issues/261565132">b/261565132</a>)</li>
+ <li>Adding <code translate="no" dir="ltr">securePolicy</code> as a parameter to <code translate="no" dir="ltr">ModalBottomSheet</code>, so users can define the behavior for <code translate="no" dir="ltr">WindowManager.LayoutParams.FLAG_SECURE</code>. (<a href="https://android-review.googlesource.com/#/q/Icdac86a7c7f358c9d4c023bf987a5c6c9227cd76">Icdac8</a>, <a href="https://issuetracker.google.com/issues/296250262">b/296250262</a>)</li>
+ <li>Added new overloads of <code translate="no" dir="ltr">LinearProgressIndicator</code> and <code translate="no" dir="ltr">CircularProgressIndicator</code> that take <code translate="no" dir="ltr">progress</code> as a lambda. These should be more performant than the previous versions. (<a href="https://android-review.googlesource.com/#/q/I824e6ba4d57e713ad47f97f25a41c330b3439eb0">I824e6</a>, <a href="https://issuetracker.google.com/issues/295616656">b/295616656</a>)</li>
+ <li>Renames <code translate="no" dir="ltr">StandardSizeClasses</code> to <code translate="no" dir="ltr">AllSizeClasses</code>. (<a href="https://android-review.googlesource.com/#/q/I8cb076fc9f490695b2f639b02e2654661dab6eee">I8cb07</a>)</li>
+ <li>Combine calculation functions of window size classes. (<a href="https://android-review.googlesource.com/#/q/Iad935dc48d04040a7b3335f014ae0118f1d1d01d">Iad935</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fix a <code translate="no" dir="ltr">DatePicker</code> crash when quickly clicking the navigation arrow buttons when the displayed month is at the edge of the allowed range of years. (<a href="https://android-review.googlesource.com/#/q/I46f360883dc57d677a545863ff2d913903861928">I46f36</a>, <a href="https://issuetracker.google.com/issues/290954897">b/290954897</a>, <a href="https://issuetracker.google.com/issues/297002119">b/297002119</a>)</li>
+ <li>[Nav rail/bar] Support transparent color for indicator. (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2726373">Ie0a9b</a>, <a href="https://issuetracker.google.com/issues/267289987">b/267289987</a>) </li>
+</ul>
+
+<h2>Compose Runtime: v1.5.4</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.5.4</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/4ed495b997a532cc4cbe39abdbaa98b8fc6f3764..b6d5e6e62e40f6938bdbcfef1d6c8a79e25006f8/compose/runtime">Version 1.5.4 contains these commits.</a></p>
+
+<h2>Compose Runtime: v1.6.0-alpha08</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.6.0-alpha08</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f7407d4293384a1b91bc142880e3525048b3443..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/compose/runtime">Version 1.6.0-alpha08 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Add an experimental compiler option to skip composables with unstable parameters. (<a href="https://android-review.googlesource.com/#/q/I610f9b2703b84bd93cfaa0d97defbee313023830">I610f9</a>)</li>
+</ul>
+
+<h2>Compose UI: v1.5.4</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.5.4</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/4ed495b997a532cc4cbe39abdbaa98b8fc6f3764..b6d5e6e62e40f6938bdbcfef1d6c8a79e25006f8/compose/ui">Version 1.5.4 contains these commits.</a></p>
+
+<h2>Compose UI: v1.6.0-alpha08</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.6.0-alpha08</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f7407d4293384a1b91bc142880e3525048b3443..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/compose/ui">Version 1.6.0-alpha08 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">Modifier.dragAndDrawSource</code> has had the <code translate="no" dir="ltr">onDrawDragShadow</code> lambda renamed to <code translate="no" dir="ltr">drawDragDecoration</code> and <code translate="no" dir="ltr">DragAndDropInfo</code> has had the size parameter renamed to <code translate="no" dir="ltr">dragDecorationSize</code>. (<a href="https://android-review.googlesource.com/#/q/Id0e3037697efad03dcf74c2c9393a733e6ab0489">Id0e30</a>, <a href="https://issuetracker.google.com/issues/303904810">b/303904810</a>)</li>
+ <li>Introduce <code translate="no" dir="ltr">SemanticsNodeInteraction.isDisplayed()</code> and <code translate="no" dir="ltr">SemanticsNodeInteraction.isNotDisplayed()</code> to check if a matched node is visible or not without also asserting on it. (<a href="https://android-review.googlesource.com/#/q/I2c1967befd4ae5dc2fbe324371c3039eecd5d89c">I2c196</a>, <a href="https://issuetracker.google.com/issues/302100809">b/302100809</a>)</li>
+ <li>Introduced a special <code translate="no" dir="ltr">Unspecified</code> value for <code translate="no" dir="ltr">TextAlign</code>, <code translate="no" dir="ltr">TextDirection</code>, <code translate="no" dir="ltr">Hyphens</code> and <code translate="no" dir="ltr">LineBreak</code> fields of the <code translate="no" dir="ltr">ParagraphTextStyle</code> to replace <code translate="no" dir="ltr">null</code>. Because these classes are inline classes, by replacing nullable with the Unspecified, we avoid primitive type boxing. Constructors, getters and other methods in <code translate="no" dir="ltr">TextStyle</code> and Paragraph style were updated to accept the mentioned parameters as non-null types. (<a href="https://android-review.googlesource.com/#/q/I4197ea85db556846ecad27ca8f561955e2370951">I4197e</a>, <a href="https://issuetracker.google.com/issues/299490814">b/299490814</a>)</li>
+ <li>Add <code translate="no" dir="ltr">GoogleFont</code> overload for reading a <code translate="no" dir="ltr">GoogleFont</code> from XML. (<a href="https://android-review.googlesource.com/#/q/If8f5911dde550e78bded1a8ea6a72b9e5977bac7">If8f59</a>)</li>
+ <li>Made <code translate="no" dir="ltr">LoremIpsum</code> <code translate="no" dir="ltr">PreviewParameterProvider</code> an open class. (<a href="https://android-review.googlesource.com/#/q/I41bf5f4e880867aea3603b3c4ea9a37c456e428d">I41bf5</a>, <a href="https://issuetracker.google.com/issues/266918816">b/266918816</a>, <a href="https://issuetracker.google.com/issues/300116360">b/300116360</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">FontFamilyResolver</code> now uses <code translate="no" dir="ltr">Dispatchers.Main</code> for cache management coroutines. (<a href="https://android-review.googlesource.com/#/q/Ie8dd912e671a4ee49990c76f4d72adad16cc4f53">Ie8dd9</a>)</li>
+ <li><code translate="no" dir="ltr">AndroidViewBinding</code> now synchronously removes <code translate="no" dir="ltr">Fragment</code> instances inflated by including a <code translate="no" dir="ltr">FragmentContainerView</code> in your layout as part of its <code translate="no" dir="ltr">onRelease</code> by using <code translate="no" dir="ltr">commitNow</code> (instead of the <code translate="no" dir="ltr">commit</code> it was using previously), thus fixing issues with Live Edit's method with replacing the composition upon changes. (<a href="https://android-review.googlesource.com/#/q/I58fbffefb19ed896ffedc835185718a24a86949e">I58fbf</a>)</li>
+</ul>
+
+<h2>Core and Core-ktx: v1.13.0-alpha01</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.core:core:1.13.0-alpha01</code>, <code translate="no" dir="ltr">androidx.core:core-ktx:1.13.0-alpha01</code>, and <code translate="no" dir="ltr">androidx.core:core-testing:1.13.0-alpha01</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/29aee18f0412c0d5d5b54e795697e34f358fd70a..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/core">Version 1.13.0-alpha01 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Make <code translate="no" dir="ltr">PathParser</code> public. The class can create a Path instance from SVG path strings. (<a href="https://android-review.googlesource.com/#/q/Ic7af2e7ea294ed43e8ebcf41852d2c1618816655">Ic7af2</a>, <a href="https://issuetracker.google.com/issues/302376846">b/302376846</a>)</li>
+ <li>Added compat method for <code translate="no" dir="ltr">Context.createAttributionContext</code>. (<a href="https://android-review.googlesource.com/#/q/I61dcfdb554718d29517694ea0793fa9fd9c920dd">I61dcf</a>, <a href="https://android-review.googlesource.com/#/q/Ibe18777566ad760e5f790409d02d96614bd8e849">Ibe187</a>)</li>
+ <li>Marks <code translate="no" dir="ltr">NotificationCompatSideChannelService</code> as deprecated. (<a href="https://android-review.googlesource.com/#/q/I18fd939b593bd4b624d5c8e09358b8cb3893da55">I18fd9</a>)</li>
+ <li>New API for differential motion fling. (<a href="https://android-review.googlesource.com/#/q/I46b0db177bf022c0de3838dc4707d9dcc33cfa32">I46b0d</a>, <a href="https://android-review.googlesource.com/#/q/Ia9f688063958d6165583d735d1b92745a8d2790e">Ia9f68</a>)</li>
+ <li>Additional compat APIs for <code translate="no" dir="ltr">VelocityTracker</code> to track platform SDK. (<a href="https://android-review.googlesource.com/#/q/I327530551bbae8e4594d1b081ce3277bc60efe57">I32753</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Override <code translate="no" dir="ltr">equals</code> and <code translate="no" dir="ltr">hashCode</code> methods in <code translate="no" dir="ltr">Person</code>. (<a href="https://android-review.googlesource.com/#/q/I610a5c9ea9bfc273bea3a1c474eaec29edff2bab">I610a5</a>)</li>
+</ul>
+
+<h2>Health Connect: v1.1.0-alpha06</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.health.connect:connect-client:1.1.0-alpha06</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f7407d4293384a1b91bc142880e3525048b3443..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/health/connect/connect-client">Version 1.1.0-alpha06 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Makes <code translate="no" dir="ltr">recordingMethod</code> definitions public. (<a href="https://android-review.googlesource.com/#/q/I401fbce35a8166cb85fd74777195b4596819fe89">I401fb</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Add documentation to exercise route specifying that location should be before end time of the session. (<a href="https://android-review.googlesource.com/#/q/0e51e65666d49852f2724fc24b66c48cbfde0851">0e51e6</a>)</li>
+</ul>
+
+<h2>Hilt: v1.1.0-rc01</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.hilt:hilt-*:1.1.0-rc01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f7407d4293384a1b91bc142880e3525048b3443..4367a721d36863f1754212c1c67659df43956511/hilt">Version 1.1.0-rc01 contains these commits.</a></p>
+
+<h2>JavascriptEngine: v1.0.0-alpha07</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.javascriptengine:javascriptengine:1.0.0-alpha07</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f7407d4293384a1b91bc142880e3525048b3443..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/javascriptengine/javascriptengine">Version 1.0.0-alpha07 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>New API introduced to allow apps to register callbacks to handle isolate crashes. </li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Rename <code translate="no" dir="ltr">DEFAULT_MAX_HEAP_SIZE</code> to <code translate="no" dir="ltr">AUTOMATIC_MAX_HEAP_SIZE</code>. (<a href="https://android-review.googlesource.com/#/q/I6d303f359434c90c338f0ded308356ee61f11ca3">I6d303</a>)</li>
+ <li>Rename <code translate="no" dir="ltr">FileDescriptorIoException</code> to <code translate="no" dir="ltr">DataInputException</code>. (<a href="https://android-review.googlesource.com/#/q/Iba4ebd392f3e4ca7c0a4831a1a76fa5635a78596">Iba4eb</a>)</li>
+ <li>Rename <code translate="no" dir="ltr">DEFAULT_ISOLATE_HEAP_SIZE</code> to <code translate="no" dir="ltr">DEFAULT_MAX_HEAP_SIZE</code>. (<a href="https://android-review.googlesource.com/#/q/Iaa16f8fc099012b135f13197fa8e4a012cd57f5f">Iaa16f</a>)</li>
+ <li>Remove non-functional console <code translate="no" dir="ltr">getSource</code> and <code translate="no" dir="ltr">getTrace</code> methods. (<a href="https://android-review.googlesource.com/#/q/I4b7a2102ee682e52f23b4ec54dbd5647038fb551">I4b7a2</a>)</li>
+ <li>Unhide <code translate="no" dir="ltr">FileDescriptorIoException</code> (<a href="https://android-review.googlesource.com/#/q/Ic44e678260c450190fcac70d4ceb8886f667ea52">Ic44e6</a>)</li>
+ <li>Allow apps to register callbacks to handle isolate crashes. (<a href="https://android-review.googlesource.com/#/q/Iad25f63f60fa8fc8be6d60af89e40c97ab2b469d">Iad25f</a>)</li>
+</ul>
+
+<h2>Lifecycle: v2.7.0-alpha03</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.lifecycle:lifecycle-*:2.7.0-alpha03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9ce75ea1baa2af10dda8f787f69c40c6654bcac1..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/lifecycle">Version 2.7.0-alpha03 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">lifecycle-runtime-testing</code> now contains a new Lint check to avoid setting the <code translate="no" dir="ltr">Lifecycle.State</code> of the <code translate="no" dir="ltr">TestLifecycleOwner</code> by using the <code translate="no" dir="ltr">currentState</code> field when inside of a coroutine. The Lint check now suggests the suspending <code translate="no" dir="ltr">setCurrentState</code> which allows setting the <code translate="no" dir="ltr">Lifecycle.State</code> without blocking. (<a href="https://android-review.googlesource.com/#/q/Icf728aa93a9aeca7c3cd89311289aae970d1f651">Icf728</a>, <a href="https://issuetracker.google.com/issues/297880630">b/297880630</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed an issue with <code translate="no" dir="ltr">LiveData.switchMap</code> where returning the same <code translate="no" dir="ltr">LiveData</code> instance both on the initial call and a subsequent call would prevent the <code translate="no" dir="ltr">LiveData</code> instance from being added as a source. (<a href="https://android-review.googlesource.com/#/q/Ibedcba7934ae43bba58eb1cb43388e125adf4bc6">Ibedcba7</a>)</li>
+</ul>
+
+<h2>privacysandbox sdkruntime: v1.0.0-alpha10</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.privacysandbox.sdkruntime:sdkruntime-client:1.0.0-alpha10</code>, <code translate="no" dir="ltr">androidx.privacysandbox.sdkruntime:sdkruntime-core:1.0.0-alpha10</code>, and <code translate="no" dir="ltr">androidx.privacysandbox.sdkruntime:sdkruntime-provider:1.0.0-alpha10</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f7407d4293384a1b91bc142880e3525048b3443..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/privacysandbox/sdkruntime">Version 1.0.0-alpha10 contains these commits.</a></p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed resource remapping for SDK loaded in app process.</li>
+</ul>
+
+<h2>privacysandbox ui: v1.0.0-alpha07</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.privacysandbox.ui:ui-client:1.0.0-alpha07</code>, <code translate="no" dir="ltr">androidx.privacysandbox.ui:ui-core:1.0.0-alpha07</code>, and <code translate="no" dir="ltr">androidx.privacysandbox.ui:ui-provider:1.0.0-alpha07</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/91bb8c1f81dcb031bda00fcd8e55f1e890b56f06..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/privacysandbox/ui">Version 1.0.0-alpha07 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Added backwards compatibility support for the library. On API 33 and below, the provider’s view will be rendered inside the app process, in a different classloader. (<a href="https://android-review.googlesource.com/#/q/If0b7adce29b55c8058a3d0789b46600815b3e1e3">If0b7a</a>)</li>
+ <li>Added logic that allows the resizing of host and provider containers to be committed in the same frame to avoid visible UI jank. (<a href="https://android-review.googlesource.com/#/q/Ic2cd94d14cc2cc34abd3effcfa750cfccc05977e">Ic2cd9</a>)</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>MinSdk for the library bumped to API 21. (<a href="https://android-review.googlesource.com/#/q/I474b853da5fdd363934f43a40b256c9c4f5345c3">I474b8</a>)</li>
+</ul>
+
+<h2>Recyclerview: v1.4.0-alpha01</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.recyclerview:recyclerview:1.4.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/68f4660cd40b87c9383c5c7d86ae26ebccbf93e8..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/recyclerview/recyclerview">Version 1.4.0-alpha01 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Add <code translate="no" dir="ltr">RecyclerView$LayoutManager#isLayoutReversed</code> API. (<a href="https://android-review.googlesource.com/#/q/I4970ed9322cf3786377e847be6e22400cbd5c2e2">I4970e</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fix a bug causing sporadic crashes during animations (<a href="https://android-review.git.corp.google.com/c/platform/frameworks/support/+/2672255">I42f22b</a>) (also included in 1.3.2)</li>
+</ul>
+
+<h2>Recyclerview: v1.3.2</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.recyclerview:recyclerview:1.3.2</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/68f4660cd40b87c9383c5c7d86ae26ebccbf93e8..053c71e9fde5883b9033ee934e438bddc9c5a4ba/recyclerview/recyclerview">Version 1.3.2 contains these commits.</a></p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fix a bug causing sporadic crashes during animations. (<a href="https://android-review.git.corp.google.com/c/platform/frameworks/support/+/2672255">I42f22b</a>)</li>
+</ul>
+
+<h2>Room: v2.6.0</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.room:room-*:2.6.0</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/5b7df8b23daa6000a04ba680f5d5979df6fd2560..ec9bfe9db962dfb9b86a707c0b84ff1e24ef3c7d/room">Version 2.6.0 contains these commits.</a></p>
+<p><strong>Important changes since 2.5.0</strong></p>
+<ul>
+ <li>The option to enable Kotlin code generation (or “Kotlin CodeGen”) is now available in Room KSP. (<a href="https://android.googlesource.com/platform/frameworks/support/+/4297ec00790d6d88f86c6c5d9dfb9a260a7131ad">4297ec0</a>). To turn on Kotlin CodeGen in Room, add the <code translate="no" dir="ltr">room.generateKotlin</code> option name to your processor options for KSP. For more details on how to pass processor options for KSP, see the <a href="https://kotlinlang.org/docs/ksp-quickstart.html#pass-options-to-processors">KSP documentation</a>.</li>
+</ul>
+<p class="note"><b>Note:</b> When using Kotlin CodeGen, it is important to note that there are additional restrictions that have been added. Abstract properties as DAO getters or DAO queries in Kotlin CodeGen are disallowed, and instead expected to be rewritten as functions to avoid the false notion that the property value is immutable and has a fixed stored result. Another restriction that has been added is that Nullable collection return types are no longer allowed in Room for Kotlin CodeGen.</p>
+<p class="warning"><b>Warning:</b> You may find that your projects are more strict in terms of nullability when using Kotlin CodeGen. In Kotlin CodeGen, the nullability of type arguments is important, wheras in Java this is mostly ignored. For example, let's say you have a `Flow<foo\>
+  ` return type and the table is empty. In Java CodeGen, this will not cause any issues, but in Kotlin CodeGen, you will get an error. To avoid this, you will need to use `Flow
+  <foo?\>
+   `, assuming a null is emitted. 
+  </foo?\>
+ </foo\></p>
+<ul>
+ <li>The new artifact for the Room Gradle Plugin has been added to Room with the id <code translate="no" dir="ltr">androidx.room</code>, which solves various existing issues in Room regarding having inputs and outputs of schemas via Gradle annotation processor options. For more details, refer to the <a href="https://developer.android.com/jetpack/androidx/releases/room#2.6.0-alpha02">Room Version 2.6.0-alpha02 release notes</a>. </li>
+ <li>Value classes in Room Entities are now supported for KSP. (<a href="https://android.googlesource.com/platform/frameworks/support/+/4194095366032c1c06d9e472e4e78b822c82cbe6">4194095</a>)</li>
+ <li>Nested Map return types in DAO functions are now supported in Room. (<a href="https://android.googlesource.com/platform/frameworks/support/+/3c46fef7382077611c9d9b4cb330bc52373ccc6d">I13f48</a>, <a href="https://b.corp.google.com/issues/203008711">203008711</a>)</li>
+</ul>
+
+<h2>Sqlite: v2.4.0</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.sqlite:sqlite:2.4.0</code>, <code translate="no" dir="ltr">androidx.sqlite:sqlite-framework:2.4.0</code>, and <code translate="no" dir="ltr">androidx.sqlite:sqlite-ktx:2.4.0</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/761ab24acbd0dd0fbc675c82f9c1cf42ad6c8fc3..c2576dcd7beccce96617f96da4c5293e1924885a/sqlite">Version 2.4.0 contains these commits.</a></p>
+<p><strong>Important changes since 2.3.0</strong></p>
+<ul>
+ <li>Various bug fixes have been added. </li>
+</ul>
+
+<h2>Wear Tooling Preview: v1.0.0-beta01</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.wear:wear-tooling-preview:1.0.0-beta01</code> is released with no changes. <a href="https://android.googlesource.com/platform/frameworks/support/+log/3315f1ef094c312203fe26841287902916fbedf5..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/wear/wear-tooling-preview">Version 1.0.0-beta01 contains these commits.</a></p>
+
+<h2>Wear Compose: v1.3.0-alpha08</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.wear.compose:compose-*:1.3.0-alpha08</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f7407d4293384a1b91bc142880e3525048b3443..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/wear/compose">Version 1.3.0-alpha08 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>We have added individual flags to <code translate="no" dir="ltr">PositionIndicator</code> overloads, to control different animations: <code translate="no" dir="ltr">showFadeInAnimation</code>, <code translate="no" dir="ltr">showFadeOutAnimation</code> and <code translate="no" dir="ltr">showPositionAnimation</code>. The previous API has been deprecated and forwards calls to the new one. For performance reasons and for UX consistency, when the <code translate="no" dir="ltr">PositionIndicator</code> is used with a scrollable list, we recommend switching off <code translate="no" dir="ltr">showFadeInAnimation</code> and <code translate="no" dir="ltr">showPositionAnimation</code> flags. If <code translate="no" dir="ltr">PositionIndicator</code> is used as a standalone indicator, for example for volume change, then we recommend having all 3 animations turned on. (<a href="https://android-review.googlesource.com/#/q/I44294ccbb47f244dda839b4659a1b2cd962c7aef">I44294</a>)</li>
+ <li>We have deprecated the Material <code translate="no" dir="ltr">SwipeToDismissBoxState</code>, <code translate="no" dir="ltr">SwipeToDismissValue</code> and <code translate="no" dir="ltr">edgeSwipeToDismiss</code> following the migration of Swipe-to-Dismiss functionality to <code translate="no" dir="ltr">wear.compose.foundation</code>. Please replace with the <code translate="no" dir="ltr">wear.compose.foundation</code> equivalents. (<a href="https://android-review.googlesource.com/#/q/Iee8c97aeb50a9109d35fc70d41c57fb755dab699">Iee8c9</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>We have updated the baseline profiles for wear compose foundation, material and navigation libraries. (<a href="https://android-review.googlesource.com/#/q/Idb060e09eeb5d708f6bf5c531fe9c01b7e5ae465">Idb060</a>)</li>
+ <li>We have reverted a behavioral change for <code translate="no" dir="ltr">PositionIndicator</code> introduced in a previous CL, such that the <code translate="no" dir="ltr">PositionIndicator</code> was animated when a screen was initially displayed. We intend to make a similar change in an early 1.4 alpha, so that the <code translate="no" dir="ltr">PositionIndicator</code> is initially displayed, but without any animation. (<a href="https://android-review.googlesource.com/#/q/I41843ef10d4ebad839616c8005070f1989b2e940">I41843</a>)</li>
+ <li>We have addressed some performance issues in <code translate="no" dir="ltr">PositionIndicator</code>. (<a href="https://android-review.googlesource.com/#/q/I1c6546abc834f718c9d8f11d756262d507590acc">I1c654</a>, <a href="https://issuetracker.google.com/issues/302399827">b/302399827</a>)</li>
+ <li>We have optimized performance of the touch exploration state provider default implementation to rely on <code translate="no" dir="ltr">State&lt;Boolean&gt;</code> rather than derived state. (<a href="https://android-review.googlesource.com/#/q/Ieec4de2ea71eefabb5dbac43d61975e4f36cc5df">Ieec4d</a>)</li>
+ <li>We have set <code translate="no" dir="ltr">systemGestureExclusion</code> rectangles for Android 13 and higher. (<a href="https://android-review.googlesource.com/#/q/Ib1f4b09be3efedc382213b58d80f02bb21608e7d">Ib1f4b</a>)</li>
+</ul>
+
+<h2>Wear Compose Material3: v1.0.0-alpha14</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.wear.compose:compose-material3:1.0.0-alpha14</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f7407d4293384a1b91bc142880e3525048b3443..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/wear/compose/compose-material3">Version 1.0.0-alpha14 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>We have removed the <code translate="no" dir="ltr">indicatorStyle</code> parameter from the Material3 <code translate="no" dir="ltr">HorizontalPageIndicator</code> - instead, it will follow the device screen shape (linear or round). (<a href="https://android-review.googlesource.com/#/q/I83728bf6fd56805a7281e98e08cde5f58553a156">I83728</a>)</li>
+ <li>We have separated the colors for <code translate="no" dir="ltr">SplitToggleButton</code> from those for <code translate="no" dir="ltr">ToggleButton</code>, by adding a new <code translate="no" dir="ltr">SplitToggleButtonColors</code> class. (<a href="https://android-review.googlesource.com/#/q/I78bee267eeca5a62c18874b7a8ae225685f08dbe">I78bee</a>)</li>
+</ul>
+
+<h2>Wear Compose: v1.2.1</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.wear.compose:compose-*:1.2.1</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/2133a18cd930fd58cb9719a4017260320a02a0b8..82384c3670fd9bbfe3fe33de06271c43466457b1/wear/compose">Version 1.2.1 contains these commits.</a></p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed a bug when the <code translate="no" dir="ltr">PositionIndicator</code> incorrectly disappeared. (<a href="/jetpack/androidx/releases/I32b7d7d14361078ab3cbd2a379a95187bcd86a05">I32b7d</a>)</li>
+</ul>
+
+<h2>wear protolayout: v1.1.0-alpha01</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.wear.protolayout:protolayout-*:1.1.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/b9b10aa25e1bd67bdb78cc13bac036cb58657587..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/wear/protolayout">Version 1.1.0-alpha01 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Added a brush option to <code translate="no" dir="ltr">Arcline</code>, with support for <code translate="no" dir="ltr">SweepGradient</code>. (<a href="https://android-review.googlesource.com/#/q/Ie7ce34644bccd3bfe17f0d551be4a2b57caaa767">Ie7ce3</a>)</li>
+ <li>Added support for zoned date-time formatting. (<a href="https://android-review.googlesource.com/#/q/Ibfae0abe71a3b7e88dd72500293afc6f59032856">Ibfae0</a>)</li>
+ <li>Added protos and java Wrappers required for zoned date-time formatting. (<a href="https://android-review.googlesource.com/#/q/I971267de203f5c9c8a29246fa78eefe505e59c00">I97126</a>)</li>
+ <li>Added getters for reading back the value stored in a <code translate="no" dir="ltr">DynamicDataValue</code>. (<a href="https://android-review.googlesource.com/#/q/Ie6cea66c8938ea363ad0067f75cbae856df0917f">Ie6cea</a>)</li>
+ <li>Added a setter for positioning the edge content in <code translate="no" dir="ltr">EdgeContentLayout</code> so it can be positioned before other content. (<a href="https://android-review.googlesource.com/#/q/Ie8e8a4d033d8ef2059620094b38e5119a4ab08d7">Ie8e8a</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed an issue when an expression with multiple time data source registrations was not being updated immediately. (<a href="https://android-review.googlesource.com/#/q/I8e1a80ea606a831433f81c9454605803a24b4c8e">I8e1a8</a>)</li>
+ <li>Fixed a bug to center root element during diff updates. (<a href="https://android-review.googlesource.com/#/q/Ie48f781568c7a6295e816c613173b90432bb54ec">Ie48f7</a>)</li>
+ <li>Unset (or empty) layout constraint values will not be ignored anymore. (<a href="https://android-review.googlesource.com/#/q/Ibc78519a3a1f8a433cb1d846e1eed783f5a81fa2">Ibc785</a>)</li>
+ <li>Reduced delay between a layout becoming visible and its pipeline nodes being initialized. (<a href="https://android-review.googlesource.com/#/q/I38d4e8cd73037e5099f1b88f595b659cbc8436a5">I38d4e</a>)</li>
+</ul>
+
+<h2>Wear Tiles: v1.3.0-alpha01</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.wear.tiles:tiles-*:1.3.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/wear/tiles">Version 1.3.0-alpha01 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Provide the context as a preview method parameter instead of <code translate="no" dir="ltr">TilePreviewData</code> callback parameters. (<a href="https://android-review.googlesource.com/#/q/I5e97d259efc03dd36bb6855288ebfc75bc21d0d7">I5e97d</a>)</li>
+ <li>Module for wear tiles tooling is updated for tile preview support and is set for being published. (<a href="https://android-review.googlesource.com/#/q/I63d0f04780f4f28e67d40951057bcdc814f5f6d8">I63d0f</a>)</li>
+</ul>
+
+<h2>Wear Watchface: v1.2.0-rc01</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.wear.watchface:watchface-*:1.2.0-rc01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9ce75ea1baa2af10dda8f787f69c40c6654bcac1..87003c5527bd9cba2649e62e397cd8aa2ddc8e19/wear/watchface">Version 1.2.0-rc01 contains these commits.</a></p>
+
+<h2>Webkit: v1.9.0-alpha01</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.webkit:webkit:1.9.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/6d044fc1d7a213f318abade3b2235f9d90b28901..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/webkit/webkit">Version 1.9.0-alpha01 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>We added the multi-profile API which allows you to have separate browsing sessions between <code translate="no" dir="ltr">WebViews</code>, each profile has its own data (e.g. cookies). You can create profiles, assign them to <code translate="no" dir="ltr">WebView</code> instances, and retrieve them later for any data access. There is a singleton class <code translate="no" dir="ltr">ProfileStore</code> to help you manage profiles by creation or deletion with APIs; <code translate="no" dir="ltr">getOrCreateProfile</code>, <code translate="no" dir="ltr">getProfile</code>, <code translate="no" dir="ltr">getAllProfileNames</code> and <code translate="no" dir="ltr">deleteProfile</code>. The <code translate="no" dir="ltr">Profile</code> class will have different APIs to use to get associated data with this profile such as its name, <a href="/reference/android/webkit/GeolocationPermissions"><code translate="no" dir="ltr">GeoLocationPermissions</code></a>, <a href="/reference/android/webkit/ServiceWorkerController"><code translate="no" dir="ltr">ServiceWorkerController</code></a>, <a href="/reference/android/webkit/CookieManager"><code translate="no" dir="ltr">CookieManager</code></a> and <a href="/reference/android/webkit/WebStorage"><code translate="no" dir="ltr">WebStorage</code></a>. Each <code translate="no" dir="ltr">WebView</code> will run with the default profile by default however, you can change that using <code translate="no" dir="ltr">WebViewCompat#setProfile</code> Related to that, a <code translate="no" dir="ltr">WebView</code>’s profile can be retrieved using <code translate="no" dir="ltr">WebViewCompat#getProfile</code>. (<a href="https://android-review.googlesource.com/#/q/I32d2278b5028d43bb49a0dbc71d13ab594bcba11">I32d22</a>)</li>
+ <li>Add APIs to modify how Attribution Reporting events are registered. We introduced a new API <code translate="no" dir="ltr">WebSettingsCompat#setAttributionRegistrationBehavior</code> which allows developers to configure whether sources and triggers are registered as coming from the app itself or coming from the web content in the <code translate="no" dir="ltr">WebView</code>. This method can also be used to disable Attribution Reporting in <code translate="no" dir="ltr">WebView</code>. Additionally we added a new API <code translate="no" dir="ltr">WebSettingsCompat#getAttributionRegistrationBehavior</code> to get the current behavior. For more information see the <a href="/design-for-safety/privacy-sandbox/attribution-app-to-web#attribution_source_and_trigger_registration_from_webview">Privacy Sandbox documentation</a>. (<a href="https://android-review.googlesource.com/#/q/I661f28500fd791c31f20b8d9cab8c09872581d79">I661f2</a>)</li>
+ <li>Add APIs to override user-agent metadata. We introduced a new API <code translate="no" dir="ltr">WebSettingsCompat#setUserAgentMetadata</code> to override the user-agent metadata for WebView, which is used to populate the user-agent client hints, and we also added another new API <code translate="no" dir="ltr">WebSettingsCompat#getUserAgentMetadata</code> to get current user-agent overrides. We encourage apps to use the new API to set the right override values instead of relying on changing user-agent. (<a href="https://android-review.googlesource.com/#/q/I745009a8c24d287416787802fb29210a78967855">I74500</a>)</li>
+ <li>Add an API to inject Javascript to be run during page load. The <code translate="no" dir="ltr">WebViewCompat.addDocumentStartJavascript</code> API allows apps to inject scripts into a WebView which will be run before any page scripts are executed. The API allows the app to specify a target list of origins for the script to be enabled on, ensuring that it only runs on intended pages. Unlike <code translate="no" dir="ltr">WebView.evaluateJavascript</code>, this API will allow execution of scripts in embedded Iframes when they load. (<a href="https://android-review.googlesource.com/#/q/Ide0637579a8a879c6641bda61dec1448d3c51979">Ide063</a>)</li>
+</ul>
+
+<h2>WindowManager: v1.2.0-beta04</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.window:window-*:1.2.0-beta04</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/91bb8c1f81dcb031bda00fcd8e55f1e890b56f06..465c5c5b7a0d79793bddb26a695f67aba8ea2f7e/window">Version 1.2.0-beta04 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Remove unstable APIs. (<a href="https://android-review.googlesource.com/#/q/Ibc534a8ba5f81f0fdcde569335a581e605d1c69e">Ibc534</a>, <a href="https://issuetracker.google.com/issues/302380585">b/302380585</a>)</li>
+</ul>
+
+<h2>WorkManager: v2.9.0-rc01</h2>
+<p>October 18, 2023</p>
+<p><code translate="no" dir="ltr">androidx.work:work-*:2.9.0-rc01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9ce75ea1baa2af10dda8f787f69c40c6654bcac1..2b5fbfa0dbb62c3a185a0be13fb1a63f50b2c034/work">Version 2.9.0-rc01 contains these commits.</a></p>
+<ul>
+ <li>No changes since the last beta release</li>
 </ul>
 </body>
 </html>
