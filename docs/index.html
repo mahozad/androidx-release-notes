@@ -66,129 +66,33 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Browser: v1.7.0-rc01</h2>
-<p>November 1, 2023</p>
-<p><code translate="no" dir="ltr">androidx.browser:browser:1.7.0-rc01</code> is released with no changes. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..9d1512626b03b7b079ea5d8c71ee3b9d2513284e/browser/browser">Version 1.7.0-rc01 contains these commits.</a></p>
+<h2>Compose Compiler: v1.5.4</h2>
+<p>November 7, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.compiler:compiler:1.5.4</code> and <code translate="no" dir="ltr">androidx.compose.compiler:compiler-hosted:1.5.4</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/738409b08051e4780768b4e7163348898f8d6c03..e858b16810125048c66293684afdfc08f57e4ebc/compose/compiler">Version 1.5.4 contains these commits.</a></p>
+<p><strong>Dependency Updates</strong></p>
 <ul>
- <li>No changes since alpha-01</li>
+ <li>Compose Compiler is now compatible with Kotlin 1.9.20</li>
 </ul>
-
-<h2>Car App: v1.4.0-rc01</h2>
-<p>November 1, 2023</p>
-<p><code translate="no" dir="ltr">androidx.car.app:app-*:1.4.0-rc01</code> is released with no notable changes. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1780af2e94fd353709acd675b7574f8e52ba04dc..1280f3ae888e7721f7739bda09baae721af398c3/car/app">Version 1.4.0-rc01 contains these commits.</a>. </p>
-
-<h2>credentials: v1.2.0</h2>
-<p>November 1, 2023</p>
-<p><code translate="no" dir="ltr">androidx.credentials:credentials:1.2.0</code> and <code translate="no" dir="ltr">androidx.credentials:credentials-play-services-auth:1.2.0</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/4b03ea635a1664645b27282ba4a3126017f631c3..1b17367013411d8043b8de6ee9d7791a2a04b4f2/credentials">Version 1.2.0 contains these commits.</a></p>
-<p><strong>Important changes since 1.0.0</strong></p>
-<ul>
- <li>This release added a new set of APIs for supporting Credential Provider in storing and fetching passwords, passkeys per users' requests.</li>
-</ul>
-
-<h2>DataStore: v1.1.0-alpha06</h2>
-<p>November 1, 2023</p>
-<p><code translate="no" dir="ltr">androidx.datastore:datastore-*:1.1.0-alpha06</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9ce75ea1baa2af10dda8f787f69c40c6654bcac1..e3ffd7948030a769c857b8c629e0079c54b730ad/datastore">Version 1.1.0-alpha06 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li><code translate="no" dir="ltr">createSingleProcessCoordinator</code> factory method now receives a file path (<code translate="no" dir="ltr">String</code>, <code translate="no" dir="ltr">java.io.File</code> and <code translate="no" dir="ltr">okio.Path</code>) to be consistent with <code translate="no" dir="ltr">createMultiProcessCoordinator</code>. (<a href="https://android-review.googlesource.com/#/q/I211c8a55215607234554eff7127ef9bdf270984a">I211c8</a>, <a href="https://issuetracker.google.com/issues/305755935">b/305755935</a>)</li>
-</ul>
-
-<h2>Fragment: v1.6.2</h2>
-<p>November 1, 2023</p>
-<p><code translate="no" dir="ltr">androidx.fragment:fragment-*:1.6.2</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/2c3ed1b7130ae685522386d109f42c2030276ec6..447211941f6898816452f8b591a9f5a3fa3816f8/fragment">Version 1.6.2 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>When the Fragment of a <code translate="no" dir="ltr">FragmentContainerView</code> is inflated, its states such as <code translate="no" dir="ltr">FragmentManager</code>, Host, and id are now accessible in the <code translate="no" dir="ltr">onInflate</code> callback. (<a href="https://android-review.googlesource.com/#/q/I1e44c5dbf5f0e0c55be39489f4c973937f6910cd">I1e44c</a>, <a href="https://issuetracker.google.com/issues/307427423">b/307427423</a>)</li>
- <li>When using <code translate="no" dir="ltr">clearBackStack</code> to remove a set of fragments, any nested Fragment's <code translate="no" dir="ltr">ViewModel</code> will now be cleared when the parent fragment’s <code translate="no" dir="ltr">ViewModels</code> are cleared. (<a href="https://android-review.googlesource.com/#/q/I6d83cd93421837b213d25d2fdbe5405348cd2637">I6d83c</a>, <a href="https://issuetracker.google.com/issues/296173018">b/296173018</a>)</li>
-</ul>
-
-<h2>Games Performance Tuner 2.0: v2.0.0-alpha06</h2>
-<p>November 1, 2023</p>
-<p><code translate="no" dir="ltr">androidx.games:games-performance-tuner:2.0.0-alpha06</code> is released. <a href="https://android.googlesource.com/platform/frameworks/opt/gamesdk/+log/d10c609303f8e9f75167e727b0f8fd58715117f3..e7cc630a269be37ff70185e013845ebd93bced9f/games-performance-tuner">Version 2.0.0-alpha06 contains these commits.</a></p>
-
-<h2>Hilt: v1.1.0</h2>
-<p>November 1, 2023</p>
-<p><code translate="no" dir="ltr">androidx.hilt:hilt-*:1.1.0</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/4367a721d36863f1754212c1c67659df43956511..60e349522e1cd1c1f6e4b2a79592dd8b130c36c7/hilt">Version 1.1.0 contains these commits.</a></p>
-<p><strong>Major changes since 1.0.0</strong></p>
-<ul>
- <li>Add KSP support to <code translate="no" dir="ltr">androidx.hilt</code>.</li>
- <li>Accept <code translate="no" dir="ltr">HasDefaultViewModelProviderFactory</code> in <code translate="no" dir="ltr">hiltViewModel()</code>.</li>
- <li>The <code translate="no" dir="ltr">hiltViewModel()</code> API now takes an optional key parameter.</li>
-</ul>
-
-<h2>JavascriptEngine: v1.0.0-beta01</h2>
-<p>November 1, 2023</p>
-<p><code translate="no" dir="ltr">androidx.javascriptengine:javascriptengine:1.0.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..e3ffd7948030a769c857b8c629e0079c54b730ad/javascriptengine/javascriptengine">Version 1.0.0-beta01 contains these commits.</a></p>
-<ul>
- <li>No changes since <code translate="no" dir="ltr">1.0.0-alpha07</code></li>
-</ul>
-
-<h2>Lifecycle: v2.7.0-beta01</h2>
-<p>November 1, 2023</p>
-<p><code translate="no" dir="ltr">androidx.lifecycle:lifecycle-*:2.7.0-beta01</code> is released with no changes. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..e3ffd7948030a769c857b8c629e0079c54b730ad/lifecycle">Version 2.7.0-beta01 contains these commits.</a></p>
-<ul>
- <li>A beta version bump, no major changes to this release version.</li>
-</ul>
-
-<h2>Media: v1.7.0-beta01</h2>
-<p>November 1, 2023</p>
-<p><code translate="no" dir="ltr">androidx.media:media:1.7.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/7d3ac1ab1206c01fae3ebb500b5b942636070155..e3ffd7948030a769c857b8c629e0079c54b730ad/media/media">Version 1.7.0-beta01 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Fix potential memory leak of <code translate="no" dir="ltr">MediaBrowserService</code> and <code translate="no" dir="ltr">MediaBrowserServiceCompat</code>. <a href="https://issuetracker.google.com/37137738">b/37137738</a>.</li>
- <li>Fix <code translate="no" dir="ltr">IllegalStateException</code> caused by returning null from <code translate="no" dir="ltr">MediaBrowserService.onLoadChildren</code> on older Android versions.</li>
-</ul>
-
-<h2>Navigation: v2.7.5</h2>
-<p>November 1, 2023</p>
-<p><code translate="no" dir="ltr">androidx.navigation:navigation-*:2.7.5</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/ace3a9ea98b0b126ae715bacad4d4e65853b3a83..93793630001ce27b6709c8bb6b73711313cc9d5d/navigation">Version 2.7.5 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Greatly improved the performance (both in terms of time and number of allocations) of comparing two graphs. This means that calls such as <code translate="no" dir="ltr">setGraph</code> which internally compare the new graph to the existing one are much faster and result in fewer skipped frames. (<a href="https://android-review.googlesource.com/#/q/I6ad62bef1fb9bbbe8a91839a6e24e1f85a8982e2">I6ad62</a>)</li>
- <li><code translate="no" dir="ltr">NavHost</code> will now render the start destination on the first composition pass instead of needing to wait for the second pass to read updated state. (<a href="https://android-review.googlesource.com/#/q/I439a7fe894907b1ebee251134113acb08973083c">I439a7</a>, <a href="https://issuetracker.google.com/issues/304852206">b/304852206</a>)</li>
- <li>Fixed an issue where your back stack would be popped if you called <code translate="no" dir="ltr">setGraph</code> more than once with the exact same graph only if there was a destination in your graph that contained an action linking two destinations. (<a href="https://android-review.googlesource.com/#/q/Ieaed7edf02f70696cd0a3558cfe8d7960d1cddd4">Ieaed7</a>)</li>
- <li>Dialogs that were navigated to and dismissed in quick succession will no longer leak into the list of <code translate="no" dir="ltr">NavController.visibleEntries</code>. (<a href="https://android-review.googlesource.com/#/q/I67586735d33659e524ca7b2e4ae44b2df3494f3e">I67586</a>, <a href="https://issuetracker.google.com/issues/287969970">b/287969970</a>)</li>
- <li>When an entry is popped followed by a configuration change, the entry's <code translate="no" dir="ltr">ViewModel</code> will now be cleared properly if <code translate="no" dir="ltr">saveState</code> is false. (<a href="https://android-review.googlesource.com/#/q/Idf242239ceeb731c3375ef507a2cc854d85743c7">Idf242</a>, <a href="https://issuetracker.google.com/issues/298164648">b/298164648</a>)</li>
- <li>Fixed an issue where <code translate="no" dir="ltr">NavController</code> could handle the same deep link more than once if the back stack was entirely empty before a configuration change or call to <code translate="no" dir="ltr">setGraph</code> only when the incoming Intent had the <code translate="no" dir="ltr">FLAG_ACTIVITY_NEW_TASK</code> flag set. (<a href="https://android-review.googlesource.com/#/q/I73c7f78a55eb283ac4b2fa7b10f6ea05a8fd8db7">I73c7f</a>)</li>
-</ul>
-
-<h2>Test Uiautomator: v2.3.0-alpha05</h2>
-<p>November 1, 2023</p>
-<p><code translate="no" dir="ltr">androidx.test.uiautomator:uiautomator:2.3.0-alpha05</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/4aed940027a19667e67d155563fc5fa8b7279313..e3ffd7948030a769c857b8c629e0079c54b730ad/test/uiautomator/uiautomator">Version 2.3.0-alpha05 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Added <code translate="no" dir="ltr">UiObject2#getDrawingOrder</code> to expose drawing order (z-index) information. (<a href="https://android-review.googlesource.com/#/q/I5dfa4f12ee03cff473d6cddd76c060f5ee9a701b">I5dfa4</a>).</li>
- <li>Added <code translate="no" dir="ltr">UiDevice</code> methods to get, set, freeze, and unfreeze the rotation of secondary displays. (<a href="https://android-review.googlesource.com/#/q/I912cd814a58f9a53a90a6e4edca66e5dbc31c283">I912cd</a>).</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Added retry to <code translate="no" dir="ltr">UiObject2#scrollUntil</code> when the end of scrolling could not be detected (<a href="https://android-review.googlesource.com/#/q/Ibac6f1ece6f1d786614b6b49d1f5cfe3630d4d12">Ibac6f</a>).</li>
- <li>Fixed issue where <code translate="no" dir="ltr">UiDevice</code> would use a stale <code translate="no" dir="ltr">Instrumentation</code> instance if it was recreated (<a href="https://android-review.googlesource.com/#/q/I18cae09e7c29e7c993ba37633664fef5f312a18d">I18cae</a>).</li>
- <li>Fixed possible NPE if the display ID cannot be determined when dumping nodes (<a href="https://android-review.googlesource.com/#/q/Icafcb9a4965bf5b45f6553a9c65a7ba2dfe07bda">Icafcb</a>).</li>
- <li>Added warning when performing clicks/scrolls on non-clickable/scrollable objects (<a href="https://android-review.googlesource.com/#/q/I4a5d9804da04dc3f3da60c0051147035e4bc8211">I4a5d9</a>).</li>
- <li>Reduced the default <code translate="no" dir="ltr">UiObject2</code> scroll speed to improve reliability (<a href="https://android-review.googlesource.com/#/q/I5e071d55a2be2883e8a3a0450d030bb1a4184825">I5e071</a>).</li>
-</ul>
-
-<h2>Webkit: v1.9.0-beta01</h2>
-<p>November 1, 2023</p>
-<p><code translate="no" dir="ltr">androidx.webkit:webkit:1.9.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..e3ffd7948030a769c857b8c629e0079c54b730ad/webkit/webkit">Version 1.9.0-beta01 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Address user-agent metadata API's nullability issue. We update <code translate="no" dir="ltr">BrandVersion</code> class to use builder pattern, make the <code translate="no" dir="ltr">UserAgentMetadata</code> class's getters and setters nullability consistent. (<a href="https://android-review.googlesource.com/#/q/Ibf19517c81c8a3228072768791f67087279faef8">Ibf195</a>)</li>
- <li>Annotating <code translate="no" dir="ltr">ProfileStore</code>, <code translate="no" dir="ltr">WebViewCompat#setProfile</code> and <code translate="no" dir="ltr">WebViewCompat.getProfile</code> with <code translate="no" dir="ltr">@UiThread</code>. (<a href="https://android-review.googlesource.com/#/q/I499b28e80fbe8109cdfb9bb841df765589d2087b">I499b2</a>)</li>
-</ul>
-
-<h2>WindowManager: v1.2.0-rc01</h2>
-<p>November 1, 2023</p>
-<p><code translate="no" dir="ltr">androidx.window:window-*:1.2.0-rc01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..06e4d421091d61357319a483cbc0e42ee323eced/window">Version 1.2.0-rc01 contains these commits.</a></p>
 <p><strong>New Features</strong></p>
 <ul>
- <li>Expose experimental window APIs for accessing the rear screen.</li>
- <li>Test APIs for creating a <code translate="no" dir="ltr">FoldingFeature</code> is now stable.</li>
- <li>Test APIs for setting up fake <code translate="no" dir="ltr">ActivityEmbedding</code> values are now stable.</li>
- <li><code translate="no" dir="ltr">WindowLayoutInfoPublisherRule</code> now reports the override when obtaining a value from a <code translate="no" dir="ltr">UiContext</code>.</li>
- <li><code translate="no" dir="ltr">WindowInfoTracker</code> reports folding feature data to <code translate="no" dir="ltr">UiContext</code> parameters.</li>
- <li>Expose the Extensions Version on the device.</li>
+ <li>Add experimental option to enable strong skipping mode. Enable for better performance, but you must ensure all your parameters to composable functions/lambdas are stable before using it. (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2671135">22421e</a>)</li>
+ <li>Add flag to enable/disable source/trace information. (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2810413">4d45f09</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Allow configuring the stability of external classes via a configuration file. (<a href="https://android-review.googlesource.com/#/q/If40eb860d19ece10d8385ce2fd518bd5d271f620">If40eb</a>)</li>
+ <li>Fix early exit from composable functions when source information is not collected. (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2737893">fe6267</a>)</li>
+ <li>Fix continue from composable functions. (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2762445">948362</a>)</li>
+ <li>Fix resolution when composable functions are invoked from within a function invocation that has multiple overloads that are dependent on expression return type. (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2769286">2d36d0</a>)</li>
+ <li>Fix memoization when function reference does not have dispatch receiver. (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2770269">fc2326</a>)</li>
+ <li>Fix dirty check which was preventing recomposition of lambdas in some situations. (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2779188">db3699</a>)</li>
+ <li>Fix stability when incrementally compiling across modules. (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2766125">7d3e127</a>)</li>
+ <li>Reduce scope of <code translate="no" dir="ltr">@DontMemoize</code> to lambda expressions only. (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2804275">7a7fa52</a>)</li>
+ <li>Fix Variables not captured correctly when using a Composable fun interface as a lambda. (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2810414">5ae3556</a>)</li>
+</ul>
+<p><strong>External Contribution</strong></p>
+<ul>
+ <li>Use structural equality symbol for numeric and null comparison (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2668595">c612a0</a>)</li>
 </ul>
 </body>
 </html>
