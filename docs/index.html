@@ -66,602 +66,383 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Activity: v1.8.1</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.activity:activity:1.8.1</code>, <code translate="no" dir="ltr">androidx.activity:activity-compose:1.8.1</code>, and <code translate="no" dir="ltr">androidx.activity:activity-ktx:1.8.1</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9ed4ce88fa7e2b68e312ef93f7a97744620a7d03..b9ef80de74ee258455627f176f46da81e48ac3b2/activity">Version 1.8.1 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li><code translate="no" dir="ltr">OnBackPressedDispatcher</code> now continues to dispatch to the correct <code translate="no" dir="ltr">OnBackPressedCallback</code> even after a new <code translate="no" dir="ltr">OnBackPressedCallback</code> is added while the back gesture is being handled. (<a href="https://android-review.googlesource.com/#/q/Id0ff6b50a2a7f721fc13bab5ca63f620f1e3e25e">Id0ff6</a>)</li>
-</ul>
-
-<h2>Benchmark: v1.2.1</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.benchmark:benchmark-*:1.2.1</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/4d17fe57ec366c9d3a8fc21a851974189b615a12..dd28c3e7d9e6ce9ec5ea046c8b09c28d3449656a/benchmark">Version 1.2.1 contains these commits.</a></p>
+<h2>Activity: v1.9.0-alpha01</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.activity:activity:1.9.0-alpha01</code>, <code translate="no" dir="ltr">androidx.activity:activity-compose:1.9.0-alpha01</code>, and <code translate="no" dir="ltr">androidx.activity:activity-ktx:1.9.0-alpha01</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/b9ef80de74ee258455627f176f46da81e48ac3b2..b5166f9a1e9c047162d1215884c3e2cd41a4a74a/activity">Version 1.9.0-alpha01 contains these commits.</a></p>
 <p><strong>New Features</strong></p>
 <ul>
- <li>Improved error message when user disables test variants (<a href="https://issuetracker.google.com/issues/307478189">b/307478189</a>)</li>
- <li>Added properties to support AS test run integration (<a href="https://issuetracker.google.com/issues/309805233">b/309805233</a>), (<a href="https://issuetracker.google.com/issues/309116324">b/309116324</a>)</li>
-</ul>
-
-<h2>Browser: v1.7.0</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.browser:browser:1.7.0</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9d1512626b03b7b079ea5d8c71ee3b9d2513284e..1067481a829ed7816785e1a9486a02f28cf772e9/browser/browser">Version 1.7.0 contains these commits.</a></p>
-<p><strong>Important changes since 1.6.0</strong></p>
-<ul>
- <li>Added <code translate="no" dir="ltr">CustomTabsIntent.Builder#setBookmarksButtonEnabled</code> that enables the bookmarks button in the overflow menu. (<a href="https://android-review.googlesource.com/#/q/Ia792eb29ee8953d83db9bad82d5ee10f1a221048">Ia792e</a>)</li>
- <li>Added <code translate="no" dir="ltr">CustomTabsIntent.Builder#setDownloadButtonEnabled</code> that enables the download button in the overflow menu. (<a href="https://android-review.googlesource.com/#/q/Ia792eb29ee8953d83db9bad82d5ee10f1a221048">Ia792e</a>)</li>
- <li>Added <code translate="no" dir="ltr">CustomTabsIntent.Builder#setSendToExtraDefaultHandlerEnabled</code> that enables sending initial urls to external handler apps. (<a href="https://android-review.googlesource.com/#/q/Ia792eb29ee8953d83db9bad82d5ee10f1a221048">Ia792e</a>)</li>
- <li>Added <code translate="no" dir="ltr">CustomTabsIntent.Builder#setTranslateLanguage</code> that specifies the target language that the Translate UI should be triggered with. (<a href="https://android-review.googlesource.com/#/q/Ia792eb29ee8953d83db9bad82d5ee10f1a221048">Ia792e</a>)</li>
- <li>Added <code translate="no" dir="ltr">CustomTabsIntent.Builder#setBackgroundInteractionEnabled</code> that enables interactions with the background app when a partial Custom Tab is launched. (<a href="https://android-review.googlesource.com/#/q/Ia792eb29ee8953d83db9bad82d5ee10f1a221048">Ia792e</a>)</li>
- <li>Added <code translate="no" dir="ltr">CustomTabsIntent.Builder#setShareIdentityEnabled</code> that allows Custom Tabs to obtain the caller's identity. (<a href="https://android-review.googlesource.com/#/q/I7bf2b2db541398f64af772f34ede7635a216fde8">I7bf2b</a>)</li>
- <li>Added <code translate="no" dir="ltr">CustomTabsIntent.Builder#setSecondaryToolbarSwipeUpGesture</code> that sets a <code translate="no" dir="ltr">PendingIntent</code> to be sent when the user swipes up from the bottom toolbar. (<a href="https://android-review.googlesource.com/#/q/Id42a2a75706c6bd966f417c470ec8a710e383fe7">Id42a2</a>)</li>
-</ul>
-
-<h2>Browser: v1.8.0-alpha01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.browser:browser:1.8.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/312eb9f1ddece3a18317f18515a877e0e745cb2c/browser/browser">Version 1.8.0-alpha01 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Added <code translate="no" dir="ltr">CustomTabsIntent.Builder#setInitialActivityWidthPx</code> which allows developers to specify the initial launch width of a Custom Tab. (<a href="https://android-review.googlesource.com/#/q/I443f6f3295cde72d0eedf4deb41ada1597b30299">I443f6</a>)</li>
- <li>Added <code translate="no" dir="ltr">CustomTabsIntent.Builder#setActivitySideSheetBreakpointDp</code> which allows developers to specify the minimum Custom Tabs window width in order for it to act as a side sheet. (<a href="https://android-review.googlesource.com/#/q/I443f6f3295cde72d0eedf4deb41ada1597b30299">I443f6</a>)</li>
- <li>Added <code translate="no" dir="ltr">CustomTabsIntent.Builder#setActivitySideSheetPosition</code> which allows developers to specify the Custom Tab’s position when acting as a side sheet. (<a href="https://android-review.googlesource.com/#/q/I443f6f3295cde72d0eedf4deb41ada1597b30299">I443f6</a>)</li>
- <li>Added <code translate="no" dir="ltr">CustomTabsIntent.Builder#setActivitySideSheetEnableMaximization</code> which allows developers to enable or disable the maximization button when the Custom Tab is acting as a side sheet. (<a href="https://android-review.googlesource.com/#/q/I443f6f3295cde72d0eedf4deb41ada1597b30299">I443f6</a>)</li>
- <li>Added <code translate="no" dir="ltr">CustomTabsIntent.Builder#setActivitySideSheetDecorationType</code> which allows developers to specify the Custom Tab’s decoration type when it is acting as a side sheet. (<a href="https://android-review.googlesource.com/#/q/I443f6f3295cde72d0eedf4deb41ada1597b30299">I443f6</a>)</li>
- <li>Added <code translate="no" dir="ltr">CustomTabsIntent.Builder#setActivitySideSheetRoundedCornersPosition</code> which allows developers to specify the position of the rounded corners when the Custom Tab is acting as a side sheet. (<a href="https://android-review.googlesource.com/#/q/I443f6f3295cde72d0eedf4deb41ada1597b30299">I443f6</a>)</li>
- <li>Added <code translate="no" dir="ltr">onActivityLayout</code> callback method to interface <code translate="no" dir="ltr">CustomTabsCallback</code> to let developers know the coordinates of the area occupied by the Custom Tab and the state in which it is being displayed. This will be called when the Custom Tab is first displayed on the screen and each time the occupied area changes. (<a href="https://android-review.googlesource.com/#/q/I443f6f3295cde72d0eedf4deb41ada1597b30299">I443f6</a>)</li>
- <li>Added <code translate="no" dir="ltr">onWarmupCompleted</code> callback method to interface <code translate="no" dir="ltr">CustomTabsCallback</code> to let developers know when <code translate="no" dir="ltr">CustomTabsClient#warmup</code>finishes warming up the browser process. (<a href="https://android-review.googlesource.com/#/q/I107cfe713e3a12971123e94b505fce44494dcc0f">I107cf</a>)</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>​​Added the session id to extras in <code translate="no" dir="ltr">CustomTabsSession#setEngagementSignalsCallback</code> and <code translate="no" dir="ltr">CustomTabsSession#isEngagementSignalsApiAvailable</code>. (<a href="https://android-review.googlesource.com/#/q/Iba7f1e5be9cfe30ed69274e1fd016ef02cf5e13d">Iba7f1</a>)</li>
-</ul>
-
-<h2>Collection: v1.4.0-beta01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.collection:collection-*:1.4.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/d01dc8c0d7a84bfca831a38146dccc49111668f2..312eb9f1ddece3a18317f18515a877e0e745cb2c/collection">Version 1.4.0-beta01 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Fix for <code translate="no" dir="ltr">ListIterator</code> incorrectly setting values in <code translate="no" dir="ltr">ObjectList</code> that could result in a crash due to <code translate="no" dir="ltr">IndexOutOfBoundsException</code>. (<a href="https://android-review.googlesource.com/#/q/I3bd8a616a27c6537db32e6bcec22a69f093c8f37">I3bd8a</a>, <a href="https://b.corp.google.com/issues/307049391">b/307049391</a>)</li>
-</ul>
-
-<h2>Compose Animation: v1.6.0-beta01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.6.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..1f80a6f0c1cb96288c04124001fa2c9bd29617d6/compose/animation">Version 1.6.0-beta01 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li><code translate="no" dir="ltr">ExitTransition.Hold</code> has been renamed to <code translate="no" dir="ltr">ExitTransition.KeepUntilTransitionsFinished</code> to be more explicit. (<a href="https://android-review.googlesource.com/#/q/I1c4906213f267c9dabae03f15e6d9d9f05622581">I1c490</a>)</li>
- <li>You may now use <code translate="no" dir="ltr">keyframesWithSpline</code> to interpolate any N-dimensional value using monotonic splines. It's particularly useful to interpolate positional values such as <code translate="no" dir="ltr">Offset</code>, <code translate="no" dir="ltr">IntOffset</code>, <code translate="no" dir="ltr">DpOffset</code>. Added as Experimental API.</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Add renderer support for Sweep Gradient in <code translate="no" dir="ltr">ArcLine</code>. (<a href="https://android-review.googlesource.com/#/q/I4d5bb5948d2216dca2a29d2449fd97519b2b65bb">I4d5bb</a>)</li>
- <li>Implement equals and hashcode for <code translate="no" dir="ltr">PageSize.Fixed</code>. (<a href="https://android-review.googlesource.com/#/q/Ie3edea3aafd75068cd57c04aafdd7055ead20ad7">Ie3ede</a>, <a href="https://issuetracker.google.com/issues/300134276">b/300134276</a>)</li>
- <li>Fix binary compatibility issue with Window Inset change. (<a href="https://android-review.googlesource.com/#/q/Iee695f0f1b2bf24a820b5a1bccfe550d9c29a5fa">Iee695</a>)</li>
- <li>Remove material core layer for Material3 Chip/Button as the microbenchmarks show better performance without it. (<a href="https://android-review.googlesource.com/#/q/I5555573520638dd3c7f0d202e048ae6fffde19e5">I55555</a>)</li>
-</ul>
-
-<h2>Compose Foundation: v1.6.0-beta01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.6.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..1f80a6f0c1cb96288c04124001fa2c9bd29617d6/compose">Version 1.6.0-beta01 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>The <code translate="no" dir="ltr">DragAndDropTarget</code> modifier now takes in the receiving <code translate="no" dir="ltr">DragAndDropTarget</code> explicitly and has a lambda to opt into a drag and drop session. There are now two factory functions for a <code translate="no" dir="ltr">DragAndDropModifierNode</code>. One for receiving transfers and one for transferring data (<a href="https://android-review.googlesource.com/#/q/I69481ca031bfa52b3f8ff910b159e3ee8f7ffaf9">I69481</a>)</li>
- <li>Updated <code translate="no" dir="ltr">maximumFlingVelocity</code> to be represented as Float. Updated documentation to be more clear about the <code translate="no" dir="ltr">maximumFlingVelocity</code> unity. (<a href="https://android-review.googlesource.com/#/q/I8adc73327ca3c0d43a9ea31d871ddae1da5e9496">I8adc7</a>)</li>
- <li><p><code translate="no" dir="ltr">onDragAndDropStart</code> in the <code translate="no" dir="ltr">DragAndDropModifierNode</code> factory has been renamed to <code translate="no" dir="ltr">acceptDragAndDropTransfer</code>.</p><p><code translate="no" dir="ltr">acceptsDragAndDropTransfer</code> has been added to the <code translate="no" dir="ltr">dragAndDropTarget</code> <code translate="no" dir="ltr">Modifier</code> to accept from a drag and drop session. This lambda returns a viable <code translate="no" dir="ltr">DragAndDropTarget</code> if interested in a drag and drop session. Other lambdas for processing drag events have been replaced by this.</p><p>a <code translate="no" dir="ltr">DragAndDropTarget</code> factory function has been added to receive from drag and drop sessions (<a href="https://android-review.googlesource.com/#/q/Iebf3a243ad9e4515dfe43b1947ab98ade6804a99">Iebf3a</a>)</p></li>
- <li><p>Exposing <code translate="no" dir="ltr">startDragImmediately</code> in <code translate="no" dir="ltr">AnchoredDraggable</code> gives control for detecting dragging gestures when using it. It is useful to set it when the widget is animating to a target anchor. See <a href="https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:compose/foundation/foundation/samples/src/main/java/androidx/compose/foundation/samples/AnchoredDraggableSample.kt?q=java%2Fandroidx%2Fcompose%2Ffoundation%2Fsamples%2FAnchoredDraggableSample.kt#:%7E:text=AnchoredDraggableCatchAnimatingWidgetSample">Sample</a>. (<a href="https://android-review.googlesource.com/#/q/Ie6d134277bb4f25bbab7ff1929d59bba00ede235">Ie6d13</a>, <a href="https://issuetracker.google.com/issues/285139987">b/285139987</a>)</p></li>
- <li><p>Foundation Tooltip APIs are now <code translate="no" dir="ltr">@ExperimentalFoundationApi</code> (<a href="https://android-review.googlesource.com/#/q/I30b0b47c0d7d048369779600071fde5f2452e71d">I30b0b</a>)</p></li>
- <li><p>Removed <code translate="no" dir="ltr">DragAndDropInfo</code> as a type <code translate="no" dir="ltr">DragAndDropModifierNode.drag</code> now takes parameters for the <code translate="no" dir="ltr">transferData</code>, decoration size and drag decoration <code translate="no" dir="ltr">DrawScope</code> lambda</p><p><code translate="no" dir="ltr">DragAndDropTarget</code> has methods for particular drag and drop events instead of being a single abstract method</p><p><code translate="no" dir="ltr">onDragAndDropEvent</code> in the factory function for a <code translate="no" dir="ltr">DragAndDropModifierNode</code> has been renamed to <code translate="no" dir="ltr">onDragAndDropStart</code> to better communicate that the <code translate="no" dir="ltr">DragAndDropTarget</code> provided is valid for a given drag and drop session only</p><p>The <code translate="no" dir="ltr">DragAndDropEventType</code> has been removed (<a href="https://android-review.googlesource.com/#/q/I645b1531085bceef359daebf7f36aa9119f6017b">I645b1</a>)</p></li>
- <li><p>Renamed <code translate="no" dir="ltr">PlatformTextInputModifierNode.runTextInputSession</code> to <code translate="no" dir="ltr">establishTextInputSession</code>. (<a href="https://android-review.googlesource.com/#/q/I03cd0d84be09a89ed7a763d1b5921cb4975b72a0">I03cd0</a>)</p></li>
- <li><p>Replace <code translate="no" dir="ltr">OriginalText</code> by <code translate="no" dir="ltr">TextSubstitution</code>. (<a href="https://android-review.googlesource.com/#/q/Ifa5a8d6a2efd776c384642d9148dbf40b23eb6e3">Ifa5a8</a>)</p></li>
- <li><p>Renamed <code translate="no" dir="ltr">PlatformTextInputModifierNode.textInputSession</code> to <code translate="no" dir="ltr">runTextInputSession</code>. (<a href="https://android-review.googlesource.com/#/q/Ie9c6b37420dc9c024d68bbfc94fdcbbef105a547">Ie9c6b</a>)</p></li>
- <li><p>The children of <code translate="no" dir="ltr">SubcomposeLayout</code> (and layouts like <code translate="no" dir="ltr">LazyColumn</code> based on it) which are retained to be reused in future are considered deactivated. New <code translate="no" dir="ltr">assertIsDeactivated()</code> test API was introduced to test such nodes. The rest of the test apis will filter out deactivated nodes by default. (<a href="https://android-review.googlesource.com/#/q/I2ef84fb2ed578238bb20c07655c475df6fb8dbd0">I2ef84</a>, <a href="https://issuetracker.google.com/issues/187188981">b/187188981</a>)</p></li>
- <li><p><code translate="no" dir="ltr">clippingEnabled</code> parameter of <code translate="no" dir="ltr">Modifier.magnifier</code> is renamed to <code translate="no" dir="ltr">clip</code>.</p></li>
- <li><p><code translate="no" dir="ltr">magnifierCenter</code> parameter of <code translate="no" dir="ltr">Modifier.magnifier</code> is made nullable preserving the same default behavior. (<a href="https://android-review.googlesource.com/#/q/I6aa66e52283bd467372b6a04132341642549f20d">I6aa66</a>)</p></li>
- <li><p>Material <code translate="no" dir="ltr">SwipeToReveal</code> APIs (for Cards and Chips) now rely on a slot based API (as recommended by Compose) instead of data class based instances to create those slots. This is a breaking change, please see the demo and sample code for examples on how to use the new API. (<a href="https://android-review.googlesource.com/#/q/Ia89431e240b0602bfe08bceb660ff9ef1137d938">Ia8943</a>)</p></li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Implement equals and hashcode for <code translate="no" dir="ltr">PageSize.Fixed</code>. (<a href="https://android-review.googlesource.com/#/q/Ie3edea3aafd75068cd57c04aafdd7055ead20ad7">Ie3ede</a>, <a href="https://issuetracker.google.com/issues/300134276">b/300134276</a>)</li>
- <li>Fixed a bug that would cause <code translate="no" dir="ltr">BasicText</code> layout to not shrink when <code translate="no" dir="ltr">minWidth</code> changed and <code translate="no" dir="ltr">minWidth</code> less than initial measure constraints <code translate="no" dir="ltr">maxWidth</code> (<a href="https://android-review.googlesource.com/#/q/Idb19ce3a2975761c189962887575eab3066a04b7">Idb19c</a>)</li>
- <li>Add renderer support for Sweep Gradient in <code translate="no" dir="ltr">ArcLine</code>. (<a href="https://android-review.googlesource.com/#/q/I4d5bb5948d2216dca2a29d2449fd97519b2b65bb">I4d5bb</a>)</li>
- <li>Fix binary compatibility issue with Window Inset change (<a href="https://android-review.googlesource.com/#/q/Iee695f0f1b2bf24a820b5a1bccfe550d9c29a5fa">Iee695</a>)</li>
- <li>Remove material core layer for Material3 Chip/Button as the microbenchmarks show better performance without it. (<a href="https://android-review.googlesource.com/#/q/I5555573520638dd3c7f0d202e048ae6fffde19e5">I55555</a>)</li>
-</ul>
-
-<h2>Compose Material: v1.6.0-beta01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.6.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..1f80a6f0c1cb96288c04124001fa2c9bd29617d6/compose/material">Version 1.6.0-beta01 contains these commits.</a></p>
-
-<h2>Compose Material 3: v1.2.0-alpha11</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.material3:material3-*:1.2.0-alpha11</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..03b3b94c9895b338f1b3eeec7c39f44cc72b9b89/compose/material3">Version 1.2.0-alpha11 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Implements <code translate="no" dir="ltr">PullToRefreshContainer</code> and <code translate="no" dir="ltr">PullToRefreshState</code>, which together provide a pull to refresh implementation in Material3. (<a href="https://android-review.googlesource.com/#/q/I1645695db83e706b2f20e25b82bb937885d95abf">I16456</a>, <a href="https://issuetracker.google.com/issues/261760718">b/261760718</a>)</li>
+ <li><code translate="no" dir="ltr">ComponentActivity</code> now implements <code translate="no" dir="ltr">OnUserLeaveHintProvider</code> to allow components to callbacks for <code translate="no" dir="ltr">onUserLeaveHint</code> events. (<a href="https://android-review.googlesource.com/#/q/I54892c9ab5a8a002164b9f98cd31e02d56d73da7">I54892</a>)</li>
 </ul>
 <p><strong>API Changes</strong></p>
 <ul>
- <li>Mark the <code translate="no" dir="ltr">SwipeToDismissBox</code> <code translate="no" dir="ltr">DismissDirection</code> and <code translate="no" dir="ltr">DismissValue</code> as experimental. (<a href="https://android-review.googlesource.com/#/q/I517b00a95360086eba237d32c08386ac9c00e3d7">I517b0</a>)</li>
- <li>Rename <code translate="no" dir="ltr">SwipeToDismiss</code> to <code translate="no" dir="ltr">SwipeToDismissBox</code>. Rename <code translate="no" dir="ltr">background</code> to <code translate="no" dir="ltr">backgroundContent</code> and <code translate="no" dir="ltr">dismissContent</code> to trailing <code translate="no" dir="ltr">content</code> lambda. (<a href="https://android-review.googlesource.com/#/q/I7f4d3606d0b79b827f79780a9b0b86fdfb4bd810">I7f4d3</a>)</li>
- <li>Make the constructor for <code translate="no" dir="ltr">ChipElevation</code> and <code translate="no" dir="ltr">SelectableChipElevation</code> public. (<a href="https://android-review.googlesource.com/#/q/Ie0c48d7eec6b96d0276d434ed91ad94e53ad6a6c">Ie0c48</a>, <a href="https://issuetracker.google.com/issues/308432421">b/308432421</a>)</li>
- <li>Adding <code translate="no" dir="ltr">ModalBottomSheetProperties</code>. Moving <code translate="no" dir="ltr">securePolicy</code> into <code translate="no" dir="ltr">ModalBottomSheetProperties</code>. Adding <code translate="no" dir="ltr">isFocusable</code> and <code translate="no" dir="ltr">shouldDismissOnBackPress</code> to <code translate="no" dir="ltr">ModalBottomSheetProperties</code>. These new booleans help determine how modal bottom sheet should handle IME events. (<a href="https://android-review.googlesource.com/#/q/Iea56ff84fd2f8a70037607e8aef0ceaf7a47e3d0">Iea56f</a>, <a href="https://issuetracker.google.com/issues/278216859">b/278216859</a>)</li>
- <li>Updated <code translate="no" dir="ltr">RangeSlider</code> and <code translate="no" dir="ltr">Slider</code> states to remove <code translate="no" dir="ltr">initialOnValueChange</code>, the initial prefixes, and appropriate kdocs. (<a href="https://android-review.googlesource.com/#/q/I57d302c9d3660381df37c4b1e756e84787c45219">I57d30</a>)</li>
- <li>Deprecate <code translate="no" dir="ltr">ChipBorder</code> class and its associated function calls, recommend using <code translate="no" dir="ltr">BorderStroke</code> directly instead. (<a href="https://android-review.googlesource.com/#/q/I89cc2875d4179ee0ab09e4204b798a529da69e35">I89cc2</a>)</li>
- <li>Foundation Tooltip APIs are now <code translate="no" dir="ltr">@ExperimentalFoundationApi</code>. (<a href="https://android-review.googlesource.com/#/q/I30b0b47c0d7d048369779600071fde5f2452e71d">I30b0b</a>)</li>
- <li><code translate="no" dir="ltr">TabRow</code> and <code translate="no" dir="ltr">ScrollableTabRow</code> are no longer deprecated. The new Primary and Secondary variants are marked as experimental. (<a href="https://android-review.googlesource.com/#/q/I0def68f453857ab8b40ff708ce09408251111067">I0def6</a>)</li>
- <li>Filter and input chips now use <code translate="no" dir="ltr">BorderStroke</code> directly. (<a href="https://android-review.googlesource.com/#/q/I07a8d2b2157599c7c3345ed7b2723bd4903b85df">I07a8d</a>)</li>
- <li><code translate="no" dir="ltr">SegmentedButton</code> now uses <code translate="no" dir="ltr">BorderStroke</code> directly. (<a href="https://android-review.googlesource.com/#/q/I89b9bb765e0d31f97a8140c961e284cd025a321f">I89b9b</a>)</li>
- <li>Renamed the generic <code translate="no" dir="ltr">AlertDialog</code> function to <code translate="no" dir="ltr">BasicAlertDialog</code>, and deprecate the previous function. (<a href="https://android-review.googlesource.com/#/q/Idbe52197df664e1d98a6484f7052ec274f2b8be9">Idbe52</a>)</li>
- <li>Rename <code translate="no" dir="ltr">SwipeToDismiss</code> APIs to <code translate="no" dir="ltr">SwipeDismiss</code>, and promote the new <code translate="no" dir="ltr">SwipeDismiss</code> APIs to stable. (<a href="https://android-review.googlesource.com/#/q/I14cbe61714d822b6481c1c6f30102b57de1fcfde">I14cbe</a>)</li>
- <li>Adding <code translate="no" dir="ltr">tonalElevation</code> and <code translate="no" dir="ltr">shadowElevation</code> to tooltip APIs. Additionally, moving <code translate="no" dir="ltr">TooltipBox</code>, <code translate="no" dir="ltr">PlainTooltip</code>, and <code translate="no" dir="ltr">RichTooltip</code> APIs back to experimental since they were accidentally released as stable. (<a href="https://android-review.googlesource.com/#/q/If0f66a8ccc737a0c163fd2b2a890ce60ad3d5fe4">If0f66</a>, <a href="https://issuetracker.google.com/issues/293939035">b/293939035</a>)</li>
- <li>Promote experimental chip APIs to stable. (<a href="https://android-review.googlesource.com/#/q/Iea2c35aaa8ebfb81720fcd42f9955aecdeb1643a">Iea2c3</a>)</li>
- <li>Removed the <code translate="no" dir="ltr">@ExperimentalMaterial3Api</code> annotation from the Material3 clickable Cards. (<a href="https://android-review.googlesource.com/#/q/I88dbfe41b25f0fd7603964b63a3e8adff0eeb16c">I88dbf</a>)</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Fixed an issue where <code translate="no" dir="ltr">SwipeToDismiss</code> would crash in certain scenarios with nested Lookahead and Lazy layouts. (<a href="https://android-review.googlesource.com/#/q/Ica8d19764426a0b8d6f7033a03d28687eab77d17">Ica8d1</a>, <a href="https://issuetracker.google.com/issues/297226562">b/297226562</a>)</li>
-</ul>
-
-<h2>Compose Material3 Adaptive Navigation Suite: v1.0.0-alpha01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.material3:material3-adaptive-navigation-suite:1.0.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/03b3b94c9895b338f1b3eeec7c39f44cc72b9b89/compose/material3/material3-adaptive-navigation-suite">Version 1.0.0-alpha01 contains these commits.</a> &lt;!--* <strong>New Features</strong></p>
-<ul>
- <li><a href="https://developer.android.com/reference/kotlin/androidx/compose/material3/adaptive/navigation-suite/package-summary#NavigationSuiteScaffold">NavigationSuiteScaffold</a>
-  <ul>
-   <li><a href="https://developer.android.com/reference/kotlin/androidx/compose/material3/adaptive/navigation-suite/package-summary#NavigationSuiteScaffoldLayout">NavigationSuiteScaffoldLayout</a></li>
-   <li><a href="https://developer.android.com/reference/kotlin/androidx/compose/material3/adaptive/navigation-suite/package-summary#NavigationSuite">NavigationSuite</a> *--&gt; ## Compose Material3 Adaptive Version 1.0</li>
-  </ul></li>
-</ul>
-
-<h2>Compose Material 3: v1.0.0-alpha01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.material3:material3-adaptive:1.0.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/03b3b94c9895b338f1b3eeec7c39f44cc72b9b89/compose/material3/material3-adaptive">Version 1.0.0-alpha01 contains these commits.</a></p>
-
-<h2>Compose Runtime: v1.6.0-beta01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.6.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..1f80a6f0c1cb96288c04124001fa2c9bd29617d6/compose">Version 1.6.0-beta01 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Propagate Certain stability values in annotation. <a href="https://android-review.googlesource.com/#/q/Ib39a8b8d9a598a252ea7489686f264dab27b802a">(274a4c)</a></li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Use referential policy for composition local scope state in context. <a href="https://android-review.googlesource.com/#/q/I315f1c664890023342196659c5ff6eba2b70d553">(83361c)</a></li>
- <li>Restrict $dirty capture to inline lambdas. <a href="https://android-review.googlesource.com/#/q/I67f435f73ba8c5e3c96bdd21e94827364a9b5a84">(acfca0)</a></li>
- <li>Fix moveable content sometimes receiving the wrong composition locals. <a href="https://android-review.googlesource.com/#/q/I99bccb7c7ef6b60ea07512c1c4d25399f9dec58f">(035cd6)</a></li>
- <li>Use faster non-allocating hashmaps in <code translate="no" dir="ltr">RecomposeScopeImpl</code>. <a href="https://android-review.googlesource.com/#/q/I7b4b55329003827c0555082a27d7d88d871efecd">(d79494)</a></li>
- <li>Use <code translate="no" dir="ltr">ObjectIntMap</code> in <code translate="no" dir="ltr">DerivedState</code>. <a href="https://android-review.googlesource.com/#/q/Ib10a28f4e870ddcc123716c1cfd2d0962c7ee945">(21862e)</a></li>
- <li>Use <code translate="no" dir="ltr">IntRef</code> for int <code translate="no" dir="ltr">SnapshotThreadLocal</code> in <code translate="no" dir="ltr">DerivedState</code>. <a href="https://android-review.googlesource.com/#/q/I30b27c826147e51017d11e61a166912dfb7cf497">(04eaf4)</a></li>
-</ul>
-
-<h2>Runtime Tracing: v1.0.0-alpha05</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-tracing:1.0.0-alpha05</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/216f103fa4a5c7247f7bafc8bb3014616c265f0c..1f80a6f0c1cb96288c04124001fa2c9bd29617d6/compose/runtime/runtime-tracing">Version 1.0.0-alpha05 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Pinned dependencies to lowest supported stable versions (i.e. compose-runtime and tracing-perfetto) - fixing an issue where compose-runtime-tracing would bring in a newer version of compose-runtime into the app.</li>
-</ul>
-
-<h2>Compose UI: v1.6.0-beta01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.6.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..1f80a6f0c1cb96288c04124001fa2c9bd29617d6/compose/ui">Version 1.6.0-beta01 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>The <code translate="no" dir="ltr">DragAndDropTarget</code> modifier now takes in the receiving <code translate="no" dir="ltr">DragAndDropTarget</code> explicitly and has a lambda to opt into a drag and drop session. There are now two factory functions for a <code translate="no" dir="ltr">DragAndDropModifierNode</code>. One for receiving transfers and one for transferring data (<a href="https://android-review.googlesource.com/#/q/I69481ca031bfa52b3f8ff910b159e3ee8f7ffaf9">I69481</a>)</li>
- <li>Updated <code translate="no" dir="ltr">maximumFlingVelocity</code> to be represented as Float. Updated documentation to be more clear about the <code translate="no" dir="ltr">maximumFlingVelocity</code> unity. (<a href="https://android-review.googlesource.com/#/q/I8adc73327ca3c0d43a9ea31d871ddae1da5e9496">I8adc7</a>)</li>
- <li><code translate="no" dir="ltr">onDragAndDropStart</code> in the <code translate="no" dir="ltr">DragAndDropModifierNode</code> factory has been renamed to <code translate="no" dir="ltr">acceptDragAndDropTransfer</code>.<code translate="no" dir="ltr">acceptsDragAndDropTransfer</code> has been added to the <code translate="no" dir="ltr">dragAndDropTarget</code> Modifier to accept from a drag and drop session. This lambda returns a viable <code translate="no" dir="ltr">DragAndDropTarget</code> if interested in a drag and drop session. Other lambdas for processing drag events have been replaced by this. a <code translate="no" dir="ltr">DragAndDropTarget</code> factory function has been added to receive from drag and drop sessions (<a href="https://android-review.googlesource.com/#/q/Iebf3a243ad9e4515dfe43b1947ab98ade6804a99">Iebf3a</a>)</li>
- <li><p>Removed <code translate="no" dir="ltr">DragAndDropInfo</code> as a type <code translate="no" dir="ltr">DragAndDropModifierNode.drag</code> now takes parameters for the <code translate="no" dir="ltr">transferData</code>, decoration size and drag decoration <code translate="no" dir="ltr">DrawScope</code> lambda</p><p><code translate="no" dir="ltr">DragAndDropTarget</code> has methods for particular drag and drop events instead of being a single abstract method</p><p><code translate="no" dir="ltr">onDragAndDropEvent</code> in the factory function for a <code translate="no" dir="ltr">DragAndDropModifierNode</code> has been renamed to <code translate="no" dir="ltr">onDragAndDropStart</code> to better communicate that the <code translate="no" dir="ltr">DragAndDropTarget</code> provided is valid for a given drag and drop session only</p><p>The <code translate="no" dir="ltr">DragAndDropEventType</code> has been removed (<a href="https://android-review.googlesource.com/#/q/I645b1531085bceef359daebf7f36aa9119f6017b">I645b1</a>)</p></li>
- <li><p>Renamed <code translate="no" dir="ltr">PlatformTextInputModifierNode.runTextInputSession</code> to <code translate="no" dir="ltr">establishTextInputSession</code>. (<a href="https://android-review.googlesource.com/#/q/I03cd0d84be09a89ed7a763d1b5921cb4975b72a0">I03cd0</a>)</p></li>
- <li><p>Improves traversable node api names to make them more understandable. (<a href="https://android-review.googlesource.com/#/q/Ia4474e234f77a9e04cfeffd46e7ee6a0f05d006a">Ia4474</a>)</p></li>
- <li><p>Replace <code translate="no" dir="ltr">OriginalText</code> by <code translate="no" dir="ltr">TextSubstitution</code>. (<a href="https://android-review.googlesource.com/#/q/Ifa5a8d6a2efd776c384642d9148dbf40b23eb6e3">Ifa5a8</a>)</p></li>
- <li><p>Renamed <code translate="no" dir="ltr">PlatformTextInputModifierNode.textInputSession</code> to <code translate="no" dir="ltr">runTextInputSession</code>. (<a href="https://android-review.googlesource.com/#/q/Ie9c6b37420dc9c024d68bbfc94fdcbbef105a547">Ie9c6b</a>)</p></li>
- <li><p>The children of <code translate="no" dir="ltr">SubcomposeLayout</code> (and layouts like <code translate="no" dir="ltr">LazyColumn</code> based on it) which are retained to be reused in future are considered deactivated. New <code translate="no" dir="ltr">assertIsDeactivated()</code> test API was introduced to test such nodes. The rests of the test apis will filter out deactivated nodes by default. (<a href="https://android-review.googlesource.com/#/q/I2ef84fb2ed578238bb20c07655c475df6fb8dbd0">I2ef84</a>, <a href="https://issuetracker.google.com/issues/187188981">b/187188981</a>)</p></li>
- <li><p>Removed <code translate="no" dir="ltr">FocusDirection.In</code> and <code translate="no" dir="ltr">FocusDirection.Out</code> use <code translate="no" dir="ltr">FocusDirection.Enter</code> and <code translate="no" dir="ltr">FocusDirection.Exit</code> instead (<a href="https://android-review.googlesource.com/#/q/I2f660ded2b6e0d018eca7afa0156b9af0ff35316">I2f660</a>)</p></li>
- <li><p>Material <code translate="no" dir="ltr">SwipeToReveal</code> APIs (for Cards and Chips) now rely on a slot based API (as recommended by Compose) instead of data class based instances to create those slots. This is a breaking change, please see the demo and sample code for examples on how to use the new API. (<a href="https://android-review.googlesource.com/#/q/Ia89431e240b0602bfe08bceb660ff9ef1137d938">Ia8943</a>)</p></li>
- <li><p><code translate="no" dir="ltr">FontStyle(int)</code> constructor is deprecated, use <code translate="no" dir="ltr">FontStyle.Normal</code> or <code translate="no" dir="ltr">FontStyle.Italic</code> instead. (<a href="https://android-review.googlesource.com/#/q/I6661037ce4156041740effcc9c194eaa3c55a0c9">I66610</a>)</p></li>
- <li><p>Renamed <code translate="no" dir="ltr">FontScalable</code> interface to <code translate="no" dir="ltr">FontScaling</code> (<a href="https://android-review.googlesource.com/#/q/Ie804acee6d71ed8d8fddb6817eea74e5f40da2c6">Ie804a</a>)</p></li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li><code translate="no" dir="ltr">SoftwareKeyboardController.show()</code> will no longer show the software keyboard if no text editor is focused. (<a href="https://android-review.googlesource.com/#/q/I2165acf1b065cd56e5bfdaab31829e83292efc3c">I2165a</a>, <a href="https://issuetracker.google.com/issues/301477279">b/301477279</a>)</li>
- <li>Hardware key Up events for keys that haven't received a Down event in the same Compose View will now be ignored. (<a href="https://android-review.googlesource.com/#/q/Ib37b434b9275c1e828b980f5124956cc2ef45047">Ib37b4</a>, <a href="https://issuetracker.google.com/issues/305518328">b/305518328</a>)</li>
- <li>Add renderer support for Sweep Gradient in <code translate="no" dir="ltr">ArcLine</code>. (<a href="https://android-review.googlesource.com/#/q/I4d5bb5948d2216dca2a29d2449fd97519b2b65bb">I4d5bb</a>)</li>
- <li>Implement equals and hashcode for <code translate="no" dir="ltr">PageSize.Fixed</code>. (<a href="https://android-review.googlesource.com/#/q/Ie3edea3aafd75068cd57c04aafdd7055ead20ad7">Ie3ede</a>, <a href="https://issuetracker.google.com/issues/300134276">b/300134276</a>)</li>
- <li>Fix binary compatibility issue with Window Inset change (<a href="https://android-review.googlesource.com/#/q/Iee695f0f1b2bf24a820b5a1bccfe550d9c29a5fa">Iee695</a>)</li>
- <li>Remove material core layer for Material3 Chip/Button as the microbenchmarks show better performance without it. (<a href="https://android-review.googlesource.com/#/q/I5555573520638dd3c7f0d202e048ae6fffde19e5">I55555</a>)</li>
- <li><code translate="no" dir="ltr">TestDispatcher</code>s passed as the <code translate="no" dir="ltr">effectContext</code> to Compose tests will now be used to create the test and frame clocks. (<a href="https://android-review.googlesource.com/#/q/Ia71786a741b31b16fa092800732e8c6abcdfcaa5">Ia7178</a>)</li>
-</ul>
-
-<h2>Games-Activity: v3.0.0-alpha01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.games:games-activity:3.0.0-alpha01</code> and <code translate="no" dir="ltr">androidx.games:games-text-input:3.0.0-alpha01</code> are released. <a href="https://android.googlesource.com/platform/frameworks/opt/gamesdk/+log/c9a97403705fcf46685d3655f8723bdaa7f434b9..d1f9f40d22248179ba6612beb8acec847bc5880d/game-activity">Version 3.0.0-alpha01 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li><code translate="no" dir="ltr">GameActivityMotionEvent</code> and <code translate="no" dir="ltr">GameActivityCallbacks</code> structures changed their sizes.</li>
- <li><code translate="no" dir="ltr">onEditorAction</code> changes its return type from boolean to void.</li>
- <li><code translate="no" dir="ltr">setImeEditorInfo</code> now expects enum parameters, not integers.</li>
- <li>internal functions of <code translate="no" dir="ltr">GameActivityEvents</code> are moved into <code translate="no" dir="ltr">GameActivityEvents_internal.h</code>.</li>
- <li><code translate="no" dir="ltr">GameTextInput</code>’s input types are also enumerations, not integers.</li>
-</ul>
-
-<h2>Games-Memory-Advice version 2.1: v2.1.0-alpha01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.games:games-memory-advice:2.1.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/opt/gamesdk/+log/77508803835f68c459c7191e2c741468fc0b7cc7..d1f9f40d22248179ba6612beb8acec847bc5880d/games-memory-advice">Version 2.1.0-alpha01 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Updated the memory model of the library for better predictions.</li>
-</ul>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Added a new API <code translate="no" dir="ltr">getAvailableMemory()</code> that returns an estimate for the amount of memory that can safely be allocated, in bytes.</li>
-</ul>
-
-<h2>Games Frame Pacing: v2.1.0</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.games:games-frame-pacing:2.1.0</code> is released. <a href="https://android.googlesource.com/platform/frameworks/opt/gamesdk/+log/408e113fbcd92d04fc5bd273bc2ba1f3a1109488..4880f53064c0abc7f2adaa4895e0c9e1c0ade08b/games-frame-pacing">Version 2.1.0 contains these commits.</a></p>
-
-<h2>Leanback Leanback-Preference: v1.2.0-alpha04</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.leanback:leanback:1.2.0-alpha04</code> and <code translate="no" dir="ltr">androidx.leanback:leanback-preference:1.2.0-alpha04</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9ce75ea1baa2af10dda8f787f69c40c6654bcac1..312eb9f1ddece3a18317f18515a877e0e745cb2c/leanback">Version 1.2.0-alpha04 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>(<a href="https://android-review.googlesource.com/#/q/I2c3a0f7ae43f72bd6a1dbbe30c269148f824a885">I2c3a0</a>, <a href="https://issuetracker.google.com/issues/292114537">b/292114537</a>)</li>
+ <li><code translate="no" dir="ltr">ComponentActivity</code> has been rewritten in Kotlin. (<a href="https://android-review.googlesource.com/#/q/I14f312d6879ce6c91496112fb6b171f81cdbddf2">I14f31</a>)</li>
+ <li><code translate="no" dir="ltr">ActivityResultCaller</code> has been rewritten in Kotlin. (<a href="https://android-review.googlesource.com/#/q/Ib02e49c49dbed2ce0d25ac71c8caf0325ffb8142">Ib02e4</a>)</li>
+ <li><code translate="no" dir="ltr">ActivityResultLauncher</code> has been rewritten in Kotlin. As part of that conversion, the <code translate="no" dir="ltr">getContract</code> method is now an abstract Kotlin property. This is a binary compatible change, but source breaking if your implementation of <code translate="no" dir="ltr">ActivityResultLauncher</code> is written in Kotlin. (<a href="https://android-review.googlesource.com/#/q/Id4615d19b383b2438be6a8f68da7584394d13515">Id4615</a>)</li>
+ <li><code translate="no" dir="ltr">PickVisualMediaRequest</code> now has the same minimum API level of 19 as the <code translate="no" dir="ltr">PickVisualMedia</code> Activity Result contract. (<a href="https://android-review.googlesource.com/#/q/Id6e21cd21f91dd81bcb1c3b23286e5528ffa7cd6">Id6e21</a>)</li>
 </ul>
 <p><strong>Dependency Update</strong></p>
 <ul>
- <li>Update recyclerview requirement to 1.3.2 to fix a common crash in TV apps</li>
+ <li>Activity now depends on <a href="/jetpack/androidx/releases/core#1.13.0-alpha01">Core <code translate="no" dir="ltr">1.13.0-alpha01</code></a>. (<a href="https://android-review.googlesource.com/#/q/I14f312d6879ce6c91496112fb6b171f81cdbddf2">I14f31</a>)</li>
 </ul>
 
-<h2>Leanback-Grid: v1.0.0-alpha03</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.leanback:leanback-grid:1.0.0-alpha03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9ce75ea1baa2af10dda8f787f69c40c6654bcac1..312eb9f1ddece3a18317f18515a877e0e745cb2c/leanback/leanback-grid">Version 1.0.0-alpha03 contains these commits.</a></p>
-<p><strong>Dependency Updates</strong></p>
-<ul>
- <li>Update to depend on <a href="/jetpack/androidx/releases/recyclerview#recyclerview-1.3.2">RecyclerView <code translate="no" dir="ltr">1.3.2</code></a> to fix a common crash in TV apps (<a href="https://android-review.googlesource.com/#/q/I2c3a0f7ae43f72bd6a1dbbe30c269148f824a885">I2c3a0</a>, <a href="https://issuetracker.google.com/issues/292114537">b/292114537</a>)</li>
-</ul>
-
-<h2>Leanback-Paging: v1.1.0-alpha11</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.leanback:leanback-paging:1.1.0-alpha11</code> is released with no changes. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9ce75ea1baa2af10dda8f787f69c40c6654bcac1..312eb9f1ddece3a18317f18515a877e0e745cb2c/leanback/leanback-paging">Version 1.1.0-alpha11 contains these commits.</a></p>
-
-<h2>Lifecycle: v2.7.0-rc01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.lifecycle:lifecycle-*:2.7.0-rc01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/e3ffd7948030a769c857b8c629e0079c54b730ad..13d5e2efb6ca3077b4bd3f6040c5a15b504397d3/lifecycle">Version 2.7.0-rc01 contains these commits.</a></p>
+<h2>Annotation-Experimental: v1.4.0-alpha01</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.annotation:annotation-experimental:1.4.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/7c0dba3c01588fa781e827cfd1547c38609205c2..b5166f9a1e9c047162d1215884c3e2cd41a4a74a/annotation/annotation-experimental">Version 1.4.0-alpha01 contains these commits.</a></p>
 <p><strong>Bug Fixes</strong></p>
 <ul>
- <li><code translate="no" dir="ltr">LifecycleStartEffect</code> and <code translate="no" dir="ltr">LifecycleResumeEffect</code> now correctly dispose and recreate the effect block if the <code translate="no" dir="ltr">LifecycleOwner</code> is changed. (<a href="https://android-review.googlesource.com/#/q/Ia25c6adab84ef2215493c32deecae3d4e61ccad0">Ia25c6</a>)</li>
+ <li>Temporarily remove class-level autofix suggestions to work around <a href="http://b/301598518">b/301598518</a>. (<a href="https://android-review.googlesource.com/#/q/Id98b2281c79ebd842e8585f9fc04d2286e5001de">Id98b2</a>)</li>
+ <li>Show warnings for Java usages of experimentally-annotated Kotlin properties (<a href="https://android-review.googlesource.com/#/q/I8bd43b972619c8622a7d57e923951079712b9ace">I8bd43</a>)</li>
+ <li>Fix placement of autofix annotation on Kotlin methods (<a href="https://android-review.googlesource.com/#/q/Id7a41679a7262c63c1e4c2f59fd8394283963785">Id7a41</a>)</li>
 </ul>
 
-<h2>Media: v1.7.0-rc01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.media:media:1.7.0-rc01</code> is released with no changes. <a href="https://android.googlesource.com/platform/frameworks/support/+log/e3ffd7948030a769c857b8c629e0079c54b730ad..372e1696caa87356c2b67083315d3e55b29a5da3/media/media">Version 1.7.0-rc01 contains these commits.</a></p>
-
-<h2>Media2: v1.3.0-alpha01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.media2:media2-*:1.3.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/2831fd34eaa9351500d9aff2187e3d6bb96cf1eb..e4f41c35a73dd32f261f1330bd050cbb9d70752e/media2">Version 1.3.0-alpha01 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li><code translate="no" dir="ltr">androidx.media2</code> is now fully deprecated. Use <code translate="no" dir="ltr">androidx.media3</code> instead. (<a href="https://android-review.googlesource.com/#/q/I5316437d008c0a3030927cd8956b71cd2582ab20">I53164</a>)</li>
-</ul>
-
-<h2>Media3: v1.2.0</h2>
-<p>November 15, 2023</p>
-<ul>
- <li>Common Library: 
-  <ul>
-   <li>Add a <code translate="no" dir="ltr">@Nullable Throwable</code> parameter to the methods in the <code translate="no" dir="ltr">Log.Logger</code> interface. The <code translate="no" dir="ltr">message</code> parameter to these methods no longer contains any information about the <code translate="no" dir="ltr">Throwable</code> passed to the <code translate="no" dir="ltr">Log.{d,i,w,e}()</code> methods, so implementations will need to manually append this information if desired (possibly using <code translate="no" dir="ltr">Logger.appendThrowableString(String, Throwable)</code>).</li>
-   <li>Fix Kotlin compatibility issue where nullable generic type parameters and nullable array element types are not detected as nullable. Examples are <code translate="no" dir="ltr">TrackSelectorResult</code> and <code translate="no" dir="ltr">SimpleDecoder</code> method parameters (<a href="https://github.com/google/ExoPlayer/issues/6792">#6792</a>).</li>
-   <li>Change default UI and notification behavior in <code translate="no" dir="ltr">Util.shouldShowPlayButton</code> to show a "play" button while playback is temporarily suppressed (e.g. due to transient audio focus loss). The legacy behavior can be maintained by using <code translate="no" dir="ltr">PlayerView.setShowPlayButtonIfPlaybackIsSuppressed(false)</code> or <code translate="no" dir="ltr">MediaSession.Builder.setShowPlayButtonIfPlaybackIsSuppressed(false)</code> (<a href="https://github.com/google/ExoPlayer/issues/11213">#11213</a>).</li>
-   <li>Upgrade <code translate="no" dir="ltr">androidx.annotation:annotation-experimental</code> to <code translate="no" dir="ltr">1.3.1</code> to fix https://issuetracker.google.com/251172715.</li>
-   <li>Move <code translate="no" dir="ltr">ExoPlayer.setAudioAttributes</code> to the <code translate="no" dir="ltr">Player</code> interface.</li>
-  </ul></li>
- <li>ExoPlayer: 
-  <ul>
-   <li>Fix seeking issues in AC4 streams caused by not identifying decode-only samples correctly (<a href="https://github.com/google/ExoPlayer/issues/11000">#11000</a>).</li>
-   <li>Add suppression of playback on unsuitable audio output devices (e.g. the built-in speaker on Wear OS devices) when this feature is enabled via <code translate="no" dir="ltr">ExoPlayer.Builder.setSuppressPlaybackOnUnsuitableOutput</code>. The playback suppression reason will be updated as <code translate="no" dir="ltr">Player.PLAYBACK_SUPPRESSION_REASON_UNSUITABLE_AUDIO_OUTPUT</code> if playback is attempted when no suitable audio outputs are available, or if all suitable outputs are disconnected during playback. The suppression reason will be removed when a suitable output is connected.</li>
-   <li>Add <code translate="no" dir="ltr">MediaSource.canUpdateMediaItem</code> and <code translate="no" dir="ltr">MediaSource.updateMediaItem</code> to accept <code translate="no" dir="ltr">MediaItem</code> updates after creation via <code translate="no" dir="ltr">Player.replaceMediaItem(s)</code>.</li>
-   <li>Allow <code translate="no" dir="ltr">MediaItem</code> updates for all <code translate="no" dir="ltr">MediaSource</code> classes provided by the library via <code translate="no" dir="ltr">Player.replaceMediaItem(s)</code> (<a href="https://github.com/androidx/media/issues/33">#33</a>, <a href="https://github.com/google/ExoPlayer/issues/9978">#9978</a>).</li>
-   <li>Rename <code translate="no" dir="ltr">MimeTypes.TEXT_EXOPLAYER_CUES</code> to <code translate="no" dir="ltr">MimeTypes.APPLICATION_MEDIA3_CUES</code>.</li>
-   <li>Add <code translate="no" dir="ltr">PngExtractor</code> that sends and reads a whole PNG file into the <code translate="no" dir="ltr">TrackOutput</code> as one sample.</li>
-   <li>Enhance <code translate="no" dir="ltr">SequenceableLoader.continueLoading(long)</code> method in the <code translate="no" dir="ltr">SequenceableLoader</code> interface to <code translate="no" dir="ltr">SequenceableLoader.continueLoading(LoadingInfo loadingInfo)</code>. <code translate="no" dir="ltr">LoadingInfo</code> contains additional parameters, including <code translate="no" dir="ltr">playbackSpeed</code> and <code translate="no" dir="ltr">lastRebufferRealtimeMs</code> in addition to the existing <code translate="no" dir="ltr">playbackPositionUs</code>.</li>
-   <li>Enhance <code translate="no" dir="ltr">ChunkSource.getNextChunk(long, long, List, ChunkHolder)</code> method in the <code translate="no" dir="ltr">ChunkSource</code> interface to <code translate="no" dir="ltr">ChunkSource.getNextChunk(LoadingInfo, long, List, ChunkHolder)</code>.</li>
-   <li>Add additional fields to Common Media Client Data (CMCD) logging: buffer starvation (<code translate="no" dir="ltr">bs</code>), deadline (<code translate="no" dir="ltr">dl</code>), playback rate (<code translate="no" dir="ltr">pr</code>) and startup (<code translate="no" dir="ltr">su</code>) (<a href="https://github.com/google/ExoPlayer/issues/8699">#8699</a>).</li>
-   <li>Add luma and chroma bitdepth to <code translate="no" dir="ltr">ColorInfo</code> (<a href="https://github.com/androidx/media/pull/491">#491</a>).</li>
-   <li>Add additional fields to Common Media Client Data (CMCD) logging: next object request (<code translate="no" dir="ltr">nor</code>) and next range request (<code translate="no" dir="ltr">nrr</code>) (<a href="https://github.com/google/ExoPlayer/issues/8699">#8699</a>).</li>
-   <li>Add functionality to transmit Common Media Client Data (CMCD) data using query parameters (<a href="https://github.com/androidx/media/issues/553">#553</a>).</li>
-   <li>Fix <code translate="no" dir="ltr">ConcurrentModificationException</code> in <code translate="no" dir="ltr">ExperimentalBandwidthMeter</code> (<a href="https://github.com/androidx/media/issues/612">#612</a>).</li>
-   <li>Add <code translate="no" dir="ltr">MediaPeriodId</code> parameter to <code translate="no" dir="ltr">CompositeMediaSource.getMediaTimeForChildMediaTime</code>.</li>
-   <li>Support <code translate="no" dir="ltr">ClippingMediaSource</code> (and other sources with period/window time offsets) in <code translate="no" dir="ltr">ConcatenatingMediaSource2</code> (<a href="https://github.com/google/ExoPlayer/issues/11226">#11226</a>).</li>
-   <li>Change <code translate="no" dir="ltr">BaseRenderer.onStreamChanged()</code> to also receive a <code translate="no" dir="ltr">MediaPeriodId</code> argument.</li>
-  </ul></li>
- <li>Transformer: 
-  <ul>
-   <li>Parse EXIF rotation data for image inputs.</li>
-   <li>Remove <code translate="no" dir="ltr">TransformationRequest.HdrMode</code> annotation type and its associated constants. Use <code translate="no" dir="ltr">Composition.HdrMode</code> and its associated constants instead.</li>
-   <li>Simplify the <code translate="no" dir="ltr">OverlaySettings</code> to fix rotation issues.</li>
-   <li>Changed <code translate="no" dir="ltr">frameRate</code> and <code translate="no" dir="ltr">durationUs</code> parameters of <code translate="no" dir="ltr">SampleConsumer.queueInputBitmap</code> to <code translate="no" dir="ltr">TimestampIterator</code>.</li>
-  </ul></li>
- <li>Track Selection: 
-  <ul>
-   <li>Add <code translate="no" dir="ltr">DefaultTrackSelector.Parameters.allowAudioNonSeamlessAdaptiveness</code> to explicitly allow or disallow non-seamless adaptation. The default stays at its current behavior of <code translate="no" dir="ltr">true</code>.</li>
-  </ul></li>
- <li>Extractors: 
-  <ul>
-   <li>MPEG-TS: Ensure the last frame is rendered by passing the last access unit of a stream to the sample queue (<a href="https://github.com/google/ExoPlayer/issues/7909">#7909</a>).</li>
-   <li>Fix typo when determining <code translate="no" dir="ltr">rotationDegrees</code>. Changed <code translate="no" dir="ltr">projectionPosePitch</code> to <code translate="no" dir="ltr">projectionPoseRoll</code> (<a href="https://github.com/androidx/media/pull/461">#461</a>).</li>
-   <li>Remove the assumption that <code translate="no" dir="ltr">Extractor</code> instances can be directly inspected with <code translate="no" dir="ltr">instanceof</code>. If you want runtime access to the implementation details of an <code translate="no" dir="ltr">Extractor</code> you must first call <code translate="no" dir="ltr">Extractor.getUnderlyingInstance</code>.</li>
-   <li>Add <code translate="no" dir="ltr">BmpExtractor</code>.</li>
-   <li>Add <code translate="no" dir="ltr">WebpExtractor</code>.</li>
-   <li>Add <code translate="no" dir="ltr">HeifExtractor</code>.</li>
-   <li>Add <a href="https://developer.apple.com/standards/qtff-2001.pdf">QuickTime classic</a> support to <code translate="no" dir="ltr">Mp4Extractor</code>.</li>
-  </ul></li>
- <li>Audio: 
-  <ul>
-   <li>Add support for 24/32-bit big-endian PCM in MP4 and Matroska, and parse PCM encoding for <code translate="no" dir="ltr">lpcm</code> in MP4.</li>
-   <li>Add support for extracting Vorbis audio in MP4.</li>
-   <li>Add <code translate="no" dir="ltr">AudioSink.getFormatOffloadSupport(Format)</code> that retrieves level of offload support the sink can provide for the format through a <code translate="no" dir="ltr">DefaultAudioOffloadSupportProvider</code>. It returns the new <code translate="no" dir="ltr">AudioOffloadSupport</code> that contains <code translate="no" dir="ltr">isFormatSupported</code>, <code translate="no" dir="ltr">isGaplessSupported</code>, and <code translate="no" dir="ltr">isSpeedChangeSupported</code>.</li>
-   <li>Add <code translate="no" dir="ltr">AudioSink.setOffloadMode()</code> through which the offload configuration on the audio sink is configured. Default is <code translate="no" dir="ltr">AudioSink.OFFLOAD_MODE_DISABLED</code>.</li>
-   <li>Offload can be enabled through <code translate="no" dir="ltr">setAudioOffloadPreference</code> in <code translate="no" dir="ltr">TrackSelectionParameters</code>. If the set preference is to enable, the device supports offload for the format, and the track selection is a single audio track, then audio offload will be enabled.</li>
-   <li>If <code translate="no" dir="ltr">audioOffloadModePreference</code> is set to <code translate="no" dir="ltr">AUDIO_OFFLOAD_MODE_PREFERENCE_REQUIRED</code>, then the <code translate="no" dir="ltr">DefaultTrackSelector</code> will only select an audio track and only if that track's format is supported in offload. If no audio track is supported in offload, then no track will be selected.</li>
-   <li>Disabling gapless support for offload when pre-API level 33 due to playback position issue after track transition.</li>
-   <li>Remove parameter <code translate="no" dir="ltr">enableOffload</code> from <code translate="no" dir="ltr">DefaultRenderersFactory.buildAudioSink</code> method signature.</li>
-   <li>Remove method <code translate="no" dir="ltr">DefaultAudioSink.Builder.setOffloadMode</code>.</li>
-   <li>Remove intdef value <code translate="no" dir="ltr">DefaultAudioSink.OffloadMode.OFFLOAD_MODE_ENABLED_GAPLESS_DISABLED</code>.</li>
-   <li>Add support for Opus gapless metadata during offload playback.</li>
-   <li>Allow renderer recovery by disabling offload if failed at first write (<a href="https://github.com/androidx/media/issues/627">#627</a>).</li>
-   <li>Enable Offload Scheduling by default for audio-only offloaded playback.</li>
-   <li>Delete <code translate="no" dir="ltr">ExoPlayer.experimentalSetOffloadSchedulingEnabled</code> and <code translate="no" dir="ltr">AudioOffloadListener.onExperimentalOffloadSchedulingEnabledChanged</code>.</li>
-   <li>Renamed <code translate="no" dir="ltr">onExperimentalSleepingForOffloadChanged</code> as <code translate="no" dir="ltr">onSleepingForOffloadChanged</code> and <code translate="no" dir="ltr">onExperimentalOffloadedPlayback</code> as <code translate="no" dir="ltr">onOffloadedPlayback</code>.</li>
-   <li>Move audio offload mode related <code translate="no" dir="ltr">TrackSelectionParameters</code> interfaces and definitions to an inner <code translate="no" dir="ltr">AudioOffloadPreferences</code> class.</li>
-   <li>Add <code translate="no" dir="ltr">onAudioTrackInitialized</code> and <code translate="no" dir="ltr">onAudioTrackReleased</code> callbacks to <code translate="no" dir="ltr">AnalyticsListener</code>, <code translate="no" dir="ltr">AudioRendererEventListener</code> and <code translate="no" dir="ltr">AudioSink.Listener</code>.</li>
-   <li>Fix DTS Express audio buffer underflow issue (<a href="https://github.com/androidx/media/pull/650">#650</a>).</li>
-   <li>Fix bug where the capabilities check for E-AC3-JOC throws an <code translate="no" dir="ltr">IllegalArgumentException</code> (<a href="https://github.com/androidx/media/issues/677">#677</a>).</li>
-  </ul></li>
- <li>Video: 
-  <ul>
-   <li>Allow <code translate="no" dir="ltr">MediaCodecVideoRenderer</code> to use a custom <code translate="no" dir="ltr">VideoFrameProcessor.Factory</code>.</li>
-   <li>Fix bug where the first frame couldn't be rendered if the audio stream starts with negative timestamps (<a href="https://github.com/androidx/media/issues/291">#291</a>).</li>
-  </ul></li>
- <li>Text: 
-  <ul>
-   <li>Remove <code translate="no" dir="ltr">ExoplayerCuesDecoder</code>. Text tracks with <code translate="no" dir="ltr">sampleMimeType = application/x-media3-cues</code> are now directly handled by <code translate="no" dir="ltr">TextRenderer</code> without needing a <code translate="no" dir="ltr">SubtitleDecoder</code> instance.</li>
-  </ul></li>
- <li>Metadata: 
-  <ul>
-   <li><code translate="no" dir="ltr">MetadataDecoder.decode</code> will no longer be called for "decode-only" samples as the implementation must return null anyway.</li>
-  </ul></li>
- <li>Effect: 
-  <ul>
-   <li>Add <code translate="no" dir="ltr">VideoFrameProcessor.queueInputBitmap(Bitmap, Iterator&lt;Long&gt;)</code> queuing bitmap input by timestamp.</li>
-   <li>Change <code translate="no" dir="ltr">VideoFrameProcessor.registerInputStream()</code> to be non-blocking. Apps must implement <code translate="no" dir="ltr">VideoFrameProcessor.Listener#onInputStreamRegistered()</code>.</li>
-   <li>Changed <code translate="no" dir="ltr">frameRate</code> and <code translate="no" dir="ltr">durationUs</code> parameters of <code translate="no" dir="ltr">VideoFrameProcessor.queueInputBitmap</code> to <code translate="no" dir="ltr">TimestampIterator</code>.</li>
-  </ul></li>
- <li>IMA extension: 
-  <ul>
-   <li>Fix bug where a multi-period DASH live stream that is not the first item in a playlist can throw an exception (<a href="https://github.com/androidx/media/issues/571">#571</a>).</li>
-   <li>Release StreamManager before calling <code translate="no" dir="ltr">AdsLoader.destroy()</code></li>
-   <li>Bump IMA SDK version to 3.31.0.</li>
-  </ul></li>
- <li>Session: 
-  <ul>
-   <li>Set the notifications foreground service behavior to <code translate="no" dir="ltr">FOREGROUND_SERVICE_IMMEDIATE</code> in <code translate="no" dir="ltr">DefaultMediaNotificationProvider</code> (<a href="https://github.com/androidx/media/issues/167">#167</a>).</li>
-   <li>Use only <code translate="no" dir="ltr">android.media.session.MediaSession.setMediaButtonBroadcastReceiver()</code> above API 31 to avoid problems with deprecated API on Samsung devices (<a href="https://github.com/androidx/media/issues/167">#167</a>).</li>
-   <li>Use the media notification controller as proxy to set available commands and custom layout used to populate the notification and the platform session.</li>
-   <li>Convert media button events that are received by <code translate="no" dir="ltr">MediaSessionService.onStartCommand()</code> within Media3 instead of routing them to the platform session and back to Media3. With this, the caller controller is always the media notification controller and apps can easily recognize calls coming from the notification in the same way on all supported API levels.</li>
-   <li>Fix bug where <code translate="no" dir="ltr">MediaController.getCurrentPosition()</code> is not advancing when connected to a legacy <code translate="no" dir="ltr">MediaSessionCompat</code>.</li>
-   <li>Add <code translate="no" dir="ltr">MediaLibrarySession.getSubscribedControllers(mediaId)</code> for convenience.</li>
-   <li>Override <code translate="no" dir="ltr">MediaLibrarySession.Callback.onSubscribe()</code> to assert the availability of the parent ID for which the controller subscribes. If successful, the subscription is accepted and <code translate="no" dir="ltr">notifyChildrenChanged()</code> is called immediately to inform the browser (<a href="https://github.com/androidx/media/issues/561">#561</a>).</li>
-   <li>Add session demo module for Automotive OS and enable session demo for Android Auto.</li>
-   <li>Do not set the queue of the framework session when <code translate="no" dir="ltr">COMMAND_GET_TIMELINE</code> is not available for the media notification controller. With Android Auto as the client controller reading from the framework session, this has the effect that the <code translate="no" dir="ltr">queue</code> button in the UI of Android Auto is not displayed (<a href="https://github.com/androidx/media/issues/339">#339</a>).</li>
-   <li>Use <code translate="no" dir="ltr">DataSourceBitmapLoader</code> by default instead of <code translate="no" dir="ltr">SimpleBitmapLoader</code> (<a href="https://github.com/androidx/media/issues/271">#271</a>, <a href="https://github.com/androidx/media/issues/327">#327</a>).</li>
-   <li>Add <code translate="no" dir="ltr">MediaSession.Callback.onMediaButtonEvent(Intent)</code> that allows apps to override the default media button event handling.</li>
-  </ul></li>
- <li>UI: 
-  <ul>
-   <li>Add a <code translate="no" dir="ltr">Player.Listener</code> implementation for Wear OS devices that handles playback suppression due to <code translate="no" dir="ltr">Player.PLAYBACK_SUPPRESSION_REASON_UNSUITABLE_AUDIO_OUTPUT</code> by launching a system dialog to allow a user to connect a suitable audio output (e.g. bluetooth headphones). The listener will auto-resume playback if a suitable device is connected within a configurable timeout (default is 5 minutes).</li>
-  </ul></li>
- <li>Downloads: 
-  <ul>
-   <li>Declare "data sync" foreground service type for <code translate="no" dir="ltr">DownloadService</code> for Android 14 compatibility. When using this service, the app also needs to add <code translate="no" dir="ltr">dataSync</code> as <code translate="no" dir="ltr">foregroundServiceType</code> in the manifest and add the <code translate="no" dir="ltr">FOREGROUND_SERVICE_DATA_SYNC</code> permission (<a href="https://github.com/google/ExoPlayer/issues/11239">#11239</a>).</li>
-  </ul></li>
- <li>HLS Extension: 
-  <ul>
-   <li>Refresh the HLS live playlist with an interval calculated from the last load start time rather than the last load completed time (<a href="https://github.com/androidx/media/issues/663">#663</a>).</li>
-  </ul></li>
- <li>DASH Extension: 
-  <ul>
-   <li>Allow multiple of the same DASH identifier in segment template URL.</li>
-   <li>Add experimental support for parsing subtitles during extraction. This has better support for merging overlapping subtitles, including resolving flickering when transitioning between subtitle segments. You can enable this using <code translate="no" dir="ltr">DashMediaSource.Factory.experimentalParseSubtitlesDuringExtraction()</code> (<a href="https://github.com/androidx/media/issues/288">#288</a>).</li>
-  </ul></li>
- <li>RTSP Extension: 
-  <ul>
-   <li>Fix a race condition that could lead to <code translate="no" dir="ltr">IndexOutOfBoundsException</code> when falling back to TCP, or playback hanging in some situations.</li>
-   <li>Check state in RTSP setup when returning loading state of <code translate="no" dir="ltr">RtspMediaPeriod</code> (<a href="https://github.com/androidx/media/issues/577">#577</a>).</li>
-   <li>Ignore custom Rtsp request methods in Options response public header (<a href="https://github.com/androidx/media/issues/613">#613</a>).</li>
-   <li>Use RTSP Setup Response timeout value in time interval of sending keep-alive RTSP Options requests (<a href="https://github.com/androidx/media/issues/662">#662</a>).</li>
-  </ul></li>
- <li>Decoder Extensions (FFmpeg, VP9, AV1, MIDI, etc.): 
-  <ul>
-   <li>Release the MIDI decoder module, which provides support for playback of standard MIDI files using the Jsyn library to synthesize audio.</li>
-   <li>Add <code translate="no" dir="ltr">DecoderOutputBuffer.shouldBeSkipped</code> to directly mark output buffers that don't need to be presented. This is preferred over <code translate="no" dir="ltr">C.BUFFER_FLAG_DECODE_ONLY</code> that will be deprecated.</li>
-   <li>Add <code translate="no" dir="ltr">Decoder.setOutputStartTimeUs</code> and <code translate="no" dir="ltr">SimpleDecoder.isAtLeastOutputStartTimeUs</code> to allow decoders to drop decode-only samples before the start time. This should be preferred to <code translate="no" dir="ltr">Buffer.isDecodeOnly</code> that will be deprecated.</li>
-   <li>Fix bug publishing MIDI decoder artifact to Maven repository. The artifact is renamed to <code translate="no" dir="ltr">media3-exoplayer-midi</code> (<a href="https://github.com/androidx/media/issues/734">#734</a>).</li>
-  </ul></li>
- <li>Leanback extension: 
-  <ul>
-   <li>Fix bug where disabling a surface can cause an <code translate="no" dir="ltr">ArithmeticException</code> in Leanback code (<a href="https://github.com/androidx/media/issues/617">#617</a>).</li>
-  </ul></li>
- <li>Test Utilities: 
-  <ul>
-   <li>Make <code translate="no" dir="ltr">TestExoPlayerBuilder</code> and <code translate="no" dir="ltr">FakeClock</code> compatible with Espresso UI tests and Compose UI tests. This fixes a bug where playback advances non-deterministically during Espresso or Compose view interactions.</li>
-  </ul></li>
- <li>Remove deprecated symbols: 
-  <ul>
-   <li>Remove <code translate="no" dir="ltr">TransformationRequest.Builder.setEnableRequestSdrToneMapping(boolean)</code> and <code translate="no" dir="ltr">TransformationRequest.Builder.experimental_setEnableHdrEditing(boolean)</code>. Use <code translate="no" dir="ltr">Composition.Builder.setHdrMode(int)</code> and pass the <code translate="no" dir="ltr">Composition</code> to <code translate="no" dir="ltr">Transformer.start(Composition, String)</code> instead.</li>
-   <li>Remove deprecated <code translate="no" dir="ltr">DownloadNotificationHelper.buildProgressNotification</code> method, use a non deprecated method that takes a <code translate="no" dir="ltr">notMetRequirements</code> parameter instead.</li>
-  </ul></li>
-</ul>
-
-<h2>Mediarouter: v1.7.0-alpha01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.mediarouter:mediarouter:1.7.0-alpha01</code> and <code translate="no" dir="ltr">androidx.mediarouter:mediarouter-testing:1.7.0-alpha01</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/b0e4a78094191074b46ef428e2c04350e604f605..312eb9f1ddece3a18317f18515a877e0e745cb2c/mediarouter">Version 1.7.0-alpha01 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Add <code translate="no" dir="ltr">isSystemRoute()</code> to <code translate="no" dir="ltr">MediaRouteDescriptor</code> and <code translate="no" dir="ltr">RouteInfo</code> which returns true if the corresponding route is a system-managed route, which means that the system is the route provider and the app is in charge of feeding media samples to the system for their rendering (<a href="https://android-review.googlesource.com/#/q/I949e41347ede2fec98700f45de532cf89e75d9f8">I949e4</a>). Bluetooth headsets, wired headsets and built-in speakers are examples of system routes.</li>
- <li>Deprecate <code translate="no" dir="ltr">MediaRouter.removeRemoteControlClient</code>. You should call <code translate="no" dir="ltr">setMediaSessionCompat(MediaSessionCompat)</code> instead of <code translate="no" dir="ltr">addRemoteControlClient(Object)</code> so that there is no need to call <code translate="no" dir="ltr">removeRemoteControlClient(Object)</code>. (<a href="https://android-review.googlesource.com/#/q/I8fc5e2ec38776d1f965541437c35dfda95eb276b">I8fc5e</a>).</li>
- <li>Make <code translate="no" dir="ltr">MediaRouteButton</code> extend <code translate="no" dir="ltr">AppCompatImageView</code>. (<a href="https://android-review.googlesource.com/#/q/Ib455eabd662effe6bde57a54f80a56ef009afde0">Ib455e</a>).</li>
- <li>Add <code translate="no" dir="ltr">DEVICE_TYPE_SMARTPHONE</code>, which indicates that a media route is a smartphone. (<a href="https://android-review.googlesource.com/#/q/I39837f2ed6a28c8126b7c3e9eff00e92cdb83639">I39837</a>).</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Add missing icon resolutions for the route button that was possibly causing some isolated crashes. (<a href="https://android.googlesource.com/platform/frameworks/support/+/cddba9334fdcdc5e5e7ac6df9753df7095545814">cddba9</a>, <a href="https://issuetracker.google.com/261878418">b/261878418</a>).</li>
-</ul>
-
-<h2>privacysandbox activity: v1.0.0-alpha01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.privacysandbox.activity:activity-client:1.0.0-alpha01</code>, <code translate="no" dir="ltr">androidx.privacysandbox.activity:activity-core:1.0.0-alpha01</code>, and <code translate="no" dir="ltr">androidx.privacysandbox.activity:activity-provider:1.0.0-alpha01</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/312eb9f1ddece3a18317f18515a877e0e745cb2c/privacysandbox/activity">Version 1.0.0-alpha01 contains these commits.</a></p>
+<h2>bluetooth: v1.0.0-alpha02</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.bluetooth:bluetooth:1.0.0-alpha02</code> and <code translate="no" dir="ltr">androidx.bluetooth:bluetooth-testing:1.0.0-alpha02</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/91bb8c1f81dcb031bda00fcd8e55f1e890b56f06..b5166f9a1e9c047162d1215884c3e2cd41a4a74a/bluetooth">Version 1.0.0-alpha02 contains these commits.</a></p>
 <p><strong>New Features</strong></p>
 <ul>
- <li>Introducing a dedicated Privacy Sandbox Activity library.</li>
- <li>It contains interfaces for launching activities from the SDK Runtime. The interfaces were previously defined in the Privacy Sandbox UI library.</li>
-</ul>
-<devsite-hats-survey class="nocontent" hats-id="onAFgYxTD0kxBYCLVTd0Z41p75CM" listnr-id="5207477"></devsite-hats-survey>
-
-<h2>privacysandbox ads: v1.1.0-beta03</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.privacysandbox.ads:ads-adservices:1.1.0-beta03</code> and <code translate="no" dir="ltr">androidx.privacysandbox.ads:ads-adservices-java:1.1.0-beta03</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f7407d4293384a1b91bc142880e3525048b3443..15b45436d846a1cbb8f82f449405f97a8a19839a/privacysandbox/ads">Version 1.1.0-beta03 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Backward compatibility support for Android S.</li>
-</ul>
-
-<h2>privacysandbox sdkruntime: v1.0.0-alpha11</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.privacysandbox.sdkruntime:sdkruntime-client:1.0.0-alpha11</code>, <code translate="no" dir="ltr">androidx.privacysandbox.sdkruntime:sdkruntime-core:1.0.0-alpha11</code>, and <code translate="no" dir="ltr">androidx.privacysandbox.sdkruntime:sdkruntime-provider:1.0.0-alpha11</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..312eb9f1ddece3a18317f18515a877e0e745cb2c/privacysandbox/sdkruntime">Version 1.0.0-alpha11 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
-<ul>
- <li><code translate="no" dir="ltr">AppOwnedSdkSandboxInterfaceCompat</code> supported on API34 Ext 8 devices (before worked only on <code translate="no" dir="ltr">PrivacySandbox</code> Developer Preview builds)</li>
-</ul>
-
-<h2>Versionedparcelable: v1.2.0-alpha01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.versionedparcelable:versionedparcelable:1.2.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/9fd278801e06c07a5d230fd7edbb97e16c322949..312eb9f1ddece3a18317f18515a877e0e745cb2c/versionedparcelable/versionedparcelable">Version 1.2.0-alpha01 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Export stable AIDL definitions to dependent projects (<a href="https://android-review.googlesource.com/#/q/I473cbc23b15505b8493a00766248fcd1d8a10a96">I473cb</a>, <a href="https://issuetracker.google.com/issues/277084531">b/277084531</a>)</li>
+ <li>Lower <code translate="no" dir="ltr">minSdkVersion</code> to 21</li>
 </ul>
 <p><strong>API Changes</strong></p>
 <ul>
- <li>Added nullability annotations (<a href="https://android-review.googlesource.com/#/q/Ic16ed43e46dfd51803d40e6332b0cf34467aaf7c">Ic16ed</a>)</li>
+ <li><code translate="no" dir="ltr">GattServerConnectFlow#updateServices</code> becomes a suspend function (<a href="https://android-review.googlesource.com/#/q/I0237d90173df024f4052a781ba41dd72a9a54343">I0237d</a>)</li>
+ <li>Change <code translate="no" dir="ltr">AdvertiseParams.durationMillis</code> to Long (<a href="https://android-review.googlesource.com/#/q/If6771fb2a9de564dd194d62bf100420e4b6a16d0">If6771</a>)</li>
+ <li>Convert <code translate="no" dir="ltr">openGattServer</code> to Flow (<a href="https://android-review.googlesource.com/#/q/Icef5495059e5fd5d7db9aa1eed779b798142d2d8">Icef54</a>)</li>
+ <li>Throw <code translate="no" dir="ltr">ScanException</code> on scan fail and set scanner to <code translate="no" dir="ltr">setLegacy(false)</code> by default (<a href="https://android-review.googlesource.com/#/q/Ib337c25327a8c2a9611352b804a8ae6c71a99656">Ib337c</a>)</li>
+ <li>Throw <code translate="no" dir="ltr">AdvertiseException</code> on advertise fail (<a href="https://android-review.googlesource.com/#/q/I0e691b67dfb11f0e67e6c61845f38b5a2bcfd44c">I0e691</a>)</li>
+ <li>Add general bluetooth exception to catch (<a href="https://android-review.googlesource.com/#/q/I0130d754ada8ec78577936ca65bbd56f97feb69c">I0130d</a>)</li>
+ <li>Convert advertise to Flow and change maximum duration (<a href="https://android-review.googlesource.com/#/q/I32fd8522085028d20735749cd9ca2f18fcae9851">I32fd8</a>)</li>
+ <li>Add <code translate="no" dir="ltr">serviceData</code> and <code translate="no" dir="ltr">serviceSolicitationUuids</code> to <code translate="no" dir="ltr">ScanResult</code> (<a href="https://android-review.googlesource.com/#/q/I6d7f0a36e15b168a374ad3ea8d28f18bc6b7cb79">I6d7f0</a>)</li>
+ <li>Change <code translate="no" dir="ltr">durationMillis</code> from Long to Duration (<a href="https://android-review.googlesource.com/#/q/I89d4936165a43600862521673605d2e533bc9677">I89d49</a>)</li>
+ <li>Add rssi, and <code translate="no" dir="ltr">periodicAdvertisingInterval</code> to <code translate="no" dir="ltr">ScanResult</code> (<a href="https://android-review.googlesource.com/#/q/I60b514a7893ec07bcc0eec2a8706e635c4c51c1f">I60b51</a>)</li>
+ <li>Add <code translate="no" dir="ltr">serviceSolicitationUuid</code> and <code translate="no" dir="ltr">solicitationUuidMask</code> to <code translate="no" dir="ltr">ScanFilter</code> (<a href="https://android-review.googlesource.com/#/q/Ic220683ef400b7d707424b250ef497194fad450d">Ic2206</a>)</li>
+ <li>Added <code translate="no" dir="ltr">GattServerSessionScope#subscribedCharacteristics</code> (<a href="https://android-review.googlesource.com/#/q/I0edabd53e1af3dcd64abd42470887a36de236144">I0edab</a>)</li>
+ <li>Add <code translate="no" dir="ltr">serviceSolicitationUuids</code> to <code translate="no" dir="ltr">AdvertiseParams</code> (<a href="https://android-review.googlesource.com/#/q/Ic9aa78cad8da049ccfabbe48f468e5e193fbaad0">Ic9aa7</a>)</li>
+ <li>Change <code translate="no" dir="ltr">AdvertiseParams.durationMillis</code> from Int to Long (<a href="https://android-review.googlesource.com/#/q/I6873f3b2c222f02ab0f53c04e66c23a6106d86a5">I6873f</a>)</li>
+ <li><code translate="no" dir="ltr">GattServerSessionScope#notify</code> does not return but throws an exception if it fails (<a href="https://android-review.googlesource.com/#/q/Ifc26fac2a3b8fbd0aa404fb4e6d5d9fa4c59f9d5">Ifc26f</a>)</li>
 </ul>
-
-<h2>Wear: v1.4.0-alpha01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.wear:wear:1.4.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/a81fd7956fbfa71c7b124c58a36e4799d8a231a3..312eb9f1ddece3a18317f18515a877e0e745cb2c/wear/wear">Version 1.4.0-alpha01 contains these commits.</a></p>
 <p><strong>Bug Fixes</strong></p>
 <ul>
- <li>Vertically center <code translate="no" dir="ltr">ConfirmationOverlay</code> icon when there's no message. (<a href="https://android-review.googlesource.com/#/q/I496d8db2998206e45b88117665057d9c5e67e7bd">I496d8</a>)</li>
+ <li>Extract scan functionality (<a href="https://android-review.googlesource.com/#/q/I4d43f370b201c942bea0eda1230fef7ff6ef8aca">I4d43f</a>)</li>
 </ul>
 
-<h2>Wear Tooling Preview: v1.0.0-rc01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.wear:wear-tooling-preview:1.0.0-rc01</code> is released with no changes. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..af0e5af4f5cecea65dc0553cde117ce199dacb30/">Version 1.0.0-rc01 contains these commits.</a></p>
-
-<h2>Wear Compose: v1.3.0-beta01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.wear.compose:compose-*:1.3.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..1f80a6f0c1cb96288c04124001fa2c9bd29617d6/wear/compose">Version 1.3.0-beta01 contains these commits.</a></p>
-<p>The 1.3-beta01 release of Compose for Wear OS indicates that this release of the library is feature complete and the API is locked (except where marked as experimental). Wear Compose 1.3 includes the following new functionality:</p>
+<h2>Browser: v1.8.0-beta01</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.browser:browser:1.8.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/312eb9f1ddece3a18317f18515a877e0e745cb2c..b5166f9a1e9c047162d1215884c3e2cd41a4a74a/browser/browser">Version 1.8.0-beta01 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
 <ul>
- <li><code translate="no" dir="ltr">SwipeToDismissBox</code> has been migrated from <code translate="no" dir="ltr">androidx.wear.compose.material</code> to <code translate="no" dir="ltr">androidx.wear.compose.foundation</code> where it has been renamed <code translate="no" dir="ltr">BasicSwipeToDismissBox</code>. The Material level <code translate="no" dir="ltr">SwipeToDismissBox</code> pulls colors from the <code translate="no" dir="ltr">MaterialTheme</code> and delegates the remaining implementation to the <code translate="no" dir="ltr">BasicSwipeToDismissBox</code>. </li>
- <li><code translate="no" dir="ltr">SwipeDismissableNavHost</code> now supports a new <code translate="no" dir="ltr">userSwipeEnabled</code> parameter so that swipe handling can be turned off for screens where it is not required.</li>
- <li><code translate="no" dir="ltr">BasicSwipeToDismissBox</code> has improved focus handling using <code translate="no" dir="ltr">HierarchicalFocusCoordinator</code>. </li>
- <li><code translate="no" dir="ltr">SwipeToReveal</code> has new <code translate="no" dir="ltr">SwipeToRevealCard</code> and <code translate="no" dir="ltr">SwipeToRevealChip</code> composables in Material that follow the recommended UX guidance for <code translate="no" dir="ltr">Card</code> and <code translate="no" dir="ltr">Chip</code>. It also has undo support for the secondary action.</li>
- <li><code translate="no" dir="ltr">DefaultTextStyle</code> now turns off font padding to be consistent across the Android Platform.</li>
- <li><code translate="no" dir="ltr">Chip</code> and <code translate="no" dir="ltr">ToggleChip</code> now adjust their height to accommodate content that has grown due to large fonts for accessibility</li>
- <li><code translate="no" dir="ltr">PositionIndicator</code> now has individual animation specs for the fade-in, fade-out and position-change animations. For performance reasons, we recommend that fade-in and position-change are turned off when used with scrollable lists.</li>
- <li><code translate="no" dir="ltr">ExpandableStateMapping</code> provides a new way to generate <code translate="no" dir="ltr">ExpandableStates</code> when they need to be created on demand and not necessarily with a <code translate="no" dir="ltr">@Composable</code> scope.</li>
- <li><code translate="no" dir="ltr">Placeholder</code> now allows resetting if the content is no longer in the ready state. Also, the reduce motion setting now applies to the shimmering effect and wipe-off motion on <code translate="no" dir="ltr">Placeholder</code>.</li>
+ <li>Add experimental support for Minimized Custom Tabs APIs. (<a href="https://android-review.googlesource.com/#/q/I67f2d2186806af733b09b225aa48cc7464f69026">I67f2d</a>)</li>
 </ul>
-<p><strong>Known Issues</strong></p>
+
+<h2>Collection: v1.4.0-beta02</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.collection:collection-*:1.4.0-beta02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/312eb9f1ddece3a18317f18515a877e0e745cb2c..b5166f9a1e9c047162d1215884c3e2cd41a4a74a/collection">Version 1.4.0-beta02 contains these commits.</a></p>
+<p><strong>New Features</strong> - Improved performance of <code translate="no" dir="ltr">FloatFloatPair</code>. (<a href="https://android-review.googlesource.com/#/q/If5537d58ae9248b558bfc1c63e4fdec4f343253c">If5537</a>)</p>
+<p><strong>Bug Fixes</strong></p>
 <ul>
- <li><code translate="no" dir="ltr">PositionIndicator</code> is not initially shown when a screen is first displayed. We intend to make a change in an early 1.4 alpha so that it will be initially shown, but without any animation.</li>
+ <li><code translate="no" dir="ltr">ScatterMap.asMap()</code> iterator now return new instances (<a href="https://android-review.googlesource.com/#/q/I2893260c67fcbd3388c74043786c0329570ca5db">I28932</a>, <a href="https://issuetracker.google.com/issues/310365754">b/310365754</a>)</li>
+</ul>
+
+<h2>Compose Animation: v1.6.0-beta02</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.6.0-beta02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f80a6f0c1cb96288c04124001fa2c9bd29617d6..15c82aaef0f1fd0307d6c00061859e5b6c4384c6/compose/animation">Version 1.6.0-beta02 contains these commits.</a></p>
+
+<h2>Compose Compiler: v1.5.5</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.compiler:compiler:1.5.5</code> and <code translate="no" dir="ltr">androidx.compose.compiler:compiler-hosted:1.5.5</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/e858b16810125048c66293684afdfc08f57e4ebc..1935aef1c3b3c4893c4ed900ed41552093c37e86/compose/compiler">Version 1.5.5 contains these commits.</a></p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixes a crash during lookup of overridden composable types (<a href="https://android-review.googlesource.com/#/q/Ib6d2c0ec3e18716f345a61b4df465cb64d268fec">Ib6d2c</a>, <a href="https://issuetracker.google.com/issues/297665426">b/297665426</a>) 
+  <ul>
+   <li>Add <code translate="no" dir="ltr">stabilityConfigurationPath</code> to known parameters (previously bug prevented usage of configuration file flag). (<a href="https://issuetracker.google.com/issues/309765121">b/309765121</a>)</li>
+   <li>Memoization fixes (<a href="https://android-review.googlesource.com/#/q/I081d18a5a35fd7296a655c5e3491d45c15ada5c1">I081d1</a>, <a href="https://android-review.googlesource.com/#/q/I4d7bf3061e60eaa6fd3af60662d6a7b02c1a83b2">I4d7bf</a>)</li>
+   <li>Recomposition fix by accounting for Uncertain param state in intrinsic remember (<a href="https://issuetracker.google.com/issues/263402091">b/263402091</a>)</li>
+   <li>Fix debugging line information for intrinsic remember (<a href="https://android-review.googlesource.com/#/q/Ic8cf5e99bb56bd0fe6c3e6a8d0cf04c41ff4794b">Ic8cf5</a>)</li>
+   <li>Fix crash (IR lowering failed) during overridden composable types lookup at compile time (<a href="https://issuetracker.google.com/issues/297665426">b/297665426</a>)</li>
+  </ul></li>
+</ul>
+<p><strong>External Contribution</strong></p>
+<ul>
+ <li>Memoize stable function references with arguments (<a href="https://android-review.googlesource.com/#/q/I4d7bf3061e60eaa6fd3af60662d6a7b02c1a83b2">I4d7bf</a>, <a href="https://issuetracker.google.com/issues/302680514">b/302680514</a>)</li>
+</ul>
+
+<h2>Compose Foundation: v1.6.0-beta02</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.6.0-beta02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f80a6f0c1cb96288c04124001fa2c9bd29617d6..15c82aaef0f1fd0307d6c00061859e5b6c4384c6/compose/foundation">Version 1.6.0-beta02 contains these commits.</a></p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fix for <code translate="no" dir="ltr">canScroll</code> not being updated after relayout-only scroll. (<a href="https://android.googlesource.com/platform/frameworks/support/+/2d15876146ccf201f7e15cacc78bfca762060624">I60a86</a>)</li>
+ <li>Fix for <code translate="no" dir="ltr">Modifier.animateItemPlacement()</code> and <code translate="no" dir="ltr">LookaheadScope</code> after small scrolls. (<a href="https://android.googlesource.com/platform/frameworks/support/+/14a894f3270c310a12a68f7ae1d0eda2ffe1c81e">I3a2b7</a>)</li>
+</ul>
+
+<h2>Compose Material: v1.6.0-beta02</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.6.0-beta02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f80a6f0c1cb96288c04124001fa2c9bd29617d6..15c82aaef0f1fd0307d6c00061859e5b6c4384c6/compose/material">Version 1.6.0-beta02 contains these commits.</a></p>
+
+<h2>Compose Material 3: v1.2.0-alpha12</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.material3:material3-*:1.2.0-alpha12</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/03b3b94c9895b338f1b3eeec7c39f44cc72b9b89..064f85294a9be2e86650737b91db1bff868926e2/compose/material3">Version 1.2.0-alpha12 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">RangeSlider</code> now takes a Kotlin range (e.g., <code translate="no" dir="ltr">0f..1f</code>) instead of a custom <code translate="no" dir="ltr">FloatRange</code> value class. <code translate="no" dir="ltr">SnapFlingBehavior.kt</code> now also uses a Kotlin range. (<a href="https://android-review.googlesource.com/#/q/I025cb6717a8f59e4ce70a8017fb76594383489ce">I025cb</a>)</li>
+ <li>Mark Modifier factory functions as <code translate="no" dir="ltr">@Stable</code>. (<a href="https://android-review.googlesource.com/#/q/Ib109fa4fe56a3f2d79ad94e46163236f8ef6e046">Ib109f</a>)</li>
+</ul>
+
+<h2>Compose Material3 Adaptive: v1.0.0-alpha02</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.material3:material3-adaptive:1.0.0-alpha02</code>, <code translate="no" dir="ltr">androidx.compose.material3:material3-adaptive-android:1.0.0-alpha02</code>, and <code translate="no" dir="ltr">androidx.compose.material3:material3-adaptive-desktop:1.0.0-alpha02</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/03b3b94c9895b338f1b3eeec7c39f44cc72b9b89..064f85294a9be2e86650737b91db1bff868926e2/compose/material3/material3-adaptive">Version 1.0.0-alpha02 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Split navigation APIs from adaptive scaffold APIs. (<a href="https://android-review.googlesource.com/#/q/Ic4045258ae44356dcf6d79ae72e28c5ad3b9bcbc">Ic4045</a>)</li>
+ <li>Remove <code translate="no" dir="ltr">GutterSize</code> class. (<a href="https://android-review.googlesource.com/#/q/I785b38171a262c797b1a151b0f0749870f51ddf5">I785b3</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fix panes are not switched when <code translate="no" dir="ltr">AnimatedPane</code> is not used (<a href="https://android.googlesource.com/platform/frameworks/support/+/d88f181cb56e830a4dd5ab39b9a86d533e9d5fad">d88f181</a>)</li>
+</ul>
+
+<h2>Compose Runtime: v1.6.0-beta02</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.6.0-beta02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f80a6f0c1cb96288c04124001fa2c9bd29617d6..15c82aaef0f1fd0307d6c00061859e5b6c4384c6/compose/runtime">Version 1.6.0-beta02 contains these commits.</a></p>
+
+<h2>Runtime Tracing: v1.0.0-beta01</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-tracing:1.0.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f80a6f0c1cb96288c04124001fa2c9bd29617d6..b5166f9a1e9c047162d1215884c3e2cd41a4a74a/compose/runtime/runtime-tracing">Version 1.0.0-beta01 contains these commits.</a></p>
+
+<h2>Compose UI: v1.6.0-beta02</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.6.0-beta02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f80a6f0c1cb96288c04124001fa2c9bd29617d6..15c82aaef0f1fd0307d6c00061859e5b6c4384c6/compose/ui">Version 1.6.0-beta02 contains these commits.</a></p>
+
+<h2>Core and Core-ktx: v1.13.0-alpha02</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.core:core:1.13.0-alpha02</code>, <code translate="no" dir="ltr">androidx.core:core-ktx:1.13.0-alpha02</code>, and <code translate="no" dir="ltr">androidx.core:core-testing:1.13.0-alpha02</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..b5166f9a1e9c047162d1215884c3e2cd41a4a74a/core">Version 1.13.0-alpha02 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Adds the <code translate="no" dir="ltr">OnUserLeaveHintProvider</code> interface to allow any component to receive <code translate="no" dir="ltr">onUserLeaveHint</code> events necessary for implementing picture-in-picture. This is implemented by <code translate="no" dir="ltr">ComponentActivity</code> in <a href="/jetpack/androidx/releases/activity#1.9.0-alpha01">Activity <code translate="no" dir="ltr">1.9.0-alpha01</code></a>. (<a href="https://android-review.googlesource.com/#/q/I54892c9ab5a8a002164b9f98cd31e02d56d73da7">I54892</a>)</li>
 </ul>
 <p><strong>API Changes</strong></p>
 <ul>
- <li>We have renamed the Foundation level <code translate="no" dir="ltr">SwipeToDismissBox</code> to <code translate="no" dir="ltr">BasicSwipeToDismissBox</code>. This makes the distinction clearer between the Foundation level component and the Material level <code translate="no" dir="ltr">SwipeToDismissBox</code>. The latter pulls colors from the <code translate="no" dir="ltr">MaterialTheme</code> to be used in scrims and delegates the remaining implementation to the <code translate="no" dir="ltr">BasicSwipeToDismissBox</code>. (<a href="https://android-review.googlesource.com/#/q/Ibecfc1720eadd2d8e5e1c1cfd6832300775bffb1">Ibecfc</a>)</li>
- <li>We have marked <code translate="no" dir="ltr">rememberExpandableStateMapping</code> as experimental and improved the performance of <code translate="no" dir="ltr">expandableItem</code>. (<a href="https://android-review.googlesource.com/#/q/I5f6bc03b5b0c8b8e4a66f03000a3710c368ebf67">I5f6bc</a>)</li>
- <li>We have replaced the <code translate="no" dir="ltr">SwipeToRevealAction</code> class in the Material <code translate="no" dir="ltr">SwipeToReveal</code> Card and Chip APIs with a slot-based API using <code translate="no" dir="ltr">SwipeToRevealPrimaryAction</code>, <code translate="no" dir="ltr">SwipeToRevealSecondaryAction</code> and <code translate="no" dir="ltr">SwipeToRevealUndoAction</code> composables. Please see sample code for examples on how to use the new API. (<a href="https://android-review.googlesource.com/#/q/Ia89431e240b0602bfe08bceb660ff9ef1137d938">Ia8943</a>)</li>
- <li>We have replaced the <code translate="no" dir="ltr">PositionIndicator</code> animation flags with <code translate="no" dir="ltr">AnimationSpec</code> parameters. The individual animations can be disabled by passing <code translate="no" dir="ltr">snap</code> as the <code translate="no" dir="ltr">AnimationSpec</code>. (<a href="https://android-review.googlesource.com/#/q/I6c5232868a3e4fcafde3f066a735ae8df203cb54">I6c523</a>)</li>
+ <li>Deprecated <code translate="no" dir="ltr">androidx.core.os.CancellationSignal</code>. Usages should be replaced with the platform-provided <code translate="no" dir="ltr">android.os.CancellationSignal</code>. (<a href="https://android-review.googlesource.com/#/q/Id45f69a0b9cee7515d3f5b35dde3b3b037f8bd3a">Id45f6</a>, <a href="https://issuetracker.google.com/issues/309499026">b/309499026</a>, <a href="https://issuetracker.google.com/issues/309054079">b/309054079</a>)</li>
+ <li>The <code translate="no" dir="ltr">OnMultiWindowModeChangedProvider</code>, <code translate="no" dir="ltr">OnNewIntentProvider</code>, <code translate="no" dir="ltr">OnPictureInPictureModeChangedProvider</code>, <code translate="no" dir="ltr">OnConfigurationChangedProvider</code>, and <code translate="no" dir="ltr">OnTrimMemoryProvider</code> interfaces have been converted to Kotlin to ensure that the generic parameters on the <code translate="no" dir="ltr">Consumer</code> that their listener methods take have the correct nullability (they are all non-null). (<a href="https://android-review.googlesource.com/#/q/Ib62377a0f6002806074a05126cf6a9ca8c78dcbf">Ib6237</a>)</li>
+ <li>The <code translate="no" dir="ltr">MultiWindowModeChangedInfo</code> and <code translate="no" dir="ltr">PictureInPictureModeChangedInfo</code> classes that are sent to the <code translate="no" dir="ltr">Consumer</code> added to their respective Provider interfaces are now written in Kotlin. (<a href="https://android-review.googlesource.com/#/q/Ie08e292c77dc66634a0b474a63df0ac31f34f87e">Ie08e2</a>)</li>
 </ul>
-<p><strong>Bug Fixes</strong></p>
+<p><strong>Dependency Update</strong></p>
 <ul>
- <li>We have fixed a bug triggered by limited curved text when size is limited (<a href="https://android-review.googlesource.com/#/q/I50efee190c03dcb4e9abc433602623ae4ba955d7">I50efe</a>)</li>
- <li>We have addressed a potential NaN crash related to <code translate="no" dir="ltr">curvedComposable</code> (<a href="https://android-review.googlesource.com/#/q/I970ebced07b80bb3b51b6d6cd8329207be79902b">I970eb</a>)</li>
- <li>We have reverted the removal of the position change highlight animation on <code translate="no" dir="ltr">PositionIndicator</code>. (<a href="https://android-review.googlesource.com/#/q/Ieb4245ffbfde4405f948adc98a79b0c11def424e">Ieb424</a>)</li>
- <li>We have removed the material-core layer for material Chip to improve its performance. (<a href="https://android-review.googlesource.com/#/q/If2dcbbc99bbb6394b85b7fc8f3c9d88bdc78ba4a">If2dcb</a>)</li>
+ <li>Core now depends on <a href="/jetpack/androidx/releases/lifecycle#2.6.2">Lifecycle <code translate="no" dir="ltr">2.6.2</code></a>. (<a href="https://android-review.googlesource.com/#/q/I2d94c8b7fc3fb3bb59547d56a5d2f06584f1b5a4">I2d94c</a>)</li>
 </ul>
 
-<h2>Wear Compose Material3: v1.0.0-alpha15</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.wear.compose:compose-material3:1.0.0-alpha15</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..1f80a6f0c1cb96288c04124001fa2c9bd29617d6/wear/compose/compose-material3">Version 1.0.0-alpha15 contains these commits.</a></p>
+<h2>DataStore: v1.1.0-alpha07</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.datastore:datastore-*:1.1.0-alpha07</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/e3ffd7948030a769c857b8c629e0079c54b730ad..b5166f9a1e9c047162d1215884c3e2cd41a4a74a/datastore">Version 1.1.0-alpha07 contains these commits.</a></p>
 <p><strong>API Changes</strong></p>
 <ul>
- <li>We have renamed the Foundation level <code translate="no" dir="ltr">SwipeToDismissBox</code> to <code translate="no" dir="ltr">BasicSwipeToDismissBox</code>. This makes the distinction clearer between the Foundation level component and the Material3 level <code translate="no" dir="ltr">SwipeToDismissBox</code>. The latter pulls colors from the <code translate="no" dir="ltr">MaterialTheme</code> to be used in scrims and delegates the remaining implementation to the <code translate="no" dir="ltr">BasicSwipeToDismissBox</code>. (<a href="https://android-review.googlesource.com/#/q/Ibecfc1720eadd2d8e5e1c1cfd6832300775bffb1">Ibecfc</a>)</li>
+ <li>Make <code translate="no" dir="ltr">MultiProcessDataStoreFactory</code> methods no longer experimental by removing <code translate="no" dir="ltr">@ExperimentalMultiProcessDataStore</code> annotations. (<a href="https://android-review.googlesource.com/#/q/Ieee5497537562d4c3ac820b5dff626e983d0e518">Ieee54</a>)</li>
 </ul>
 <p><strong>Bug Fixes</strong></p>
 <ul>
- <li>We have removed the material-core layer for Material3 Button to improve performance. (<a href="https://android-review.googlesource.com/#/q/I5555573520638dd3c7f0d202e048ae6fffde19e5">I55555</a>)</li>
+ <li>Rollout the removal of <code translate="no" dir="ltr">@ExperimentalMultiProcessDataStore</code> annotations to 1.1.0-alpha07. (<a href="https://android-review.googlesource.com/#/q/I8e607f110ab184396237972dd479cea82ebeb412">I8e607</a>)</li>
 </ul>
 
-<h2>wear protolayout: v1.1.0-alpha02</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.wear.protolayout:protolayout-*:1.1.0-alpha02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..312eb9f1ddece3a18317f18515a877e0e745cb2c/wear/protolayout">Version 1.1.0-alpha02 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
+<h2>Fragment: v1.7.0-alpha07</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.fragment:fragment-*:1.7.0-alpha07</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/e63042bab069a262f0e762d23f5a18152f3bf12a..b5166f9a1e9c047162d1215884c3e2cd41a4a74a/fragment">Version 1.7.0-alpha07 contains these commits.</a></p>
+<p><strong>Bug Fixes</strong></p>
 <ul>
- <li>Added an <code translate="no" dir="ltr">ArcLine</code> <code translate="no" dir="ltr">StrokeCap</code> <code translate="no" dir="ltr">Shadow</code> field to the API. (<a href="https://android-review.googlesource.com/#/q/I830ec5416f94cd789bc536759bfd85c17957d097">I830ec</a>)</li>
- <li>Extending the API to be able to specify Spacer's width or height to expand. (<a href="https://android-review.googlesource.com/#/q/I757ca61bd85315ae0ea22a1d68ccf7010d0e3031">I757ca</a>)</li>
- <li>We have added an experimental API to automatically scale the text size based on the space it has inside of the parent. (<a href="https://android-review.googlesource.com/#/q/Ibbe632447dcf28a9948a0877f193b4912acb23d1">Ibbe63</a>)</li>
- <li>Support minimum clickable size (<a href="https://android-review.googlesource.com/#/q/I178e33822f11755435236a4ca13cd754ab1244c5">I178e3</a>)</li>
- <li>Added renderer support for <code translate="no" dir="ltr">StrokeCap</code> <code translate="no" dir="ltr">Shadow</code>. (<a href="https://android-review.googlesource.com/#/q/I48b177194ede8fb8d365cab01998c89e0a2b44cd">I48b17</a>)</li>
- <li>Add renderer support for Sweep Gradient in <code translate="no" dir="ltr">ArcLine</code>. (<a href="https://android-review.googlesource.com/#/q/I4d5bb5948d2216dca2a29d2449fd97519b2b65bb">I4d5bb</a>)</li>
+ <li>Fixed a <code translate="no" dir="ltr">NullPointerException</code> caused by setting a shared element transition and failing to set an enter/exitTransition as well. (<a href="https://android-review.googlesource.com/#/q/I8472b865cf93d1d3463f73942c460263f746fef5">I8472b</a>)</li>
+ <li>From <a href="#1.6.2">Fragment <code translate="no" dir="ltr">1.6.2</code></a>: When the Fragment of a <code translate="no" dir="ltr">FragmentContainerView</code> is inflated, its states such as <code translate="no" dir="ltr">FragmentManager</code>, Host, and id are now accessible in the <code translate="no" dir="ltr">onInflate</code> callback. (<a href="https://android-review.googlesource.com/#/q/I1e44c5dbf5f0e0c55be39489f4c973937f6910cd">I1e44c</a>, <a href="https://issuetracker.google.com/issues/307427423">b/307427423</a>)</li>
+ <li>From <a href="#1.6.2">Fragment <code translate="no" dir="ltr">1.6.2</code></a>: When using <code translate="no" dir="ltr">clearBackStack</code> to remove a set of fragments, any nested Fragment's <code translate="no" dir="ltr">ViewModel</code> will now be cleared when the parent fragment’s <code translate="no" dir="ltr">ViewModels</code> are cleared. (<a href="https://android-review.googlesource.com/#/q/I6d83cd93421837b213d25d2fdbe5405348cd2637">I6d83c</a>, <a href="https://issuetracker.google.com/issues/296173018">b/296173018</a>)</li>
 </ul>
 
-<h2>Wear Tiles: v1.3.0-alpha02</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.wear.tiles:tiles-*:1.3.0-alpha02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/465c5c5b7a0d79793bddb26a695f67aba8ea2f7e..312eb9f1ddece3a18317f18515a877e0e745cb2c/wear/tiles">Version 1.3.0-alpha02 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
+<h2>Games-Activity: v3.0.0-beta01</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.games:games-activity:3.0.0-beta01</code> and <code translate="no" dir="ltr">androidx.games:games-text-input:3.0.0-beta01</code> are released. <a href="https://android.googlesource.com/platform/frameworks/opt/gamesdk/+log/d1f9f40d22248179ba6612beb8acec847bc5880d..3b94fe082e0e95399ed99b5a16ef8eeea307eee2/game-activity">Version 3.0.0-beta01 contains these commits.</a></p>
+
+<h2>Games-Memory-Advice version 2.1: v2.1.0-beta01</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.games:games-memory-advice:2.1.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/opt/gamesdk/+log/d1f9f40d22248179ba6612beb8acec847bc5880d..3b94fe082e0e95399ed99b5a16ef8eeea307eee2/games-memory-advice">Version 2.1.0-beta01 contains these commits.</a></p>
+
+<h2>Games Performance Tuner 2.0: v2.0.0-alpha07</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.games:games-performance-tuner:2.0.0-alpha07</code> is released. <a href="https://android.googlesource.com/platform/frameworks/opt/gamesdk/+log/e7cc630a269be37ff70185e013845ebd93bced9f..3b94fe082e0e95399ed99b5a16ef8eeea307eee2/games-performance-tuner">Version 2.0.0-alpha07 contains these commits.</a></p>
+<p><strong>Bug Fixes</strong></p>
 <ul>
- <li>We have added an experimental API to automatically scale the text size based on the space it has inside of the parent. (<a href="https://android-review.googlesource.com/#/q/Ibbe632447dcf28a9948a0877f193b4912acb23d1">Ibbe63</a>)</li>
+ <li>Fixed memory telemetry reporting sometimes reporting wrong values</li>
 </ul>
 
-<h2>Webkit: v1.9.0-rc01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.webkit:webkit:1.9.0-rc01</code> is released. This release contains no changes from the <code translate="no" dir="ltr">1.9.0-beta01</code> release.</p>
-
-<h2>WindowManager: v1.3.0-alpha01</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.window:window-*:1.3.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/312eb9f1ddece3a18317f18515a877e0e745cb2c/window">Version 1.3.0-alpha01 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
+<h2>Graphics Path: v1.0.0-beta01</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.graphics:graphics-path:1.0.0-beta01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/95657d008c8886de1770adf1d52e01e6e952b5b0..b5166f9a1e9c047162d1215884c3e2cd41a4a74a/graphics/graphics-path">Version 1.0.0-beta01 contains these commits.</a></p>
+<p><strong>API Changes</strong></p>
 <ul>
- <li>Expose experimental window APIs for accessing the rear screen.</li>
- <li>Test APIs for creating a <code translate="no" dir="ltr">FoldingFeature</code> is now stable.</li>
- <li>Test APIs for setting up fake <code translate="no" dir="ltr">ActivityEmbedding</code> values are now stable.</li>
- <li><code translate="no" dir="ltr">WindowLayoutInfoPublisherRule</code> now reports the override when obtaining a value from a <code translate="no" dir="ltr">UiContext</code>.</li>
- <li><code translate="no" dir="ltr">WindowInfoTracker</code> reports folding feature data to <code translate="no" dir="ltr">UiContext</code> parameters.</li>
- <li>Expose the Extensions Version on the device.</li>
+ <li>Removed usages of experimental <code translate="no" dir="ltr">isAtLeastU()</code> API (<a href="https://android-review.googlesource.com/#/q/Ie9117598f70e8873011f98ebbe0e6cd502772c87">Ie9117</a>, <a href="https://issuetracker.google.com/issues/289269026">b/289269026</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Various fixes and performance improvements, including how the library deals with conics.</li>
 </ul>
 
-<h2>WindowManager: v1.2.0</h2>
-<p>November 15, 2023</p>
-<p><code translate="no" dir="ltr">androidx.window:window-*:1.2.0</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/06e4d421091d61357319a483cbc0e42ee323eced..773c9e51174927e05d2fb969a9652753345d22d5/window">Version 1.2.0 contains these commits.</a></p>
+<h2>Media: v1.7.0</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.media:media:1.7.0</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/372e1696caa87356c2b67083315d3e55b29a5da3..3919950349304b3de3fad474f9afb11e8d87b211/media/media">Version 1.7.0 contains these commits.</a></p>
+<p><strong>Important changes since 1.6.0</strong></p>
+<ul>
+ <li>Catch <code translate="no" dir="ltr">ForegroundServiceStartNotAllowedException</code> in <code translate="no" dir="ltr">MediaButtonReceiver</code> and forward it to <code translate="no" dir="ltr">onForegroundServiceStartNotAllowedException</code>. (<a href="https://android-review.googlesource.com/#/q/I0c9392298a93add391bfaae2b47e06d06258ab78">I0c939</a>)</li>
+ <li>Add <code translate="no" dir="ltr">BROWSER_SERVICE_EXTRAS_KEY_FAVORITES_MEDIA_ITEM</code> for passing Favorites media item in <code translate="no" dir="ltr">MediaBrowserCompat</code> root extras. (<a href="https://android-review.googlesource.com/#/q/Id3a11251c96b7e7727081840e36fe0e5cff24c5d">Id3a11</a>)</li>
+ <li>Add extras to set browse custom actions in <code translate="no" dir="ltr">MediaBrowserCompat</code> root extras and <code translate="no" dir="ltr">MediaItem</code> descriptions. (<a href="https://android-review.googlesource.com/#/q/Iab16398066d6e83661aa0806aefe1f1934a1fed1">Iab163</a>)</li>
+ <li>Fix <code translate="no" dir="ltr">IllegalStateException</code> caused by returning null from <code translate="no" dir="ltr">MediaBrowserService.onLoadChildren</code> on older Android versions.</li>
+</ul>
+
+<h2>Media2: v1.3.0-beta01</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.media2:media2-*:1.3.0-beta01</code> is released with no changes from Media2 <code translate="no" dir="ltr">1.3.0-alpha01</code>. <a href="https://android.googlesource.com/platform/frameworks/support/+log/e4f41c35a73dd32f261f1330bd050cbb9d70752e..ce959de2e0774761f69dd26ef2772a4eca2774d1/media2">Version 1.3.0-beta01 contains these commits.</a></p>
+
+<h2>Room: v2.6.1</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.room:room-*:2.6.1</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/ec9bfe9db962dfb9b86a707c0b84ff1e24ef3c7d..04d99ffb15b386a8708eb883c780d45a3a5cece8/room">Version 2.6.1 contains these commits.</a></p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Resolved issue in generated code where the default value for Double columns in <code translate="no" dir="ltr">EntityCursorConverter</code> was being set to 0 instead of 0.0. A potential fix for a similar edge-case for Float type columns has also been included. (<a href="https://android-review.googlesource.com/q/commit:6aa7e7e786298cad202cda711e05d514cf50fe30">Id75f5</a>, <a href="https://issuetracker.google.com/304584179">b/304584179</a>)</li>
+ <li>Exceptions thrown from <code translate="no" dir="ltr">PagingSource</code> loads will now be propagated as a <code translate="no" dir="ltr">LoadStateUpdate</code> of <code translate="no" dir="ltr">LoadResult.Error</code> containing the Throwable. This error state is observable through <code translate="no" dir="ltr">PagingDataAdapter.loadStateFlow(Views)</code> or <code translate="no" dir="ltr">LazyPagingItems.loadState(Compose)</code>. Note that this marks a behavioral change where in the past load errors will bubble up as an Exception thrown by the dao method that triggered the load. (<a href="https://android-review.googlesource.com/#/q/I93887de62a4fc76d1abe4ade60ed524a41d9d4e8">I93887</a>, <a href="https://issuetracker.google.com/issues/302708983">b/302708983</a>)</li>
+</ul>
+
+<h2>Tracing: v1.2.0</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.tracing:tracing:1.2.0</code> and <code translate="no" dir="ltr">androidx.tracing:tracing-ktx:1.2.0</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/0ad460fe9733c0fa6a69a1be92d3e8450287fa5e..538750227118fd2cca14f4de7df81bace1f50dd3/tracing">Version 1.2.0 contains these commits.</a></p>
 <p><strong>Important changes since 1.1.0</strong></p>
 <ul>
- <li>Expose experimental window APIs for accessing the rear screen.</li>
- <li>Test APIs for creating a <code translate="no" dir="ltr">FoldingFeature</code> is now stable.</li>
- <li>Test APIs for setting up fake <code translate="no" dir="ltr">ActivityEmbedding</code> values are now stable.</li>
- <li><code translate="no" dir="ltr">WindowLayoutInfoPublisherRule</code> now reports the override when obtaining a value from a <code translate="no" dir="ltr">UiContext</code>.</li>
- <li><code translate="no" dir="ltr">WindowInfoTracker</code> reports folding feature data to <code translate="no" dir="ltr">UiContext</code> parameters.</li>
- <li>Expose the Extensions Version on the device.</li>
+ <li>Add <code translate="no" dir="ltr">trace()</code> and <code translate="no" dir="ltr">traceAsync()</code> variants with lazy string and cookie computation. Also now correctly skips <code translate="no" dir="ltr">Trace.end</code> if <code translate="no" dir="ltr">Trace.begin</code> throws.</li>
+</ul>
+
+<h2>Transition: v1.5.0-alpha05</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.transition:transition:1.5.0-alpha05</code> and <code translate="no" dir="ltr">androidx.transition:transition-ktx:1.5.0-alpha05</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/e63042bab069a262f0e762d23f5a18152f3bf12a..b5166f9a1e9c047162d1215884c3e2cd41a4a74a/transition">Version 1.5.0-alpha05 contains these commits.</a></p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed a <code translate="no" dir="ltr">NullPointerException</code> caused by setting a shared element transition and failing to set an <code translate="no" dir="ltr">enter/exitTransition</code> as well. (<a href="https://android-review.googlesource.com/#/q/I8472b865cf93d1d3463f73942c460263f746fef5">I8472b</a>)</li>
+ <li>Fixed issue where <code translate="no" dir="ltr">animateToStart()</code> with <code translate="no" dir="ltr">Slide()</code> failed to move the View back to the start position (<a href="https://android-review.googlesource.com/#/q/I698f4dbcef46304f9aa545847d205f7b70c80d63">I698f4</a>, <a href="https://issuetracker.google.com/issues/300157785">b/300157785</a>)</li>
+ <li>Fixed reentrancy problem in Transition which broke cancellation. (<a href="https://android-review.googlesource.com/#/q/Iddcce38e84838ddee22ed6bde72a6adb16cc0112">Iddcce</a>, <a href="https://issuetracker.google.com/issues/308379201">b/308379201</a>)</li>
+</ul>
+
+<h2>Versionedparcelable: v1.2.0-beta01</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.versionedparcelable:versionedparcelable:1.2.0-beta01</code> is released with no changes since 1.2.0-alpha01. <a href="https://android.googlesource.com/platform/frameworks/support/+log/312eb9f1ddece3a18317f18515a877e0e745cb2c..b5166f9a1e9c047162d1215884c3e2cd41a4a74a/versionedparcelable/versionedparcelable">Version 1.2.0-beta01 contains these commits.</a></p>
+
+<h2>Wear Tooling Preview: v1.0.0</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.wear:wear-tooling-preview:1.0.0</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/af0e5af4f5cecea65dc0553cde117ce199dacb30..5b26896e52ff3bce385a4211e47750dda343998c/wear/wear-tooling-preview">Version 1.0.0 contains these commits.</a></p>
+<p><strong>Features in 1.0.0</strong></p>
+<ul>
+ <li>Add <code translate="no" dir="ltr">WearDevices</code> to list valid wear devices that can be used for UI previews.</li>
+</ul>
+
+<h2>wear protolayout: v1.1.0-alpha03</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.wear.protolayout:protolayout-*:1.1.0-alpha03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/312eb9f1ddece3a18317f18515a877e0e745cb2c..b5166f9a1e9c047162d1215884c3e2cd41a4a74a/wear/protolayout">Version 1.1.0-alpha03 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Add experimental support for dynamically hiding/unhiding layout elements (<a href="https://android-review.googlesource.com/#/q/I64a78ae6173cc74e28db2ba8b9225df9fdc0b217">I64a78</a>)</li>
+ <li>Add dynamic value support to <code translate="no" dir="ltr">BoolProp</code> (<a href="https://android-review.googlesource.com/#/q/I2fe96d0ce123d694d15d14ede02e6f20c8b4f95c">I2fe96</a>)</li>
+ <li>Add schema version requirement annotation to <code translate="no" dir="ltr">ProtoLayout</code> APIs (<a href="https://android-review.googlesource.com/#/q/I0f03cc51fa3374cda092b93e3c38b068f76cf235">I0f03c</a>)</li>
+ <li>Extending the API with the new option in <code translate="no" dir="ltr">TextOverflow</code> for ellipsizing the Text in a fixed parent container even when max lines is not reached (but there's not enough space for Text). (<a href="https://android-review.googlesource.com/#/q/I110a9598aca5c6bcf58afe24b47a6f4264f9a72c">I110a9</a>)</li>
+ <li>Added helper method <code translate="no" dir="ltr">DimensionBuilders.weight</code> for building <code translate="no" dir="ltr">ExpandedDimensionProp</code> with weight. (<a href="https://android-review.googlesource.com/#/q/I4f72bee665cbd4e908cc0a85c81f25004257506b">I4f72b</a>)</li>
+ <li><code translate="no" dir="ltr">DynamicInstant</code> and <code translate="no" dir="ltr">DynamicDuration</code> can be used as state or platform data types. (<a href="https://android-review.googlesource.com/#/q/I6819f24246778cd1e3ed709f2c2c109ed83fa3ea">I6819f</a>)</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Update The API to hide <code translate="no" dir="ltr">DynamicZonedDateTime</code> and move all its operations to <code translate="no" dir="ltr">DyanamicInstant</code> (<a href="https://android-review.googlesource.com/#/q/I34b948f1881e44ed417bc2a68d9ac340567e025a">I34b94</a>)</li>
+ <li>Spacer now supports Expanded dimension for width/height. (<a href="https://android-review.googlesource.com/#/q/Ie7c94f96a028f9f31a74bf6641e19023e10d6625">Ie7c94</a>)</li>
+ <li>Support click target area extension in Renderer (<a href="https://android-review.googlesource.com/#/q/I39c79d4f9d6dcf2afb2a2fdc6bbae8a249beaca5">I39c79</a>)</li>
+</ul>
+
+<h2>Wear Tiles: v1.3.0-alpha03</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.wear.tiles:tiles-*:1.3.0-alpha03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/312eb9f1ddece3a18317f18515a877e0e745cb2c..b5166f9a1e9c047162d1215884c3e2cd41a4a74a/wear/tiles">Version 1.3.0-alpha03 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Added a new API <code translate="no" dir="ltr">TileService#getActiveTilesSnapshotAsync</code> for querying which tiles belonging to the app are active. (<a href="https://android-review.googlesource.com/#/q/I6850e783d964154711fefd6b1f1a5f2f5f49a59a">I6850e</a>)</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Rename <code translate="no" dir="ltr">@TilePreview</code> to <code translate="no" dir="ltr">@Preview</code> (<a href="https://android-review.googlesource.com/#/q/Ifc08a144da2b9fb09c88321d3c71103e2d17edb3">Ifc08a</a>)</li>
+</ul>
+
+<h2>Wear Watchface: v1.2.0</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.wear.watchface:watchface-*:1.2.0</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/87003c5527bd9cba2649e62e397cd8aa2ddc8e19..1e601766fcfbbd0dfaf0e3d36ce56bf647d7b100/wear/watchface">Version 1.2.0 contains these commits.</a></p>
+<p><strong>Important changes since 1.1.0</strong></p>
+<ul>
+ <li>We’ve added support some new complication types which are available for use from Android T: 
+  <ul>
+   <li><code translate="no" dir="ltr">GoalProgressComplicationData</code> which is similar to <code translate="no" dir="ltr">RangedValueComplicationData</code> except it's for progress towards a goal where min implicitly is zero, and the value is allowed to be larger than <code translate="no" dir="ltr">targetValue</code>.</li>
+   <li><code translate="no" dir="ltr">WeightedElementsComplicationData</code> which consists of an array of Elements (pairs of weight and color) along with optional text/title/image. These might be displayed as a pie chart where the colors need to be meaningful given the context, since there typically isn't room in a complication to render labels.</li>
+  </ul></li>
+ <li>We’ve added support for optional <code translate="no" dir="ltr">ColorRanges</code> to <code translate="no" dir="ltr">RangedValueComplicationData</code>. Normally complications would be rendered in colors of the watch face's choosing, but sometimes the <code translate="no" dir="ltr">ComplicationDataSource</code> is best placed to set the colors e.g. when they have a particular semantic meaning. E.g. red to blue for temperature. </li>
+ <li>Almost every type of <code translate="no" dir="ltr">ComplicationData</code> now supports <code translate="no" dir="ltr">SmallImages</code>.</li>
+ <li>We've added <code translate="no" dir="ltr">ComplicationDisplayPolicy</code> where <code translate="no" dir="ltr">DO_NOT_SHOW_WHEN_DEVICE_LOCKED</code> instructs a compatible watch face to not display the complication when the device is locked. </li>
+ <li>From Android T, OEMs will be able to determine if a complication request is from a watch face in the list defined by the <code translate="no" dir="ltr">android.support.wearable.complications.SAFE_WATCH_FACES</code> metadata in their provider’s manifest by <code translate="no" dir="ltr">ComplicationRequest#isForSafeWatchFace</code>. The provider will need the <code translate="no" dir="ltr">com.google.wear.permission.GET_IS_FOR_SAFE_WATCH_FACE</code> permission to receive anything other than TargetWatchFaceSafety.UNKNOWN`.</li>
+ <li><code translate="no" dir="ltr">UserStyleFlavors</code> has become a non-experimental feature.</li>
+</ul>
+
+<h2>Webkit: v1.10.0-alpha01</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.webkit:webkit:1.10.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/b5166f9a1e9c047162d1215884c3e2cd41a4a74a/webkit/webkit">Version 1.10.0-alpha01 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Added a new API to <code translate="no" dir="ltr">WebSettingsCompat</code> to control the experimental <a href="https://android-developers.googleblog.com/2023/11/increasing-trust-for-embedded-media.html">Android WebView Media Integrity API</a> behaviour by either disabling the API entirely, or restrict sharing the application identity in the API response. This can be toggled for all origins and on a per origin basis.</li>
+</ul>
+
+<h2>Webkit: v1.9.0</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.webkit:webkit:1.9.0</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/40bb8c8db91df80e03503485d4964664f87cde66..d905464a8027b0af72851565b52e77892405085d/webkit/webkit">Version 1.9.0 contains these commits.</a></p>
+<p><strong>Important changes since 1.8.0</strong></p>
+<ul>
+ <li><strong>Added a new multi-profile API for WebViews.</strong>
+  <ul>
+   <li>The <a href="https://developer.android.com/reference/androidx/webkit/Profile">Profile</a> interface has different APIs to use to get associated data with this profile such as its name, <a href="https://developer.android.com/reference/android/webkit/GeolocationPermissions">GeoLocationPermissions</a>, <a href="https://developer.android.com/reference/android/webkit/ServiceWorkerController">ServiceWorkerController</a>, <a href="https://developer.android.com/reference/android/webkit/CookieManager">CookieManager</a> and <a href="https://developer.android.com/reference/android/webkit/WebStorage">WebStorage</a>. These objects are specific to the profile, and information is not shared between different profiles in the application.</li>
+   <li>The profile used by a <code translate="no" dir="ltr">WebView</code> instance can be changed using the <a href="https://developer.android.com/reference/androidx/webkit/WebViewCompat#setProfile(android.webkit.WebView,java.lang.String)">WebViewCompat#setProfile</a> method and retrieved using <a href="https://developer.android.com/reference/androidx/webkit/WebViewCompat#getProfile(android.webkit.WebView)">WebViewCompat#getProfile</a></li>
+   <li>The newly introduced <a href="https://developer.android.com/reference/androidx/webkit/ProfileStore">ProfileStore</a> let you manage the available profiles in your application, including the default profile.</li>
+   <li>Existing WebView APIs such as <a href="https://developer.android.com/reference/android/webkit/CookieManager#getInstance()">CookieManager#getInstance</a> will continue to operate on the Default profile.</li>
+  </ul></li>
+ <li><strong>Added an API to inject and run Javascript before page load.</strong>
+  <ul>
+   <li>The <a href="https://developer.android.com/reference/androidx/webkit/WebViewCompat#addDocumentStartJavaScript(android.webkit.WebView,java.lang.String,java.util.Set%3Cjava.lang.String%3E)">WebViewCompat#addDocumentStartJavascript</a> API allows apps to inject scripts into a <code translate="no" dir="ltr">WebView</code> which are guaranteed to run before any page scripts are executed. The API allows the app to specify a target list of origins for the script to be enabled on, ensuring that it only runs on intended pages. Unlike <a href="https://developer.android.com/reference/android/webkit/WebView#evaluateJavascript(java.lang.String,%20android.webkit.ValueCallback%3Cjava.lang.String%3E)">WebView#evaluateJavascript</a>, this API will allow execution of scripts in embedded Iframes when they load. Apps can use this new API in combination with <a href="https://developer.android.com/reference/androidx/webkit/WebViewCompat#addWebMessageListener(android.webkit.WebView,java.lang.String,java.util.Set%3Cjava.lang.String%3E,androidx.webkit.WebViewCompat.WebMessageListener)">WebViewCompat#addWebMessageListener</a> to set up two-way communication with JavaScript in the page in a reliable way.</li>
+  </ul></li>
+ <li><strong>Added APIs to modify how Privacy Sandbox Attribution Reporting events are registered.</strong>
+  <ul>
+   <li>We introduced a new API <a href="https://developer.android.com/reference/androidx/webkit/WebSettingsCompat#setAttributionRegistrationBehavior(android.webkit.WebSettings,int)">WebSettingsCompat#setAttributionRegistrationBehavior</a> which allows developers to configure whether attribution sources and triggers are registered as coming from the app itself or coming from the web content in the WebView. This method can also be used to disable Attribution Reporting in WebView. Additionally we added a new API <code translate="no" dir="ltr">WebSettingsCompat#getAttributionRegistrationBehavior</code> to get the current behavior.</li>
+   <li>For more information see the <a href="https://developer.android.com/design-for-safety/privacy-sandbox/attribution-app-to-web#attribution_source_and_trigger_registration_from_webview">Privacy Sandbox documentation</a>.</li>
+  </ul></li>
+ <li><strong>Added APIs to override user-agent metadata for client hints.</strong>
+  <ul>
+   <li>We introduced a new API, <a href="https://developer.android.com/reference/androidx/webkit/WebSettingsCompat#setUserAgentMetadata(android.webkit.WebSettings,androidx.webkit.UserAgentMetadata)">WebSettingsCompat#setUserAgentMetadata</a> to override the user-agent metadata for WebView used to populate the user-agent client hints, and we also added another new API <a href="https://developer.android.com/reference/androidx/webkit/WebSettingsCompat#getUserAgentMetadata(android.webkit.WebSettings)">WebSettingsCompat#getUserAgentMetadata</a> to get current user-agent overrides. We encourage apps to use the new API to set the right override values whenever the app changes the default user agent string using <a href="https://developer.android.com/reference/android/webkit/WebSettings#setUserAgentString(java.lang.String)">WebSettings.setUserAgentString</a> to ensure the correct values are being used in all situations.</li>
+  </ul></li>
+</ul>
+
+<h2>WorkManager: v2.9.0</h2>
+<p>November 29, 2023</p>
+<p><code translate="no" dir="ltr">androidx.work:work-*:2.9.0</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/2b5fbfa0dbb62c3a185a0be13fb1a63f50b2c034..8dd90c8d04c2e85019a84ac8f4b01df8932f1899/work">Version 2.9.0 contains these commits.</a></p>
+<p><strong>Important changes since 2.8.0</strong></p>
+<ul>
+ <li>Observability via <code translate="no" dir="ltr">Flow</code>-s. Instead of <code translate="no" dir="ltr">LiveData</code>, Worker's progress now can be observed via Flow’s via <code translate="no" dir="ltr">WorkManager.getWorkInfosFlow</code> and similar methods.</li>
+ <li>Now <code translate="no" dir="ltr">WorkManager</code> provides a hint on why a worker was previously stopped. It can be queried from a worker itself via <code translate="no" dir="ltr">getStopReason()</code> method or from <code translate="no" dir="ltr">WorkInfo</code> via <code translate="no" dir="ltr">getStopReason()</code>.</li>
+ <li>Precise scheduling of periodic workers via <code translate="no" dir="ltr">setNextScheduleTimeOverride</code>. This allows dynamic calculation of the next Periodic work schedule, which can be used to implement advanced features like adaptive refresh times, custom retry behavior, or making a newsfeed worker run before the user wakes up every morning without drift. <code translate="no" dir="ltr">ExistingPeriodicWorkPolicy.UPDATE</code> should be used with these techniques to avoid canceling a currently-running worker while scheduling the next one.</li>
+ <li>WorkManager’s testing with threading matching production. <code translate="no" dir="ltr">ExecutorsMode.PRESERVE_EXECUTORS</code> can be used in <code translate="no" dir="ltr">initializeTestWorkManager</code> to preserve executors set in <code translate="no" dir="ltr">Configuration</code> and to use the real main thread.</li>
+ <li>Coroutines APIs such as <code translate="no" dir="ltr">CoroutineWorker</code> have been moved from additional artifact work-runtime-ktx to the main artifact work-runtime. work-runtime-ktx is now empty.</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">stopReason</code> was added to <code translate="no" dir="ltr">WorkInfo</code>. It makes <code translate="no" dir="ltr">stopReason</code> available after the worker has run. It could be helpful in the reporting <code translate="no" dir="ltr">stopReason</code> in a usable way, because once a worker has been stopped, an app itself could be killed very quickly. (<a href="https://android-review.googlesource.com/#/q/I213869adf99dd675b705f6d7f7a080c7bed88220">I21386</a>)</li>
+ <li>Allow <code translate="no" dir="ltr">Clock</code> to be set via config and used to drive execution sequencing of Worker tests. (<a href="https://android-review.googlesource.com/#/q/Ic586efd1c81ac21ece399f4d74f0d2d8bdb1e5ea">Ic586e</a>)</li>
+ <li><code translate="no" dir="ltr">getStopReason()</code> method was added to <code translate="no" dir="ltr">ListenableWorker</code> that gives a hint why the worker was stopped. (<a href="https://android-review.googlesource.com/#/q/I070605b2337c30c496c02bef142167f65c23cf5e">I07060</a>)</li>
+ <li>Added <code translate="no" dir="ltr">WorkManagerTestInitHelper#closeWorkDatabase()</code> to avoid Closeguard's warning about leaked resources. (<a href="https://android-review.googlesource.com/#/q/Ia8d49b6054df11ab5a67c8960c6317b515aa14b6">Ia8d49</a>)</li>
+ <li><code translate="no" dir="ltr">WorkInfo</code>'s constructor is public now, which can be useful in testing. (<a href="https://android-review.googlesource.com/#/q/Ia00b6beffca0b0b2dff5cdae67020bbd4b068579">Ia00b6</a>, <a href="https://issuetracker.google.com/issues/209145335">b/209145335</a>)</li>
+ <li><code translate="no" dir="ltr">work-runtime-ktx</code> is now empty, <code translate="no" dir="ltr">CoroutineWorker</code> and other Kotlin specific utilities are now available in the main work-runtime artifact. (<a href="https://android-review.googlesource.com/#/q/I71a9a873fb3a68b1150ff6a0f9e62774393a17e8">I71a9a</a>)</li>
+ <li>Added <code translate="no" dir="ltr">setNextScheduleTimeOverride</code> method, which allows accurate setting of periodic work schedules (<a href="https://android-review.googlesource.com/#/q/I3b4da91bab9ffc6da3e305ef7ae814b59f7090fb">I3b4da</a>)</li>
+ <li>Added <code translate="no" dir="ltr">getNextScheduleTimeMillis</code> to get scheduled run time info is added to <code translate="no" dir="ltr">WorkInfo</code>. (<a href="https://android-review.googlesource.com/#/q/I797e4a88d7d96eb14ea4c689f7b64be038d4fbd8">I797e4</a>)</li>
+ <li>Initial delay and periodicity info are added to <code translate="no" dir="ltr">WorkInfo</code>. (<a href="https://android-review.googlesource.com/#/q/I52f2f2f18f30dae132b6db4a11cc4c426e461ba6">I52f2f</a>)</li>
+ <li>Added method observe workers via Flows via methods <code translate="no" dir="ltr">getWorkInfosByTagFlow</code>, <code translate="no" dir="ltr">getWorkInfoByIdFlow</code>, <code translate="no" dir="ltr">getWorkInfosForUniqueWorkFlow</code>, <code translate="no" dir="ltr">getWorkInfosFlow</code> (<a href="https://android-review.googlesource.com/#/q/If122a4bcc280e30c3721abec7bea6c7f1bbb4bd0">If122a</a>)</li>
+ <li>Added missing <code translate="no" dir="ltr">@RequiresApi(...)</code> annotations to <code translate="no" dir="ltr">Constraints</code>' constructors and properties. They are now aligned with corresponding annotations on setters in <code translate="no" dir="ltr">Constraints.Builder</code> that existed from early versions of <code translate="no" dir="ltr">WorkManager</code>. (<a href="https://android-review.googlesource.com/#/q/I6d7d23237c06a9cc197b30b054e213e96672a6dc">I6d7d2</a>)</li>
+ <li><code translate="no" dir="ltr">WorkManager</code> now has a separate limit for content uri workers to give them guaranteed slots in <code translate="no" dir="ltr">JobScheduler</code> to prevent missing content updates under the high load. The limit can be configured via <code translate="no" dir="ltr">Configuration.Builder.setContentUriTriggerWorkersLimit</code>. (<a href="https://android-review.googlesource.com/#/q/Ic128f0bd0095e17c01a6ed6ed30d5ac00cb9772c">Ic128f</a>)</li>
+ <li>Constraints are added to <code translate="no" dir="ltr">WorkInfo</code>. (<a href="https://android-review.googlesource.com/#/q/I162c0d683dc5066f4f842f4431d25a9750633524">I162c0</a>)</li>
 </ul>
 </body>
 </html>
