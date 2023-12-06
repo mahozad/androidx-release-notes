@@ -66,12 +66,22 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Benchmark: v1.2.2</h2>
-<p>December 1, 2023</p>
-<p><code translate="no" dir="ltr">androidx.benchmark:benchmark-*:1.2.2</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/dd28c3e7d9e6ce9ec5ea046c8b09c28d3449656a..72f6955a7392567f82ddbd849864f8d27a358781/benchmark">Version 1.2.2 contains these commits.</a></p>
-<p><strong>Baseline Profiles</strong></p>
+<h2>Compose Compiler: v1.5.6</h2>
+<p>December 6, 2023</p>
+<p><code translate="no" dir="ltr">androidx.compose.compiler:compiler:1.5.6</code> and <code translate="no" dir="ltr">androidx.compose.compiler:compiler-hosted:1.5.6</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1935aef1c3b3c4893c4ed900ed41552093c37e86..756b7ad84884595dc9fae5ab1aa29cd329d89308/compose/compiler">Version 1.5.6 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
 <ul>
- <li>Execution logs will show the baseline profile output file path as a local file URI (<a href="https://android-review.googlesource.com/2843918">aosp/2843918</a>, <a href="https://android-review.googlesource.com/2853665">aosp/2853665</a>, <a href="https://issuetracker.google.com/issues/313976958">b/313976958</a>)</li>
+ <li>Support for Kotlin 1.9.21</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Enable intrinsic remember - the compiler transform that inlines remember in Compose compiler plugin and replaces <code translate="no" dir="ltr">.equals</code> comparisons with int comparisons of the parameter meta for stable params. This results in less slots being used and less comparisons being done at runtime. The option can be disabled by providing compiler plugin argument: -P <code translate="no" dir="ltr">plugin:androidx.compose.compiler.plugins.kotlin:intrinsicRemember=false</code>. (<a href="https://android-review.googlesource.com/#/q/If675f9fc1cd7e197f7fcc6094124b011cca12922">If675f</a>)</li>
+ <li>Fix memoization of adapted function references and inline arguments. (<a href="https://issuetracker.google.com/issues/312738720">b/312738720</a>)</li>
+ <li>Realize groups when exiting inline function call (<a href="https://issuetracker.google.com/issues/312242547">b/312242547</a>)</li>
+</ul>
+<p><strong>External Contribution</strong></p>
+<ul>
+ <li>Fix k/native and k/wasm runtime crash due to missing return statement in Composable functions when it's the last statement and returns a null const (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2835716">aosp/2835716</a>)</li>
 </ul>
 </body>
 </html>
