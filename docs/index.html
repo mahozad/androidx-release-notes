@@ -66,6 +66,74 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Media3: </h2>
+<h2>Media3: v1.3.0-alpha01</h2>
+<p>January 15, 2024</p>
+<ul>
+ <li>Common Library: 
+  <ul>
+   <li>Implement support for <code translate="no" dir="ltr">android.resource://package/[type/]name</code> raw resource URIs where <code translate="no" dir="ltr">package</code> is different to the package of the current application. This has always been documented to work, but wasn't correctly implemented until now.</li>
+   <li>Normalize MIME types set by app code or read from media to be fully lower-case.</li>
+   <li>Define ads with a full <code translate="no" dir="ltr">MediaItem</code> instead of a single <code translate="no" dir="ltr">Uri</code> in <code translate="no" dir="ltr">AdPlaybackState</code>.</li>
+   <li>Increase <code translate="no" dir="ltr">minSdk</code> to 19 (Android KitKat). This is <a href="https://android-developers.googleblog.com/2023/10/androidx-minsdkversion-19.html">aligned with all other AndroidX libraries</a>, and is required for us to upgrade to the latest versions of our AndroidX dependencies.</li>
+  </ul></li>
+ <li>ExoPlayer: 
+  <ul>
+   <li>Add <code translate="no" dir="ltr">PreloadMediaSource</code> and <code translate="no" dir="ltr">PreloadMediaPeriod</code> that allows apps to preload a content media source at a specific start position before playback. <code translate="no" dir="ltr">PreloadMediaSource</code> takes care of preparing the content media source to receive the <code translate="no" dir="ltr">Timeline</code>, preparing and caching the period at the given start position, selecting tracks and loading media data for the period. Apps control the preload progress by implementing <code translate="no" dir="ltr">PreloadMediaSource.PreloadControl</code> and set the preloaded source to the player for playback.</li>
+   <li>Add <code translate="no" dir="ltr">ExoPlayer.setImageOutput</code> that allows apps to set <code translate="no" dir="ltr">ImageRenderer.ImageOutput</code>.</li>
+   <li><code translate="no" dir="ltr">DefaultRenderersFactory</code> now provides an <code translate="no" dir="ltr">ImageRenderer</code> to the player by default with null <code translate="no" dir="ltr">ImageOutput</code> and <code translate="no" dir="ltr">ImageDecoder.Factory.DEFAULT</code>.</li>
+   <li>Emit <code translate="no" dir="ltr">Player.Listener.onPositionDiscontinuity</code> event when silence is skipped (<a href="https://github.com/androidx/media/issues/765">#765</a>).</li>
+   <li>Add experimental support for parsing subtitles during extraction. You can enable this using <code translate="no" dir="ltr">MediaSource.Factory.experimentalParseSubtitlesDuringExtraction()</code>.</li>
+   <li>Support adaptive media sources with <code translate="no" dir="ltr">PreloadMediaSource</code>.</li>
+   <li>Implement <code translate="no" dir="ltr">HttpEngineDataSource</code>, an <code translate="no" dir="ltr">HttpDataSource</code> using the <a href="https://developer.android.com/reference/android/net/http/HttpEngine">HttpEngine</a> API.</li>
+  </ul></li>
+ <li>Transformer: 
+  <ul>
+   <li>Add support for flattening H.265/HEVC SEF slow motion videos.</li>
+   <li>Increase transmuxing speed, especially for 'remove video' edits.</li>
+   <li>Add API to ensure that the output file starts on a video frame. This can make the output of trimming operations more compatible with player implementations that don't show the first video frame until its presentation timestamp (<a href="https://github.com/androidx/media/issues/829">#829</a>).</li>
+  </ul></li>
+ <li>Track Selection: 
+  <ul>
+   <li>Add <code translate="no" dir="ltr">DefaultTrackSelector.selectImageTrack</code> to enable image track selection.</li>
+   <li>Add <code translate="no" dir="ltr">TrackSelectionParameters.isPrioritizeImageOverVideoEnabled</code> to determine whether to select an image track if both an image track and a video track are available. The default value is <code translate="no" dir="ltr">false</code> which means selecting a video track is prioritized.</li>
+  </ul></li>
+ <li>Extractors: 
+  <ul>
+   <li>Add additional AV1C parsing to MP4 extractor to retrieve <code translate="no" dir="ltr">ColorInfo.colorSpace</code>, <code translate="no" dir="ltr">ColorInfo.colorTransfer</code>, and <code translate="no" dir="ltr">ColorInfo.colorRange</code> values (<a href="https://github.com/androidx/media/pull/692">#692</a>).</li>
+  </ul></li>
+ <li>Video: 
+  <ul>
+   <li>Change the <code translate="no" dir="ltr">MediaCodecVideoRenderer</code> constructor that takes a <code translate="no" dir="ltr">VideoFrameProcessor.Factory</code> argument and replace it with a constructor that takes a <code translate="no" dir="ltr">VideoSinkProvider</code> argument. Apps that want to inject a custom <code translate="no" dir="ltr">VideoFrameProcessor.Factory</code> can instantiate a <code translate="no" dir="ltr">CompositingVideoSinkProvider</code> that uses the custom <code translate="no" dir="ltr">VideoFrameProcessor.Factory</code> and pass the video sink provider to <code translate="no" dir="ltr">MediaCodecVideoRenderer</code>.</li>
+  </ul></li>
+ <li>Text: 
+  <ul>
+   <li>Fix serialization of bitmap cues to resolve <code translate="no" dir="ltr">Tried to marshall a Parcel that contained Binder objects</code> error when using <code translate="no" dir="ltr">DefaultExtractorsFactory.setTextTrackTranscodingEnabled</code> (<a href="https://github.com/androidx/media/issues/836">#836</a>).</li>
+   <li>CEA-708: Ignore <code translate="no" dir="ltr">rowLock</code> value. The CEA-708-E S-2023 spec states that <code translate="no" dir="ltr">rowLock</code> and <code translate="no" dir="ltr">columnLock</code> should both be assumed to be true, regardless of the values present in the stream (<code translate="no" dir="ltr">columnLock</code> support is not implemented, so it's effectively assumed to always be false).</li>
+  </ul></li>
+ <li>DRM: 
+  <ul>
+   <li>Play 'clear lead' unencrypted samples in DRM content immediately by default, even if the keys for the later encrypted samples aren't ready yet. This may lead to mid-playback stalls if the keys still aren't ready when the playback position reaches the encrypted samples (but previously playback wouldn't have started at all by this point). This behavior can be disabled with <a href="https://developer.android.com/reference/androidx/media3/common/MediaItem.DrmConfiguration.Builder#setPlayClearContentWithoutKey(boolean)"><code translate="no" dir="ltr">MediaItem.DrmConfiguration.Builder.setPlayClearContentWithoutKey</code></a> or <a href="https://developer.android.com/reference/androidx/media3/exoplayer/drm/DefaultDrmSessionManager.Builder#setPlayClearSamplesWithoutKeys(boolean)"><code translate="no" dir="ltr">DefaultDrmSessionManager.Builder.setPlayClearSamplesWithoutKeys</code></a>.</li>
+  </ul></li>
+ <li>IMA extension: 
+  <ul>
+   <li>Fix issue where DASH and HLS ads without the appropriate file extension can't be played.</li>
+  </ul></li>
+ <li>HLS Extension: 
+  <ul>
+   <li>Reduce <code translate="no" dir="ltr">HlsMediaPeriod</code> to package-private visibility. This type shouldn't be directly depended on from outside the HLS package.</li>
+  </ul></li>
+ <li>Decoder Extensions (FFmpeg, VP9, AV1, MIDI, etc.): 
+  <ul>
+   <li>MIDI decoder: Ignore SysEx event messages (<a href="https://github.com/androidx/media/pull/710">#710</a>).</li>
+  </ul></li>
+ <li>Test Utilities: 
+  <ul>
+   <li>Don't pause playback in <code translate="no" dir="ltr">TestPlayerRunHelper.playUntilPosition</code>. The test keeps the playback in a playing state, but suspends progress until the test is able to add assertions and further actions.</li>
+  </ul></li>
+ <li>Demo app: 
+  <ul>
+   <li>Add a shortform demo module to demo the usage of <code translate="no" dir="ltr">PreloadMediaSource</code> with the short-form content use case.</li>
+  </ul></li>
+</ul>
 </body>
 </html>
