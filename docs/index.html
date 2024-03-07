@@ -233,7 +233,7 @@
 <p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.7.0-alpha04</code> is released. Version 1.7.0-alpha04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/e1b82c49c59d8e976ce558aba5586f6c61bc9054..638a8d3a474af45f6ad5fdc3d6d1836ea42d1778/compose/ui">these commits</a>.</p>
 <p><strong>API Changes</strong></p>
 <ul>
- <li>Support stylus handwriting feature on devices after Android U. (<a href="https://android-review.googlesource.com/#/q/I002e4f3218bb909833fcb92b8d1ff9b2153931d7">I002e4</a>)</li>
+ <li>Support stylus handwriting feature for BasicTextField2 on devices after Android U. (<a href="https://android-review.googlesource.com/#/q/I002e4f3218bb909833fcb92b8d1ff9b2153931d7">I002e4</a>)</li>
  <li>In this CL we are adding the <code translate="no" dir="ltr">GetScrollViewportLength</code> semantic action so we can pipe up information about the components being scrolled in compose to the a11y system. This CL also applies the usage of said property in Foundation Scrollable Lists. (<a href="https://android-review.googlesource.com/#/q/Ic5fa297df4613636529e12037a0b7d03bcacc534">Ic5fa2</a>)</li>
  <li><code translate="no" dir="ltr">FocusRequester.createRefs</code> is now stable (<a href="https://android-review.googlesource.com/#/q/I4d92c644c57436fcd4883bc73fe0120ffa0a6fb2">I4d92c</a>, <a href="https://issuetracker.google.com/issues/261436820">b/261436820</a>)</li>
  <li>Introduced <code translate="no" dir="ltr">DelegatableNode.requireView()</code> to allow modifier nodes to get the current Android <code translate="no" dir="ltr">View</code> without reading a composition local. (<a href="https://android-review.googlesource.com/#/q/I407682883cafa8315d1ede370288afdaf62d97a4">I40768</a>)</li>
@@ -282,6 +282,106 @@
 <h2>Graphics Path: v1.0.0</h2>
 <p>March 6, 2024</p>
 <p><code translate="no" dir="ltr">androidx.graphics:graphics-path:1.0.0</code> is released.</p>
+
+<h2>Media3: v1.3.0</h2>
+<p>March 6, 2024</p>
+<p><code translate="no" dir="ltr">androidx.media3:media3-*:1.3.0</code> is released. Version 1.3.0 contains <a href="https://github.com/androidx/media/commits/1.3.0">these commits</a>.</p>
+<ul>
+ <li>Common Library: 
+  <ul>
+   <li>Implement support for <code translate="no" dir="ltr">android.resource://package/[type/]name</code> raw resource URIs where <code translate="no" dir="ltr">package</code> is different to the package of the current application. This has always been documented to work, but wasn't correctly implemented until now.</li>
+   <li>Normalize MIME types set by app code or read from media to be fully lower-case.</li>
+   <li>Define ads with a full <code translate="no" dir="ltr">MediaItem</code> instead of a single <code translate="no" dir="ltr">Uri</code> in <code translate="no" dir="ltr">AdPlaybackState</code>.</li>
+   <li>Increase <code translate="no" dir="ltr">minSdk</code> to 19 (Android KitKat). This is <a href="https://android-developers.googleblog.com/2023/10/androidx-minsdkversion-19.html">aligned with all other AndroidX libraries</a>, and is required for us to upgrade to the latest versions of our AndroidX dependencies.</li>
+   <li>Populate both <code translate="no" dir="ltr">artworkUri</code> and <code translate="no" dir="ltr">artworkData</code> in <code translate="no" dir="ltr">MediaMetadata.Builder.populate(MediaMetadata)</code> when at least one of them is non-null (<a href="https://github.com/androidx/media/issues/964">#964</a>).</li>
+  </ul></li>
+ <li>ExoPlayer: 
+  <ul>
+   <li>Add <code translate="no" dir="ltr">PreloadMediaSource</code> and <code translate="no" dir="ltr">PreloadMediaPeriod</code> that allows apps to preload a content media source at a specific start position before playback. <code translate="no" dir="ltr">PreloadMediaSource</code> takes care of preparing the content media source to receive the <code translate="no" dir="ltr">Timeline</code>, preparing and caching the period at the given start position, selecting tracks and loading media data for the period. Apps control the preload progress by implementing <code translate="no" dir="ltr">PreloadMediaSource.PreloadControl</code> and set the preloaded source to the player for playback.</li>
+   <li>Add <code translate="no" dir="ltr">ExoPlayer.setImageOutput</code> that allows apps to set <code translate="no" dir="ltr">ImageRenderer.ImageOutput</code>.</li>
+   <li><code translate="no" dir="ltr">DefaultRenderersFactory</code> now provides an <code translate="no" dir="ltr">ImageRenderer</code> to the player by default with null <code translate="no" dir="ltr">ImageOutput</code> and <code translate="no" dir="ltr">ImageDecoder.Factory.DEFAULT</code>.</li>
+   <li>Emit <code translate="no" dir="ltr">Player.Listener.onPositionDiscontinuity</code> event when silence is skipped (<a href="https://github.com/androidx/media/issues/765">#765</a>).</li>
+   <li>Add experimental support for parsing subtitles during extraction. You can enable this using <code translate="no" dir="ltr">MediaSource.Factory.experimentalParseSubtitlesDuringExtraction()</code>.</li>
+   <li>Support adaptive media sources with <code translate="no" dir="ltr">PreloadMediaSource</code>.</li>
+   <li>Implement <code translate="no" dir="ltr">HttpEngineDataSource</code>, an <code translate="no" dir="ltr">HttpDataSource</code> using the <a href="https://developer.android.com/reference/android/net/http/HttpEngine">HttpEngine</a> API.</li>
+   <li>Prevent subclassing <code translate="no" dir="ltr">CompositeSequenceableLoader</code>. This component was <a href="https://github.com/androidx/media/commit/0de57cbfae7165dd3bb829e323d089cd312b4b1b">previously made extensible</a> but was never subclassed within the library. Customizations can be done by wrapping an instance using the <a href="https://en.wikipedia.org/wiki/Decorator_pattern">decorator pattern</a> and implementing a custom <code translate="no" dir="ltr">CompositeSequenceableLoaderFactory</code>.</li>
+   <li>Fix issue where repeating the same time causes metadata from this item to be cleared (<a href="https://github.com/androidx/media/issues/1007">#1007</a>).</li>
+   <li>Rename <code translate="no" dir="ltr">experimentalSetSubtitleParserFactory</code> methods on <code translate="no" dir="ltr">BundledChunkExtractor.Factory</code> and <code translate="no" dir="ltr">DefaultHlsExtractorFactory</code> to <code translate="no" dir="ltr">setSubtitleParserFactory</code> and disallow passing <code translate="no" dir="ltr">null</code>. Use the new <code translate="no" dir="ltr">experimentalParseSubtitlesDuringExtraction(boolean)</code> methods to control parsing behaviour.</li>
+   <li>Add support for customising the <code translate="no" dir="ltr">SubtitleParser.Factory</code> used during extraction. This can be achieved with <code translate="no" dir="ltr">MediaSource.Factory.setSubtitleParserFactory()</code>.</li>
+   <li>Add source prefix to all <code translate="no" dir="ltr">Format.id</code> fields generated from <code translate="no" dir="ltr">MergingMediaSource</code>. This helps to identify which source produced a <code translate="no" dir="ltr">Format</code> (<a href="https://github.com/androidx/media/issues/883">#883</a>).</li>
+   <li>Fix the regex used for validating custom Common Media Client Data (CMCD) key names by modifying it to only check for hyphen (<a href="https://github.com/androidx/media/issues/1028">#1028</a>).</li>
+   <li>Stop double-encoding CMCD query parameters (<a href="https://github.com/androidx/media/issues/1075">#1075</a>).</li>
+  </ul></li>
+ <li>Transformer: 
+  <ul>
+   <li>Add support for flattening H.265/HEVC SEF slow motion videos.</li>
+   <li>Increase transmuxing speed, especially for 'remove video' edits.</li>
+   <li>Add API to ensure that the output file starts on a video frame. This can make the output of trimming operations more compatible with player implementations that don't show the first video frame until its presentation timestamp (<a href="https://github.com/androidx/media/issues/829">#829</a>).</li>
+   <li>Add support for optimizing single asset MP4 trim operations.</li>
+   <li>Add support to ensure a video frame has the first timestamp in the output file. Fixes output files beginning with black frame on iOS based players (<a href="https://github.com/androidx/media/issues/829">#829</a>).</li>
+  </ul></li>
+ <li>Track Selection: 
+  <ul>
+   <li>Add <code translate="no" dir="ltr">DefaultTrackSelector.selectImageTrack</code> to enable image track selection.</li>
+   <li>Add <code translate="no" dir="ltr">TrackSelectionParameters.isPrioritizeImageOverVideoEnabled</code> to determine whether to select an image track if both an image track and a video track are available. The default value is <code translate="no" dir="ltr">false</code> which means selecting a video track is prioritized.</li>
+  </ul></li>
+ <li>Extractors: 
+  <ul>
+   <li>Add additional AV1C parsing to MP4 extractor to retrieve <code translate="no" dir="ltr">ColorInfo.colorSpace</code>, <code translate="no" dir="ltr">ColorInfo.colorTransfer</code>, and <code translate="no" dir="ltr">ColorInfo.colorRange</code> values (<a href="https://github.com/androidx/media/pull/692">#692</a>).</li>
+   <li>MP3: Use constant bitrate (CBR) seeking for files with an <code translate="no" dir="ltr">Info</code> header (the CBR equivalent of the <code translate="no" dir="ltr">Xing</code> header). Previously we used the seek table from the <code translate="no" dir="ltr">Info</code> header, but this results in less precise seeking than if we ignore it and assume the file is CBR.</li>
+   <li>MPEG2-TS: Add DTS, DTS-LBR and DTS:X Profile2 support (<a href="https://github.com/androidx/media/pull/275">#275</a>).</li>
+   <li>Extract audio types from TS descriptors and map them to role flags, allowing users to make better-informed audio track selections (<a href="https://github.com/androidx/media/pull/973">#973</a>).</li>
+  </ul></li>
+ <li>Audio: 
+  <ul>
+   <li>Improve silence skipping algorithm with smooth volume ramp; retained minimal silence and more natural silence durations (<a href="https://github.com/google/ExoPlayer/issues/7423">#7423</a>).</li>
+   <li>Report the skipped silence more deterministically (<a href="https://github.com/androidx/media/issues/1035">#1035</a>).</li>
+  </ul></li>
+ <li>Video: 
+  <ul>
+   <li>Change the <code translate="no" dir="ltr">MediaCodecVideoRenderer</code> constructor that takes a <code translate="no" dir="ltr">VideoFrameProcessor.Factory</code> argument and replace it with a constructor that takes a <code translate="no" dir="ltr">VideoSinkProvider</code> argument. Apps that want to inject a custom <code translate="no" dir="ltr">VideoFrameProcessor.Factory</code> can instantiate a <code translate="no" dir="ltr">CompositingVideoSinkProvider</code> that uses the custom <code translate="no" dir="ltr">VideoFrameProcessor.Factory</code> and pass the video sink provider to <code translate="no" dir="ltr">MediaCodecVideoRenderer</code>.</li>
+  </ul></li>
+ <li>Text: 
+  <ul>
+   <li>Fix serialization of bitmap cues to resolve <code translate="no" dir="ltr">Tried to marshall a Parcel that contained Binder objects</code> error when using <code translate="no" dir="ltr">DefaultExtractorsFactory.setTextTrackTranscodingEnabled</code> (<a href="https://github.com/androidx/media/issues/836">#836</a>).</li>
+   <li>CEA-708: Ignore <code translate="no" dir="ltr">rowLock</code> value. The CEA-708-E S-2023 spec states that <code translate="no" dir="ltr">rowLock</code> and <code translate="no" dir="ltr">columnLock</code> should both be assumed to be true, regardless of the values present in the stream (<code translate="no" dir="ltr">columnLock</code> support is not implemented, so it's effectively assumed to always be false).</li>
+  </ul></li>
+ <li>Image: 
+  <ul>
+   <li>Add support for DASH thumbnails. Grid images are cropped and individual thumbnails are provided to <code translate="no" dir="ltr">ImageOutput</code> close to their presentation times.</li>
+  </ul></li>
+ <li>DRM: 
+  <ul>
+   <li>Play 'clear lead' unencrypted samples in DRM content immediately by default, even if the keys for the later encrypted samples aren't ready yet. This may lead to mid-playback stalls if the keys still aren't ready when the playback position reaches the encrypted samples (but previously playback wouldn't have started at all by this point). This behavior can be disabled with <a href="https://developer.android.com/reference/androidx/media3/common/MediaItem.DrmConfiguration.Builder#setPlayClearContentWithoutKey(boolean)"><code translate="no" dir="ltr">MediaItem.DrmConfiguration.Builder.setPlayClearContentWithoutKey</code></a> or <a href="https://developer.android.com/reference/androidx/media3/exoplayer/drm/DefaultDrmSessionManager.Builder#setPlayClearSamplesWithoutKeys(boolean)"><code translate="no" dir="ltr">DefaultDrmSessionManager.Builder.setPlayClearSamplesWithoutKeys</code></a>.</li>
+  </ul></li>
+ <li>IMA extension: 
+  <ul>
+   <li>Fix issue where DASH and HLS ads without the appropriate file extension can't be played.</li>
+  </ul></li>
+ <li>Session: 
+  <ul>
+   <li>Disable double-click detection for TV apps (<a href="https://github.com/androidx/media/issues/962">#962</a>).</li>
+   <li>Fix issue where <code translate="no" dir="ltr">MediaItem.RequestMetadata</code> with just non-null extras is not transmitted between media controllers and sessions.</li>
+   <li>Add constructor to <code translate="no" dir="ltr">MediaLibrarySession.Builder</code> that only takes a <code translate="no" dir="ltr">Context</code> instead of a <code translate="no" dir="ltr">MediaLibraryService</code>.</li>
+  </ul></li>
+ <li>HLS Extension: 
+  <ul>
+   <li>Reduce <code translate="no" dir="ltr">HlsMediaPeriod</code> to package-private visibility. This type shouldn't be directly depended on from outside the HLS package.</li>
+   <li>Resolve seeks to beginning of a segment more efficiently (<a href="https://github.com/androidx/media/pull/1031">#1031</a>).</li>
+  </ul></li>
+ <li>Decoder Extensions (FFmpeg, VP9, AV1, MIDI, etc.): 
+  <ul>
+   <li>MIDI decoder: Ignore SysEx event messages (<a href="https://github.com/androidx/media/pull/710">#710</a>).</li>
+  </ul></li>
+ <li>Test Utilities: 
+  <ul>
+   <li>Don't pause playback in <code translate="no" dir="ltr">TestPlayerRunHelper.playUntilPosition</code>. The test keeps the playback in a playing state, but suspends progress until the test is able to add assertions and further actions.</li>
+  </ul></li>
+ <li>Demo app: 
+  <ul>
+   <li>Add a shortform demo module to demo the usage of <code translate="no" dir="ltr">PreloadMediaSource</code> with the short-form content use case.</li>
+  </ul></li>
+</ul>
 
 <h2>Mediarouter: v1.7.0-rc01</h2>
 <p>March 6, 2024</p>
