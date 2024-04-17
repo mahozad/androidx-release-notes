@@ -66,77 +66,68 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Media3: v1.3.1</h2>
-<p>April 11, 2024</p>
-<p><code translate="no" dir="ltr">androidx.media3:media3-*:1.3.1</code> is released. Version 1.3.1 contains <a href="https://github.com/androidx/media/commits/1.3.1">these commits</a>.</p>
+<h2>Media3: v1.4.0-alpha01</h2>
+<p>April 17, 2024</p>
+<p><code translate="no" dir="ltr">androidx.media3:media3-*:1.4.0-alpha01</code> is released. Version 1.4.0-alpha01 contains <a href="https://github.com/androidx/media/commits/1.4.0-alpha01">these commits</a>.</p>
 <ul>
- <li>Common Library: 
-  <ul>
-   <li>Add <code translate="no" dir="ltr">Format.labels</code> to allow localized or other alternative labels.</li>
-  </ul></li>
  <li>ExoPlayer: 
   <ul>
-   <li>Fix issue where <code translate="no" dir="ltr">PreloadMediaPeriod</code> cannot retain the streams when it is preloaded again.</li>
-   <li>Apply the correct corresponding <code translate="no" dir="ltr">TrackSelectionResult</code> to the playing period in track reselection.</li>
-   <li>Start early-enabled renderers only after advancing the playing period when transitioning between media items (<a href="https://github.com/androidx/media/issues/1017">#1017</a>).</li>
-   <li>Add missing return type to proguard <code translate="no" dir="ltr">-keepclasseswithmembers</code> rule for <code translate="no" dir="ltr">DefaultVideoFrameProcessor.Factory.Builder.build()</code> (<a href="https://github.com/androidx/media/issues/1187">#1187</a>).</li>
+   <li>Add <code translate="no" dir="ltr">BasePreloadManager</code> which coordinates the preloading for multiple sources based on the priorities defined by their <code translate="no" dir="ltr">rankingData</code>. Customization is possible by extending this class. Add <code translate="no" dir="ltr">DefaultPreloadManager</code> which uses <code translate="no" dir="ltr">PreloadMediaSource</code> to preload media samples of the sources into memory, and uses an integer <code translate="no" dir="ltr">rankingData</code> that indicates the index of an item on the UI.</li>
+   <li>Add <code translate="no" dir="ltr">PlayerId</code> to most methods of <code translate="no" dir="ltr">LoadControl</code> to enable <code translate="no" dir="ltr">LoadControl</code> implementations to support multiple players.</li>
+   <li>Remove <code translate="no" dir="ltr">Buffer.isDecodeOnly()</code> and <code translate="no" dir="ltr">C.BUFFER_FLAG_DECODE_ONLY</code>. There is no need to set this flag as renderers and decoders will decide to skip buffers based on timestamp. Custom <code translate="no" dir="ltr">Renderer</code> implementations should check if the buffer time is at least <code translate="no" dir="ltr">BaseRenderer.getLastResetPositionUs()</code> to decide whether a sample should be shown. Custom <code translate="no" dir="ltr">SimpleDecoder</code> implementations can check <code translate="no" dir="ltr">isAtLeastOutputStartTimeUs</code> if needed or mark other buffers with <code translate="no" dir="ltr">DecoderOutputBuffer.shouldBeSkipped</code> to skip them.</li>
+   <li>Allow a null value to be returned by <code translate="no" dir="ltr">TargetPreloadStatusControl.getTargetPreloadStatus(T)</code> to indicate not to preload a <code translate="no" dir="ltr">MediaSource</code> with the given <code translate="no" dir="ltr">rankingData</code>.</li>
+   <li>Add <code translate="no" dir="ltr">remove(MediaSource)</code> to <code translate="no" dir="ltr">BasePreloadManager</code>.</li>
   </ul></li>
  <li>Transformer: 
   <ul>
-   <li>Add workaround for exception thrown due to <code translate="no" dir="ltr">MediaMuxer</code> not supporting negative presentation timestamps before API 30.</li>
-  </ul></li>
- <li>Track Selection: 
-  <ul>
-   <li><code translate="no" dir="ltr">DefaultTrackSelector</code>: Prefer video tracks with a 'reasonable' frame rate (&gt;=10fps) over those with a lower or unset frame rate. This ensures the player selects the 'real' video track in MP4s extracted from motion photos that can contain two HEVC tracks where one has a higher resolution but a very small number of frames (<a href="https://github.com/androidx/media/issues/1051">#1051</a>).</li>
-  </ul></li>
- <li>Extractors: 
-  <ul>
-   <li>Fix issue where padding was not skipped when reading odd-sized chunks from WAV files (<a href="https://github.com/androidx/media/pull/1117">#1117</a>).</li>
-   <li>MP3: Populate <code translate="no" dir="ltr">Format.averageBitrate</code> from metadata frames such as <code translate="no" dir="ltr">XING</code> and <code translate="no" dir="ltr">VBRI</code>.</li>
-   <li>MPEG-TS: Revert a change that aimed to ensure the last frame is rendered by passing the last access unit of a stream to the sample queue (<a href="https://github.com/google/ExoPlayer/issues/7909">#7909</a>). This is due to the change causing new problems with I-frame only HLS streams (<a href="https://github.com/google/ExoPlayer/issues/1150">#1150</a>) and H.262 HLS streams (<a href="https://github.com/google/ExoPlayer/issues/1126">#1126</a>).</li>
-  </ul></li>
- <li>Audio: 
-  <ul>
-   <li>Allow renderer recovery by disabling offload if audio track fails to initialize in offload mode.</li>
+   <li>Add <code translate="no" dir="ltr">audioConversionProcess</code> and <code translate="no" dir="ltr">videoConversionProcess</code> to <code translate="no" dir="ltr">ExportResult</code> indicating how the respective track in the output file was made.</li>
+   <li>Relax trim optimization H.264 level checks.</li>
+   <li>Add support for changing between SDR and HDR input media in a sequence.</li>
+   <li>Add support for composition-level audio effects.</li>
+   <li>Add support for transcoding Ultra HDR images into HDR videos.</li>
+   <li>Fix issue where the <code translate="no" dir="ltr">DefaultAudioMixer</code> does not output the correct amount of bytes after being reset and reused.</li>
   </ul></li>
  <li>Video: 
   <ul>
-   <li>Add workaround for a device issue on Galaxy Tab S7 FE, Chromecast with Google TV, and Lenovo M10 FHD Plus that causes 60fps H265 streams to be marked as unsupported</li>
-   <li>Add workaround that ensures the first frame is always rendered while tunneling even if the device does not do this automatically as required by the API (<a href="https://github.com/androidx/media/issues/1169">#1169</a>). (<a href="https://github.com/androidx/media/issues/966">#966</a>).</li>
-   <li>Fix issue where HDR color info handling causes codec misbehavior and prevents adaptive format switches for SDR video tracks (<a href="https://github.com/androidx/media/issues/1158">#1158</a>).</li>
+   <li>Fix issue where <code translate="no" dir="ltr">Listener.onRenderedFirstFrame()</code> arrives too early when switching surfaces mid-playback.</li>
   </ul></li>
- <li>Text: 
+ <li>DataSource: 
   <ul>
-   <li>WebVTT: Prevent directly consecutive cues from creating spurious additional <code translate="no" dir="ltr">CuesWithTiming</code> instances from <code translate="no" dir="ltr">WebvttParser.parse</code> (<a href="https://github.com/androidx/media/issues/1177">#1177</a>).</li>
-  </ul></li>
- <li>DRM: 
-  <ul>
-   <li>Work around a <code translate="no" dir="ltr">NoSuchMethodError</code> which can be thrown by the <code translate="no" dir="ltr">MediaDrm</code> framework instead of <code translate="no" dir="ltr">ResourceBusyException</code> or <code translate="no" dir="ltr">NotProvisionedException</code> on some Android 14 devices (<a href="https://github.com/androidx/media/issues/1145">#1145</a>).</li>
+   <li>Implement support for <code translate="no" dir="ltr">android.resource://package/id</code> raw resource URIs where <code translate="no" dir="ltr">package</code> is different to the package of the current application. This wasn't previously documented to work, but is a more efficient way of accessing resources in another package than by name.</li>
+   <li>Eagerly check <code translate="no" dir="ltr">url</code> is non-null in the <code translate="no" dir="ltr">DataSpec</code> constructors. This parameter was already annotated to be non-null.</li>
   </ul></li>
  <li>Effect: 
   <ul>
-   <li>Improved PQ to SDR tone-mapping by converting color spaces.</li>
+   <li>Support multiple speed changes within the same <code translate="no" dir="ltr">EditedMediaItem</code> or <code translate="no" dir="ltr">Composition</code> in <code translate="no" dir="ltr">SpeedChangeEffect</code>.</li>
+   <li>Support for HLG and PQ output from ultra HDR bitmap input.</li>
+   <li>Add support for EGL_GL_COLORSPACE_BT2020_HLG_EXT, which improves HLG surface output in ExoPlayer.setVideoEffect and Transformer's Debug SurfaceView.</li>
+   <li>Update Overlay matrix implementation to make it consistent with the documentation by flipping the x and y values applied in <code translate="no" dir="ltr">setOverlayFrameAnchor()</code>. If using <code translate="no" dir="ltr">OverlaySettings.Builder.setOverlayFrameAnchor()</code>, flip their x and y values by multiplying them by <code translate="no" dir="ltr">-1</code>.</li>
   </ul></li>
  <li>Session: 
   <ul>
-   <li>Fix issue where the current position jumps back when the controller replaces the current item (<a href="https://github.com/androidx/media/issues/951">#951</a>).</li>
-   <li>Fix issue where <code translate="no" dir="ltr">MediaMetadata</code> with just non-null <code translate="no" dir="ltr">extras</code> is not transmitted between media controllers and sessions (<a href="https://github.com/androidx/media/issues/1176">#1176</a>).</li>
+   <li>Change default of <code translate="no" dir="ltr">CommandButton.enabled</code> to <code translate="no" dir="ltr">true</code> and ensure the value can stay false for controllers even if the associated command is available.</li>
+   <li>Add icon constants for <code translate="no" dir="ltr">CommandButton</code> that should be used instead of custom icon resources.</li>
+   <li>Add <code translate="no" dir="ltr">MediaSessionService.isPlaybackOngoing()</code> to let apps query whether the service needs to be stopped in <code translate="no" dir="ltr">onTaskRemoved()</code> (<a href="https://github.com/androidx/media/issues/1219">#1219</a>).</li>
+   <li>Add <code translate="no" dir="ltr">MediaSessionService.pauseAllPlayersAndStopSelf()</code> that conveniently allows to pause playback of all sessions and call <code translate="no" dir="ltr">stopSelf</code> to terminate the lifecycle of the <code translate="no" dir="ltr">MediaSessionService</code>.</li>
+   <li>Override <code translate="no" dir="ltr">MediaSessionService.onTaskRemoved(Intent)</code> to provide a safe default implementation that keeps the service running in the foreground if playback is ongoing or stops the service otherwise.</li>
   </ul></li>
- <li>UI: 
+ <li>Downloads: 
   <ul>
-   <li>Fallback to include audio track language name if <code translate="no" dir="ltr">Locale</code> cannot identify a display name (<a href="https://github.com/androidx/media/issues/988">#988</a>).</li>
+   <li>Ensure that <code translate="no" dir="ltr">DownloadHelper</code> does not leak unreleased <code translate="no" dir="ltr">Renderer</code> instances, which can eventually result in an app crashing with <code translate="no" dir="ltr">IllegalStateException: Too many receivers, total of 1000, registered for pid</code> (<a href="https://github.com/androidx/media/issues/1224">#1224</a>).</li>
   </ul></li>
- <li>DASH Extension: 
+ <li>Test Utilities: 
   <ul>
-   <li>Populate all <code translate="no" dir="ltr">Label</code> elements from the manifest into <code translate="no" dir="ltr">Format.labels</code> (<a href="https://github.com/androidx/media/pull/1054">#1054</a>).</li>
+   <li>Implement <code translate="no" dir="ltr">onInit()</code> and <code translate="no" dir="ltr">onRelease()</code> in <code translate="no" dir="ltr">FakeRenderer</code>.</li>
+   <li>Change <code translate="no" dir="ltr">TestPlayerRunHelper.runUntil/playUntil</code> methods to fail on nonfatal errors (e.g. those reported to <code translate="no" dir="ltr">AnalyticsListener.onVideoCodecError</code>). Use the new <code translate="no" dir="ltr">TestPlayerRunHelper.run(player).ignoringNonFatalErrors().untilXXX()</code> method chain to disable this behavior.</li>
   </ul></li>
- <li>RTSP Extension: 
+ <li>Demo app: 
   <ul>
-   <li>Skip empty session information values (i-tags) in SDP parsing (<a href="https://github.com/androidx/media/issues/1087">#1087</a>).</li>
+   <li>Use <code translate="no" dir="ltr">DefaultPreloadManager</code> in the short form demo app.</li>
   </ul></li>
- <li>Decoder Extensions (FFmpeg, VP9, AV1, MIDI, etc.): 
+ <li>Remove deprecated symbols: 
   <ul>
-   <li>Disable the MIDI extension as a local dependency by default because it requires an additional Maven repository to be configured. Users who need this module from a local dependency <a href="https://github.com/androidx/media/blob/main/README.md#midi-module">can re-enable it</a>.</li>
+   <li>Remove <code translate="no" dir="ltr">CronetDataSourceFactory</code>. Use <code translate="no" dir="ltr">CronetDataSource.Factory</code> instead.</li>
+   <li>Remove some <code translate="no" dir="ltr">DataSpec</code> constructors. Use <code translate="no" dir="ltr">DataSpec.Builder</code> instead.</li>
   </ul></li>
 </ul>
 </body>
