@@ -137,7 +137,6 @@
 <p><code translate="no" dir="ltr">androidx.camera:camera-*:1.4.0-alpha05</code> is released. Version 1.4.0-alpha05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/cc8546da2e453883b157aa38bbd034b8ae5bbac8..7f20a95e69d42bdab1dbae806dd5dee41b86143d/camera">these commits</a>.</p>
 <p><strong>New Features</strong></p>
 <ul>
- <li>Adding a Composable Viewfinder to be used with CameraX or Camera2 (<a href="https://android-review.googlesource.com/#/q/If79e702dd3962567118920a408c7a5f6b2e003ac">If79e7</a>)</li>
  <li>Converted <code translate="no" dir="ltr">ProcessCameraProvider</code> into Kotlin implementation. (<a href="https://android-review.googlesource.com/#/q/I46d4fb4e2a7eb8908f952afd5ffb8565d27f8a47">I46d4f</a>)</li>
  <li>Added <code translate="no" dir="ltr">ImageCapture.takePicture</code> suspend functions to allow it to be called in a Kotlin-idiomatic way. (<a href="https://android-review.googlesource.com/#/q/I920bed9dc547a4e1b78af37f1ba4239793741bb5">I920be</a>)</li>
 </ul>
@@ -457,10 +456,9 @@
 <p><strong>Major changes since 1.0.0 release</strong></p>
 <p>Please review the release notes from alpha and beta versions of 1.1.0 for more info. Some of the major updates in 1.1.0 are:</p>
 <ul>
- <li>You can now use DataStore in <a href="https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-getting-started.html">KMM</a> projects.</li>
- <li>Refactored to merge the implementations for single process and multi process DataStore implementations.</li>
- <li>Add a new interface InterProcessCoordinator that helps multiple DataStore instances communicate across processes. Note that, Multi-Process implementation of InterProcessCoordinator is only available on Android.</li>
- <li>Removed <code translate="no" dir="ltr">@ExperimentalMultiProcessDataStore</code> annotations</li>
+ <li>DataStore now supports multiple processes accessing the same file, with support for observability across processes.</li>
+ <li>The new Storage interface allows you to customize how to store or serialize your data models.</li>
+ <li>You can now use DataStore in Kotlin Multiplatform projects.</li>
 </ul>
 
 <h2>Fragment: v1.7.0-rc02</h2>
@@ -515,7 +513,16 @@
 <p><code translate="no" dir="ltr">androidx.navigation:navigation-*:2.8.0-alpha07</code> is released. Version 2.8.0-alpha07 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/02b55f664eba38e42e362e1af3913be1df552d55..a0c81b50a8c175a7992821bb8eff152cc37e7a3c/navigation">these commits</a>.</p>
 <p><strong>New Features</strong></p>
 <ul>
- <li>Adds a new <code translate="no" dir="ltr">navigation-fragment-compose</code> artifact that includes a <code translate="no" dir="ltr">ComposableNavHostFragment</code> alternative to <code translate="no" dir="ltr">NavHostFragment</code> that allows you to add <code translate="no" dir="ltr">composable</code> destinations to your Navigation XML files. Each <code translate="no" dir="ltr">composable</code> destination must be expressed as a top-level, no argument <code translate="no" dir="ltr">@Composable</code> method whose fully qualified name is used as the <code translate="no" dir="ltr">android:name</code> attribute on each destination. When navigating to one of these destinations, a containing fragment is created to display the composable content. (<a href="https://android-review.googlesource.com/#/q/I0ef2e5897128d18d1b374f3617c7095022ca7c0e">I0ef2e</a>, <a href="https://issuetracker.google.com/issues/265480755">b/265480755</a>)</li>
+ <li><p>Adds a new <code translate="no" dir="ltr">navigation-fragment-compose</code> artifact that includes a <code translate="no" dir="ltr">ComposableNavHostFragment</code> alternative to <code translate="no" dir="ltr">NavHostFragment</code> that allows you to add <code translate="no" dir="ltr">composable</code> destinations to your Navigation XML files. Each <code translate="no" dir="ltr">composable</code> destination must be expressed as a top-level, no argument <code translate="no" dir="ltr">@Composable</code> method whose fully qualified name is used as the <code translate="no" dir="ltr">android:name</code> attribute on each destination. When navigating to one of these destinations, a containing fragment is created to display the composable content. (<a href="https://android-review.googlesource.com/#/q/I0ef2e5897128d18d1b374f3617c7095022ca7c0e">I0ef2e</a>, <a href="https://issuetracker.google.com/issues/265480755">b/265480755</a>)</p><pre class="prettyprint lang-kotlin" translate="no" dir="ltr"><code translate="no" dir="ltr">// In HomeScreen.kt
+@Composable
+fun HomeScreen() {
+  // Your Composable content here
+}
+</code></pre><pre class="prettyprint lang-xml" translate="no" dir="ltr"><code translate="no" dir="ltr">// In your navigation.xml
+&lt;composable
+  android:id="@+id/home_screen"
+  android:name="com.example.HomeScreenKt\$HomeScreen" /&gt;
+</code></pre></li>
 </ul>
 <p><strong>API Changes</strong></p>
 <ul>
