@@ -66,150 +66,286 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Media3: v1.4.0-alpha02</h2>
-<p>June 07, 2024</p>
-<p><code translate="no" dir="ltr">androidx.media3:media3-*:1.4.0-alpha02</code> is released. Version 1.4.0-alpha02 contains <a href="https://github.com/androidx/media/commits/1.4.0-alpha02">these commits</a>.</p>
+<h2>Benchmark: v1.3.0-beta01</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.benchmark:benchmark-*:1.3.0-beta01</code> is released. Version 1.3.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/6a69101fd0edc8d02aa316df1f43e0552fd2d7c4..e688db5c82e85000364f92965558ef1e2236c5a0/benchmark">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
 <ul>
- <li>Common Library: 
+ <li>Renamed <code translate="no" dir="ltr">MethodTracing.affectsMeasurementOnThisDevice</code> to <code translate="no" dir="ltr">AFFECTS_MEASUREMENT_ON_THIS_DEVICE</code> for consistency. (<a href="https://android-review.googlesource.com/#/q/I1bdfa9acbd481f837649a2444fee46185d49bd61">I1bdfa</a>)</li>
+ <li>Added experimental <code translate="no" dir="ltr">BlackHole.consume()</code> api to prevent dead code elimination in microbenchmarks. (<a href="https://android-review.googlesource.com/#/q/If681208c4e5ad5d054117c2320b4fd56b86f4ff5">If6812</a>, <a href="https://issuetracker.google.com/issues/286091643">b/286091643</a>)</li>
+ <li>Microbenchmark will now correctly throw to prevent method tracing from interfering with measurements. This occurs on certain devices when method tracing is forced on (via instrumentation args or <code translate="no" dir="ltr">MicrobenchmarkConfig</code>), and if a measurement is attempted after a method trace. Affected devices are running API 26-30 or certain ART mainline module versions affected by this interference, and can be detected at runtime via <code translate="no" dir="ltr">ProfilerConfig.MethodTracing.affectsMeasurementOnThisDevice</code>. (<a href="https://android-review.googlesource.com/#/q/Iafb92c47c76bf257c047634b61401d873ce85cc5">Iafb92</a>, <a href="https://issuetracker.google.com/issues/303660864">b/303660864</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Bumped max agp version recommended to 9.0.0-alpha01. (<a href="https://android-review.googlesource.com/#/q/I5bbb0401cf54f7f5394e7462235947d61be20ee2">I5bbb0</a>)</li>
+ <li>Added compilation mode to benchmark context (<a href="https://android-review.googlesource.com/#/q/If5612552a718b459e95cd96dc721e92a88e3fa8a">If5612</a>, <a href="https://issuetracker.google.com/issues/325512900">b/325512900</a>)</li>
+ <li>Enable AIDL tracing by default (requires API 28) (<a href="https://android-review.googlesource.com/#/q/Ia0af2a55ac2635db68427845860dc96d93994220">Ia0af2</a>, <a href="https://issuetracker.google.com/issues/341852305">b/341852305</a>)</li>
+ <li>Added additional information in benchmark context in JSON output: 
   <ul>
-   <li>Forward presumed no-op seek calls to the protected <code translate="no" dir="ltr">BasePlayer.seekTo</code> and <code translate="no" dir="ltr">SimpleBasePlayer.handleSeek</code> methods instead of ignoring them. If you are implementing these methods in a custom player, you may need to handle these additional calls with <code translate="no" dir="ltr">mediaItemIndex == C.INDEX_UNSET</code>.</li>
-   <li>Remove compile dependency on enhanced Java 8 desugaring (<a href="https://github.com/androidx/media/issues/1312">#1312</a>).</li>
-   <li>Ensure the duration passed to <code translate="no" dir="ltr">MediaItem.Builder.setImageDurationMs</code> is ignored for a non-image <code translate="no" dir="ltr">MediaItem</code> (as documented).</li>
+   <li><code translate="no" dir="ltr">context.artMainlineVersion</code> - integer version of Art mainline module (if present on device, -1 otherwise)</li>
+   <li><code translate="no" dir="ltr">context.build.id</code> - Equals <code translate="no" dir="ltr">android.os.Build.ID</code></li>
+   <li><code translate="no" dir="ltr">context.build.version.codename</code> - Equals <code translate="no" dir="ltr">android.os.Build.VERSION.CODENAME</code></li>
+   <li><code translate="no" dir="ltr">context.build.version.abbreviatedCodename</code> - corresponds to first letter of pre-release codename (even on release builds) (<a href="https://android-review.googlesource.com/#/q/Ie502065af175c2a8054bbe85716f15f4ff38b822">Ie5020</a>)</li>
   </ul></li>
- <li>ExoPlayer: 
-  <ul>
-   <li>Add <code translate="no" dir="ltr">reset</code> to <code translate="no" dir="ltr">BasePreloadManager</code> to release all the holding sources while keep the preload manager instance.</li>
-   <li>Add <code translate="no" dir="ltr">ExoPlayer.setPriority</code> (and <code translate="no" dir="ltr">Builder.setPriority</code>) to define the priority value used in <code translate="no" dir="ltr">PriorityTaskManager</code> and for MediaCodec importance from API 35.</li>
-   <li>Fix issue with updating the last rebuffer time which resulted in incorrect <code translate="no" dir="ltr">bs</code> (buffer starvation) key in CMCD (<a href="https://github.com/androidx/media/issues/1124">#1124</a>).</li>
-   <li>Add <code translate="no" dir="ltr">PreloadMediaSource.PreloadControl.onLoadedToTheEndOfSource(PreloadMediaSource)</code> to indicate that the source has loaded to the end. This allows the <code translate="no" dir="ltr">DefaultPreloadManager</code> and the custom <code translate="no" dir="ltr">PreloadMediaSource.PreloadControl</code> implementations to preload the next source or take other actions.</li>
-   <li>Fix bug where silence skipping at the end of items can trigger a playback exception.</li>
-   <li>Add <code translate="no" dir="ltr">clear</code> to <code translate="no" dir="ltr">PreloadMediaSource</code> to discard the preloading period.</li>
-   <li>Add new error code <code translate="no" dir="ltr">PlaybackException.ERROR_CODE_DECODING_RESOURCES_RECLAIMED</code> that is used when codec resources are reclaimed for higher priority tasks.</li>
-   <li>Let <code translate="no" dir="ltr">AdsMediaSource</code> load preroll ads before initial content media preparation completes (<a href="https://github.com/androidx/media/issues/1358">#1358</a>).</li>
-   <li>Fix bug where playback moved to <code translate="no" dir="ltr">STATE_ENDED</code> when re-preparing a multi-period DASH live stream after the original period was already removed from the manifest.</li>
-   <li>Rename <code translate="no" dir="ltr">onTimelineRefreshed</code> to <code translate="no" dir="ltr">onSourcePrepared</code> and <code translate="no" dir="ltr">onPrepared</code> to <code translate="no" dir="ltr">onTracksSelected</code> in <code translate="no" dir="ltr">PreloadMediaSource.PreloadControl</code>. Also rename the IntDefs in <code translate="no" dir="ltr">DefaultPreloadManager.Stage</code> accordingly.</li>
-   <li>Add experimental support for dynamic scheduling to better align work with CPU wake-cycles and delay waking up to when renderers can progress. You can enable this using <code translate="no" dir="ltr">experimentalSetDynamicSchedulingEnabled</code> when setting up your ExoPlayer instance.</li>
-   <li>Add <code translate="no" dir="ltr">Renderer.getDurationToProgressMs</code>. A <code translate="no" dir="ltr">Renderer</code> can implement this method to return to ExoPlayer the duration that playback must advance for the renderer to progress. If <code translate="no" dir="ltr">ExoPlayer</code> is set with <code translate="no" dir="ltr">experimentalSetDynamicSchedulingEnabled</code> then <code translate="no" dir="ltr">ExoPlayer</code> will call this method when calculating the time to schedule its work task.</li>
-   <li>Add <code translate="no" dir="ltr">MediaCodecAdapter#OnBufferAvailableListener</code> to alert when input and output buffers are available for use by <code translate="no" dir="ltr">MediaCodecRenderer</code>. <code translate="no" dir="ltr">MediaCodecRenderer</code> will signal <code translate="no" dir="ltr">ExoPlayer</code> when receiving these callbacks and if <code translate="no" dir="ltr">ExoPlayer</code> is set with <code translate="no" dir="ltr">experimentalSetDynamicSchedulingEnabled</code>, then <code translate="no" dir="ltr">ExoPlayer</code> will schedule its work loop as renderers can make progress.</li>
-   <li>Use data class for <code translate="no" dir="ltr">LoadControl</code> methods instead of individual parameters.</li>
-  </ul></li>
- <li>Transformer: 
-  <ul>
-   <li>Work around a decoder bug where the number of audio channels was capped at stereo when handling PCM input.</li>
-   <li>When selecting tracks in <code translate="no" dir="ltr">ExoPlayerAssetLoader</code>, ignore audio channel count constraints as they only apply for playback.</li>
-   <li>Replace <code translate="no" dir="ltr">androidx.media3.transformer.Muxer</code> interface with <code translate="no" dir="ltr">androidx.media3.muxer.Muxer</code> and remove <code translate="no" dir="ltr">androidx.media3.transformer.Muxer</code>.</li>
-   <li>Fix HEIC image loading from content URI schemes. (<a href="https://github.com/androidx/media/issues/1373">#1373</a>).</li>
-   <li>Adjust audio track duration in <code translate="no" dir="ltr">AudioGraphInput</code> to improve AV sync.</li>
-  </ul></li>
- <li>Extractors: 
-  <ul>
-   <li>MPEG-TS: Roll forward the change ensuring the last frame is rendered by passing the last access unit of a stream to the sample queue (<a href="https://github.com/google/ExoPlayer/issues/7909">#7909</a>). Incorporating fixes to resolve the issues that emerged in I-frame only HLS streams(<a href="https://github.com/androidx/media/issues/1150">#1150</a>) and H.262 HLS streams (<a href="https://github.com/androidx/media/issues/1126">#1126</a>).</li>
-   <li>MP3: Prefer the data size from an <code translate="no" dir="ltr">Info</code> frame over the size reported by the underlying stream (e.g. file size, or HTTP <code translate="no" dir="ltr">Content-Length</code> header). This helps to exclude non-playable trailer data (e.g. album artwork) from constant bitrate seeking calculations, making seeks more accurate (<a href="https://github.com/androidx/media/issues/1376">#1376</a>).</li>
-   <li>MP3: Use the frame count and other data in an <code translate="no" dir="ltr">Info</code> frame (if present) to compute an average bitrate for constant bitrate seeking, rather than extrapolating from the bitrate of the frame after the <code translate="no" dir="ltr">Info</code> frame, which may be artificially small, e.g. <code translate="no" dir="ltr">PCUT</code> frame (<a href="https://github.com/androidx/media/issues/1376">#1376</a>).</li>
-  </ul></li>
- <li>Audio: 
-  <ul>
-   <li>Fix DTS:X Profile 2 encoding attributes for passthrough playback (<a href="https://github.com/androidx/media/pull/1299">#1299</a>).</li>
-   <li>For offloaded playback, reset the tracking field for stream completion in <code translate="no" dir="ltr">DefaultAudioSink</code> prior to calling <code translate="no" dir="ltr">AudioTrack.stop()</code> so that <code translate="no" dir="ltr">AudioTrack.StreamEventCallback#onPresentationEnded</code> correctly identifies when all pending data has been played.</li>
-   <li>Fix bug in <code translate="no" dir="ltr">SilenceSkippingAudioProcessor</code> where transitions between different audio formats (for example stereo to mono) can cause the processor to throw an exception (<a href="https://github.com/androidx/media/issues/1352">#1352</a>).</li>
-   <li>Implement <code translate="no" dir="ltr">MediaCodecAudioRenderer.getDurationToProgressUs</code> so that ExoPlayer will dynamically schedule its main work loop to when the MediaCodecAudioRenderer can make progress.</li>
-  </ul></li>
- <li>Video: 
-  <ul>
-   <li>Fix decoder fallback logic for Dolby Vision to use a compatible AV1 decoder if needed (<a href="https://github.com/androidx/media/pull/1389">#1389</a>).</li>
-  </ul></li>
- <li>Text: 
-  <ul>
-   <li>Fix issue where subtitles starting before a seek position are skipped. This issue was only introduced in Media3 1.4.0-alpha01.</li>
-   <li>Change default subtitle parsing behavior so it happens during extraction instead of during rendering (see <a href="https://developer.android.com/media/media3/exoplayer/glossary#exoplayer">ExoPlayer's architecture diagram</a> for the difference between extraction and rendering). 
-    <ul>
-     <li>This change can be overridden by calling <strong>both</strong><code translate="no" dir="ltr">MediaSource.Factory.experimentalParseSubtitlesDuringExtraction(false)</code> and <code translate="no" dir="ltr">TextRenderer.experimentalSetLegacyDecodingEnabled(true)</code>. See the <a href="https://developer.android.com/media/media3/exoplayer/customization">docs on customization</a> for how to plumb these components into an <code translate="no" dir="ltr">ExoPlayer</code> instance. These methods (and all support for legacy subtitle decoding) will be removed in a future release.</li>
-     <li>Apps with custom <code translate="no" dir="ltr">SubtitleDecoder</code> implementations need to update them to implement <code translate="no" dir="ltr">SubtitleParser</code> instead (and <code translate="no" dir="ltr">SubtitleParser.Factory</code> instead of <code translate="no" dir="ltr">SubtitleDecoderFactory</code>).</li>
-    </ul></li>
-   <li>PGS: Fix run-length decoding to resolve <code translate="no" dir="ltr">0</code> as a color index, instead of a literal color value (<a href="https://github.com/androidx/media/pull/1367">#1367</a>).</li>
-   <li>CEA-708: Ignore <code translate="no" dir="ltr">rowLock</code> value. The CEA-708-E S-2023 spec states that <code translate="no" dir="ltr">rowLock</code> and <code translate="no" dir="ltr">columnLock</code> should both be assumed to be true, regardless of the values present in the stream (<code translate="no" dir="ltr">columnLock</code> support is not implemented, so it's effectively assumed to always be false). 
-    <ul>
-     <li>This was originally included in the <code translate="no" dir="ltr">1.3.0-alpha01</code> release notes, but the change was accidentally reverted before the <code translate="no" dir="ltr">1.3.0-rc01</code> release. This is now fixed, so the change is present again.</li>
-    </ul></li>
-   <li>CEA-708: Avoid duplicate newlines being added by ExoPlayer's naive handling of the 'set pen location' command (<a href="https://github.com/androidx/media/pull/1315">#1315</a>).</li>
-  </ul></li>
- <li>Metadata: 
-  <ul>
-   <li>Fix mapping of MP4 to ID3 sort tags. Previously the 'album sort' (<code translate="no" dir="ltr">soal</code>), 'artist sort' (<code translate="no" dir="ltr">soar</code>) and 'album artist sort' (<code translate="no" dir="ltr">soaa</code>) MP4 tags were wrongly mapped to the <code translate="no" dir="ltr">TSO2</code>, <code translate="no" dir="ltr">TSOA</code> and <code translate="no" dir="ltr">TSOP</code> ID3 tags (<a href="https://github.com/androidx/media/issues/1302">#1302</a>).</li>
-   <li>Fix reading of MP4 (/iTunes) numeric <code translate="no" dir="ltr">gnre</code> (genre) and <code translate="no" dir="ltr">tmpo</code> (tempo) tags when the value is more than one byte long.</li>
-   <li>Propagate ID3 <code translate="no" dir="ltr">TCON</code> frame to <code translate="no" dir="ltr">MediaMetadata.genre</code> (<a href="https://github.com/androidx/media/issues/1305">#1305</a>).</li>
-  </ul></li>
- <li>Image: 
-  <ul>
-   <li>Add support for non-square DASH thumbnail grids (<a href="https://github.com/androidx/media/pull/1300">#1300</a>).</li>
-   <li>Add support for AVIF for API 34+.</li>
-  </ul></li>
- <li>DataSource: 
-  <ul>
-   <li>Allow <code translate="no" dir="ltr">ByteArrayDataSource</code> to resolve a URI to a byte array during <code translate="no" dir="ltr">open()</code>, instead of being hard-coded at construction (<a href="https://github.com/androidx/media/issues/1405">#1405</a>).</li>
-  </ul></li>
- <li>DRM: 
-  <ul>
-   <li>Allow setting a <code translate="no" dir="ltr">LoadErrorHandlingPolicy</code> on <code translate="no" dir="ltr">DefaultDrmSessionManagerProvider</code> (<a href="https://github.com/androidx/media/issues/1271">#1271</a>).</li>
-  </ul></li>
- <li>Effect: 
-  <ul>
-   <li>Fix bug where <code translate="no" dir="ltr">TimestampWrapper</code> crashes when used with <code translate="no" dir="ltr">ExoPlayer#setVideoEffects</code> (<a href="https://github.com/androidx/media/issues/821">#821</a>).</li>
-   <li>Change default SDR color working space from linear colors to electrical BT 709 SDR video. Also provide third option to retain the original colorspace.</li>
-   <li>Allow defining indeterminate z-order of EditedMediaItemSequences (<a href="https://github.com/androidx/media/pull/1055">#1055</a>).</li>
-   <li>Maintain a consistent luminance range across different pieces of HDR content (uses the HLG range).</li>
-   <li>Add support for Ultra HDR (bitmap) overlays on HDR content.</li>
-   <li>Allow <code translate="no" dir="ltr">SeparableConvolution</code> effects to be used before API 26.</li>
-  </ul></li>
- <li>IMA extension: 
-  <ul>
-   <li>Promote API that is required for apps to play <a href="https://developers.google.com/ad-manager/dynamic-ad-insertion/full-service">DAI ad streams</a> to stable.</li>
-   <li>Add <code translate="no" dir="ltr">replaceAdTagParameters(Map &lt;String, String&gt;)</code> to <code translate="no" dir="ltr">ImaServerSideAdInsertionMediaSource.AdLoader</code> that allows replacing ad tag parameters at runtime.</li>
-   <li>Fix bug where <code translate="no" dir="ltr">VideoAdPlayer.VideoAdPlayerCallback.onError</code> was not called when a player error happened during ad playback (<a href="https://github.com/androidx/media/issues/1334">#1334</a>).</li>
-   <li>Bump IMA SDK version to 3.33.0 to fix a <code translate="no" dir="ltr">NullPointerException</code> when using <code translate="no" dir="ltr">data://</code> ad tag URIs (<a href="https://github.com/androidx/media/issues/700">#700</a>).</li>
-  </ul></li>
- <li>Session: 
-  <ul>
-   <li>Hide seekbar in the media notification for live streams by not setting the duration into the platform session metadata (<a href="https://github.com/androidx/media/issues/1256">#1256</a>).</li>
-   <li>Align conversion of <code translate="no" dir="ltr">MediaMetadata</code> to <code translate="no" dir="ltr">MediaDescriptionCompat</code>, to use the same preferred order and logic when selecting metadata properties as in media1.</li>
-   <li>Add <code translate="no" dir="ltr">MediaSession.sendError()</code> that allows sending non-fatal errors to Media3 controller. When using the notification controller (see <code translate="no" dir="ltr">MediaSession.getMediaNotificationControllerInfo()</code>), the custom error is used to update the <code translate="no" dir="ltr">PlaybackState</code> of the platform session to an error state with the given error information (<a href="https://github.com/androidx/media/issues/543">#543</a>).</li>
-  </ul></li>
- <li>Cronet Extension: 
-  <ul>
-   <li>Fix <code translate="no" dir="ltr">SocketTimeoutException</code> in <code translate="no" dir="ltr">CronetDataSource</code>. In some versions of Cronet, the request provided by the callback is not always the same. This leads to callback not completing and request timing out (https://issuetracker.google.com/328442628).</li>
-  </ul></li>
- <li>HLS Extension: 
-  <ul>
-   <li>Fix bug where pending EMSG samples waiting for a discontinuity were delegated in <code translate="no" dir="ltr">HlsSampleStreamWrapper</code> with an incorrect offset causing an <code translate="no" dir="ltr">IndexOutOfBoundsException</code> or an <code translate="no" dir="ltr">IllegalArgumentException</code> (<a href="https://github.com/androidx/media/issues/1002">#1002</a>).</li>
-   <li>Fix bug where non-primary playlists keep reloading for LL-HLS streams (<a href="https://github.com/androidx/media/issues/1240">#1240</a>).</li>
-   <li>Fix bug where enabling CMCD for HLS with initialization segments resulted in <code translate="no" dir="ltr">Source Error</code> and <code translate="no" dir="ltr">IllegalArgumentException</code>.</li>
-  </ul></li>
- <li>DASH Extension: 
-  <ul>
-   <li>Fix bug where re-preparing a multi-period live stream can throw an <code translate="no" dir="ltr">IndexOutOfBoundsException</code> (<a href="https://github.com/androidx/media/issues/1329">#1329</a>).</li>
-   <li>Add support for <code translate="no" dir="ltr">dashif:Laurl</code> license urls (<a href="https://github.com/androidx/media/issues/1345">#1345</a>).</li>
-  </ul></li>
- <li>Cast Extension: 
-  <ul>
-   <li>Fix bug that converted the album title of the <code translate="no" dir="ltr">MediaQueueItem</code> to the artist in the Media3 media item (<a href="https://github.com/androidx/media/pull/1255">#1255</a>).</li>
-  </ul></li>
- <li>Demo app: 
-  <ul>
-   <li>Allow setting repeat mode with <code translate="no" dir="ltr">Intent</code> arguments from command line (<a href="https://github.com/androidx/media/pull/1266">#1266</a>).</li>
-  </ul></li>
- <li>Remove deprecated symbols: 
-  <ul>
-   <li>Remove <code translate="no" dir="ltr">setContentTypePredicate(Predicate)</code> method from <code translate="no" dir="ltr">DefaultHttpDataSource</code>, <code translate="no" dir="ltr">OkHttpDataSource</code> and <code translate="no" dir="ltr">CronetDataSource</code>. Use the equivalent method on each <code translate="no" dir="ltr">XXXDataSource.Factory</code> instead.</li>
-   <li>Remove <code translate="no" dir="ltr">OkHttpDataSource</code> constructors and <code translate="no" dir="ltr">OkHttpDataSourceFactory</code>. Use <code translate="no" dir="ltr">OkHttpDataSource.Factory</code> instead.</li>
-   <li>Remove <code translate="no" dir="ltr">PlayerMessage.setHandler(Handler)</code>. Use <code translate="no" dir="ltr">setLooper(Looper)</code> instead.</li>
-   <li>Remove <code translate="no" dir="ltr">Timeline.Window.isLive</code> field. Use the <code translate="no" dir="ltr">isLive()</code> method instead.</li>
-   <li>Remove <code translate="no" dir="ltr">DefaultHttpDataSource</code> constructors. Use <code translate="no" dir="ltr">DefaultHttpDataSource.Factory</code> instead.</li>
-   <li>Remove <code translate="no" dir="ltr">DashMediaSource.DEFAULT_LIVE_PRESENTATION_DELAY_MS</code>. Use <code translate="no" dir="ltr">DashMediaSource.DEFAULT_FALLBACK_TARGET_LIVE_OFFSET_MS</code> instead.</li>
-   <li>Remove <code translate="no" dir="ltr">MediaCodecInfo.isSeamlessAdaptationSupported(Format, Format, boolean)</code>. Use <code translate="no" dir="ltr">MediaCodecInfo.canReuseCodec(Format, Format)</code> instead.</li>
-   <li>Remove <code translate="no" dir="ltr">DrmSessionManager.DUMMY</code> and <code translate="no" dir="ltr">getDummyDrmSessionManager()</code> method. Use <code translate="no" dir="ltr">DrmSessionManager.DRM_UNSUPPORTED</code> instead.</li>
-   <li>Remove <code translate="no" dir="ltr">AnalyticsListener.onAudioInputFormatChanged(EventTime, Format)</code>, <code translate="no" dir="ltr">AnalyticsListener.onVideoInputFormatChanged(EventTime, Format)</code>, <code translate="no" dir="ltr">AudioRendererEventListener.onAudioInputFormatChanged(Format)</code>, <code translate="no" dir="ltr">VideoRendererEventListener.onVideoInputFormatChanged(Format)</code>. Use the overloads that take a <code translate="no" dir="ltr">DecoderReuseEvaluation</code> instead.</li>
-   <li>Remove <code translate="no" dir="ltr">RendererSupport.FormatSupport</code> IntDef and <code translate="no" dir="ltr">FORMAT_HANDLED</code>, <code translate="no" dir="ltr">FORMAT_EXCEEDS_CAPABILITIES</code>, <code translate="no" dir="ltr">FORMAT_UNSUPPORTED_DRM</code>, <code translate="no" dir="ltr">FORMAT_UNSUPPORTED_SUBTYPE</code>, <code translate="no" dir="ltr">FORMAT_UNSUPPORTED_TYPE</code> constants. Use the equivalent IntDef and constants in <code translate="no" dir="ltr">androidx.media3.common.C</code> instead (e.g. <code translate="no" dir="ltr">C.FORMAT_HANDLED</code>).</li>
-  </ul></li>
+ <li>Fixes <code translate="no" dir="ltr">StackSampling</code> to respect <code translate="no" dir="ltr">androidx.benchmark.profiling.sampleDurationSeconds</code> (<a href="https://android-review.googlesource.com/#/q/Ib1d5318442eb4bb586d6d5c06ce57bb929e1d996">Ib1d53</a>)</li>
+ <li>Change macro-&gt;common dependency to be <code translate="no" dir="ltr">api()</code>, so it's easier to use e.g. <code translate="no" dir="ltr">PerfettoTrace</code> and <code translate="no" dir="ltr">PerfettoConfig</code>. (<a href="https://android-review.googlesource.com/#/q/Icdae394628d71131e556c6a02840c6c894f82957">Icdae3</a>, <a href="https://issuetracker.google.com/issues/341851833">b/341851833</a>)</li>
+ <li>Ensure <code translate="no" dir="ltr">mergeArtProfile</code> and <code translate="no" dir="ltr">mergeStartupProfile</code> tasks always wait for baseline profile generation. (<a href="https://android-review.git.corp.google.com/q/I623d65b8fedc7abb1d22fb2ca016582703f51176">I623d6</a>, <a href="https://issuetracker.google.com/issues/343086054">b/343086054</a>)</li>
+ <li>Consider variant enable state when deciding whether variant should be enabled. (<a href="https://android-review.git.corp.google.com/q/I5d19e3040d28243857fab9b9a679057d6ad46c1b">I5d19e</a>, <a href="https://issuetracker.google.com/issues/343249144">b/343249144</a>)</li>
+ <li>Increased default start timeout for perfetto trace processor. (<a href="https://android-review.git.corp.google.com/q/I87e8c9ec3472db0aafb908b590a9a91f6e9e5ed8">I87e8c</a>, <a href="https://issuetracker.google.com/issues/329145808">b/329145808</a>)</li>
+</ul>
+
+<h2>CameraX: v1.3.4</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.camera:camera-*:1.3.4</code> is released. Version 1.3.4 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/1fb89fe455e3527cadfdca47bfb353829dba6be4..fc680027273b2ecace66751e7a2f4f97b0ef2430/camera">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed the issue where <code translate="no" dir="ltr">getZoomRatio</code> incorrectly returned a decreased value when applying an increasing zoom ratio. (<a href="https://android-review.googlesource.com/#/q/I4aa0df75c6b6382e1e3f4b7905459acdbc6b4d3c">I4aa0d</a>, <a href="https://issuetracker.google.com/issues/317543616">b/317543616</a>)</li>
+ <li>Fixed still capture/tap-to-focus not using the repeating request FPS/stabilization mode values which may re-create capture session and cause latency issues or Preview freeze in some devices. (<a href="https://android-review.googlesource.com/#/q/I7dc0b1de12c35acbf08a078973a42512ef1f2b45">I7dc0b</a>)</li>
+ <li>Fixed the issue that the frame rate is set to a lower value when calling <code translate="no" dir="ltr">setTargetFrameRate</code> with <code translate="no" dir="ltr">FRAME_RATE_RANGE_UNSPECIFIED</code>. (<a href="https://android-review.git.corp.google.com/#/q/I78c617b40e383d48b117e6ea7d8849847ce906d9">I78c61</a>)</li>
+</ul>
+
+<h2>Camera: v1.4.0-beta02</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.camera:camera-*:1.4.0-beta02</code> is released. Version 1.4.0-beta02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c7d2a9b0f7f27c85a187b05044b5fb8f1281a191..97ce0972adadb34722870dfe4d0a6bb0540d13e7/camera">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Similar to <code translate="no" dir="ltr">VideoCapture</code>, add <code translate="no" dir="ltr">setMirrorMode</code> for Preview use case. It will support mirror mode ON and OFF for Preview stream via <code translate="no" dir="ltr">OutputConfiguration.setMirrorMode</code> from API 33 and above, for older APIs, it will be no-op. (<a href="https://android-review.googlesource.com/#/q/I821f466c4d5851468d02748483a68268e13023e6">I821f4</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed the issue that apps can't take pictures successfully on Samsung Tab A8 when <code translate="no" dir="ltr">ImageCapture</code> selects 1920x1080 under <code translate="no" dir="ltr">Preview</code> + <code translate="no" dir="ltr">VideoCapture</code> + <code translate="no" dir="ltr">ImageCapture</code> <code translate="no" dir="ltr">UseCase</code> combination. (<a href="https://android-review.googlesource.com/#/q/I5a463a7d42f5adda71c5ce34e934b93fa9969764">I5a463</a>, <a href="https://issuetracker.google.com/issues/336925549">b/336925549</a>)</li>
+ <li>Fixed persistent recording may fail to continue recording after switching camera. (<a href="https://android-review.googlesource.com/#/q/Icb0a12559d0f7e6b144ea3f2f498de95ca2d95eb">Icb0a1</a>)</li>
+</ul>
+
+<h2>Camera Viewfinder: v1.4.0-alpha07</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.camera:camera-viewfinder:1.4.0-alpha07</code> and <code translate="no" dir="ltr">androidx.camera:camera-viewfinder-core:1.4.0-alpha07</code> are released. Version 1.4.0-alpha07 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c7d2a9b0f7f27c85a187b05044b5fb8f1281a191..97ce0972adadb34722870dfe4d0a6bb0540d13e7/camera">these commits</a>.</p>
+
+<h2>Camera Viewfinder Compose: v1.0.0-alpha02</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.camera:camera-viewfinder-compose:1.0.0-alpha02</code> is released. Version 1.0.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c7d2a9b0f7f27c85a187b05044b5fb8f1281a191..97ce0972adadb34722870dfe4d0a6bb0540d13e7/camera/camera-viewfinder-compose">these commits</a>.</p>
+
+<h2>Compose Animation: v1.7.0-beta03</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.7.0-beta03</code> is released. Version 1.7.0-beta03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/1a123f646cfea1599f9efead6da546b0c26063fa..c29f7383c14ede0af9cb64be9f3eee63714bc73c/compose/animation">these commits</a>.</p>
+
+<h2>Compose Animation: v1.6.8</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.6.8</code> is released. Version 1.6.8 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/9a13a0e3b1197d66bfc19b9051576bc705f2c337..9dbbab668fd22cd643de4651197354a828aaa7b9/compose/animation">these commits</a>.</p>
+
+<h2>Compose Foundation: v1.7.0-beta03</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.7.0-beta03</code> is released. Version 1.7.0-beta03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/1a123f646cfea1599f9efead6da546b0c26063fa..c29f7383c14ede0af9cb64be9f3eee63714bc73c/compose/foundation">these commits</a>.</p>
+
+<h2>Compose Foundation: v1.6.8</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.6.8</code> is released. Version 1.6.8 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/9a13a0e3b1197d66bfc19b9051576bc705f2c337..9dbbab668fd22cd643de4651197354a828aaa7b9/compose/foundation">these commits</a>.</p>
+
+<h2>Compose Material: v1.7.0-beta03</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.7.0-beta03</code> is released. Version 1.7.0-beta03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/1a123f646cfea1599f9efead6da546b0c26063fa..3bb7e8ef41a5a1cec16efda4248c7865d2da51c4/compose/material">these commits</a>.</p>
+
+<h2>Compose Material: v1.6.8</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.6.8</code> is released. Version 1.6.8 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/9a13a0e3b1197d66bfc19b9051576bc705f2c337..9dbbab668fd22cd643de4651197354a828aaa7b9/compose/material">these commits</a>.</p>
+
+<h2>Compose Material3: v1.3.0-beta03</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.material3:material3-*:1.3.0-beta03</code> is released. Version 1.3.0-beta03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/473554f275109d78164adca6b6cea539aed8b68b..f5541f29d045c6ba9734689ec67891f8d667412b/compose/material3">these commits</a>.</p>
+<p><strong>External Contribution</strong></p>
+<ul>
+ <li>Make <code translate="no" dir="ltr">androidx.compose.material3.DropdownMenu</code> available from common source set. (<a href="https://android-review.googlesource.com/#/q/If62c08a313c09acf91de71950c9405e3e5968f89">If62c0</a>)</li>
+</ul>
+
+<h2>Compose Material3 Adaptive: v1.0.0-beta03</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.material3.adaptive:adaptive-*:1.0.0-beta03</code> is released. Version 1.0.0-beta03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/473554f275109d78164adca6b6cea539aed8b68b..f5541f29d045c6ba9734689ec67891f8d667412b/compose/material3/adaptive">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixes crashes caused by incorrect dependency resolution in beta02.</li>
+</ul>
+
+<h2>Compose Runtime: v1.7.0-beta03</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.7.0-beta03</code> is released. Version 1.7.0-beta03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/1a123f646cfea1599f9efead6da546b0c26063fa..c29f7383c14ede0af9cb64be9f3eee63714bc73c/compose/runtime">these commits</a>.</p>
+
+<h2>Compose Runtime: v1.6.8</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.6.8</code> is released. Version 1.6.8 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/9a13a0e3b1197d66bfc19b9051576bc705f2c337..9dbbab668fd22cd643de4651197354a828aaa7b9/compose/runtime">these commits</a>.</p>
+
+<h2>Compose UI: v1.7.0-beta03</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.7.0-beta03</code> is released. Version 1.7.0-beta03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/1a123f646cfea1599f9efead6da546b0c26063fa..c29f7383c14ede0af9cb64be9f3eee63714bc73c/compose/ui">these commits</a>.</p>
+
+<h2>Compose UI: v1.6.8</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.6.8</code> is released. Version 1.6.8 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/9a13a0e3b1197d66bfc19b9051576bc705f2c337..9dbbab668fd22cd643de4651197354a828aaa7b9/compose/ui">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed inconsistencies in font scaling when the font scale is less than the lowest defined table. In this case, we now interpolate between the linear 1x scale and the lowest defined table, so that the font size is monotonically increasing as scales increase. (<a href="https://android-review.googlesource.com/#/q/Icbae34e19e771ec2f55e74badcca3b4c90d55d25">Icbae3</a>)</li>
+</ul>
+
+<h2>Concurrent: v1.2.0</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.concurrent:concurrent-futures:1.2.0</code> and <code translate="no" dir="ltr">androidx.concurrent:concurrent-futures-ktx:1.2.0</code> are released. Version 1.2.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/981a26f286d763f3ebe90ef825c12873ae8fd171..f3f60b391b39a0d5c6bbb3bb9f83f227a0c8a72b/concurrent">these commits</a>.</p>
+<p><strong>Important changes since 1.1.0</strong></p>
+<ul>
+ <li>Added <a href="/reference/kotlin/androidx/concurrent/futures/SuspendToFutureAdapter"><code translate="no" dir="ltr">SuspendToFutureAdapter</code></a> for translating a call to a suspending API into a <code translate="no" dir="ltr">ListenableFuture</code>.</li>
+</ul>
+
+<h2>Core and Core-ktx: v1.15.0-alpha01</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.core:core:1.15.0-alpha01</code>, <code translate="no" dir="ltr">androidx.core:core-ktx:1.15.0-alpha01</code>, and <code translate="no" dir="ltr">androidx.core:core-testing:1.15.0-alpha01</code> are released. This version is developed in an internal branch and is compatible with Android 15 Beta 3 (<code translate="no" dir="ltr">android-35</code>).</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Various updates to compatibility classes for parity with Android 15 SDK.</li>
+</ul>
+
+<h2>Core Remote Views: v1.1.0</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.core:core-remoteviews:1.1.0</code> is released. Version 1.1.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/16fcdbc19dd53423937bad83094a24f4e901e57e..c9ba94cdd70f8dc09ace9bb042e815e7a6f77703/core/core-remoteviews">these commits</a>.</p>
+<p><strong>Important changes since 1.0.0</strong></p>
+<ul>
+ <li>Core <code translate="no" dir="ltr">RemoteViews</code> moves to 1.1.0 stable.</li>
+</ul>
+
+<h2>Core-i18n Core-location-altitude: v1.0.0-alpha02</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.core:core-location-altitude:1.0.0-alpha02</code>, <code translate="no" dir="ltr">androidx.core:core-location-altitude-external-protobuf:1.0.0-alpha02</code>, and <code translate="no" dir="ltr">androidx.core:core-location-altitude-proto:1.0.0-alpha02</code> are released. Version 1.0.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f5541f29d045c6ba9734689ec67891f8d667412b/core">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixes proguard failure caused by the repackaging of proto libraries.</li>
+</ul>
+<p><strong>External Contribution</strong></p>
+<ul>
+ <li>Bug fix above provided by andrekir@pm.me</li>
+</ul>
+
+<h2>credentials: v1.5.0-alpha02</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.credentials:credentials:1.5.0-alpha02</code> and <code translate="no" dir="ltr">androidx.credentials:credentials-play-services-auth:1.5.0-alpha02</code> are released. This version is developed in an internal branch.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>The ability for <code translate="no" dir="ltr">CredentialManager</code> to directly imbue a <code translate="no" dir="ltr">BiometricPrompt</code> within the credential creation and retrieval flows is now available for use through Jetpack for providers.</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Added the <code translate="no" dir="ltr">BiometricPromptData</code> to the API surface to allow utilizing the new imbued <code translate="no" dir="ltr">BiometricPrompt</code> flow through <code translate="no" dir="ltr">CredentialManager</code> (<a href="https://googleplex-android-review.git.corp.google.com/q/I3b1595a588645d3628fb3051660a2f628a1c6f0a">I3b159</a>)</li>
+ <li>Modified all entry classes and subclasses across <code translate="no" dir="ltr">CreateEntry</code> and <code translate="no" dir="ltr">CredentialEntry</code> to gain the utility of the <code translate="no" dir="ltr">BiometricPromptData</code> for Providers. (<a href="https://googleplex-android-review.git.corp.google.com/q/I16936d64cf2fbba47294a112173aebe25d3ccdb9">I16936</a>, <a href="https://googleplex-android-review.git.corp.google.com/q/I8e5bc104b7337850ca6c49064502044d29c1308b">I8e5bc</a>)</li>
+ <li>Added the types needed to encode the error and results from the imbued <code translate="no" dir="ltr">BiometricPrompt</code> flows with <code translate="no" dir="ltr">CredentialManager</code>. (<a href="https://googleplex-android-review.git.corp.google.com/q/I8e5bc104b7337850ca6c49064502044d29c1308b">I8e5bc</a>)</li>
+</ul>
+
+<h2>credentials: v1.3.0-beta02</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.credentials:credentials:1.3.0-beta02</code> and <code translate="no" dir="ltr">androidx.credentials:credentials-play-services-auth:1.3.0-beta02</code> are released. Version 1.3.0-beta02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/473554f275109d78164adca6b6cea539aed8b68b..f5541f29d045c6ba9734689ec67891f8d667412b/credentials">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed logic to correctly check for <code translate="no" dir="ltr">NOT_ALLOWED_ERR</code> instead of <code translate="no" dir="ltr">CONSTRAINT_ERR</code> in public key credential flows that contain an error on pre-U devices (<a href="https://android-review.git.corp.google.com/q/I31b3798bf9eabe17c927fe25dd01dd82816edd09">I31b37</a>)</li>
+</ul>
+
+<h2>Fragment: v1.8.0</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.fragment:fragment-*:1.8.0</code> is released. Version 1.8.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/b9b27a2972eeb4612cbea0f230f514ffb142a5ee..4cb33e7274271da73c61e9231b4d372300cecec4/fragment">these commits</a>.</p>
+<p><strong>Important changes since 1.7.0</strong></p>
+<ul>
+ <li>The <code translate="no" dir="ltr">fragment-compose</code> artifact now contains an <code translate="no" dir="ltr">AndroidFragment</code> <code translate="no" dir="ltr">Composable</code> that allows adding fragments into the Compose hierarchy via the fragment class name. It automatically handles the saving and restoring of the Fragment’s state. This should be used as a direct replacement for the previously recommended approach of using <code translate="no" dir="ltr">AndroidViewBinding</code> to inflate a Fragment.</li>
+ <li>The <code translate="no" dir="ltr">onBackStackChangeCancelled</code> callback on the <code translate="no" dir="ltr">FragmentManager</code>’s <code translate="no" dir="ltr">OnBackStackChangedListener</code> interface now fires as part of executing operations in <code translate="no" dir="ltr">FragmentManager</code>, moving it closer in line with the timing of the <code translate="no" dir="ltr">onBackStackChangeCommitted</code> callback.</li>
+</ul>
+
+<h2>Games-Controller: v2.0.2</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.games:games-controller:2.0.2</code> is released. Version 2.0.2 contains <a href="https://android.googlesource.com/platform/frameworks/opt/gamesdk/+log/f1ebe620d10210d1ec538e250b6066c487a7f42b..b832f08a5a2c2785f393ae99ad9af81922c2a337/games-controller">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed issue where controller connected callbacks were not firing for controllers already connected before <code translate="no" dir="ltr">Paddleboat_init</code>.</li>
+ <li>Fixed issue where game controller touchpads were not registering touchpad presses in <code translate="no" dir="ltr">Paddleboat_processGameActivityMotionInputEvent</code> without manually enabling the pressure axis.</li>
+ <li>Fixed issue where game controller touchpad events were not being marked as consumed by <code translate="no" dir="ltr">Paddleboat_processGameActivityMotionInputEvent</code>.</li>
+</ul>
+
+<h2>Glance: v1.1.0</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.glance:glance-*:1.1.0</code> is released. Version 1.1.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/9bf02c72eae9ac630e994275470e66a612bcef56..c19aed31b001308c51b4f54c1690e43170516216/glance">these commits</a>.</p>
+<p><strong>Important changes since 1.0.0</strong></p>
+<ul>
+ <li>Moves Glance to 1.1.0 stable.</li>
+</ul>
+
+<h2>Lifecycle: v2.8.2</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.lifecycle:lifecycle-*:2.8.2</code> is released. Version 2.8.2 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/b390c8d82bf426c9fb727016dc2423891ecd1735..86a54e23482b320e083f9a337814c7fe4f78e9a3/lifecycle">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed <code translate="no" dir="ltr">CompositionLocal LocalLifecycleOwner not present</code> errors when using Lifecycle 2.8.X with Compose 1.6.X or earlier - you can now use Lifecycle 2.8.2 with any version of Compose without any workarounds required. (<a href="https://android-review.googlesource.com/3105647">aosp/3105647</a>, <a href="https://issuetracker.google.com/336842920">b/336842920</a>)</li>
+ <li><code translate="no" dir="ltr">ViewModelProvider</code> will no longer crash when mixing previous versions of <code translate="no" dir="ltr">compileOnly</code> Lifecycle dependencies with versions 2.8+, fixing issues with libraries such as LeakCanary. (<a href="https://android-review.googlesource.com/#/q/I803839b1c34bc8c70d6ebeb9ba90c426b340416c">I80383</a>, <a href="https://issuetracker.google.com/issues/341792251">b/341792251</a>)</li>
+</ul>
+
+<h2>Navigation: v2.8.0-beta03</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.navigation:navigation-*:2.8.0-beta03</code> is released. Version 2.8.0-beta03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/473554f275109d78164adca6b6cea539aed8b68b..9de5bf61f1fad1fd6da2b64fe350d3aa39dc5de1/navigation">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">CollectionNavType</code> has a new abstract <code translate="no" dir="ltr">emptyCollection()</code> method. Override this to handle an empty collection passed in as an argument. (<a href="https://android-review.googlesource.com/#/q/Ie4d8464050a7164176c2aee55518b03a5db704ad">Ie4d84</a>, <a href="https://issuetracker.google.com/issues/341723133">b/341723133</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Added documentation on <code translate="no" dir="ltr">NavType.serializeAsValue</code> and <code translate="no" dir="ltr">serializeAsValues</code> to highlight that the final outputs should be Uri encoded. (<a href="https://android-review.googlesource.com/#/q/Ida6bd848fb1e3d8e26277eff0f214e1d40907063">Ida6bd</a>, <a href="https://issuetracker.google.com/issues/344943214">b/344943214</a>)</li>
+ <li>Fixed crash when calling <code translate="no" dir="ltr">toRoute&lt;T&gt;</code> with a null <code translate="no" dir="ltr">CollectionNavType</code> argument. When navigating with a null <code translate="no" dir="ltr">CollectionNavType</code>, the output argument will be the default value declared on your Serializable class, or the return value of <code translate="no" dir="ltr">emptyCollection()</code> if there is no default value. (<a href="https://android-review.googlesource.com/#/q/I84158320503bc04052de8f80022f83d86e23cc15">I84158</a>, <a href="https://android-review.googlesource.com/#/q/Id630fb148782fbb34d3c236f5d8bb363fba7ef91">Id630f</a>, <a href="https://issuetracker.google.com/issues/342672856">b/342672856</a>)</li>
+</ul>
+
+<h2>Room: v2.7.0-alpha04</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.room:room-*:2.7.0-alpha04</code> is released. Version 2.7.0-alpha04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/473554f275109d78164adca6b6cea539aed8b68b..f5541f29d045c6ba9734689ec67891f8d667412b/room">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed an issue in Room’s annotation processor would generate incompatible KMP code when a multi-map return type was defined in a DAO. (<a href="https://issuetracker.google.com/340983093">b/340983093</a>)</li>
+ <li>Fixed an issue where Room would fail to find the generated database implementation if the <code translate="no" dir="ltr">@Database</code> annotated class had no package. (<a href="https://issuetracker.google.com/342097292">b/342097292</a>)</li>
+ <li>Fixed an issue where enabling auto-close and multi-instance invalidation would sometimes cause a <code translate="no" dir="ltr">ConcurrentModificationException</code> when the database was auto-closed due to being idle.</li>
+</ul>
+
+<h2>Security-State: v1.0.0-alpha01</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.security:security-state:1.0.0-alpha01</code> is released. Version 1.0.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f5541f29d045c6ba9734689ec67891f8d667412b/security/security-state">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Security State is a new library developers can use to get actionable data about versions of updateable system components, security updates and applied fixes.</li>
+</ul>
+
+<h2>Sqlite: v2.5.0-alpha04</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.sqlite:sqlite-*:2.5.0-alpha04</code> is released. Version 2.5.0-alpha04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/473554f275109d78164adca6b6cea539aed8b68b..f5541f29d045c6ba9734689ec67891f8d667412b/sqlite">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Added an <code translate="no" dir="ltr">open()</code> overload API to <code translate="no" dir="ltr">BundledSQLiteDriver</code> to pass open flags when opening a database connection. Useful for opening a database in read-only mode or using the serialized thread safe mode instead of the multi-thread mode bundled SQLite is compiled with (<a href="https://issuetracker.google.com/issues/340949940">b/340949940</a>).</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed a linking issue in the Bundled SQLite Driver that would cause <code translate="no" dir="ltr">UnsatisfiedLinkError</code> to be thrown due to missing atomic symbols in Android devices with an ARM32. (<a href="https://issuetracker.google.com/341639198">b/341639198</a>)</li>
+ <li>Fixed an issue in the drivers where binding a zero-length byte array into a column would lead to a null value when reading from it.</li>
+</ul>
+
+<h2>Wear Compose: v1.4.0-beta03</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.wear.compose:compose-*:1.4.0-beta03</code> is released. Version 1.4.0-beta03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/fe555cd2859b125be61b919d63c255741025e9d1..3bb7e8ef41a5a1cec16efda4248c7865d2da51c4/wear/compose">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>We have updated <code translate="no" dir="ltr">Modifier.rotaryScrollable</code> to replace use of ‘focusable’ with ‘focusTarget’ which improves performance. (<a href="https://android-review.googlesource.com/#/q/Id294b8890b0a043537617a218190991026a75c28">Id294b</a>)</li>
+ <li>We have fixed an issue where the <code translate="no" dir="ltr">ProgressIndicator</code> repeated its announcement under <code translate="no" dir="ltr">TalkBack</code>. (<a href="https://android-review.googlesource.com/#/q/I945631b73dfaea897c46cf24ce33d191ebbc6f65">I94563</a>)</li>
+ <li>We have updated the Wear Compose library baseline profiles. (<a href="https://android-review.googlesource.com/#/q/I3cbc391d29d9f1b3962b3644c40a458a059046e2">I3cbc3</a>)</li>
+</ul>
+
+<h2>Webkit: v1.12.0-alpha02</h2>
+<p>June 12, 2024</p>
+<p><code translate="no" dir="ltr">androidx.webkit:webkit:1.12.0-alpha02</code> is released. Version 1.12.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/67004410fdbff19f90caa4cc43965ab21dca1943..f5541f29d045c6ba9734689ec67891f8d667412b/webkit/webkit">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Add a new API to <code translate="no" dir="ltr">WebSettingsCompat</code> to enabled/disable <a href="https://developer.chrome.com/blog/back-forward-cache"><code translate="no" dir="ltr">BackForwardCache</code></a>. This API is experimental and can be changed in the future. (<a href="https://android-review.googlesource.com/#/q/I64a38d91f09a386a1b9e791538d37a730c1a12f6">I64a38</a>)</li>
+ <li>Add a new API to <code translate="no" dir="ltr">WebSettingsCompat</code> to control the Speculative Loading behavior for this WebSettings. Only <a href="https://developer.chrome.com/docs/web-platform/prerender-pages">Prerender</a> is available for now. This API is experimental and can be changed in the future. (<a href="https://android-review.googlesource.com/#/q/I13962fd09f251fb2629c6d19ad1ec016bc38248d">I13962</a>)</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Some methods are now documented with <code translate="no" dir="ltr">@UiThread</code> where appropriate. (<a href="https://android-review.googlesource.com/#/q/I6c7e092a07cd47c4b76f5cffd2628eda3127edd9">I6c7e0</a>), (<a href="https://android-review.googlesource.com/#/q/I44541931ef0aed0a9755de353b098aa96d0c2604">I44541</a>)</li>
+ <li>Thread-safe methods are now documented with <code translate="no" dir="ltr">@AnyThread</code>. (<a href="https://android-review.googlesource.com/#/q/I701894e8da5d8e968430f6a0a6c14c101d1ab474">I70189</a>)</li>
+ <li>Increasing <code translate="no" dir="ltr">minSdkVersion</code> from 19 to 21. (<a href="https://android-review.googlesource.com/#/q/Id7a43dc96264bb58670a90b7de34b9f3a7cc2818">Id7a43</a>)</li>
 </ul>
 </body>
 </html>
