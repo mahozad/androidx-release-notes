@@ -66,231 +66,203 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Core 1.6.0: Core Core-ktx 1.6.0</h2>
-<p>June 24, 2024</p>
-<p><code translate="no" dir="ltr">androidx.test:core:1.6.0</code> and <code translate="no" dir="ltr">androidx.test:core-ktx:1.6.0</code> are released.</p>
-<p>Changes since last stable release 1.5.0 include:</p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Added ApplicationInfoBuilder.setFlags(int)</li>
- <li>Add new lower level screenshot APIs View.captureToBitmap, WindowCapture.captureToBitmap, Bitmap.writeToTestStorage and DeviceCapture.takeScreenshot screenshots.</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Remove unused androidx.test.annotation dependency</li>
- <li>Fix using ActivityScenario#launchActivityForResult with an implicit Intent</li>
- <li>Update Activity Scenario reference documentation to fix missing links</li>
- <li>Remove all support for Android SDKs &lt; 19. Minimum is API 19 (Android Kit Kat 4.4)</li>
- <li>Reference doc cleanup - document previously missing parameters, fix links, etc</li>
- <li>Activity starts are automatically opted in to allow background activity launches when targetSdk &gt;= 34</li>
- <li>Fix issue where Activity#isChangingConfigurations is incorrectly false during ActivityScenario#recreate</li>
-</ul>
+<h2>Activity: v1.10.0-alpha01</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.activity:activity:1.10.0-alpha01</code>, <code translate="no" dir="ltr">androidx.activity:activity-compose:1.10.0-alpha01</code>, and <code translate="no" dir="ltr">androidx.activity:activity-ktx:1.10.0-alpha01</code> are released. This version is developed in an internal branch.</p>
 <p><strong>New Features</strong></p>
 <ul>
- <li>Artifacts are now signed. See <a href="https://developer.android.com/jetpack/getting-started#verify_dependencies">verify dependencies</a> for more details.</li>
- <li>Major release toolchain update: now compiled to java8 bytecode</li>
+ <li>Added support for new <code translate="no" dir="ltr">PhotoPicker</code> features introduced in Android V including being able to pick images in order and choose which tab (either albums or images) should be initially visible.</li>
 </ul>
 
-<h2>Espresso 3.6.0: Espresso 3.6.0</h2>
-<p>June 24, 2024</p>
-<p>The following artifacts were released:</p>
+<h2>Annotation: v1.9.0-alpha01</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.annotation:annotation-*:1.9.0-alpha01</code> is released. Version 1.9.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/4e5e9e3ddec39fb6f9f34c89b1b4f9b58a1ab627..948119be341fa4affc055418e695d8c4c7e5e2e4/annotation/annotation">these commits</a>.</p>
+<p><strong>External Contribution</strong></p>
 <ul>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-accessibility:3.6.0</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-core:3.6.0</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-contrib:3.6.0</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-idling-resource:3.6.0</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-intents:3.6.0</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-remote:3.6.0</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-web:3.6.0</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-concurrent:3.6.0</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-net:3.6.0</code></li>
+ <li>Adds support for <code translate="no" dir="ltr">linuxArm64</code> multiplatform target (thanks to Jake Wharton!)</li>
 </ul>
-<p>Changes since last stable release 3.5.1 include:</p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Remove unused androidx.test.annotation dependency</li>
- <li>Fix slow inRoot operations in Robolectric</li>
- <li>Use PlatformTestStorageRegistry.getInstance consistently instead of passing a reference around</li>
- <li>Remove TODO from InteractionResponse public ref docs</li>
- <li>Fix typo in AdapterDataLoaderAction error message</li>
- <li>Replace use of guava with Java collections and inlining</li>
- <li>Reference doc cleanup - document previously missing parameters, fix links, etc</li>
- <li>Remove all support for Android SDKs &lt; 19. Minimum is API 19 (Android Kit Kat 4.4)</li>
- <li>Stop posting empty tasks to background threads when running in non-remote mode</li>
- <li>Better handle exceptions that may occur in DefaultFailureHandler's hierarchy capture and screenshot process.</li>
- <li>Fix the description of IsPlatformPopup to match the behavior.</li>
- <li>Fix deprecated obtainMovement impl that used the wrong coordinates.</li>
- <li>Replace broken links to junit.org javadoc with @link.</li>
-</ul>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Add ViewActions.captureToBitmap</li>
- <li>Add waitForClose to DrawerActions.</li>
- <li>Mark generated IInteractionExecutionStatus class as RestrictTo LIBRARY_GROUP</li>
- <li>Remove ExperimentalTestApi from RuntimePermissionStubber</li>
- <li>Adding a new IsActivatedMatcher to verify if it is activated or not.</li>
- <li>Makes Espresso.onIdle() work on the main thread to allow for draining the main thread from the main thread.</li>
- <li>minSdkVersion is now 19, targetSdkVersion is now 34</li>
- <li>Add scrollTo variant that allows scrolling to 90+% displayed views</li>
- <li>Deprecate EspressoOptional in favor of @Nullable.</li>
- <li>Allow customizing espresso's default failure handler to disable screenshots on failures</li>
-</ul>
+
+<h2>Car App: v1.7.0-beta01</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.car.app:app-*:1.7.0-beta01</code> is released. Version 1.7.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/5c17ac8d339b80b5f509f83792f5923e337612c7..948119be341fa4affc055418e695d8c4c7e5e2e4/car/app">these commits</a>. Features are the same as published in alpha01, which are repeated below:</p>
 <p><strong>New Features</strong></p>
 <ul>
- <li>Artifacts are now signed. See <a href="https://developer.android.com/jetpack/getting-started#verify_dependencies">verify dependencies</a> for more details.</li>
- <li>Major release toolchain update: 
+ <li><em>Map with Content:</em> New template a Map Canvas plus a content template, which for now can be List / Grid / Pane / Message. 
   <ul>
-   <li>classes are now compiled to java8 bytecode</li>
-   <li>javac compiler switched to OpenJDK 17. This should resolve IncompatibleClassChangeErrors (https://github.com/android/android-test/issues/1642)</li>
-   <li>remove internal guava usage, which resulted in a binary size reduction</li>
-   <li>release aars are no longer proguarded</li>
+   <li><code translate="no" dir="ltr">RoutePreview</code>, <code translate="no" dir="ltr">PlaceListNavigation</code>, <code translate="no" dir="ltr">MapTemplate</code> are now deprecated. Templates will continue to work as-is.</li>
+   <li>Sample apps have been updated to show <code translate="no" dir="ltr">MapWithContent</code>usage instead of deprecated templates</li>
   </ul></li>
-</ul>
-
-<h2>Test: </h2>
-
-
-<h2>Test: </h2>
-
-
-<h2>Test: </h2>
-
-
-<h2>Monitor 1.7.0: monitor 1.7.0</h2>
-<p>June 24, 2024</p>
-<p><code translate="no" dir="ltr">androidx.test:monitor:1.7.0</code> is released.</p>
-<p>Changes since last stable release 1.6.1 include:</p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Make DeviceController a public API</li>
- <li>Move PlatformTestStorage to a public API</li>
- <li>Add internal ControlledLooper#isDrawCallbacksSupported.</li>
- <li>Remove all support for Android SDKs &lt; 19. Minimum is API 19 (Android Kit Kat 4.4)</li>
- <li>minSdkVersion is now 19, targetSdkVersion is now 34</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Remove unused androidx.test.annotation dependency</li>
- <li>Fix synchronization in IntentMonitorImpl callbacks</li>
-</ul>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Artifacts are now signed. See <a href="https://developer.android.com/jetpack/getting-started#verify_dependencies">verify dependencies</a> for more details.</li>
- <li>Major release toolchain update: now compiled to java8 bytecode</li>
-</ul>
-<p><strong>Known issues</strong></p>
-<ul>
- <li>monitor has a dependency on androidx.tracing:1.1.0. Depending on configuration, gradle may downgrade this to 1.0.0 at runtime causing 'No static method forceEnableAppTracing' errors. As a workaround, add an explicit 'implementation androidx.tracing:1.1.0' dependency. See https://github.com/android/android-test/issues/1755</li>
-</ul>
-
-<h2>Orchestrator 1.5.0: orchestrator 1.5.0</h2>
-<p>June 24, 2024</p>
-<p><code translate="no" dir="ltr">androidx.test:orchestrator:1.5.0</code> is released.</p>
-<p>Changes since last stable release 1.4.2 include:</p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Introduce Instrumentation Params Proxying which allows the user to proxy instrumentation arguments to the APK under test (eg: --no-hidden-api-checks).</li>
- <li>Major release toolchain update. APK is now signed with a different key and you will need to uninstal any previous orchestrator ('adb uninstall androidx.test.orchestrator')</li>
+ <li><em>Conversation Item:</em> New APIs for displaying conversations (IM, SMS), and Assistant readout in the car.</li>
+ <li><em>Vehicle Dimensions:</em> New API to retrieve vehicle measures (data on AAOS at the moment).</li>
 </ul>
 <p><strong>API Changes</strong></p>
 <ul>
- <li>minSdkVersion is now 19</li>
+ <li>Add <code translate="no" dir="ltr">@ExperimentalCarApi</code> tag to <code translate="no" dir="ltr">MediaPlaybackTemplate.Builder</code>. (<a href="https://android-review.googlesource.com/#/q/Ic195773f56a9f10234f232413b72404f95434ec6">Ic1957</a>)</li>
+ <li>Adds a new <code translate="no" dir="ltr">SectionedItemTemplate</code> in experimental. (<a href="https://android-review.googlesource.com/#/q/I5958aaacf42d05e9a28774f2c2b468a0c6d8c6de">I5958a</a>)</li>
+ <li>Introduce <code translate="no" dir="ltr">CarAppApiLevel 8</code> (<a href="https://android-review.googlesource.com/#/q/I3fa220efd1382a4d0146f58f505991e55163ba44">I3fa22</a>)</li>
+ <li>Adds <code translate="no" dir="ltr">MediaPlaybackTemplate</code> for displaying content during media playback in Car App Library. (<a href="https://android-review.googlesource.com/#/q/I3c10d979e8fbf2f9240fad946bc42220cda2ac4b">I3c10d</a>)</li>
+ <li>Added new api for apps to detect whether the system supports background audio while driving (<a href="https://android-review.googlesource.com/#/q/I0f868508078908bd80f8fd013ce8847dcd3844aa">I0f868</a>)</li>
 </ul>
 <p><strong>Bug Fixes</strong></p>
 <ul>
- <li>Fix crash when test name is too long</li>
+ <li>Fixes certain instances of memory leaks and crashes in CAL client code and in CAL Navigation Sample App. (<a href="https://android-review.googlesource.com/#/q/I55e04addc90298c44103806ae5c4de681a2506cf">I55e04</a>)</li>
+ <li>Replace <code translate="no" dir="ltr">requireNotNull instances</code> in <code translate="no" dir="ltr">BaseCarAppActivity</code>'s <code translate="no" dir="ltr">onDestroy</code> method with if-null checks to avoid crashes. (<a href="https://android-review.googlesource.com/#/q/Iec6767110cf8839cb57b71cdc31444b6124a6950">Iec676</a>)</li>
 </ul>
 
-<h2>Runner 1.6.0: runner 1.6.0</h2>
-<p>June 24, 2024</p>
-<p><code translate="no" dir="ltr">androidx.test:runner:1.6.0</code> is released.</p>
-<p>Changes since last stable release 1.5.2 include:</p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Mark androidx.test.services.** as RestrictTo LIBRARY_GROUP</li>
- <li>Add CustomFilter API</li>
- <li>Add PackagePrefixClasspathSuite API</li>
- <li>Mark PermissionRequester as RestrictTo LIBRARY_GROUP instead of ExperimentalTestApi</li>
- <li>minSdkVersion is now 19</li>
-</ul>
+<h2>Compose Animation: v1.7.0-beta04</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.7.0-beta04</code> is released. Version 1.7.0-beta04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c29f7383c14ede0af9cb64be9f3eee63714bc73c..487d2b07dba29c903cfd87a8dc7f99483084ebb6/compose/animation">these commits</a>.</p>
+
+<h2>Compose Foundation: v1.7.0-beta04</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.7.0-beta04</code> is released. Version 1.7.0-beta04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c29f7383c14ede0af9cb64be9f3eee63714bc73c..487d2b07dba29c903cfd87a8dc7f99483084ebb6/compose/foundation">these commits</a>.</p>
 <p><strong>Bug Fixes</strong></p>
 <ul>
- <li>Remove unused androidx.test.annotation dependency</li>
- <li>When logging test exceptions, use Log's built-in support for throwables to avoid stack truncation</li>
- <li>Internal changes to support GrantPermissionRule using UiAutomation#grantRuntimePermissions</li>
- <li>Attempt to clarify limitations and deprecation reasons in RequiresDevice documentation</li>
- <li>Remove all support for Android SDKs &lt; 19. Minimum is API 19 (Android Kit Kat 4.4)</li>
- <li>Fix that "-e class" and "-e notClass" on the same class/method should perform the same result (no tests run)</li>
- <li><code translate="no" dir="ltr">TestDiscoveryEventServiceConnection.send()</code> will correctly fail the test instead of hanging if the instrumentation throws a RuntimeException.</li>
- <li>Stop reparsing all args for every AndroidJUnit4 test class. This should address initialization errors like in #1948.</li>
- <li>Force initialization of instrumentationRunListener, to prevent NPEs when instrumenting system server process.</li>
- <li>Attempt to avoid outputting a test result summary which exceeds binder transaction limit.</li>
- <li>Wait up to 2 seconds for activity finisher to run, to prevent situations where it finishes activities mid-test</li>
- <li>Improve error reporting when there is a junit class mismatch due to a custom classloader</li>
- <li>Fix reporting in logOnly mode for @Ignore-d classes</li>
- <li>Move instantiation of InstrumentationResultPrinter to after multidex is loaded</li>
- <li>Register TestStorage before using it in RunnerArgs parsing</li>
- <li>Execute test classes in order provided to TestRequestBuilder.</li>
-</ul>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Artifacts are now signed. See <a href="https://developer.android.com/jetpack/getting-started#verify_dependencies">verify dependencies</a> for more details.</li>
- <li>Major release toolchain update: 
-  <ul>
-   <li>classes are now compiled to java8 bytecode</li>
-   <li>javac compiler switched to OpenJDK 17.</li>
-  </ul></li>
+ <li>Avoid crashes when measuring very large text lines (e.g. 10k characters) (<a href="https://android.googlesource.com/platform/frameworks/support/+/8157ab1cf5d805e9d626b17e710df49bd6e5d680">8157ab</a>)</li>
+ <li>Fixes measurement of very large text causing crash in the new <code translate="no" dir="ltr">BasicTextField</code> (<a href="https://android.googlesource.com/platform/frameworks/support/+/6b75757fbd5bd38f144b3126a4a1af49c0328430">6b7575</a>)</li>
+ <li>Reverts a behavior change in Row/Column measurement that breaks Text usage in certain scenarios (<a href="https://android.googlesource.com/platform/frameworks/support/+/69e8ba04943fb0ba364f1220f8c762163d001c00">69e8ba</a>)</li>
 </ul>
 
-<h2>Rules 1.6.0: rules 1.6.0</h2>
-<p>June 24, 2024</p>
-<p><code translate="no" dir="ltr">androidx.test:rules:1.6.0</code> is released.</p>
-<p>Changes since last stable release 1.5.0 include:</p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>minSdkVersion is now 19, targetSdkVersion is now 34</li>
- <li>Recommend use of UiAutomation#grantRuntimePermissions instead of GrantPermissionRule</li>
-</ul>
+<h2>Compose Material: v1.7.0-beta04</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.7.0-beta04</code> is released. Version 1.7.0-beta04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c29f7383c14ede0af9cb64be9f3eee63714bc73c..487d2b07dba29c903cfd87a8dc7f99483084ebb6/compose/material">these commits</a>.</p>
+
+<h2>Compose Material3: v1.3.0-beta04</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.material3:material3-*:1.3.0-beta04</code> is released. Version 1.3.0-beta04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f5541f29d045c6ba9734689ec67891f8d667412b..cd4111597651ae0fbd21781f47d06fb3a214bbd6/compose/material3">these commits</a>.</p>
+
+<h2>Compose Material3 Adaptive: v1.0.0-beta04</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.material3.adaptive:adaptive-*:1.0.0-beta04</code> is released. Version 1.0.0-beta04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f5541f29d045c6ba9734689ec67891f8d667412b..967bd940b24778daf0ac5f9661bc881f4d0487c1/compose/material3/adaptive">these commits</a>.</p>
 <p><strong>Bug Fixes</strong></p>
 <ul>
- <li>Replace broken links to junit.org javadoc with @link.</li>
- <li>Make GrantPermissionRule use UiAutomation to grant permissions on APIs &gt; =28 to fix issues running on automotive.</li>
-</ul>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Artifacts are now signed. See <a href="https://developer.android.com/jetpack/getting-started#verify_dependencies">verify dependencies</a> for more details.</li>
- <li>Major release toolchain update: 
-  <ul>
-   <li>classes are now compiled to java8 bytecode</li>
-   <li>javac compiler switched to OpenJDK 17.</li>
-  </ul></li>
+ <li>Fixes the issue that when hinge bounds get updated, the layout is not updated accordingly. (<a href="https://android.googlesource.com/platform/frameworks/support/+/71e9cf129cea74cd1f99b2a08bc9c7f05e0f01e1">71e9cf1</a>)</li>
 </ul>
 
-<h2>Services 1.5.0: services 1.5.0</h2>
-<p>June 24, 2024</p>
-<p><code translate="no" dir="ltr">androidx.test.services:test-services:1.5.0</code> <code translate="no" dir="ltr">androidx.test.services:storage:1.5.0</code> are released.</p>
-<p>Changes since last stable 1.4.2 release include:</p>
+<h2>Compose Runtime: v1.7.0-beta04</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.7.0-beta04</code> is released. Version 1.7.0-beta04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c29f7383c14ede0af9cb64be9f3eee63714bc73c..487d2b07dba29c903cfd87a8dc7f99483084ebb6/compose/runtime">these commits</a>.</p>
+
+<h2>Compose UI: v1.7.0-beta04</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.7.0-beta04</code> is released. Version 1.7.0-beta04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c29f7383c14ede0af9cb64be9f3eee63714bc73c..487d2b07dba29c903cfd87a8dc7f99483084ebb6/compose/ui">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Avoid crashes when measuring very large text lines (e.g. 10k characters) (<a href="https://android.googlesource.com/platform/frameworks/support/+/8157ab1cf5d805e9d626b17e710df49bd6e5d680">8157ab</a>)</li>
+ <li>Disable software rendering support for the <code translate="no" dir="ltr">GraphicsLayer</code> API. (<a href="https://android.googlesource.com/platform/frameworks/support/+/35ddd8cb7873c11ccc56c73ad2e4ee4e96ae2b68">35ddd8</a>)</li>
+ <li>Fix for a crash in layer persistence logic. (<a href="https://android.googlesource.com/platform/frameworks/support/+/70b13e38e559c9516a79d6d8d39a6cacea4421a0">70b13e</a>)</li>
+ <li>Reusing layer objects optimization was reverted, as it caused rendering issues. (<a href="https://android.googlesource.com/platform/frameworks/support/+/70b13e38e559c9516a79d6d8d39a6cacea4421a0">70b13e</a>)</li>
+</ul>
+
+<h2>Fragment: v1.8.1</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.fragment:fragment-*:1.8.1</code> is released. Version 1.8.1 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/4cb33e7274271da73c61e9231b4d372300cecec4..c06fe0a3e7c61f31e0734f93bef3899fae9dc0f4/fragment">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed an issue where fragments without a container were immediately <code translate="no" dir="ltr">DESTROYED</code> when starting a predictive back gesture. Now they are held in the <code translate="no" dir="ltr">CREATED</code> state until after the gesture is complete. (<a href="https://android-review.googlesource.com/#/q/If6b83f7dbb655e0bebc99c3c769625626a7c4e8d">If6b83</a>, <a href="https://issuetracker.google.com/issues/345244539">b/345244539</a>)</li>
+</ul>
+
+<h2>Navigation: v2.8.0-beta04</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.navigation:navigation-*:2.8.0-beta04</code> is released. Version 2.8.0-beta04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/9de5bf61f1fad1fd6da2b64fe350d3aa39dc5de1..5299742c3cf8497f1690c2399056af490673d29e/navigation">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Navigation now supports navigating with empty strings in path arguments. (<a href="https://android-review.googlesource.com/#/q/Ic5dbdd3b4786f62f4544a70b6786a269da8a37cc">Ic5dbd</a>, <a href="https://issuetracker.google.com/issues/339481310">b/339481310</a>)</li>
+ <li>Improve error message for custom serializers declared directly on class fields via <code translate="no" dir="ltr">@Serializable(with =...)</code> to clarify that this is currently an unsupported feature. (<a href="https://android-review.googlesource.com/#/q/I052b0e6a34c7e38520723e7c00a920dc7abe4eb7">I052b0</a>, <a href="https://issuetracker.google.com/issues/341319151">b/341319151</a>)</li>
+ <li><code translate="no" dir="ltr">SavedStateHandleFactory</code> test api can now be used in non-android tests but will require Robolectric to support argument parsing with Bundles. (<a href="https://android-review.googlesource.com/#/q/I76cdc4b40474680dbdb58e6b8a6451f0e228f9b1">I76cdc</a>, <a href="https://issuetracker.google.com/issues/340966212">b/340966212</a>)</li>
+ <li>Fixed crash from restoring state when resuming the app after process death with using Type-Safe Navigation in Compose. (<a href="https://android-review.googlesource.com/#/q/Ia8f38fc59b8e4dac1910c5a593e1ec0585e59456">Ia8f38</a>, <a href="https://issuetracker.google.com/issues/341801005">b/341801005</a>)</li>
+ <li>Fixed an issue in Navigation Compose where after canceling the Predictive Back Gesture, the <code translate="no" dir="ltr">NavBackStackEntry</code> that the user returns to never returns back to the <code translate="no" dir="ltr">RESUMED</code> Lifecycle State. This also ensures the returning destination correctly animates back in instead of snapping into place after a fling. (<a href="https://android-review.googlesource.com/#/q/I97a0c5fe7fe661a2fadfbb01346676482d426028">I97a0c</a>, <a href="https://issuetracker.google.com/issues/346608857">b/346608857</a>)</li>
+ <li>When using Predictive back with Navigation Compose, the destination being popped will now have the proper z-order, correctly animating on top of the incoming destination. (<a href="https://android-review.googlesource.com/#/q/I2077b399fc9bc9a846da6ed17d63d002c8e8122f">I2077b</a>, <a href="https://issuetracker.google.com/issues/345993681">b/345993681</a>)</li>
+</ul>
+
+<h2>privacysandbox ads: v1.1.0-beta08</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.privacysandbox.ads:ads-adservices:1.1.0-beta08</code> and <code translate="no" dir="ltr">androidx.privacysandbox.ads:ads-adservices-java:1.1.0-beta08</code> are released. Version 1.1.0-beta08 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/6a69101fd0edc8d02aa316df1f43e0552fd2d7c4..948119be341fa4affc055418e695d8c4c7e5e2e4/privacysandbox/ads">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Added support for protected app signals.</li>
+ <li>Support multiple cloud providers for B&amp;A server auctions.</li>
+</ul>
 <p><strong>API Changes</strong></p>
 <ul>
- <li>Make TestStorage an internal API from experimental</li>
- <li>minSdkVersion is now 19, targetSdkVersion is now 34</li>
+ <li>Experimental API <code translate="no" dir="ltr">GetAdSelectionDataRequest::seller</code> is non-nullable. (<a href="https://android-review.googlesource.com/#/q/I680448540a29283fe627ec191d8b30585edc293c">I68044</a>)</li>
+ <li>Add <code translate="no" dir="ltr">GetAdSelectionDataRequest::coordinatorOriginUri</code> Experimental API. (<a href="https://android-review.googlesource.com/#/q/I18c0bd8074a5366a2c2ab03e789da395abe29790">I18c0b</a>)</li>
+ <li>Added <code translate="no" dir="ltr">updateSignals</code> API. (<a href="https://android-review.googlesource.com/#/q/Ia8512411048824718f8e0acce00607a1deb3fb3c">Ia8512</a>)</li>
+</ul>
+
+<h2>privacysandbox-tools: v1.0.0-alpha09</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.privacysandbox.tools:tools-*:1.0.0-alpha09</code> is released. Version 1.0.0-alpha09 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/a57d7d17753695012b58c9ce7ad55a8d39157e62..948119be341fa4affc055418e695d8c4c7e5e2e4/privacysandbox/tools">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Add support for enum classes annotated with <code translate="no" dir="ltr">@PrivacySandboxValue</code>.</li>
+ <li>Support for Privacy Sandbox UI alpha 09.</li>
+</ul>
+
+<h2>privacysandbox ui: v1.0.0-alpha09</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.privacysandbox.ui:ui-client:1.0.0-alpha09</code>, <code translate="no" dir="ltr">androidx.privacysandbox.ui:ui-core:1.0.0-alpha09</code>, and <code translate="no" dir="ltr">androidx.privacysandbox.ui:ui-provider:1.0.0-alpha09</code> are released. Version 1.0.0-alpha09 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/6a69101fd0edc8d02aa316df1f43e0552fd2d7c4..948119be341fa4affc055418e695d8c4c7e5e2e4/privacysandbox/ui">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Introduced <code translate="no" dir="ltr">AbstractSandboxedUiAdapter</code> and <code translate="no" dir="ltr">AbstractSandboxedUiAdapter.AbstractSession</code> abstract classes that can be used by UI providers to avoid implementing the entire <code translate="no" dir="ltr">SandboxedUiAdapter</code> or <code translate="no" dir="ltr">Session</code> interfaces. It is recommended for UI providers to use these abstract classes.</li>
+ <li>Added <code translate="no" dir="ltr">registerObserverFactory</code> logic that allows a <code translate="no" dir="ltr">SessionObserverFactory</code> to be attached to a <code translate="no" dir="ltr">SandboxedUiAdapter</code>. When a <code translate="no" dir="ltr">SessionObserverFactory</code> is attached to an adapter, a <code translate="no" dir="ltr">SessionObserver</code> will be created for each new UI session created for that adapter. The created <code translate="no" dir="ltr">SessionObserver</code> will receive an <code translate="no" dir="ltr">onSessionOpened</code> callback when the UI session is opened. When the UI presentation of the <code translate="no" dir="ltr">Session</code>’s view changes, <code translate="no" dir="ltr">SessionObserver.onUiContainerChanged</code> will be called. <code translate="no" dir="ltr">onUiContainerChanged</code> is throttled and will be called at most every 200ms.</li>
+ <li>Added <code translate="no" dir="ltr">SandboxedSdkViewUiInfo</code> which can be created from the <code translate="no" dir="ltr">Bundle</code> sent in <code translate="no" dir="ltr">SessionObserver.onUiContainerChanged</code>. This object represents the UI state of the <code translate="no" dir="ltr">SandboxedSdkView</code> that is hosting the UI session. It contains height and width information, a <code translate="no" dir="ltr">Rect</code> representing the geometry of the view that is visible on screen, and an opacity hint that represents the opacity of the view.</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Add opacity hint to <code translate="no" dir="ltr">SandboxedSdkViewUiInfo</code>. (<a href="https://android-review.googlesource.com/#/q/I093acd0cfe7506466497257f2732257274d1e15f">I093ac</a>)</li>
+ <li>Add <code translate="no" dir="ltr">SessionObserver.onUiContainerChanged</code> and <code translate="no" dir="ltr">SandboxedSdkViewUiInfo</code>. (<a href="https://android-review.googlesource.com/#/q/Ie98bcf74e46b6b9cb4f3668f664935dd25620e11">Ie98bc</a>)</li>
+ <li>Add <code translate="no" dir="ltr">SessionObserver</code> interface and registration logic. (<a href="https://android-review.googlesource.com/#/q/I047dc591b385780fb8c8b914832165b48ca8727d">I047dc</a>)</li>
+ <li>Add <code translate="no" dir="ltr">AbstractSandboxedUiAdapter</code> and <code translate="no" dir="ltr">AbstractSession</code>. (<a href="https://android-review.googlesource.com/#/q/I3617af7cec1902062750eaa6d6e3c9cad57ff87d">I3617a</a>)</li>
+</ul>
+<p><strong>Known Issues</strong></p>
+<ul>
+ <li>When the UI provider is in the same process as the client application, <code translate="no" dir="ltr">SessionObserver.onUiContainerChanged</code> is not sent when the container scrolls.</li>
+</ul>
+
+<h2>Security-State: v1.0.0-alpha02</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.security:security-state:1.0.0-alpha02</code> is released. Version 1.0.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f5541f29d045c6ba9734689ec67891f8d667412b..948119be341fa4affc055418e695d8c4c7e5e2e4/security/security-state">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed logic of getting kernel version. (<a href="https://android-review.googlesource.com/#/q/I5602a8e1eaa48985d704622195f147a81828e4f0">I5602a</a>)</li>
+</ul>
+
+<h2>Test Uiautomator: v2.4.0-alpha01</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.test.uiautomator:uiautomator:2.4.0-alpha01</code> is released. Version 2.4.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/4f8d91d904a453dc1b9661cb43ea02b62436a1e6..948119be341fa4affc055418e695d8c4c7e5e2e4/test/uiautomator/uiautomator">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Deprecated <code translate="no" dir="ltr">Configurator#getKeyInjectionDelay</code> and <code translate="no" dir="ltr">setKeyInjectionDelay</code> as the parameter is unused now that text is always injected directly rather than by key presses. (<a href="https://android-review.googlesource.com/#/q/I3bcc58975300f83c2e49b41ece57b7e2f0385265">I3bcc5</a>).</li>
 </ul>
 <p><strong>Bug Fixes</strong></p>
 <ul>
- <li>Reduce HostedFile log spam</li>
- <li>Remove unused androidx.test.annotation dependency</li>
- <li>TestStorage: use local cache dir to store output files when running as non system user</li>
- <li>When files are opened for writing, TestStorage now truncates the file unless it is explicitly opened for appending. This prevents bytes from a prior write to the file from remaining at the end of the file.</li>
- <li>Remove all support for Android SDKs &lt; 19. Minimum is API 19 (Android Kit Kat 4.4)</li>
+ <li>Updated the delay between <code translate="no" dir="ltr">UiObject2</code> motion events to account for dynamic refresh rates (i.e. Smooth Display) (<a href="https://android-review.googlesource.com/#/q/I43f12c4d40dc21f000983572232796d5d6439330">I43f12</a>).</li>
+ <li>Reduced flakiness from accessibility node staleness on certain UIs by periodically invalidating the accessibility cache (<a href="https://android-review.googlesource.com/#/q/I3be25f8a627766be1fbb2760d2188ae69fda5ae9">I3be25</a>).</li>
+ <li>Fixed <code translate="no" dir="ltr">StaleObjectException</code>s occurring when calling <code translate="no" dir="ltr">toString</code> or <code translate="no" dir="ltr">hashCode</code> on a stale <code translate="no" dir="ltr">UiObject2</code>. (<a href="https://android-review.googlesource.com/#/q/I38ea13d4040879c0fe896434d760565de99ff50a">I38ea1</a>).</li>
+ <li>Improved <code translate="no" dir="ltr">UiWatcher</code> performance by skipping unnecessary <code translate="no" dir="ltr">waitForIdle</code> calls. (<a href="https://android-review.googlesource.com/#/q/I8c65ead246dee1d1d99562e0f7d934a9fa30db16">I8c65e</a>).</li>
+ <li>Fixed javadoc inaccuracies, especially to clarify when each <code translate="no" dir="ltr">Configurator</code> parameter is used. (<a href="https://android-review.googlesource.com/#/q/Ie10b14bdc4d5010a360e285374f1835be6f5f8f3">Ie10b1</a>, <a href="https://android-review.googlesource.com/#/q/I7163105da85bf3cb8a2cb7f6f9c1fdfb94ec8f4f">I71631</a>).</li>
 </ul>
+
+<h2>wear protolayout: v1.2.0-alpha05</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.wear.protolayout:protolayout-*:1.2.0-alpha05</code> is released. Version 1.2.0-alpha05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/473554f275109d78164adca6b6cea539aed8b68b..948119be341fa4affc055418e695d8c4c7e5e2e4/wear/protolayout">these commits</a>.</p>
 <p><strong>New Features</strong></p>
 <ul>
- <li>Major release toolchain update: 
-  <ul>
-   <li>classes are now compiled to java8 bytecode</li>
-   <li>javac compiler switched to OpenJDK 17.</li>
-   <li>APK is now signed with a different key and you will need to uninstall any previous APK ('adb uninstall androidx.test.services')</li>
-  </ul></li>
+ <li>Add <code translate="no" dir="ltr">hasText</code> method to <code translate="no" dir="ltr">Material.CompactChip</code> to check whether the text content has been set. (<a href="https://android-review.googlesource.com/#/q/I6e8fc44f8f16016c32d958be538ae8b1428e961d">I6e8fc</a>)</li>
 </ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">FontFamily</code> const are moved to be in <code translate="no" dir="ltr">FontStyle</code> instead of its Builder class. (<a href="https://android-review.googlesource.com/#/q/I06cedbe09c134ea693b77b2ed171c60d82113614">I06ced</a>)</li>
+ <li>Update <code translate="no" dir="ltr">FontSetting.weight</code> and <code translate="no" dir="ltr">FontSetting.width</code> API to include Range annotations and change weight's parameter to be int. (<a href="https://android-review.googlesource.com/#/q/Ia726c90657bf0c11b8feb8497e1e646e17da6762">Ia726c</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Non-scalable texts in Material library now work correctly with Android 14's non-linear font scaling. (<a href="https://android-review.googlesource.com/#/q/I6601e2af6f197ac7da8407a43349bad799fecbc5">I6601e</a>)</li>
+</ul>
+
+<h2>Wear Tiles: v1.4.0-alpha05</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.wear.tiles:tiles-*:1.4.0-alpha05</code> is released. Version 1.4.0-alpha05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/473554f275109d78164adca6b6cea539aed8b68b..948119be341fa4affc055418e695d8c4c7e5e2e4/wear/tiles">these commits</a>.</p>
 </body>
 </html>
