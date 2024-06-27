@@ -162,6 +162,55 @@
  <li>Fixed an issue where fragments without a container were immediately <code translate="no" dir="ltr">DESTROYED</code> when starting a predictive back gesture. Now they are held in the <code translate="no" dir="ltr">CREATED</code> state until after the gesture is complete. (<a href="https://android-review.googlesource.com/#/q/If6b83f7dbb655e0bebc99c3c769625626a7c4e8d">If6b83</a>, <a href="https://issuetracker.google.com/issues/345244539">b/345244539</a>)</li>
 </ul>
 
+<h2>Media3: v1.4.0-beta01</h2>
+<p>June 26, 2024</p>
+<p><code translate="no" dir="ltr">androidx.media3:media3-*:1.4.0-beta01</code> is released. Version 1.4.0-beta01 contains <a href="https://github.com/androidx/media/commits/1.4.0-beta01">these commits</a>.</p>
+<ul>
+ <li>ExoPlayer: 
+  <ul>
+   <li>Add <code translate="no" dir="ltr">ExoPlayer.isReleased()</code> to check whether <code translate="no" dir="ltr">Exoplayer.release()</code> has been called.</li>
+   <li>Add <code translate="no" dir="ltr">ExoPlayer.Builder.setMaxSeekToPreviousPositionMs</code> to configure the maximum position for which <code translate="no" dir="ltr">seekToPrevious()</code> seeks to the previous item (<a href="https://github.com/androidx/media/issues/1425">#1425</a>).</li>
+  </ul></li>
+ <li>Transformer: 
+  <ul>
+   <li>Remove <code translate="no" dir="ltr">ExportResult.processedInputs</code> field. If you use this field for codec details, then use <code translate="no" dir="ltr">DefaultDecoderFactory.listener</code> instead. In case of a codec exception, codec details will be available in the <code translate="no" dir="ltr">ExportException.codecInfo</code>.</li>
+  </ul></li>
+ <li>Extractors: 
+  <ul>
+   <li>Fix PCM audio format extraction in AVI containers.</li>
+  </ul></li>
+ <li>Image: 
+  <ul>
+   <li>Allow <code translate="no" dir="ltr">null</code> as parameter for <code translate="no" dir="ltr">ExoPlayer.setImageOutput</code> to clear a previously set <code translate="no" dir="ltr">ImageOutput</code>.</li>
+  </ul></li>
+ <li>Effect: 
+  <ul>
+   <li>Remove unused <code translate="no" dir="ltr">OverlaySettings.useHdr</code> since dynamic range of overlay and frame must match.</li>
+   <li>Add HDR support for <code translate="no" dir="ltr">TextOverlay</code>. Luminance of the text overlay can be adjusted with <code translate="no" dir="ltr">OverlaySettings.setHdrLuminanceMultiplier</code>.</li>
+  </ul></li>
+ <li>Session: 
+  <ul>
+   <li>Add <code translate="no" dir="ltr">MediaSession.Callback.onPlayerInteractionFinished</code> to inform sessions when a series of player interactions from a specific controller finished.</li>
+   <li>Add <code translate="no" dir="ltr">SessionError</code> and use it in <code translate="no" dir="ltr">SessionResult</code> and <code translate="no" dir="ltr">LibraryResult</code> instead of the error code to provide more information about the error and how to resolve the error if possible.</li>
+   <li>Publish the code for the media3 controller test app that can be used to test interactions with apps publishing a media session.</li>
+   <li>Propagate extras passed to media3's <code translate="no" dir="ltr">MediaSession[Builder].setSessionExtras()</code> to a media1 controller's <code translate="no" dir="ltr">PlaybackStateCompat.getExtras()</code>.</li>
+   <li>Map fatal and non-fatal errors to and from the platform session. A <code translate="no" dir="ltr">PlaybackException</code> is mapped to a fatal error state of the <code translate="no" dir="ltr">PlaybackStateCompat</code>. A <code translate="no" dir="ltr">SessionError</code> sent to the media notification controller with <code translate="no" dir="ltr">MediaSession.sendError(ControllerInfo, SessionError)</code> is mapped to a non-fatal error in <code translate="no" dir="ltr">PlaybackStateCompat</code> which means that error code and message are set but the state of the platform session remains different to <code translate="no" dir="ltr">STATE_ERROR</code>.</li>
+  </ul></li>
+ <li>UI: 
+  <ul>
+   <li>Add image display support to <code translate="no" dir="ltr">PlayerView</code> when connected to an <code translate="no" dir="ltr">ExoPlayer</code> (<a href="https://github.com/androidx/media/issues/1144">#1144</a>).</li>
+   <li>Add customization of various icons in <code translate="no" dir="ltr">PlayerControlView</code> through xml attributes to allow different drawables per <code translate="no" dir="ltr">PlayerView</code> instance, rather than global overrides (<a href="https://github.com/androidx/media/issues/1200">#1200</a>).</li>
+  </ul></li>
+ <li>HLS Extension: 
+  <ul>
+   <li>Fix a bug where non-primary playing playlists are not refreshed during live playback (<a href="https://github.com/androidx/media/issues/1240">#1240</a>).</li>
+  </ul></li>
+ <li>Remove deprecated symbols: 
+  <ul>
+   <li>Remove <code translate="no" dir="ltr">Bundleable</code> interface. This includes removing all <code translate="no" dir="ltr">Bundleable.Creator&lt;Foo&gt; CREATOR</code> constant fields. Callers should use the <code translate="no" dir="ltr">Bundle toBundle()</code> and <code translate="no" dir="ltr">static Foo fromBundle(Bundle)</code> methods on each type instead.</li>
+  </ul></li>
+</ul>
+
 <h2>Navigation: v2.8.0-beta04</h2>
 <p>June 26, 2024</p>
 <p><code translate="no" dir="ltr">androidx.navigation:navigation-*:2.8.0-beta04</code> is released. Version 2.8.0-beta04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/9de5bf61f1fad1fd6da2b64fe350d3aa39dc5de1..5299742c3cf8497f1690c2399056af490673d29e/navigation">these commits</a>.</p>
