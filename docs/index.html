@@ -66,12 +66,184 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Lifecycle: v2.8.3</h2>
-<p>June 27, 2024</p>
-<p><code translate="no" dir="ltr">androidx.lifecycle:lifecycle-*:2.8.3</code> is released. Version 2.8.3 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/86a54e23482b320e083f9a337814c7fe4f78e9a3..92cc6e5d71efd12345ce7ba558cbc2a29926e9ac/lifecycle">these commits</a>.</p>
+<h2>Benchmark: v1.3.0-beta02</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.benchmark:benchmark-*:1.3.0-beta02</code> is released. Version 1.3.0-beta02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/e688db5c82e85000364f92965558ef1e2236c5a0..56579bc30499ce39f0d7a6713a065b00c6194206/benchmark">these commits</a>.</p>
 <p><strong>Bug Fixes</strong></p>
 <ul>
- <li>Fixed an issue with Lifecycle 2.8’s backward compatibility with Compose 1.6.0 and lower when using code shrinking. (<a href="https://android-review.googlesource.com/3133056">aosp/3133056</a>, <a href="https://issuetracker.google.com/346808608">b/346808608</a>)</li>
+ <li>Gracefully handle EXITCODE <code translate="no" dir="ltr">2</code> when starting Perfetto to log a warning, but proceed.</li>
+</ul>
+
+<h2>Collection: v1.4.1</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.collection:collection-*:1.4.1</code> is released. Version 1.4.1 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/6bb3d4c5410cf394070cca4ff347d46454194480..dba39e49c503b546475a23652716b80581e1c7b5/collection">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Remove deleted tombstones from Map/Set when resizing. (<a href="https://android-review.googlesource.com/#/q/Ic72352b3209e463de8de2278896a4b1bf10bd832">7a996c5</a>, <a href="https://issuetracker.google.com/issues/345960092">b/345960092</a>)</li>
+</ul>
+
+<h2>Compose Animation: v1.7.0-beta05</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.7.0-beta05</code> is released. Version 1.7.0-beta05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/487d2b07dba29c903cfd87a8dc7f99483084ebb6..8346df8de9f86a546fc9c316113bd4a3cc82ede9/compose/animation">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>The Transition property <code translate="no" dir="ltr">totalDurationNanos</code> now can be properly read within a <code translate="no" dir="ltr">snapshotFlow</code>.</li>
+</ul>
+
+<h2>Compose Foundation: v1.7.0-beta05</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.7.0-beta05</code> is released. Version 1.7.0-beta05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/487d2b07dba29c903cfd87a8dc7f99483084ebb6..8346df8de9f86a546fc9c316113bd4a3cc82ede9/compose/foundation">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fix for treatment of Nan values in <code translate="no" dir="ltr">SnapFlingBehavior</code> and Pager.</li>
+</ul>
+
+<h2>Compose Material: v1.7.0-beta05</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.7.0-beta05</code> is released. Version 1.7.0-beta05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/487d2b07dba29c903cfd87a8dc7f99483084ebb6..8346df8de9f86a546fc9c316113bd4a3cc82ede9/compose/material">these commits</a>.</p>
+
+<h2>Compose Runtime: v1.7.0-beta05</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.7.0-beta05</code> is released. Version 1.7.0-beta05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/487d2b07dba29c903cfd87a8dc7f99483084ebb6..8346df8de9f86a546fc9c316113bd4a3cc82ede9/compose/runtime">these commits</a>.</p>
+
+<h2>Compose UI: v1.7.0-beta05</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.7.0-beta05</code> is released. Version 1.7.0-beta05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/487d2b07dba29c903cfd87a8dc7f99483084ebb6..8346df8de9f86a546fc9c316113bd4a3cc82ede9/compose/ui">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed a bug where changing the software keyboard would cause <code translate="no" dir="ltr">TextField</code> to not accept input from the new keyboard until the focus is lost and regained. </li>
+ <li>Fixed an issue where attempts to persist layer contents would cause unintended side effects when rendering with <code translate="no" dir="ltr">SurfaceView</code> content.</li>
+</ul>
+
+<h2>credentials: v1.3.0-rc01</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.credentials:credentials:1.3.0-rc01</code> and <code translate="no" dir="ltr">androidx.credentials:credentials-play-services-auth:1.3.0-rc01</code> are released. Version 1.3.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f5541f29d045c6ba9734689ec67891f8d667412b..baedf2c9e120baecebea61b8f86ce43e1237b790/credentials">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>A version bump release along with small implementation updates.</li>
+</ul>
+
+<h2>Emoji2: v1.5.0-beta01</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.emoji2:emoji2-*:1.5.0-beta01</code> is released. Version 1.5.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/9174577f8a57ba4ae4958cc31787ea4db3b2b44a..56579bc30499ce39f0d7a6713a065b00c6194206/emoji2">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Support emoji 15.1 and bidirectional emoji selection UI.</li>
+ <li>Support multi-skintone selection redesign.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">EmojiPickerView</code>’s tab selection and indicator updates one click behind. (<a href="https://android-review.googlesource.com/#/q/146b021cc44151e8a69e26fc8c7f54bb7a92e892">146b02</a>, <a href="https://issuetracker.google.com/issues/288261054">b/288261054</a>)</li>
+ <li><code translate="no" dir="ltr">EmojiPickerView</code>’s tab selection and indicator is broken. (<a href="https://android-review.googlesource.com/#/q/5e1f1404b5689979eeb0cd0b36e509631bd274a1">5e1f14</a>, <a href="https://issuetracker.google.com/issues/273883688">b/273883688</a>)</li>
+</ul>
+
+<h2>Games-Activity: v3.0.4</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.games:games-activity:3.0.4</code> is released. Version 3.0.4 contains <a href="https://android.googlesource.com/platform/frameworks/opt/gamesdk/+log/287affdc5739c47077aab122c623606ec4f1aca8..e05ad224fd2ea838d44f48830e5b49f6dfe5dae3/game-activity">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed handling of null pointers.</li>
+ <li>Fixed missing state updates for some states in <code translate="no" dir="ltr">onConfiguration()</code> callback.</li>
+</ul>
+
+<h2>Games Frame Pacing: v2.1.1</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.games:games-frame-pacing:2.1.1</code> is released. Version 2.1.1 contains <a href="https://android.googlesource.com/platform/frameworks/opt/gamesdk/+log/4880f53064c0abc7f2adaa4895e0c9e1c0ade08b..394f81c696e264c403a8491dd6e37aa89e3da00d/games-frame-pacing">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Properly unregister display listener from swappy to avoid a hang.</li>
+ <li>Fix a crash in <code translate="no" dir="ltr">ChoreographerFilter::onSettingsChanged</code> using destroyed mutex.</li>
+</ul>
+
+<h2>Navigation: v2.8.0-beta05</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.navigation:navigation-*:2.8.0-beta05</code> is released. Version 2.8.0-beta05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/5299742c3cf8497f1690c2399056af490673d29e..56579bc30499ce39f0d7a6713a065b00c6194206/navigation">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fix <code translate="no" dir="ltr">singleTop</code> navigation crash when nested <code translate="no" dir="ltr">NavGraphs</code> share the same <code translate="no" dir="ltr">startDestination</code> route. (<a href="https://android-review.googlesource.com/#/q/I17b9466ce3411e0113d1f9a56faa8706577abc72">I17b94</a>, <a href="https://issuetracker.google.com/issues/294408596">b/294408596</a>)</li>
+</ul>
+
+<h2>privacysandbox ads: v1.1.0-beta09</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.privacysandbox.ads:ads-adservices:1.1.0-beta09</code> and <code translate="no" dir="ltr">androidx.privacysandbox.ads:ads-adservices-java:1.1.0-beta09</code> are released. Version 1.1.0-beta09 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/948119be341fa4affc055418e695d8c4c7e5e2e4..56579bc30499ce39f0d7a6713a065b00c6194206/privacysandbox/ads">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Add missing Java constructor overloads for <code translate="no" dir="ltr">GetAdSelectionDataRequest</code> Experimental API. (<a href="https://android-review.googlesource.com/#/q/Ifbf88b1b7a189585e15c04c8a111594c74ec6278">Ifbf88</a>).</li>
+</ul>
+
+<h2>Room: v2.7.0-alpha05</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.room:room-*:2.7.0-alpha05</code> is released. Version 2.7.0-alpha05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f5541f29d045c6ba9734689ec67891f8d667412b..56579bc30499ce39f0d7a6713a065b00c6194206/room">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Renamed <code translate="no" dir="ltr">SQLiteKt</code> to <code translate="no" dir="ltr">SQLite</code> and <code translate="no" dir="ltr">BundledSQLiteKt</code> to <code translate="no" dir="ltr">BundledSQLite</code>. (<a href="https://android-review.googlesource.com/#/q/I8b5016b9769244342bab288bab976ebe9fe5d11d">I8b501</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed a bug where a <code translate="no" dir="ltr">RoomDatabase</code> would deadlock or error out with a connection timeout when using the <code translate="no" dir="ltr">AndroidSQLiteDriver</code>.</li>
+</ul>
+
+<h2>Security-State: v1.0.0-alpha03</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.security:security-state:1.0.0-alpha03</code> is released. Version 1.0.0-alpha03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/948119be341fa4affc055418e695d8c4c7e5e2e4..56579bc30499ce39f0d7a6713a065b00c6194206/security/security-state">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixing ASB-A- pattern for Android security bulletin bugs, JSON parsing for additional components, and <code translate="no" dir="ltr">Webview</code> packaged retrieval. (<a href="https://android-review.googlesource.com/#/q/Ide86ae11b67041db6aeca40ea1c54a08d3b8109d">Ide86a</a>)</li>
+</ul>
+
+<h2>Sqlite: v2.5.0-alpha05</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.sqlite:sqlite-*:2.5.0-alpha05</code> is released. Version 2.5.0-alpha05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f5541f29d045c6ba9734689ec67891f8d667412b..56579bc30499ce39f0d7a6713a065b00c6194206/sqlite">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Renamed <code translate="no" dir="ltr">SQLiteKt</code> to <code translate="no" dir="ltr">SQLite</code> and <code translate="no" dir="ltr">BundledSQLiteKt</code> to <code translate="no" dir="ltr">BundledSQLite</code>. (<a href="https://android-review.googlesource.com/#/q/I8b5016b9769244342bab288bab976ebe9fe5d11d">I8b501</a>)</li>
+</ul>
+
+<h2>tv: v1.0.0-alpha11</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.tv:tv-foundation:1.0.0-alpha11</code> is released. Version 1.0.0-alpha11 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/1f7407d4293384a1b91bc142880e3525048b3443..56579bc30499ce39f0d7a6713a065b00c6194206/tv/tv-foundation">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Tv Lazy Layouts have been deprecated from tv-foundation library. Refer to <a href="https://issuetracker.google.com/issues/348896032">this ticket</a> to learn how to migrate away from the tv lazy layouts. (<a href="https://android-review.googlesource.com/#/q/I0855f36b41cf8bc374e8e69ac5faeabfefc97aa9">I0855f</a>, <a href="https://issuetracker.google.com/issues/332674072">b/332674072</a>)</li>
+ <li><code translate="no" dir="ltr">PlatformImeOptions</code> is now a concrete class instead of an interface. (<a href="https://android-review.googlesource.com/#/q/If40a4c3e832e7852f214e18af469f5ce68e798b7">If40a4</a>)</li>
+</ul>
+
+<h2>Tv-Material: v1.0.0-rc01</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.tv:tv-material:1.0.0-rc01</code> is released. Version 1.0.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/fbd1ac175922f44c69a13545d194066ee428b342..4237f41666396b1ff39ffba3563807151fed2313/tv/tv-material">these commits</a>.</p>
+
+<h2>wear protolayout: v1.2.0-beta01</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.wear.protolayout:protolayout-*:1.2.0-beta01</code> is released. Version 1.2.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/948119be341fa4affc055418e695d8c4c7e5e2e4..56579bc30499ce39f0d7a6713a065b00c6194206/wear/protolayout">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<p>The 1.2.0-beta01 release of Wear ProtoLayout indicates that this release of the library is feature complete and the API is locked (except where marked as experimental). Wear ProtoLayout 1.2 includes the following new functionalities and APIs:</p>
+<ul>
+ <li><code translate="no" dir="ltr">FontStyle</code> has been updated to have additional font support as following: 
+  <ul>
+   <li>Setting different font variation setting such as <code translate="no" dir="ltr">FontSetting.weight</code> and <code translate="no" dir="ltr">FontSetting.width</code></li>
+   <li>Setting the same width for all numeric characters - tabular numerals (<code translate="no" dir="ltr">FontSetting.tnum</code> font feature setting)</li>
+   <li>Improved font selection APIs to support the upcoming flex fonts by specifying preferred font family names to be used.</li>
+  </ul></li>
+ <li>Extended <code translate="no" dir="ltr">Corner</code> modifier to support specifying each <code translate="no" dir="ltr">CornerRadius</code> with a separate horizontal and vertical values to allow building elements with asymmetric corners.</li>
+ <li>Added a new <code translate="no" dir="ltr">Transformation</code> modifier offering translation, rotation and scaling of <code translate="no" dir="ltr">LayoutElement</code>. These transformations can be animated by using dynamic values.</li>
+ <li>Added <code translate="no" dir="ltr">setArcDirection</code> with <code translate="no" dir="ltr">Clockwise</code>, <code translate="no" dir="ltr">CounterClockwise</code> and <code translate="no" dir="ltr">Normal</code> options to all arc elements (<code translate="no" dir="ltr">Arc</code>, <code translate="no" dir="ltr">ArcLine</code> and <code translate="no" dir="ltr">ArcText</code>) for better support in different layout directions (such as LTR and RTL).</li>
+ <li>Improved accessibility of all touch targets by extending the tappable area of any element that uses <code translate="no" dir="ltr">Clickable</code> modifier to be at least <code translate="no" dir="ltr">48dp</code> by <code translate="no" dir="ltr">48dp</code>.</li>
+ <li>Improved <code translate="no" dir="ltr">PrimaryLayout</code> and <code translate="no" dir="ltr">EdgeContentLayout</code> by adding <code translate="no" dir="ltr">setResponsiveContentInsetEnabled</code> to better support responsive behavior of these layouts across different screen sizes and improve Tiles consistency. Added linter warning to suggest usage of these APIs with a quick fix.</li>
+ <li>Improved scaling/non-scaling of the Material <code translate="no" dir="ltr">Text</code> for Android 14's non-linear font scaling.</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Default font family name (<code translate="no" dir="ltr">DEFAULT_SYSTEM_FONT</code>) is removed as it is implied by not using the <code translate="no" dir="ltr">preferredFontFamilies</code> API. (<a href="https://android-review.googlesource.com/#/q/I39dab419cb0ae1461136d8f1a6181ba04ab80985">I39dab</a>)</li>
+ <li>Parameter passed in to the <code translate="no" dir="ltr">FontSetting.width</code> should be positive. (<a href="https://android-review.googlesource.com/#/q/I1266f60f35a6bd94e8159fd40e2f1f2ca0b0a8f6">I1266f</a>)</li>
+</ul>
+
+<h2>Wear Tiles: v1.4.0-beta01</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.wear.tiles:tiles-*:1.4.0-beta01</code> is released. Version 1.4.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/948119be341fa4affc055418e695d8c4c7e5e2e4..56579bc30499ce39f0d7a6713a065b00c6194206/wear/tiles">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<p>The 1.4.0-beta01 release of Wear Tiles indicates that this release of the library is feature complete and the API is locked (except where marked as experimental). Wear Tiles 1.4 includes the following new functionalities and APIs:</p>
+<ul>
+ <li>Tooling support for specifying custom platform data for Tiles previews in Android Studio.</li>
 </ul>
 </body>
 </html>
