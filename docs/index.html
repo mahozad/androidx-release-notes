@@ -155,6 +155,40 @@
  <li>Fix a crash in <code translate="no" dir="ltr">ChoreographerFilter::onSettingsChanged</code> using destroyed mutex.</li>
 </ul>
 
+<h2>Media3: v1.4.0-rc01</h2>
+<p>July 10, 2024</p>
+<p><code translate="no" dir="ltr">androidx.media3:media3-*:1.4.0-rc01</code> is released. Version 1.4.0-rc01 contains <a href="https://github.com/androidx/media/commits/1.4.0-rc01">these commits</a>.</p>
+<ul>
+ <li>Common Library: 
+  <ul>
+   <li>Add <code translate="no" dir="ltr">Format.customData</code> to store app-provided custom information about <code translate="no" dir="ltr">Format</code> instances.</li>
+  </ul></li>
+ <li>ExoPlayer: 
+  <ul>
+   <li>Fix some audio focus inconsistencies, e.g. not reporting full or transient focus loss while the player is paused (<a href="https://github.com/androidx/media/issues/1436">#1436</a>).</li>
+   <li>Fix potential <code translate="no" dir="ltr">IndexOutOfBoundsException</code> caused by extractors reporting additional tracks after the initial preparation step (<a href="https://github.com/androidx/media/issues/1476">#1476</a>).</li>
+   <li><code translate="no" dir="ltr">Effects</code> in <code translate="no" dir="ltr">ExoPlayer.setVideoEffect()</code> will receive the timestamps with the renderer offset removed (<a href="https://github.com/androidx/media/issues/1098">#1098</a>).</li>
+   <li>Fix potential <code translate="no" dir="ltr">IllegalArgumentException</code> when handling player error that happened while reading ahead into another playlist item (<a href="https://github.com/androidx/media/issues/1483">#1483</a>).</li>
+  </ul></li>
+ <li>Text: 
+  <ul>
+   <li>Fix an <code translate="no" dir="ltr">IllegalArgumentException</code> from <code translate="no" dir="ltr">LegacySubtitleUtil</code> when a WebVTT subtitle sample contains no cues, e.g. as part of a DASH stream (<a href="https://github.com/androidx/media/issues/1516">#1516</a>).</li>
+  </ul></li>
+ <li>Session: 
+  <ul>
+   <li>Allow the session activity to be set per controller to override the global session activity. The session activity can be defined for a controller at connection time by creating a <code translate="no" dir="ltr">ConnectionResult</code> with <code translate="no" dir="ltr">AcceptedResultBuilder.setSessionActivivty(PendingIntent)</code>. Once connected, the session activity can be updated with <code translate="no" dir="ltr">MediaSession.setSessionActivity(ControllerInfo, PendingIntent)</code>.</li>
+   <li>Improve error replication of calls to <code translate="no" dir="ltr">MediaLibrarySession.Callback</code>. Error replication can now be configured by using <code translate="no" dir="ltr">MediaLibrarySession.Builder.setLibraryErrorReplicationMode()</code> for choosing the error type or opt-ing out of error replication which is on by default.</li>
+  </ul></li>
+ <li>UI: 
+  <ul>
+   <li>Work around a platform bug causing stretched/cropped video when using <code translate="no" dir="ltr">SurfaceView</code> inside a Compose <code translate="no" dir="ltr">AndroidView</code> on API 34 (<a href="https://github.com/androidx/media/issues/1237">#1237</a>).</li>
+  </ul></li>
+ <li>Demo app: 
+  <ul>
+   <li>Use <code translate="no" dir="ltr">HttpEngineDataSource</code> as the <code translate="no" dir="ltr">HttpDataSource</code> when supported by the device.</li>
+  </ul></li>
+</ul>
+
 <h2>Navigation: v2.8.0-beta05</h2>
 <p>July 10, 2024</p>
 <p><code translate="no" dir="ltr">androidx.navigation:navigation-*:2.8.0-beta05</code> is released. Version 2.8.0-beta05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/5299742c3cf8497f1690c2399056af490673d29e..56579bc30499ce39f0d7a6713a065b00c6194206/navigation">these commits</a>.</p>
