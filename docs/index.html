@@ -197,7 +197,7 @@
 <p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.7.0-rc01</code> is released. Version 1.7.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/98bc1cf10201a973793b72d2ff1ae728070e47e4..d8995e2377dd4baad64b39becb6d480cadd05c86/compose/foundation">these commits</a>.</p>
 <p><strong>Bug Fixes</strong></p>
 <ul>
- <li>Fixed a regression where the crash occurred when any element is focused inside a parent that is focusable (or clickable) and disabled. (<a href="/jetpack/androidx/releases/(https:/issuetracker.google.com/issues/317561689)">b/317561689</a></li>
+ <li>Fixed a regression where the crash occurred when any element is focused inside a parent that is focusable (or clickable) and disabled. (<a href="https://issuetracker.google.com/issues/317561689">b/317561689</a>)</li>
 </ul>
 
 <h2>Compose Material: v1.7.0-rc01</h2>
@@ -245,6 +245,10 @@
 <h2>Compose UI: v1.7.0-rc01</h2>
 <p>August 21, 2024</p>
 <p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.7.0-rc01</code> is released. Version 1.7.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/98bc1cf10201a973793b72d2ff1ae728070e47e4..d8995e2377dd4baad64b39becb6d480cadd05c86/compose/ui">these commits</a>.</p>
+<p><strong>Notable changes</strong></p>
+<ul>
+ <li>ui:ui module now forces requirement of a minimum version of foundation:foundation to be at least 1.7.0-rc01 or newer. This is enforced to remedy a behaviour incompatibility between ui and foundation in regards to <code translate="no" dir="ltr">NestedScrollSource</code> changes that happened early during 1.7.0-alpha01.</li>
+</ul>
 
 <h2>Core and Core-ktx: v1.15.0-alpha02</h2>
 <p>August 21, 2024</p>
