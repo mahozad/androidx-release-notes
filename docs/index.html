@@ -66,300 +66,41 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Annotation: v1.9.0-alpha02</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.annotation:annotation-*:1.9.0-alpha02</code> is released. Version 1.9.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/5a50de555336ab8cf837fd0ddd32febb2cc85f74..c71a0ac68935256ff7027557d5396130c71eb54d/annotation">these commits</a>.</p>
-<p><strong>New Features</strong></p>
+<h2>Media3: v1.4.1</h2>
+<p>August 27, 2024</p>
+<p><code translate="no" dir="ltr">androidx.media3:media3-*:1.4.1</code> is released. Version 1.4.1 contains <a href="https://github.com/androidx/media/commits/1.4.1">these commits</a>.</p>
 <ul>
- <li>Adding support for <code translate="no" dir="ltr">mingwX64</code> platform (<a href="https://android-review.googlesource.com/#/q/I461cad1935cd2c29aa7eb05f5e6971215292f11c">I461ca</a>, <a href="https://issuetracker.google.com/issues/349894318">b/349894318</a>)</li>
- <li>Add support for <code translate="no" dir="ltr">linuxArm64</code> kotlin multiplatform target. (<a href="https://android-review.googlesource.com/#/q/I139d36226a3d06d9768bd63302de98b576a12a48">I139d3</a>, <a href="https://issuetracker.google.com/issues/338268719">b/338268719</a>)</li>
-</ul>
-
-<h2>Annotation-Experimental: v1.5.0-alpha01</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.annotation:annotation-experimental:1.5.0-alpha01</code> is released. Version 1.5.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/cb993e8594b035615bb12e0cb8294769eb7c10d1..c71a0ac68935256ff7027557d5396130c71eb54d/annotation/annotation-experimental">these commits</a>.</p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Add <code translate="no" dir="ltr">message</code> to <code translate="no" dir="ltr">RequiresOptIn</code> to match the Kotlin stdlib annotation with default empty string value. (<a href="https://android-review.googlesource.com/#/q/I1f50e2259d75e1d14f5320d21c91cb8fbc2e1609">I1f50e</a>)</li>
-</ul>
-
-<h2>Benchmark: v1.3.0</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.benchmark:benchmark-*:1.3.0</code> is released. Version 1.3.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/2f785440e93a6465ac53828357b5f71f0ad28329..392c9f0664b76c0f1bc8ff14f591f1d7d65a4476/benchmark">these commits</a>.</p>
-<p><strong>Microbenchmark changes since 1.2.0</strong></p>
-<ul>
- <li>Method tracing is on by default in microbenchmarks when running on most devices 
+ <li>ExoPlayer: 
   <ul>
-   <li>Method tracing runs as a separate phase, after measurements</li>
-   <li>Method tracing on some platform and ART versions will affect later measurement phases - on these versions, method tracing is off by default and a warning is printed to Studio output</li>
+   <li>Handle preload callbacks asynchronously in <code translate="no" dir="ltr">PreloadMediaSource</code> (<a href="https://github.com/androidx/media/issues/1568">#1568</a>).</li>
+   <li>Allow playback regardless of buffered duration when loading fails (<a href="https://github.com/androidx/media/issues/1571">#1571</a>).</li>
   </ul></li>
- <li>Main thread benchmarks and ANRs 
+ <li>Extractors: 
   <ul>
-   <li>Added <code translate="no" dir="ltr">measureRepeatedOnMainThread</code> for UI thread benchmarks (e.g. those that interact with Compose/View UIs) to avoid ANRs when running for many seconds.</li>
-   <li>Method traces are skipped if expected to overrun the ANR avoidance deadline. Set <code translate="no" dir="ltr">androidx.benchmark.profiling.skipWhenDurationRisksAnr</code> to false to disable this behavior (not recommended for CI runs).</li>
+   <li>MP3: Fix <code translate="no" dir="ltr">Searched too many bytes</code> error by correctly ignoring trailing non-MP3 data based on the length field in an <code translate="no" dir="ltr">Info</code> frame (<a href="https://github.com/androidx/media/issues/1480">#1480</a>).</li>
   </ul></li>
- <li>Minification 
+ <li>Text: 
   <ul>
-   <li>Embedded proguard rules to improve microbenchmarking with minification enabled</li>
-   <li>Minification/R8 in a library module requires AGP 8.3, and can be enabled via <code translate="no" dir="ltr">android.buildTypes.release.androidTest.enableMinification</code> in your <code translate="no" dir="ltr">build.gradle</code></li>
-   <li>Added experimental <code translate="no" dir="ltr">BlackHole.consume()</code> API to prevent dead code elimination (<a href="https://android-review.git.corp.google.com/c/platform/frameworks/support/+/3084471">If6812</a>, <a href="https://b.corp.google.com/issues/286091643">b/286091643</a>)</li>
+   <li>TTML: Fix handling of percentage <code translate="no" dir="ltr">tts:fontSize</code> values to ensure they are correctly inherited from parent nodes with percentage <code translate="no" dir="ltr">tts:fontSize</code> values.</li>
+   <li>Fix <code translate="no" dir="ltr">IndexOutOfBoundsException</code> in <code translate="no" dir="ltr">LegacySubtitleUtil</code> due to incorrectly handling the case of the requested output start time being greater than or equal to the final event time in the <code translate="no" dir="ltr">Subtitle</code> (<a href="https://github.com/androidx/media/issues/1516">#1516</a>).</li>
   </ul></li>
- <li>Metrics 
+ <li>DRM: 
   <ul>
-   <li>Experimental cpu event counter feature (metrics from <code translate="no" dir="ltr">perf_event_open</code>, which requires root on most versions of the platform), access via <code translate="no" dir="ltr">InstrumentationArgument</code> <code translate="no" dir="ltr">androidx.benchmark.cpuEventCounter.enable</code> (can be set to <code translate="no" dir="ltr">true</code>), and <code translate="no" dir="ltr">androidx.benchmark.cpuEventCounter.events</code> can be set e.g. to (<code translate="no" dir="ltr">Instructions,CpuCycles</code>). This should be supported on some userdebug emulators, but support has not been tested across</li>
+   <li>Fix <code translate="no" dir="ltr">android.media.MediaCodec$CryptoException: Operation not supported in this configuration: ERROR_DRM_CANNOT_HANDLE</code> error on API 31+ devices playing L1 Widevine content. This error is caused by an incomplete implementation of the framework <a href="https://developer.android.com/reference/android/media/MediaDrm#requiresSecureDecoder(java.lang.String)"><code translate="no" dir="ltr">MediaDrm.requiresSecureDecoder</code></a> method (<a href="https://github.com/androidx/media/issues/1603">#1603</a>).</li>
   </ul></li>
-</ul>
-<p><strong>MACRObenchmark changes since 1.2.0</strong></p>
-<ul>
- <li>Method tracing overhaul for macrobenchmarks. 
+ <li>Effect: 
   <ul>
-   <li>Now method traces are scoped to the duration of the <code translate="no" dir="ltr">measureBlock</code>, and can capture multiple sessions if the process starts multiple times.</li>
-   <li>Previously, method tracing would only work for <code translate="no" dir="ltr">StartupMode.COLD</code> benchmarks, and capture nothing for <code translate="no" dir="ltr">measureBlocks</code> that didn't restart the target process</li>
-   <li>Fixed method traces flush in macrobenchmark, so that method traces should be fully captured and valid, even on slower devices. (<a href="https://android-review.googlesource.com/#/q/I6349a48dca4116ac9b481882395ee630785f6181">I6349a</a>, <a href="https://b.corp.google.com/issues/329904950">b/329904950</a>)</li>
+   <li>Add a <code translate="no" dir="ltr">release()</code> method to <code translate="no" dir="ltr">GlObjectsProvider</code>.</li>
   </ul></li>
- <li>Correctly dump ART profile during individual <code translate="no" dir="ltr">warmUp</code> iterations when process is killed so <code translate="no" dir="ltr">CompilationMode.Partial(warmup=N)</code> measurements are more accurate. (<a href="https://android-review.googlesource.com/#/q/I17923a8bc7d37fa8472910fa33f840f182d1dbff">I17923</a>)</li>
- <li>Drop Shader broadcast failure message 
+ <li>Session: 
   <ul>
-   <li>Added debugging suggestions to drop shader broadcast failure message</li>
-   <li>Add two instrumentation arguments for overriding shader dropping behavior to workaround crashes when benchmarking apps without <code translate="no" dir="ltr">ProfileInstaller</code> 1.3: 
-    <ul>
-     <li><code translate="no" dir="ltr">androidx.benchmark.dropShaders.enable=true/false</code> : can be used to skip all shader dropping (including that done in <code translate="no" dir="ltr">StartupMode.Cold</code> launches), esp when benchmarking apps that don't yet use profileinstaller 1.3</li>
-     <li><code translate="no" dir="ltr">androidx.benchmark.dropShaders.throwOnFailure=true/false</code> : can be used to tolerate failures when trying to drop shaders, for example when benchmarking apps without profileinstaller 1.3 (<a href="https://android-review.googlesource.com/#/q/I4f57309332981ee79d082237ebaca887f39417b3">I4f573</a>)</li>
-    </ul></li>
+   <li>Transform a double-tap of <code translate="no" dir="ltr">KEYCODE_HEADSETHOOK</code> into a 'seek to next' action, as <a href="https://developer.android.com/reference/androidx/media3/session/MediaSession#media-key-events-mapping">documented</a> (<a href="https://github.com/androidx/media/issues/1493">#1493</a>).</li>
+   <li>Handle <code translate="no" dir="ltr">KEYCODE_HEADSETHOOK</code> as a 'play' command in <code translate="no" dir="ltr">MediaButtonReceiver</code> when deciding whether to ignore it to avoid a <code translate="no" dir="ltr">ForegroundServiceDidNotStartInTimeException</code> (<a href="https://github.com/androidx/media/issues/1581">#1581</a>).</li>
   </ul></li>
- <li>Added experimental <code translate="no" dir="ltr">MacrobenchmarkRule#measureRepeated</code> variant which takes a custom <code translate="no" dir="ltr">PerfettoConfig</code> for fully customized Perfetto trace recording. Note that incorrectly configured configs may cause built in Metric classes to fail. (<a href="https://android-review.googlesource.com/#/q/Idfd3d0c071005f04f8be9975c6379e6095416775">Idfd3d</a>, <a href="https://b.corp.google.com/issues/309841164">b/309841164</a>, <a href="https://b.corp.google.com/issues/304038384">b/304038384</a>)</li>
- <li>Cancel background dexopt jobs before running a Macrobenchmark to reduce interference. (<a href="https://android-review.googlesource.com/#/q/I989ed4f9e8384734f2fd16da7d6817f8dd1ee6cd">I989ed</a>)</li>
- <li>Macrobenchmark now waits for 1 second for the target application to flush an ART profile (previously it waited for 500 ms). (<a href="https://android-review.googlesource.com/#/q/I85a50e775f8b997c9a69c7a40d1e2b59561a10b1">I85a50</a>, <a href="https://b.corp.google.com/issues/316082056">b/316082056</a>)</li>
- <li><a href="https://developer.android.com/reference/kotlin/androidx/benchmark/macro/TraceSectionMetric">TraceSectionMetric</a> overhaul 
+ <li>RTSP Extension: 
   <ul>
-   <li><strong>Note</strong>: <code translate="no" dir="ltr">TraceSectionMetric</code> changes below can affect outputs in CI usage, and may create discontinuities, or break parsing</li>
-   <li>Sum is now the default, as most usage of this metric is for repeated events, and first would discard data in these cases</li>
-   <li>Changed to be more customizable, with more available modes</li>
-   <li>Mode names are now embedded in metric output name (in Studio and JSON)</li>
-   <li>Now supports slices created using <code translate="no" dir="ltr">Trace.{begin|end}AsyncSection</code>.</li>
+   <li>Skip invalid Media Descriptions in SDP parsing (<a href="https://github.com/androidx/media/issues/1472">#1087</a>).</li>
   </ul></li>
- <li>Metrics 
-  <ul>
-   <li>Power - Added <code translate="no" dir="ltr">PowerMetric.deviceSupportsHighPrecisionTracking</code>, <code translate="no" dir="ltr">PowerMetric.deviceBatteryHasMinimumCharge()</code> and <code translate="no" dir="ltr">PowerMetric.deviceSupportsPowerEnergy()</code></li>
-   <li>Renamed <code translate="no" dir="ltr">Metric.getResult</code> to <code translate="no" dir="ltr">getMeasurements</code> to match return type</li>
-   <li>Added log.w / exception labels to all startup detection failures. This does not change current behavior (so some errors throw, and others silently fail to detect the startup), just makes it more understandable. Generally the ones that <code translate="no" dir="ltr">Log.w()</code> and fail to report startup metrics are those where non-frame events are missing, exceptions are thrown when startup is detected except for frame timing information (from UI/RT slices). (<a href="https://android-review.googlesource.com/#/q/Id240f7698dfb977457362a137f0070e73dc2495c">Id240f</a>, <a href="https://b.corp.google.com/issues/329145809">b/329145809</a>)</li>
-   <li>Added <code translate="no" dir="ltr">frameCount</code> measurement to <code translate="no" dir="ltr">FrameTimingMetric</code> to aid in discovery of scenarios where measurements change because the number of frames produced changed (new animations added, invalidation issues fixed). (<a href="https://android-review.googlesource.com/#/q/I1e5aac6e28546cb5a9e1714ceac342c43e3a444c">I1e5aa</a>)</li>
-   <li>Clarified that <code translate="no" dir="ltr">frameOverrunMs</code> is the preferred metric for tracking when available in docs, and why. (<a href="https://android-review.googlesource.com/#/q/I1874977e4a9e8c0bebde86a7f6159d5730a26c47">I18749</a>, <a href="https://b.corp.google.com/issues/329478323">b/329478323</a>)</li>
-   <li>Fixes issue where unterminated frames at the beginning and end of the trace could be paired together, which would incorrectly report as a single extremely long frame. (<a href="https://android-review.googlesource.com/#/q/I393531f8cf983b2700c419c00a9c7c47ec382e67">I39353</a>, <a href="https://b.corp.google.com/issues/322232828">b/322232828</a>)</li>
-   <li>Improve <code translate="no" dir="ltr">FrameTimingMetric</code> error when frames aren't produced, and always output link to trace when failing metric parsing to assist in diagnosing problem. (<a href="https://android-review.googlesource.com/#/q/I956b90505fbd72a80dc00ad2214420f4d3957659">I956b9</a>)</li>
-   <li>Fixed crash in <code translate="no" dir="ltr">FrameTimingMetric</code> failing to parse frame id, especially on certain OEM devices. (<a href="https://android-review.googlesource.com/#/q/Ia24bc3c90b317252f579cc2425547f034ef96ef8">Ia24bc</a>, <a href="https://b.corp.google.com/issues/303823815">b/303823815</a>, <a href="https://b.corp.google.com/issues/306235276">b/306235276</a>)</li>
-   <li>Relaxed strictness of checks in <code translate="no" dir="ltr">FrameMetrics</code>, and added more detail to error messages. (<a href="https://android-review.googlesource.com/#/q/Iadededa9b5721f1e68534a0457c3dfc2f8c91b0f">Iadede</a>)</li>
-  </ul></li>
-</ul>
-<p><strong>Baseline Profile capture / Gradle plugin changes since 1.2.0</strong></p>
-<ul>
- <li>Increased max recommended version of AGP to 9.0.0-alpha01.</li>
- <li>Ensure <code translate="no" dir="ltr">mergeArtProfile</code> and <code translate="no" dir="ltr">mergeStartupProfile</code> tasks always wait for baseline profile generation. (<a href="https://android-review.git.corp.google.com/q/I623d65b8fedc7abb1d22fb2ca016582703f51176">I623d6</a>, <a href="https://b.corp.google.com/issues/343086054">b/343086054</a>)</li>
- <li>Generating a baseline profile successfully will output a summary of what changed (<a href="https://android-review.googlesource.com/#/q/I824c84553c4c1c0dd5b585f0846093762b938460">I824c8</a>, <a href="https://b.corp.google.com/issues/269484510">b/269484510</a>)</li>
- <li>Added DSL to disable warnings (<a href="https://android-review.googlesource.com/#/q/Ic4deb86fc3b91a31854053f19581e9798e43cbd6">Ic4deb</a>, <a href="https://b.corp.google.com/issues/331237001">b/331237001</a>)</li>
- <li>Fix to ensure benchmarks use generated baseline profiles when <code translate="no" dir="ltr">automaticGenerationDuringBuild</code> is off (<a href="https://android-review.googlesource.com/#/q/Ic144f394c09ec666d4892a4168a2197dc5031039">Ic144f</a>, <a href="https://b.corp.google.com/issues/333024280">b/333024280</a>)</li>
- <li>Fix <code translate="no" dir="ltr">BaselineProfile</code> gradle plugin property overrides to enable baseline profile generation and benchmarking when customizing a <code translate="no" dir="ltr">nonMinified</code> or benchmark build type. (<a href="https://android-review.googlesource.com/#/q/Ib8f0555001ff719f4b82c35cf50c13b4a3fa308d">Ib8f05</a>, <a href="https://b.corp.google.com/issues/324837887">b/324837887</a>)</li>
- <li>Fix for including library baseline profiles in AAR prior to AGP 8.3.0-alpha15. (<a href="https://android-review.googlesource.com/#/q/I1d2af6193d596a43a5f6a05eb15b2b0951523ad4">I1d2af</a>, <a href="https://b.corp.google.com/issues/313992099">b/313992099</a>)</li>
- <li>Fixed baseline and startup profile output url at the end of generation task. (<a href="https://android-review.googlesource.com/#/q/I802e5e2b335a1efa0370a0ac3d5e5bc656827f0f">I802e5</a>, <a href="https://b.corp.google.com/issues/313976958">b/313976958</a>)</li>
-</ul>
-<p><strong>Other significant changes since 1.2.0</strong></p>
-<ul>
- <li>Trace capture 
-  <ul>
-   <li>Reduced EXITCODE 2 error when starting perfetto from an error to logged warning</li>
-   <li>Enable AIDL tracing by default in benchmarks(requires API 28) (<a href="https://android-review.googlesource.com/#/q/Ia0af2a55ac2635db68427845860dc96d93994220">Ia0af2</a>, <a href="https://b.corp.google.com/issues/341852305">b/341852305</a>)</li>
-   <li>Enable porter tag tracing by default in benchmarks. This captures, for example, wakelock tracepoints. (<a href="https://android-review.googlesource.com/#/q/Icfe44e708991bb03eff2c8df527a6fe9f872fb88">Icfe44</a>, <a href="https://b.corp.google.com/issues/286551983">b/286551983</a>)</li>
-   <li>Increased trace capture start timeout to avoid crashes when starting tracing on slower devices (<a href="https://android-review.googlesource.com/#/q/I988418daa69ec33343364f7ad7c5fca26a39a5fa">I98841</a>, <a href="https://b.corp.google.com/issues/329145808">b/329145808</a>)</li>
-   <li>Added public API <code translate="no" dir="ltr">PerfettoTraceProcessor.Session.queryMetrics</code> APIs with JSON, textproto, and proto binary (undecoded) variants. These allow you to query metrics built into <code translate="no" dir="ltr">TraceProcessor</code> (<a href="https://android-review.googlesource.com/#/q/I54d7fb0cfd2d6e448bda78d9397cb96d77a2125b">I54d7f</a>, <a href="https://b.corp.google.com/issues/304038382">b/304038382</a>)</li>
-   <li>Enable blocking start on Perfetto trace record to reduce risk of missing data at beginning of trace. Only supported on API 33+. (<a href="https://android-review.googlesource.com/#/q/Ie6e417ad248b431ebf6096e2865265d51553be7f">Ie6e41</a>, <a href="https://b.corp.google.com/issues/310760059">b/310760059</a>)</li>
-  </ul></li>
- <li>JSON output 
-  <ul>
-   <li>Added additional information in benchmark context in JSON output: 
-    <ul>
-     <li><code translate="no" dir="ltr">context.artMainlineVersion</code> - integer version of Art mainline module (if present on device, <code translate="no" dir="ltr">-1</code> otherwise)</li>
-     <li><code translate="no" dir="ltr">context.build.id</code> - Equals <a href="http://android.os.Build.ID">android.os.Build.ID</a></li>
-     <li><code translate="no" dir="ltr">context.build.version.codename</code> - Equals <a href="http://android.os.Build.VERSION.CODENAME">android.os.Build.VERSION.CODENAME</a></li>
-     <li><code translate="no" dir="ltr">context.build.version.abbreviatedCodename</code> - corresponds to first letter of pre-release codename (including on release builds) (<a href="https://android-review.git.corp.google.com/c/platform/frameworks/support/+/3081738">Ie5020</a>)</li>
-    </ul></li>
-   <li>Added <code translate="no" dir="ltr">profilerOutput</code> list to JSON output for easier tooling around profiling traces (e.g. Perfetto, Method traces) (<a href="https://android-review.googlesource.com/#/q/I05ddd9af8864fdb79ce076e836699b80fca864e6">I05ddd</a>, <a href="https://b.corp.google.com/issues/332604449">b/332604449</a>)</li>
-   <li>Added a warning when Android Test Orchestrator is used in benchmark modules, as this will cause per-module output JSON files to be repeatedly overwritten. (<a href="https://android-review.googlesource.com/#/q/Ia1af6a178c9ef1c7e0dd80f735749eb97f416d7e">Ia1af6</a>, <a href="https://b.corp.google.com/issues/286899049">b/286899049</a>)</li>
-   <li>Throw when filenames are longer than 200 chars to avoid unclear crashes when writing or post-processing files. (<a href="https://android-review.googlesource.com/#/q/I4a5abd3ce0107d4465fd88f9067592a8a06f8e7c">I4a5ab</a>)</li>
-  </ul></li>
-</ul>
-
-<h2>Compose Animation: v1.7.0-rc01</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.7.0-rc01</code> is released. Version 1.7.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/98bc1cf10201a973793b72d2ff1ae728070e47e4..d8995e2377dd4baad64b39becb6d480cadd05c86/compose/animation">these commits</a>.</p>
-
-<h2>Compose Foundation: v1.7.0-rc01</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.7.0-rc01</code> is released. Version 1.7.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/98bc1cf10201a973793b72d2ff1ae728070e47e4..d8995e2377dd4baad64b39becb6d480cadd05c86/compose/foundation">these commits</a>.</p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Fixed a regression where the crash occurred when any element is focused inside a parent that is focusable (or clickable) and disabled. (<a href="https://issuetracker.google.com/issues/317561689">b/317561689</a>)</li>
-</ul>
-
-<h2>Compose Material: v1.7.0-rc01</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.7.0-rc01</code> is released. Version 1.7.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/98bc1cf10201a973793b72d2ff1ae728070e47e4..d8995e2377dd4baad64b39becb6d480cadd05c86/compose/material">these commits</a>.</p>
-
-<h2>Compose Material3: v1.3.0-rc01</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.compose.material3:material3-*:1.3.0-rc01</code> is released. Version 1.3.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/37922ee451c7e281c262f8570e84cba4efcaec47..677dcf61d60ab5702e37deefb378de88774d0f8e/compose/material3">these commits</a>.</p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li><code translate="no" dir="ltr">ModalBottomSheet</code> is now first in semantic traversal order, followed by the scrim. (<a href="https://android-review.googlesource.com/#/q/I436f9692595a637e75592a02304b3e2ca3a7a158">I436f9</a>, <a href="https://issuetracker.google.com/issues/358594665">b/358594665</a>)</li>
-</ul>
-
-<h2>Compose Material3 Adaptive: v1.0.0-rc01</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.compose.material3.adaptive:adaptive-*:1.0.0-rc01</code> is released. Version 1.0.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/967bd940b24778daf0ac5f9661bc881f4d0487c1..dd9a31e5a50f13aac48ebad38d86405cca057a46/compose/material3/adaptive">these commits</a>.</p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Fix wrong partition calculation when excluded hinge presents. (<a href="https://android-review.googlesource.com/#/q/9dfd483fadc0fdf3d27731c7567889650b0da10f">9dfd483</a>)</li>
-</ul>
-
-<h2>Compose Material3 Adaptive: v1.1.0-alpha01</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.compose.material3.adaptive:adaptive-*:1.1.0-alpha01</code> is released. Version 1.1.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/8c4071562bd7e22b937284d71fb7aca9c4cd662c/compose/material3/adaptive">these commits</a>.</p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Introduce pane expansion support of adaptive scaffolds.</li>
-</ul>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Introduce pane expansion APIs to public (<a href="https://android-review.googlesource.com/#/q/I301d6a9efc34f352707aaabe45dca05ed40a9f97">I301d6</a>)</li>
- <li>Introduced <code translate="no" dir="ltr">ThreePaneScaffoldState</code> to control pane value transitions. Added overloads of <code translate="no" dir="ltr">ListDetailPaneScaffold</code> and <code translate="no" dir="ltr">SupportingPaneScaffold</code> which accept this state. (<a href="https://android-review.googlesource.com/#/q/I5db3b9c26ff5a6d0911473015229895a13c09fb5">I5db3b</a>)</li>
- <li>Introduce pane expansion key and key provider interface (<a href="https://android-review.googlesource.com/#/q/Id621f67b8e0504e4d0e9f8084fb809b38ea1d081">Id621f</a>)</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Fix wrong partition calculation when excluded hinge presents. (<a href="https://android-review.googlesource.com/#/q/9dfd483fadc0fdf3d27731c7567889650b0da10f">9dfd483</a>)</li>
-</ul>
-
-<h2>Compose Runtime: v1.7.0-rc01</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.7.0-rc01</code> is released. Version 1.7.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/98bc1cf10201a973793b72d2ff1ae728070e47e4..d8995e2377dd4baad64b39becb6d480cadd05c86/compose/runtime">these commits</a>.</p>
-
-<h2>Compose UI: v1.7.0-rc01</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.7.0-rc01</code> is released. Version 1.7.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/98bc1cf10201a973793b72d2ff1ae728070e47e4..d8995e2377dd4baad64b39becb6d480cadd05c86/compose/ui">these commits</a>.</p>
-<p><strong>Notable changes</strong></p>
-<ul>
- <li>ui:ui module now forces requirement of a minimum version of foundation:foundation to be at least 1.7.0-rc01 or newer. This is enforced to remedy a behaviour incompatibility between ui and foundation in regards to <code translate="no" dir="ltr">NestedScrollSource</code> changes that happened early during 1.7.0-alpha01.</li>
-</ul>
-
-<h2>Core and Core-ktx: v1.15.0-alpha02</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.core:core:1.15.0-alpha02</code>, <code translate="no" dir="ltr">androidx.core:core-ktx:1.15.0-alpha02</code>, and <code translate="no" dir="ltr">androidx.core:core-testing:1.15.0-alpha02</code> are released. Version 1.15.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/4b0206986a60b7647e83f56df70756f23e5760d6..6b2638e1bfd54531dae1f04b33829101af8bf350/core">these commits</a>.</p>
-<p><strong>Important changes</strong></p>
-<ul>
- <li>Removed manual outlining of access to new platform APIs since this happens automatically via API modeling when using R8 with AGP 7.3 or later (e.g. R8 version 3.3) and for all builds when using AGP 8.1 or later (e.g. D8 version 8.1). Clients who are not using AGP are advised to update to D8 version 8.1 or later. See <a href="https://medium.com/androiddevelopers/mitigating-soft-verification-issues-in-r8-and-d8-7e9e06827dfd">this article</a> for more details. (<a href="https://android-review.googlesource.com/#/q/Ieb9aecd2af5587c5b82833146fee6e912693ab7b">Ieb9ae</a>, <a href="https://issuetracker.google.com/issues/345472586">b/345472586</a>)</li>
-</ul>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Added <code translate="no" dir="ltr">fallbackQuery</code> XML attribute to downloadable font definitions, allowing character-level fallback with downloadable fonts. (<a href="https://android-review.googlesource.com/#/q/Idd5449c07ede206b5a27e6553b5340dc16588347">Idd544</a>)</li>
- <li>Adds helper APIs for using <code translate="no" dir="ltr">ProfilingManager</code> (<a href="https://android-review.googlesource.com/#/q/If22927ac53ca54bcb294240f90c44ccf7ed01f1d">If2292</a>)</li>
- <li>Add compat method for <code translate="no" dir="ltr">ActivityOptions.setPendingIntentBackgroundActivityStartMode</code> (<a href="https://android-review.googlesource.com/#/q/I3ba1f4174f3a098e64aa255db50567bd76e3fbe5">I3ba1f</a>, <a href="https://issuetracker.google.com/issues/349617674">b/349617674</a>)</li>
- <li>Added <code translate="no" dir="ltr">DisplayCutoutCompat.getCutoutPath</code> (<a href="https://android-review.googlesource.com/#/q/I58778bb5c23837304fb5130644f9f4412884cdc2">I58778</a>, <a href="https://issuetracker.google.com/issues/279635904">b/279635904</a>)</li>
- <li>Reverts deprecation of <code translate="no" dir="ltr">ParcelCompat.writeBoolean</code> and delegates to the platform API on API level 29 and above. (<a href="https://android-review.googlesource.com/#/q/I9d2436d90f3cbe3bf22e2a3c97171f39b53cf040">I9d243</a>, <a href="https://issuetracker.google.com/issues/313834577">b/313834577</a>)</li>
- <li>Create <code translate="no" dir="ltr">FontsContractCompat.requestFonts</code> that takes executors (<a href="https://android-review.googlesource.com/#/q/I0301600d9a3c2f5062631d59105e42ad51bb4754">I03016</a>, <a href="https://issuetracker.google.com/issues/302377512">b/302377512</a>)</li>
- <li>Reverts deprecation of <code translate="no" dir="ltr">LocationCompat.isMock</code> and delegates to the platform API on API level 31 and above. (<a href="https://android-review.googlesource.com/#/q/I559407ae8f2cce149cd2802322485f1b80cb85c9">I55940</a>, <a href="https://issuetracker.google.com/issues/313834577">b/313834577</a>)</li>
- <li>Notifications can now be tagged as voicemail. (<a href="https://android-review.googlesource.com/#/q/I068aba00fe41ff34ceef18ad0ff43f60b30f18c9">I068ab</a>)</li>
-</ul>
-
-<h2>Emoji2: v1.5.0-rc01</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.emoji2:emoji2-*:1.5.0-rc01</code> is released. Version 1.5.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/56579bc30499ce39f0d7a6713a065b00c6194206..0adbbe89afc8940ce38426fa770f2b800023143f/emoji2">these commits</a>.</p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Support emoji 15.1 and bidirectional emoji selector UI. A simple click on the bidirectional switcher allows users to toggle between left and right-facing versions of emojis.</li>
- <li>Support multi-skintone emoji selector. Long-pressing couple emojis reveals a multi-person emoji selector for the zero state. When the user taps on the left half of an emoji, the emoji preview on the bottom right will be updated accordingly. When the user selects both halves of an emoji, the preview will show the entire emoji and the usr can then input it.</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Removed manual outlining of access to new platform APIs since this happens automatically via API modeling when using R8 with AGP 7.3 or later (e.g. R8 version 3.3) and for all builds when using AGP 8.1 or later (e.g. D8 version 8.1). Clients who are not using AGP are advised to update to D8 version 8.1 or later. See <a href="https://medium.com/androiddevelopers/mitigating-soft-verification-issues-in-r8-and-d8-7e9e06827dfd">this article</a> for more details. (<a href="https://android-review.googlesource.com/#/q/If6b4ccfca0a943b45971a422b58949b13a10bada">If6b4c</a>, <a href="https://issuetracker.google.com/issues/345472586">b/345472586</a>)</li>
- <li><code translate="no" dir="ltr">EmojiPickerView</code>’s tab selection and indicator updates one click behind. (<a href="https://android-review.git.corp.google.com/c/platform/frameworks/support/+/2657077">146b02</a>, <a href="https://issuetracker.google.com/issues/288261054">b/288261054</a>)</li>
- <li><code translate="no" dir="ltr">EmojiPickerView</code>’s tab selection and indicator is broken. (<a href="https://android-review.git.corp.google.com/c/platform/frameworks/support/+/2970143">5e1f14</a>, <a href="https://issuetracker.google.com/issues/273883688">b/273883688</a>)</li>
-</ul>
-
-<h2>Graphics Shapes: v1.0.0</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.graphics:graphics-shapes:1.0.0</code>, <code translate="no" dir="ltr">androidx.graphics:graphics-shapes-android:1.0.0</code>, and <code translate="no" dir="ltr">androidx.graphics:graphics-shapes-desktop:1.0.0</code> are released. Version 1.0.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/217941670a79c16dcfa827977fc9ace001bbfe3a..594e7b6ae3c328df6be79b67ea06fd32ae2af648/graphics/graphics-shapes">these commits</a>.</p>
-
-<h2>Navigation: v2.8.0-rc01</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.navigation:navigation-*:2.8.0-rc01</code> is released. Version 2.8.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/9130b719318a69f2f3eaf82c32b131232fd721cb..c19eabc8b1f7d6b3b33ce697447d6c98a4f336dd/navigation">these commits</a>.</p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Fix navigation crash when passing in top level Enum classes as type safe arguments. (<a href="https://android-review.googlesource.com/#/q/I0ba7670109e378668548a47dd6981a5b1a2f5aba">I0ba76</a>, <a href="https://issuetracker.google.com/issues/358137294">b/358137294</a>)</li>
- <li>Navigation 2.8 now correctly works with SDK 34 and will not swap over to SDK 35 until the 2.9 release along with the rest of the AndroidX libraries. (<a href="https://issuetracker.google.com/issues/358798728">b/358798728</a>)</li>
-</ul>
-
-<h2>privacysandbox ads: v1.1.0-beta10</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.privacysandbox.ads:ads-adservices:1.1.0-beta10</code> and <code translate="no" dir="ltr">androidx.privacysandbox.ads:ads-adservices-java:1.1.0-beta10</code> are released. Version 1.1.0-beta10 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/56579bc30499ce39f0d7a6713a065b00c6194206..8c4071562bd7e22b937284d71fb7aca9c4cd662c/privacysandbox/ads">these commits</a>.</p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Add missing Java constructor overloads for <code translate="no" dir="ltr">GetAdSelectionDataOutcome</code>, <code translate="no" dir="ltr">PersistAdSelectionResultRequest</code>, <code translate="no" dir="ltr">ReportEventRequest</code>, and <code translate="no" dir="ltr">FetchAndJoinCustomAudienceRequest</code> Experimental APIs. (<a href="https://android-review.googlesource.com/#/q/I19e7fe6208ed53e81895261716385db1bd24ccc5">I19e7f</a>)</li>
-</ul>
-
-<h2>ProfileInstaller: v1.4.0-beta01</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.profileinstaller:profileinstaller:1.4.0-beta01</code> is released with no changes from the last alpha. Version 1.4.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/9130b719318a69f2f3eaf82c32b131232fd721cb..8c4071562bd7e22b937284d71fb7aca9c4cd662c/profileinstaller/profileinstaller">these commits</a>.</p>
-
-<h2>Recyclerview: v1.4.0-beta01</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.recyclerview:recyclerview:1.4.0-beta01</code> is released, with no changes since <a href="#recyclerview-1.4.0-alpha02">1.4.0-alpha02</a>. Version 1.4.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/9130b719318a69f2f3eaf82c32b131232fd721cb..8c4071562bd7e22b937284d71fb7aca9c4cd662c/recyclerview/recyclerview">these commits</a>.</p>
-<p><strong>Compatibility note</strong>: This version will only compile against the API 35 (Vanilla Ice Cream) SDK or higher. If you see AGP (Android Gradle Plugin) warnings when you upgrade, you can suppress them.</p>
-
-<h2>Room: v2.7.0-alpha07</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.room:room-*:2.7.0-alpha07</code> is released. Version 2.7.0-alpha07 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/851bf84c0a2be5c65b9a8ad1add25fc42d701f48..8c4071562bd7e22b937284d71fb7aca9c4cd662c/room">these commits</a>.</p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>The Room Gradle Plugin will now automatically add the exported schemas into the Android Instrumentation Test resource sources so they can be used by the <code translate="no" dir="ltr">MigrationTestHelper</code>.</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Fixed an issue with the generated ‘actual’ of the <code translate="no" dir="ltr">RoomDatabaseConstructor</code> missing the ‘actual’ modifier in the <code translate="no" dir="ltr">initialize</code> function if such function is also overridden in the ‘expect’ declaration. (<a href="https://issuetracker.google.com/359631627">359631627</a>)</li>
- <li>Fixed an issue with the generated ‘actual’ of the <code translate="no" dir="ltr">RoomDatabaseConstructor</code> not matching the visibility of the ‘expect’ declaration. (<a href="https://issuetracker.google.com/358138953">358138953</a>)</li>
-</ul>
-
-<h2>Sqlite: v2.5.0-alpha07</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.sqlite:sqlite-*:2.5.0-alpha07</code> is released. Version 2.5.0-alpha07 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/9130b719318a69f2f3eaf82c32b131232fd721cb..8c4071562bd7e22b937284d71fb7aca9c4cd662c/sqlite">these commits</a>.</p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Add support for Linux ARM 64 in JVM / Desktop targets. (<a href="https://issuetracker.google.com/358045505">b/358045505</a>)</li>
-</ul>
-
-<h2>Startup: v1.2.0-beta01</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.startup:startup-runtime:1.2.0-beta01</code> is released. Version 1.2.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/adf1c279a86ab3886e1666c08e2c3efba783367b..6b2638e1bfd54531dae1f04b33829101af8bf350/startup/startup-runtime">these commits</a>.</p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Added explicit <code translate="no" dir="ltr">ProfileInstaller</code> dependency to support baseline profile installation fallback when profiles not installed by play.</li>
-</ul>
-
-<h2>Tv-Material: v1.0.0</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.tv:tv-material:1.0.0</code> is released. Version 1.0.0 is the first stable release of <code translate="no" dir="ltr">androidx.tv:tv-material</code>.</p>
-
-<h2>Wear Compose: v1.4.0-rc01</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.wear.compose:compose-*:1.4.0-rc01</code> is released. Version 1.4.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f38af45ab941d981ddb4a0759a4bedc5ade90e00..cd340f20b7c66762f0fc3710282a91b3e6f94ba9/wear/compose">these commits</a>.</p>
-<ul>
- <li>We have updated the Compose dependencies to 1.7.0-rc01 and pinned Wear Compose Navigation to androidx.lifecycle 2.8.3</li>
-</ul>
-
-<h2>Webkit: v1.12.0-beta01</h2>
-<p>August 21, 2024</p>
-<p><code translate="no" dir="ltr">androidx.webkit:webkit:1.12.0-beta01</code> is released. Version 1.12.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f5541f29d045c6ba9734689ec67891f8d667412b..8c4071562bd7e22b937284d71fb7aca9c4cd662c/webkit/webkit">these commits</a>.</p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Removed manual outlining of access to new platform APIs since this happens automatically via API modeling when using R8 with AGP 7.3 or later (e.g. R8 version 3.3) and for all builds when using AGP 8.1 or later (e.g. D8 version 8.1). Clients who are not using AGP are advised to update to D8 version 8.1 or later. See <a href="https://medium.com/androiddevelopers/mitigating-soft-verification-issues-in-r8-and-d8-7e9e06827dfd">this article</a> for more details. (<a href="https://android-review.googlesource.com/#/q/Ia60e0ab9f0fd613883a772c8aa34e27cc986cae8">Ia60e0</a>, <a href="https://issuetracker.google.com/issues/345472586">b/345472586</a>)</li>
 </ul>
 </body>
 </html>
