@@ -66,159 +66,115 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>ARCore for Jetpack XR: v1.0.0-alpha01</h2>
-<p>December 12, 2024</p>
-<p><code translate="no" dir="ltr">androidx.xr.arcore:arcore-* 1.0.0-alpha01</code> is released.</p>
-<p><strong>Features of initial release</strong></p>
-<p>Inspired by the existing ARCore library, the ARCore for Jetpack XR library provides capabilities for blending digital content with the real world. This library includes motion tracking, persistent anchors, hit testing, and plane identification with semantic labeling (for example, floor, walls, and tabletops). View the <a href="/develop/xr/jetpack-xr-sdk/work-with-arcore">developer guide</a> to learn more about working with ARCore for Jetpack XR.</p>
+<h2>Media3: v1.6.0-alpha01</h2>
+<p>December 20, 2024</p>
+<p><code translate="no" dir="ltr">androidx.media3:media3-*:1.6.0-alpha01</code> is released. Version 1.6.0-alpha01 contains <a href="https://github.com/androidx/media/commits/1.6.0-alpha01">these commits</a>.</p>
 <ul>
- <li><p><a href="/reference/kotlin/androidx/xr/runtime/Session"><code translate="no" dir="ltr">Session</code></a>: ARCore for Jetpack XR uses the Jetpack XR Runtime under-the-hood to power its functionality. You will use a Session to interact with most ARCore for Jetpack XR APIs, so please take a look at its documentation.</p></li>
- <li><p><a href="/reference/kotlin/androidx/xr/arcore/Plane"><code translate="no" dir="ltr">Plane</code></a>: Use planes to understand the world around you. Each plane has a <a href="/reference/kotlin/androidx/xr/arcore/Plane.Label"><code translate="no" dir="ltr">Label</code></a> that describes it semantically. You can use <a href="/reference/kotlin/androidx/xr/arcore/Plane#subscribe(androidx.xr.runtime.Session)"><code translate="no" dir="ltr">subscribe</code></a> to be notified about the latest detected planes or <a href="/reference/kotlin/androidx/xr/arcore/Plane#state()"><code translate="no" dir="ltr">state</code></a> to be notified about the changes to a specific plane.</p></li>
- <li><p><a href="/reference/kotlin/androidx/xr/arcore/Anchor"><code translate="no" dir="ltr">Anchor</code></a>: A link between a virtual object and a real world location. Anchors can be attached to a specific location in space (using <a href="/reference/kotlin/androidx/xr/arcore/Anchor#create(androidx.xr.runtime.Session,androidx.xr.runtime.math.Pose)"><code translate="no" dir="ltr">create</code></a>) or a <a href="/reference/kotlin/androidx/xr/arcore/Trackable"><code translate="no" dir="ltr">Trackable</code></a> (using <a href="/reference/kotlin/androidx/xr/arcore/Trackable#createAnchor(androidx.xr.runtime.math.Pose)"><code translate="no" dir="ltr">createAnchor</code></a>).</p>
+ <li>Common Library: 
   <ul>
-   <li><p>Anchors can be reused across sessions. You can use <a href="/reference/kotlin/androidx/xr/arcore/Anchor#persist()"><code translate="no" dir="ltr">persist</code></a> to store them, <a href="/reference/kotlin/androidx/xr/arcore/Anchor#getPersistedAnchorUuids(androidx.xr.runtime.Session)"><code translate="no" dir="ltr">getPersistedAnchorUuids</code></a> to enumerate them and <a href="/reference/kotlin/androidx/xr/arcore/Anchor#load(androidx.xr.runtime.Session,java.util.UUID)"><code translate="no" dir="ltr">load</code></a> to retrieve them. Make sure that you <a href="/reference/kotlin/androidx/xr/arcore/Anchor#unpersist(androidx.xr.runtime.Session,java.util.UUID)"><code translate="no" dir="ltr">unpersist</code></a> them once they are no longer in use.</p></li>
-   <li><p>Anchors are interoperable between ARCore for Jetpack XR and Jetpack SceneCore. You can create an <a href="/reference/kotlin/androidx/xr/scenecore/AnchorEntity"><code translate="no" dir="ltr">AnchorEntity</code></a> using an anchor or, if you have an existing AnchorEntity, you can use <a href="/reference/kotlin/androidx/xr/scenecore/AnchorEntity#getAnchor(androidx.xr.runtime.Session)"><code translate="no" dir="ltr">getAnchor</code></a> to retrieve its backing anchor.</p></li>
-   <li><p>Offer natural user interactions using <a href="/reference/kotlin/androidx/xr/arcore/package-summary#hitTest(androidx.xr.runtime.Session,androidx.xr.runtime.math.Ray)"><code translate="no" dir="ltr">hitTest</code></a>. A hitTest uses a <a href="/reference/kotlin/androidx/xr/runtime/math/Ray"><code translate="no" dir="ltr">Ray</code></a> to determine which contents it intersects and to create an <a href="/reference/kotlin/androidx/xr/arcore/Anchor"><code translate="no" dir="ltr">Anchor</code></a> from that location. Consider conducting a hitTest from an <a href="/reference/kotlin/androidx/xr/scenecore/InputEvent"><code translate="no" dir="ltr">InputEvent</code></a>.</p></li>
+   <li>Remove <code translate="no" dir="ltr">Format.toBundle(boolean excludeMetadata)</code> method, use <code translate="no" dir="ltr">Format.toBundle()</code> instead.</li>
+   <li>Add <code translate="no" dir="ltr">AudioManagerCompat</code> and <code translate="no" dir="ltr">AudioFocusRequestCompat</code> to replace the equivalent classes in <code translate="no" dir="ltr">androidx.media</code>.</li>
   </ul></li>
-</ul>
-<p><strong>Known Issues</strong></p>
-<ul>
- <li><p>There might be a delay between calling <a href="/reference/kotlin/androidx/xr/arcore/Anchor#unpersist(androidx.xr.runtime.Session,java.util.UUID)"><code translate="no" dir="ltr">unpersist</code></a> and its UUID being removed from the results returned by <a href="/reference/kotlin/androidx/xr/arcore/Anchor#getPersistedAnchorUuids(androidx.xr.runtime.Session)"><code translate="no" dir="ltr">getPersistedAnchorUuids</code></a>.</p></li>
- <li><p><a href="/reference/kotlin/androidx/xr/arcore/Anchor#create(androidx.xr.runtime.Session,androidx.xr.runtime.math.Pose)"><code translate="no" dir="ltr">create</code></a> will not validate that the system has enough resources to return new anchors. Creating an excessive amount of anchors might lead to a crash.</p></li>
- <li><p>Persisting an Anchor that was previously persisted and unpersisted is not currently supported.</p></li>
- <li><p>Usage in the emulator is supported, but the behavior might not be as stable as when running on an actual device. Particularly, calls to <a href="/reference/kotlin/androidx/xr/arcore/Anchor#create(androidx.xr.runtime.Session,androidx.xr.runtime.math.Pose)"><code translate="no" dir="ltr">create</code></a> might fail with a native code error and immediately terminate the activity.</p></li>
- <li><p>In certain circumstances, a <code translate="no" dir="ltr">RuntimeException</code> might be erroneously thrown when calling <a href="/reference/kotlin/androidx/xr/arcore/Anchor#persist()"><code translate="no" dir="ltr">persist</code></a> with the message “Anchor was not persisted”. In those circumstances, the function would still succeed and the anchor will be persisted. We recommend wrapping the call to <code translate="no" dir="ltr">persist</code> with a <code translate="no" dir="ltr">try</code> block as a workaround.</p></li>
-</ul>
-<devsite-hats-survey class="nocontent" hats-id="VxqvKSur40kxBYCLVTd0SSGykbno" listnr-id="5207477"></devsite-hats-survey>
-
-<h2>Jetpack Compose for XR: v1.0.0-alpha01</h2>
-<p>December 12, 2024</p>
-<p><code translate="no" dir="ltr">androidx.xr.compose:compose-*1.0.0-alpha01</code> is released.</p>
-<p><strong>Features of Initial Release</strong></p>
-<ul>
- <li><p>Initial developer release of Jetpack Compose for XR. Use familiar Compose concepts such as rows and columns to create spatial UI layouts in XR, whether you're porting an existing 2D app to XR or creating a new XR app from scratch. This library provides subspace and spatial composables: such as spatial panels and orbiters, which let you place your existing 2D Compose or Views-based UI in a spatial layout. It introduces the Volume subspace composable, which allows you to place SceneCore entities, such as 3D models, relative to your UI. Learn more in this <a href="/develop/xr/jetpack-xr-sdk/develop-ui">developer guide</a>:</p>
+ <li>ExoPlayer: 
   <ul>
-   <li><p><a href="/reference/kotlin/androidx/xr/compose/spatial/package-summary#Subspace(kotlin.Function1)"><code translate="no" dir="ltr">Subspace</code></a>: This composable can be placed anywhere within your app’s UI hierarchy, allowing you to maintain layouts for 2D and spatial UI without losing context between files. This makes it easier to share things like existing app architecture between XR and other form factors without needing to hoist state through your whole UI tree or re-architect your app.</p></li>
-   <li><p><a href="/reference/kotlin/androidx/xr/compose/subspace/package-summary#SpatialPanel(android.content.Intent,androidx.xr.compose.subspace.layout.SubspaceModifier,kotlin.String,androidx.xr.compose.subspace.layout.SpatialShape)">SpatialPanel</a>: A spatial panel is a subspace composable that lets you display app content–for example, you could display video playback, still images, or any other content in a spatial panel.</p></li>
-   <li><p><a href="/reference/kotlin/androidx/xr/compose/spatial/package-summary#Orbiter(androidx.xr.compose.spatial.OrbiterEdge.Horizontal,androidx.compose.ui.unit.Dp,androidx.compose.ui.Alignment.Horizontal,androidx.xr.compose.spatial.OrbiterSettings,androidx.xr.compose.subspace.layout.SpatialShape,kotlin.Function0)">Orbiter</a>: An orbiter is a spatial UI component. It's designed to be attached to a corresponding spatial panel, and contains navigation and contextual action items related to that spatial panel. For example, if you've created a spatial panel to display video content, you could add video playback controls inside an orbiter.</p></li>
-   <li><p><a href="/reference/kotlin/androidx/xr/compose/subspace/package-summary#Volume(androidx.xr.compose.subspace.layout.SubspaceModifier,kotlin.String,kotlin.Function1)">Volume</a>: Place SceneCore entities, such as 3D models, relative to your UI.</p></li>
+   <li>Consider language when selecting a video track. By default, select a 'main' video track that matches the language of the selected audio track, if available. Explicit video language preferences can be expressed with <code translate="no" dir="ltr">TrackSelectionParameters.Builder.setPreferredVideoLanguage(s)</code>.</li>
+   <li>Add <code translate="no" dir="ltr">selectedAudioLanguage</code> parameter to <code translate="no" dir="ltr">DefaultTrackSelector.selectVideoTrack()</code> method.</li>
+   <li>Add <code translate="no" dir="ltr">retryCount</code> parameter to <code translate="no" dir="ltr">MediaSourceEventListener.onLoadStarted</code> and corresponding <code translate="no" dir="ltr">MediaSourceEventListener.EventDispatcher</code> methods.</li>
+   <li>Fix bug where playlist items or periods in multi-period DASH streams with durations that don't match the actual content could cause frame freezes at the end of the item (<a href="https://github.com/androidx/media/issues/1698">#1698</a>).</li>
+   <li>Reduce default values for <code translate="no" dir="ltr">bufferForPlaybackMs</code> and <code translate="no" dir="ltr">bufferForPlaybackAfterRebufferMs</code> in <code translate="no" dir="ltr">DefaultLoadControl</code> to 1000 and 2000 ms respectively.</li>
+   <li>Add <code translate="no" dir="ltr">MediaExtractorCompat</code>, a new class that provides equivalent features to platform <code translate="no" dir="ltr">MediaExtractor</code>.</li>
+   <li>Move <code translate="no" dir="ltr">BasePreloadManager.Listener</code> to a top-level <code translate="no" dir="ltr">PreloadManagerListener</code>.</li>
+   <li><code translate="no" dir="ltr">RenderersFactory.createSecondaryRenderer</code> can be implemented to provide secondary renderers for pre-warming. Pre-warming enables quicker media item transitions during playback.</li>
+   <li>Enable sending <code translate="no" dir="ltr">CmcdData</code> for manifest requests in adaptive streaming formats DASH, HLS, and SmoothStreaming (<a href="https://github.com/androidx/media/issues/1951">#1951</a>).</li>
+   <li>Provide <code translate="no" dir="ltr">MediaCodecInfo</code> of the codec that will be initialized in <code translate="no" dir="ltr">MediaCodecRenderer.onReadyToInitializeCodec</code> (<a href="https://github.com/androidx/media/pull/1963">#1963</a>).</li>
+   <li>Change <code translate="no" dir="ltr">AdsMediaSource</code> to allow the <code translate="no" dir="ltr">AdPlaybackStates</code> to grow by appending ad groups. Invalid modifications are detected and throw an exception.</li>
   </ul></li>
- <li><p>Spatial Layout: You can create multiple spatial panels and place them within a Spatial Layout using <a href="/reference/kotlin/androidx/xr/compose/subspace/package-summary#SpatialRow(androidx.xr.compose.subspace.layout.SubspaceModifier,androidx.xr.compose.subspace.layout.SpatialAlignment,androidx.compose.ui.unit.Dp,kotlin.String,kotlin.Function1)"><code translate="no" dir="ltr">SpatialRow</code></a>, <a href="/reference/kotlin/androidx/xr/compose/subspace/package-summary#SpatialColumn(androidx.xr.compose.subspace.layout.SubspaceModifier,androidx.xr.compose.subspace.layout.SpatialAlignment,kotlin.String,kotlin.Function1)"><code translate="no" dir="ltr">SpatialColumn</code></a>, <a href="/reference/kotlin/androidx/xr/compose/subspace/package-summary#SpatialBox(androidx.xr.compose.subspace.layout.SubspaceModifier,androidx.xr.compose.subspace.layout.SpatialAlignment,kotlin.Boolean,kotlin.String,kotlin.Function1)"><code translate="no" dir="ltr">SpatialBox</code></a>, and <a href="/reference/kotlin/androidx/xr/compose/subspace/package-summary#SpatialLayoutSpacer(androidx.xr.compose.subspace.layout.SubspaceModifier)"><code translate="no" dir="ltr">SpatialLayoutSpacer</code></a>. Use <code translate="no" dir="ltr">SubspaceModifier</code>s to customize your layout.</p></li>
- <li><p>Spatial UI components: These elements can be reused in your 2D UI, and their spatial attributes will only be visible when spatial capabilities are enabled.</p>
+ <li>Transformer: 
   <ul>
-   <li><a href="/kotlin/androidx/xr/compose/spatial/package-summary#SpatialDialog(kotlin.Function0,androidx.xr.compose.spatial.SpatialDialogProperties,kotlin.Function0)"><code translate="no" dir="ltr">SpatialDialog</code></a>: Panel will push slightly back in z-depth to display an elevated dialog. </li>
-   <li><a href="/reference/kotlin/androidx/xr/compose/spatial/package-summary#SpatialPopup(androidx.xr.compose.spatial.SpatialElevationLevel,kotlin.Function1)"><code translate="no" dir="ltr">SpatialPopUp</code></a>: Panel will push slightly back in z-depth to display an elevated popup</li>
-   <li><a href="/reference/kotlin/androidx/xr/compose/spatial/package-summary#SpatialElevation(androidx.xr.compose.spatial.SpatialElevationLevel,kotlin.Function0)"><code translate="no" dir="ltr">SpatialElevation</code></a>: <code translate="no" dir="ltr">SpatialElevationLevel</code> can be set to add elevation.</li>
+   <li>Update parameters of <code translate="no" dir="ltr">VideoFrameProcessor.registerInputStream</code> and <code translate="no" dir="ltr">VideoFrameProcessor.Listener.onInputStreamRegistered</code> to use <code translate="no" dir="ltr">Format</code>.</li>
+   <li>Add support for transmuxing into alternative backward compatible formats.</li>
+   <li>Generate HDR static metadata when using <code translate="no" dir="ltr">DefaultEncoderFactory</code>.</li>
   </ul></li>
- <li><p>SpatialCapabilities: Spatial capabilities can change as users interact with your app or the system, or can even be changed by your app itself—for example, moving into Home Space or Full Space. To avoid issues, your app needs to check for <a href="/reference/kotlin/androidx/xr/compose/platform/package-summary#LocalSpatialCapabilities()"><code translate="no" dir="ltr">LocalSpatialCapabilities.current</code></a> to determine which APIs are supported in the current environment. <a href="/reference/kotlin/androidx/xr/compose/platform/SpatialCapabilities#isSpatialUiEnabled()"><code translate="no" dir="ltr">isSpatialUiEnabled</code></a>: <a href="/develop/xr/jetpack-xr-sdk/develop-ui">Spatial UI elements</a> (e.g. SpatialPanel) <a href="/reference/kotlin/androidx/xr/compose/platform/SpatialCapabilities#isContent3dEnabled()"><code translate="no" dir="ltr">isContent3dEnabled</code></a>: <a href="/develop/xr/jetpack-xr-sdk/add-3d-models">3D objects</a> <a href="/reference/kotlin/androidx/xr/compose/platform/SpatialCapabilities#isAppEnvironmentEnabled()"><code translate="no" dir="ltr">isAppEnvironmentEnabled</code></a>: The <a href="/develop/xr/jetpack-xr-sdk/add-environments">environment</a> <a href="/reference/kotlin/androidx/xr/compose/platform/SpatialCapabilities#isPassthroughControlEnabled()"><code translate="no" dir="ltr">isPassthroughControlEnabled</code></a>: Whether or not the application can control the passthrough state <a href="/reference/kotlin/androidx/xr/compose/platform/SpatialCapabilities#isSpatialAudioEnabled()"><code translate="no" dir="ltr">isSpatialAudioEnabled</code></a>: <a href="/develop/xr/jetpack-xr-sdk/add-spatial-audio">Spatial audio</a></p></li>
-</ul>
-<p><strong>Known Issues</strong></p>
-<ul>
- <li>Currently a minSDK of 30 is required to use Jetpack Compose for XR. As a workaround you may add the following manifest entry <code translate="no" dir="ltr">&lt;uses-sdk tools:overrideLibrary="androidx.xr.scenecore, androidx.xr.compose"/&gt;</code> to be able to build and run with a minSDK of 23.</li>
- <li>Jetpack XR apps currently require requesting <code translate="no" dir="ltr">android.permission.SCENE_UNDERSTANDING</code> permission in the AndroidManifest.</li>
- <li>When an app launches directly into Full Space using the <code translate="no" dir="ltr">PROPERTY_XR_ACTIVITY_START_MODE</code> property in their manifest, Activities/Applications are initially opened in Home Space before transitioning into Full Space.</li>
- <li>glTFs in Volume Composables may initially flicker at the wrong location.</li>
- <li>Using a SpatialDialog in a panel that has been moved significantly will push the content in the wrong direction.</li>
-</ul>
-<devsite-hats-survey class="nocontent" hats-id="VxqvKSur40kxBYCLVTd0SSGykbno" listnr-id="5207477"></devsite-hats-survey>
-
-<h2>Material Design for XR: v1.0.0-alpha01</h2>
-<p>December 12, 2024</p>
-<p><code translate="no" dir="ltr">androidx.xr.compose.material3:material3:1.0.0-alpha01</code> is released.</p>
-<p><strong>Features of Initial Release</strong></p>
-<p>Initial developer release of Material Design for XR. Using the existing Material 3 library, components and adaptive layouts are enhanced with spatial UI behaviors. You can build directly with M3 XR components, or adapt your current implementation by adding the <code translate="no" dir="ltr">EnableXrComponentOverrides</code> wrapper. Learn more in this <a href="/develop/xr/jetpack-xr-sdk/material-design">developer guide</a>.</p>
-<p>Supported XR adaptations:</p>
-<ul>
- <li><p>Navigation rail in any Compose layout, including <a href="/develop/ui/compose/layouts/adaptive/build-adaptive-navigation"><code translate="no" dir="ltr">NavigationSuiteScaffold</code></a> will automatically adapt to XR Orbiter. For more information, read <a href="https://m3.material.io/components/navigation-rail/xr">Material Design guidelines</a>.</p></li>
- <li><p>Navigation bar in any Compose layout, including <a href="/develop/ui/compose/layouts/adaptive/build-adaptive-navigation"><code translate="no" dir="ltr">NavigationSuiteScaffold</code></a> will automatically adapt to XR Orbiter. For more information, read <a href="https://m3.material.io/components/navigation-bar/xr">Material Design guidelines</a>.</p></li>
-</ul>
-<p><strong>Known Issues</strong></p>
-<ul>
- <li>ListDetailPaneScaffold and SupportingPaneScaffold currently don’t support multiple spatial panels</li>
-</ul>
-<devsite-hats-survey class="nocontent" hats-id="VxqvKSur40kxBYCLVTd0SSGykbno" listnr-id="5207477"></devsite-hats-survey>
-
-<h2>Jetpack SceneCore: v1.0.0-alpha01</h2>
-<p>December 12, 2024</p>
-<p><code translate="no" dir="ltr">androidx.xr.scenecore:scenecore-* 1.0.0-alpha01</code> is released.</p>
-<p><strong>Features of Initial Release</strong> Initial developer release of Jetpack SceneCore, a 3D scene graph library for creating and manipulating immersive scenes and environments. This library allows you to place and arrange 3D models and content panels relative to each other and your virtual or real-world environments.</p>
-<ul>
- <li><a href="/design/ui/xr/guides/environments">SpatialEnvironment</a>: Create fully immersive experiences with a skybox image and/or 3D model geometry as the backdrop for your XR scene of your environment. Or enable passthrough, so your virtual scene can integrate with the user’s real-world environment.</li>
- <li><a href="/reference/kotlin/androidx/xr/scenecore/PanelEntity">PanelEntity</a>: Add 2D content to your 3D scenes by embedding standard Android layouts and Activities into spatialized panels that can float or be anchored to real-world surfaces.</li>
- <li><a href="/reference/kotlin/androidx/xr/scenecore/GltfModelEntity">GltfModelEntity</a>: Place, animate, and interact with 3D models in your scene. SceneCore supports the glTF file format for ease of integration with existing models.</li>
- <li><a href="/develop/xr/jetpack-xr-sdk/add-spatial-audio">SpatialAudio</a>: Add ambient and point audio sources into your 3D scene for fully immersive, spatialized sound.</li>
- <li><a href="/reference/kotlin/androidx/xr/scenecore/StereoSurfaceEntity">StereoSurfaceEntity</a>: SceneCore supports left/right eye routing of content rendered onto an Android Surface. This can be used to render stereoscopic content in a side-by-side or top-bottom format, such as stereo photos, 3D video, or other dynamically rendered UIs. Applications should use MediaPlayer or ExoPlayer for video decoding.</li>
- <li>Component System: SceneCore offers a robust and flexible component system for adding capabilities to your XR content, including affordances for users to move, resize, and interact with models and panels.</li>
- <li><a href="/reference/kotlin/androidx/xr/arcore/Anchor">Anchor</a>: With passthrough enabled, you can attach panels and models to actual surfaces, giving users seamless integration of virtual content in their real-world environment.</li>
- <li>User Pose: Access the user’s location in the virtual scene, to orient your content around the user’s position.</li>
- <li><a href="/reference/kotlin/androidx/xr/scenecore/SpatialCapabilities">SpatialCapabilities</a>: Build fully adaptive apps that take advantage of spatialized capabilities when available, such as 3D positioning of UI content. Not only that, but your app can monitor for changes to capabilities while the app is executing, to modify the experience based on how the user is using their Android XR device.</li>
-</ul>
-<p><strong>Known Issues</strong></p>
-<ul>
- <li>Currently a minSDK of 30 is required to use Jetpack SceneCore. As a workaround add the following manifest entry <code translate="no" dir="ltr">&lt;uses-sdk tools:overrideLibrary="androidx.xr.scenecore, androidx.xr.compose"/&gt;</code> to be able to build and run with a minSDK of 23.</li>
- <li>Session can become invalid in various situations that automatically recreate the Activity, including resizing a main panel, connecting peripherals, and changing between light and dark mode. If you encounter session invalidation issues, workarounds include making you main panel non-resizable, using a dynamic panel entity, <a href="/guide/topics/resources/runtime-changes#restrict-activity">disabling activity recreation</a> for specific config changes or disabling light/dark mode theme changes.</li>
- <li>Movable and Resizable components are not supported on GltfEntity.</li>
- <li>Entity.getSize() is not supported on GltfEntity.</li>
- <li>Jetpack XR apps required to request <code translate="no" dir="ltr">android.permission.SCENE_UNDERSTANDING</code> permission in AndroidManifest.</li>
- <li>Creating a session is only supported on an Android XR device. At this time, if you create a Session and try to use it on a non Android XR device, you'll get a RuntimeException.</li>
- <li>Setting the skybox to null via `SpatialEnvironment.setSpatialEnvironmentPreference() does not result in a solid black skybox as documented. It may result in the system default skybox or no change to the current skybox.</li>
- <li>SceneCore clients should add <code translate="no" dir="ltr">implementation(“com.google.guava:listenablefuture-1.0”)</code> to their Gradle configuration for their app’s dependencies. In a future release, scenecore will include this library as an <code translate="no" dir="ltr">api</code> dependency so clients will not need to explicitly declare it.</li>
- <li>SceneCore erroneously includes <code translate="no" dir="ltr">com.google.guava:guava-31.1-android</code> and <code translate="no" dir="ltr">com.google.protobuf:protobuf-javalite</code> as transitive dependencies. If this results in duplicate class errors in your build, these two dependencies can be safely excluded.</li>
- <li>If your app uses SceneCore and enables ProGuard, it will crash when you create a Session. As a workaround, disable ProGuard. See <a href="/build/shrink-code">this guide</a> for more information on how to enable ProGuard.</li>
-</ul>
-<devsite-hats-survey class="nocontent" hats-id="VxqvKSur40kxBYCLVTd0SSGykbno" listnr-id="5207477"></devsite-hats-survey>
-
-<h2>XR Runtime: v1.0.0-alpha01</h2>
-<p>December 12, 2024</p>
-<p><code translate="no" dir="ltr">androidx.xr.runtime:runtime-* 1.0.0-alpha01</code> is released.</p>
-<p><strong>Features of Initial Release</strong></p>
-<p>Initial release of Jetpack XR Runtime. This library contains fundamental pieces of functionality for the Jetpack XR suite of libraries. This includes capability discovery, lifecycle management, configuration, and more. The Runtime library provides different variations (e.g. <code translate="no" dir="ltr">runtime-openxr</code> or <code translate="no" dir="ltr">runtime-testing</code>) depending on the execution platform. Additionally, this library offers fundamental math abstractions such as <a href="/reference/kotlin/androidx/xr/runtime/math/Vector3"><code translate="no" dir="ltr">Vector3</code></a> and <a href="/reference/kotlin/androidx/xr/runtime/math/Matrix4"><code translate="no" dir="ltr">Matrix4</code></a> that are used across the entire Jetpack XR API surface.</p>
-<ul>
- <li><p><a href="/reference/kotlin/androidx/xr/runtime/Session"><code translate="no" dir="ltr">Session</code></a>: Provides you with fine-grained controls over the XR system, including deciding when processing is and is not being executed and the overall configuration. It is also the handle that you will use across all other APIs to unlock the underlying system capabilities.</p></li>
- <li><p><a href="/reference/kotlin/androidx/xr/runtime/math/Pose"><code translate="no" dir="ltr">Pose</code></a>: A location in an arbitrary coordinate system that has a position and orientation associated with it. You will use this class to communicate the location of objects with ARCore for Jetpack XR and Jetpack SceneCore.</p></li>
-</ul>
-<p><strong>Known Issues</strong></p>
-<ul>
- <li><a href="/reference/kotlin/androidx/xr/runtime/Session#configure()"><code translate="no" dir="ltr">configure</code></a> is currently a no-op. Future releases will add new settings that you can use to control the behavior of the <a href="/reference/kotlin/androidx/xr/runtime/Session"><code translate="no" dir="ltr">Session</code></a>.</li>
-</ul>
-<devsite-hats-survey class="nocontent" hats-id="VxqvKSur40kxBYCLVTd0SSGykbno" listnr-id="5207477"></devsite-hats-survey>
-
-<h2>Compose Material3: v1.4.0-alpha05</h2>
-<p>December 12, 2024</p>
-<p><code translate="no" dir="ltr">androidx.compose.material3:material3-*:1.4.0-alpha05</code> is released. Version 1.4.0-alpha05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/6f09cf2ae979e48fdb19485f757a033e4a34bb82..604900a0795c06c6bc66e4db8d0aefb08bea3cc1/compose/material3">these commits</a>.</p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Replace type in <code translate="no" dir="ltr">WideNavigationRailState.current/target</code> value for an enum for better readability (<a href="https://android-review.googlesource.com/#/q/I2d6abfd48f2111270a8006acc7c26afd8376fd11">I2d6ab</a>)</li>
- <li><code translate="no" dir="ltr">SplitButton</code> change Shape api from data class to class for binary compatibility. (<a href="https://android-review.googlesource.com/#/q/I5381213967af44f2fe37dafba1f1ad0b0863a637">I53812</a>)</li>
- <li>Added a tooltip API that has a <code translate="no" dir="ltr">onDismissRequest</code> parameter so makers can decide what happens when a user clicks outside of the tooltip. Deprecated the old API that doesn't contain this new parameter. (<a href="https://android-review.googlesource.com/#/q/I99aef78418a6bb25f499bd67fac956a2c87be72e">I99aef</a>)</li>
- <li>Change naming of <code translate="no" dir="ltr">opticalCentering</code> to <code translate="no" dir="ltr">horizontalCenterOptically</code>. Making the modifier internal. Replace padding parameter with max start and end offset. (<a href="https://android-review.googlesource.com/#/q/I0b904925a852f44df024911bb9204dc508aebdd4">I0b904</a>)</li>
- <li>Change <code translate="no" dir="ltr">WideNavigationRailState</code> to have current/target value, remove enums in favor of boolean. (<a href="https://android-review.googlesource.com/#/q/Idfa29aad7efd1d0e943bf175f5bcb1fc347fdf0e">Idfa29</a>, <a href="https://issuetracker.google.com/issues/356039090">b/356039090</a>)</li>
- <li>Add <code translate="no" dir="ltr">NavigationBarItemComponentOverride</code>. (<a href="https://android-review.googlesource.com/#/q/I3a06a587c543d6a7aac7ced35adeb189c2c0deb6">I3a06a</a>)</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Fix the top and bottom app-bar behaviors to reliably change color when content is scrolled all the way. (<a href="https://android-review.googlesource.com/#/q/Idc4e834695cbd7cb8099f7b63cf21d5b764f1c81">Idc4e8</a>, <a href="https://issuetracker.google.com/issues/293665988">b/293665988</a>)</li>
- <li>Scroll behavior functions for top and bottom app bars now return a remembered behavior to perform better across recompositions. (<a href="https://android-review.googlesource.com/#/q/I0fdbe6e2ffb01d97b4c57d3a41a76f8531a2d72a">I0fdbe</a>, <a href="https://issuetracker.google.com/issues/207957336">b/207957336</a>)</li>
- <li>Modifier pararemeter is now applied after internal modifiers such as dragging behavior and semantics, instead of before. This affects the ordering in which modifiers are applied. (<a href="https://android-review.googlesource.com/#/q/I8d83fd447173da5cd76aa6e03ca2d0b4921c7a59">I8d83f</a>)</li>
- <li>Expanded bottom sheet remains expanded on size change. (<a href="https://android-review.googlesource.com/#/q/I2870ba38420d18b02676e6f280ef96dddc6a3a8a">I2870b</a>, <a href="https://issuetracker.google.com/issues/324934884">b/324934884</a>)</li>
- <li>Correctly route status and navigation bar flags for windows properties. (<a href="https://android-review.googlesource.com/#/q/Ie674d4f080aafa8a41aeb3732797916169a07198">Ie674d</a>, <a href="https://issuetracker.google.com/issues/362539765">b/362539765</a>)</li>
- <li>Move modifier parameter to the scaffolds root, as documented. This aligns implementation with M2. (<a href="https://android-review.googlesource.com/#/q/I0235ea935c42700a5e0aa5205d0d8a7bc8ffe88e">I0235e</a>, <a href="https://issuetracker.google.com/issues/372311595">b/372311595</a>)</li>
-</ul>
-<p><strong>External Contribution</strong></p>
-<ul>
- <li>Commonized <code translate="no" dir="ltr">DatePickerDialog</code> function. (<a href="https://android-review.googlesource.com/#/q/I7dceda6b682e488b82c0e64d2310fb9e38f1b8cd">I7dced</a>)</li>
-</ul>
-
-<h2>Compose Material3 Adaptive: v1.1.0-alpha08</h2>
-<p>December 12, 2024</p>
-<p><code translate="no" dir="ltr">androidx.compose.material3.adaptive:adaptive-*:1.1.0-alpha08</code> is released. Version 1.1.0-alpha08 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/6f09cf2ae979e48fdb19485f757a033e4a34bb82..105dbfc6218aa1777d726fcdc715d59fa2e1a1ff/compose/material3/adaptive">these commits</a>.</p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Introduce <code translate="no" dir="ltr">currentWindowDpSize</code> function. (<a href="https://android-review.googlesource.com/#/q/I991255c27fc9fa7aee15a52e99d6fb91ee27b77d">I99125</a>, <a href="https://issuetracker.google.com/issues/296300441">b/296300441</a>)</li>
- <li>Expose <code translate="no" dir="ltr">PaneScaffoldParentData</code> and <code translate="no" dir="ltr">ThreePaneScaffoldHorizontalOrder.toLtrOrder()</code> (<a href="https://android-review.googlesource.com/#/q/I2d6b73dbbf56d0a6602346129e8979e98f579d42">I2d6b7</a>)</li>
- <li>Remove <code translate="no" dir="ltr">PaneScaffoldMotionScope</code> and turn it into a field under <code translate="no" dir="ltr">PaneScaffoldTransitionScope</code>. Also rename it to <code translate="no" dir="ltr">PaneScaffoldMotionDataProvider</code> and remove the access to the underlying data structure of PaneMotionData - instead, provide getter and looping methods for accessing the data. (<a href="https://android-review.googlesource.com/#/q/Id8884de1cf9f74f006bc2cc3b8a515666e431976">Id8884</a>)</li>
- <li>Create overriding mechanism for <code translate="no" dir="ltr">ThreePaneScaffold</code> to support sideloading implementations for different form factors. (<a href="https://android-review.googlesource.com/#/q/I5280fdbe1a2f5ed7f63be6c032fc1b85f47e02ea">I5280f</a>)</li>
- <li>Makes pane expansion state null by default (<a href="https://android-review.googlesource.com/#/q/Ia65f8919ba9aaaa4c611ecb40514ee41d1e8d56f">Ia65f8</a>, <a href="https://issuetracker.google.com/issues/376394520">b/376394520</a>)</li>
+ <li>Extractors: 
+  <ul>
+   <li>AVI: Fix handling of files with constant bitrate compressed audio where the stream header stores the number of bytes instead of the number of chunks.</li>
+  </ul></li>
+ <li>Audio: 
+  <ul>
+   <li>Fix <code translate="no" dir="ltr">onAudioPositionAdvancing</code> to be called when playback resumes (previously it was called when playback was paused).</li>
+  </ul></li>
+ <li>Video: 
+  <ul>
+   <li>Fix <code translate="no" dir="ltr">MediaCodecVideoRenderer</code> such that when without a <code translate="no" dir="ltr">Surface</code>, the renderer skips just-early frames only if the <code translate="no" dir="ltr">VideoFrameReleaseControl.getFrameReleaseAction</code> is not <code translate="no" dir="ltr">FRAME_RELEASE_TRY_AGAIN_LATER</code>.</li>
+  </ul></li>
+ <li>Text: 
+  <ul>
+   <li>Stop eagerly loading all subtitle files configured with <code translate="no" dir="ltr">MediaItem.Builder.setSubtitleConfigurations</code>, and instead only load one if it is selected by track selection (<a href="https://github.com/androidx/media/issues/1721">#1721</a>).</li>
+  </ul></li>
+ <li>Effect: 
+  <ul>
+   <li>Moved the functionality of <code translate="no" dir="ltr">OverlaySettings</code> into <code translate="no" dir="ltr">StaticOverlaySettings</code>. <code translate="no" dir="ltr">OverlaySettings</code> can be subclassed to allow dynamic overlay settings.</li>
+  </ul></li>
+ <li>Muxers: 
+  <ul>
+   <li>Moved <code translate="no" dir="ltr">MuxerException</code> out of <code translate="no" dir="ltr">Muxer</code> interface to avoid a very long fully qualified name.</li>
+  </ul></li>
+ <li>Session: 
+  <ul>
+   <li>Add 'Context' as a parameter to 'MediaButtonReceiver.shouldStartForegroundService` (<a href="https://github.com/androidx/media/issues/1887">#1887</a>).</li>
+  </ul></li>
+ <li>UI: 
+  <ul>
+   <li>Add <code translate="no" dir="ltr">PlayerSurface</code> Composable to <code translate="no" dir="ltr">media3-ui-compose</code> module.</li>
+   <li>Add <code translate="no" dir="ltr">PlayPauseButtonState</code>, <code translate="no" dir="ltr">NextButtonState</code>, <code translate="no" dir="ltr">PreviousButtonState</code>, <code translate="no" dir="ltr">RepeatButtonState</code>, <code translate="no" dir="ltr">ShuffleButtonState</code> classes and the corresponding <code translate="no" dir="ltr">rememberPlayPauseButtonState</code>, <code translate="no" dir="ltr">rememberNextButtonState</code>, <code translate="no" dir="ltr">rememberPreviousButtonState</code>, <code translate="no" dir="ltr">rememberRepeatButtonState</code>, <code translate="no" dir="ltr">rememberShuffleButtonState</code> composables to <code translate="no" dir="ltr">media3-ui-compose</code> module.</li>
+  </ul></li>
+ <li>HLS Extension: 
+  <ul>
+   <li>Add a first version of <code translate="no" dir="ltr">HlsInterstitialsAdsLoader</code>. The ads loader reads the HLS interstitials of an HLS media playlist and maps them to the <code translate="no" dir="ltr">AdPlaybackState</code> that is passed to the <code translate="no" dir="ltr">AdsMediaSource</code>. This initial version only supports HLS VOD streams with <code translate="no" dir="ltr">X-ASSET-URI</code> attributes.</li>
+   <li>Add <code translate="no" dir="ltr">HlsInterstitialsAdsLoader.AdsMediaSourceFactory</code>. Apps can use it to create <code translate="no" dir="ltr">AdsMediaSource</code> instances that use an <code translate="no" dir="ltr">HlsInterstitialsAdsLoader</code> in a convenient and safe way.</li>
+  </ul></li>
+ <li>DASH Extension: 
+  <ul>
+   <li>Add AC-4 Level-4 format support for DASH (<a href="https://github.com/androidx/media/pull/1898">#1898</a>).</li>
+  </ul></li>
+ <li>Decoder Extensions (FFmpeg, VP9, AV1, etc.): 
+  <ul>
+   <li>Add the MPEG-H decoder module which uses the native MPEG-H decoder module to decode MPEG-H audio (<a href="https://github.com/androidx/media/pull/1826">#1826</a>).</li>
+  </ul></li>
+ <li>Demo app: 
+  <ul>
+   <li>Add <code translate="no" dir="ltr">MinimalControls</code> (<code translate="no" dir="ltr">PlayPauseButton</code>, <code translate="no" dir="ltr">NextButton</code>, <code translate="no" dir="ltr">PreviousButton</code>) and <code translate="no" dir="ltr">ExtraControls</code> (<code translate="no" dir="ltr">RepeatButton</code>, <code translate="no" dir="ltr">ShuffleButton</code>) Composable UI elements to <code translate="no" dir="ltr">demo-compose</code> utilizing <code translate="no" dir="ltr">PlayPauseButtonState</code>, <code translate="no" dir="ltr">NextButtonState</code>, <code translate="no" dir="ltr">PreviousButtonState</code>, <code translate="no" dir="ltr">RepeatButtonState</code>, <code translate="no" dir="ltr">ShuffleButtonState</code>.</li>
+  </ul></li>
+ <li>Remove deprecated symbols: 
+  <ul>
+   <li>Remove deprecated <code translate="no" dir="ltr">AudioMixer.create()</code> method. Use <code translate="no" dir="ltr">DefaultAudioMixer.Factory().create()</code> instead.</li>
+   <li>Remove the following deprecated <code translate="no" dir="ltr">Transformer.Builder</code> methods: 
+    <ul>
+     <li><code translate="no" dir="ltr">setTransformationRequest()</code>, use <code translate="no" dir="ltr">setAudioMimeType()</code>, <code translate="no" dir="ltr">setVideoMimeType()</code>, and <code translate="no" dir="ltr">setHdrMode()</code> instead.</li>
+     <li><code translate="no" dir="ltr">setAudioProcessors()</code>, set the audio processor in an <code translate="no" dir="ltr">EditedMediaItem.Builder.setEffects()</code>, and pass it to <code translate="no" dir="ltr">Transformer.start()</code> instead.</li>
+     <li><code translate="no" dir="ltr">setVideoEffects()</code>, set video effect in an <code translate="no" dir="ltr">EditedMediaItem.Builder.setEffects()</code>, and pass it to <code translate="no" dir="ltr">Transformer.start()</code> instead.</li>
+     <li><code translate="no" dir="ltr">setRemoveAudio()</code>, use <code translate="no" dir="ltr">EditedMediaItem.Builder.setRemoveAudio()</code> to remove the audio from the <code translate="no" dir="ltr">EditedMediaItem</code> passed to <code translate="no" dir="ltr">Transformer.start()</code> instead.</li>
+     <li><code translate="no" dir="ltr">setRemoveVideo()</code>, use <code translate="no" dir="ltr">EditedMediaItem.Builder.setRemoveVideo()</code> to remove the video from the <code translate="no" dir="ltr">EditedMediaItem</code> passed to <code translate="no" dir="ltr">Transformer.start()</code> instead.</li>
+     <li><code translate="no" dir="ltr">setFlattenForSlowMotion()</code>, use <code translate="no" dir="ltr">EditedMediaItem.Builder.setFlattenForSlowMotion()</code> to flatten the <code translate="no" dir="ltr">EditedMediaItem</code> passed to <code translate="no" dir="ltr">Transformer.start()</code> instead.</li>
+     <li><code translate="no" dir="ltr">setListener()</code>, use <code translate="no" dir="ltr">addListener()</code>, <code translate="no" dir="ltr">removeListener()</code> or <code translate="no" dir="ltr">removeAllListeners()</code> instead.</li>
+    </ul></li>
+   <li>Remove the following deprecated <code translate="no" dir="ltr">Transformer.Listener</code> methods: 
+    <ul>
+     <li><code translate="no" dir="ltr">onTransformationCompleted(MediaItem)</code>, use <code translate="no" dir="ltr">onCompleted(Composition, ExportResult)</code> instead.</li>
+     <li><code translate="no" dir="ltr">onTransformationCompleted(MediaItem, TransformationResult)</code>, use <code translate="no" dir="ltr">onCompleted(Composition, ExportResult)</code> instead.</li>
+     <li><code translate="no" dir="ltr">onTransformationError(MediaItem, Exception)</code>, use <code translate="no" dir="ltr">onError(Composition, ExportResult, ExportException)</code> instead.</li>
+     <li><code translate="no" dir="ltr">onTransformationError(MediaItem, TransformationException)</code>, use <code translate="no" dir="ltr">onError(Composition, ExportResult, ExportException)</code> instead.</li>
+     <li><code translate="no" dir="ltr">onTransformationError(MediaItem, TransformationResult, TransformationException)</code>, use <code translate="no" dir="ltr">onError(Composition, ExportResult, ExportException)</code> instead.</li>
+     <li><code translate="no" dir="ltr">onFallbackApplied(MediaItem, TransformationRequest, TransformationRequest)</code>, use <code translate="no" dir="ltr">onFallbackApplied(Composition, TransformationRequest, TransformationRequest)</code> instead.</li>
+    </ul></li>
+   <li>Remove deprecated <code translate="no" dir="ltr">TransformationResult</code> class. Use <code translate="no" dir="ltr">ExportResult</code> instead.</li>
+   <li>Remove deprecated <code translate="no" dir="ltr">TransformationException</code> class. Use <code translate="no" dir="ltr">ExportException</code> instead.</li>
+   <li>Remove deprecated <code translate="no" dir="ltr">Transformer.PROGRESS_STATE_NO_TRANSFORMATION</code>. Use <code translate="no" dir="ltr">Transformer.PROGRESS_STATE_NOT_STARTED</code> instead.</li>
+   <li>Remove deprecated <code translate="no" dir="ltr">Transformer.setListener()</code>. Use <code translate="no" dir="ltr">Transformer.addListener()</code>, <code translate="no" dir="ltr">Transformer.removeListener()</code> or <code translate="no" dir="ltr">Transformer.removeAllListeners()</code> instead.</li>
+   <li>Remove deprecated <code translate="no" dir="ltr">Transformer.startTransformation()</code>. Use <code translate="no" dir="ltr">Transformer.start(MediaItem, String)</code> instead.</li>
+   <li>Remove deprecated <code translate="no" dir="ltr">SingleFrameGlShaderProgram</code>. Use <code translate="no" dir="ltr">BaseGlShaderProgram</code> instead.</li>
+   <li>Remove <code translate="no" dir="ltr">Transformer.flattenForSlowMotion</code>. Use <code translate="no" dir="ltr">EditedMediaItem.flattenForSlowMotion</code> instead.</li>
+  </ul></li>
 </ul>
 </body>
 </html>
