@@ -2,8 +2,6 @@
 
 @file:JvmName("Retry")
 @file:CompilerOptions("-jvm-target", "11")
-@file:CompilerOptions("-Xopt-in", "kotlin.RequiresOptIn")
-@file:OptIn(kotlin.time.ExperimentalTime::class)
 
 import kotlin.time.Duration.Companion.seconds
 

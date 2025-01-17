@@ -5,27 +5,29 @@
 @file:Repository("https://repo.maven.apache.org/maven2")
 @file:Repository("https://jcenter.bintray.com")
 @file:Repository("https://jitpack.io")
-@file:DependsOn("com.rometools:rome:1.16.0")
+@file:DependsOn("com.rometools:rome:2.1.0")
 
 // NOTE: See https://youtrack.jetbrains.com/issue/KT-42101
+// NOTE that currently, IntelliJ code features break when importing external scripts.
 @file:Import("retry.main.kts")
 
 import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
-import java.io.File
-import java.net.URL
+import java.net.URI
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatter.ISO_LOCAL_TIME
+import kotlin.io.path.Path
+import kotlin.io.path.appendText
+import kotlin.io.path.readText
 
 val datesPattern = DateTimeFormatter.ofPattern("EEE LLL dd HH:mm:ss z yyyy")
-val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
+val feedUrl = URI("https://developer.android.com/feeds/androidx-release-notes.xml").toURL()
 val reader = tryTo("initialize the feed reader") { XmlReader(feedUrl) }
-val file = File("last-rss-update.txt")
+val file = Path("last-rss-update.txt")
 val feed = SyndFeedInput().build(reader)
-val ours = file.readText().trimEnd().parse()
+val ours = file.readText().trimEnd().parseAsLocalDateTime()
 val ourDate = ours.toLocalDate().toString()
-val theirs = feed.publishedDate.toString().parse()
+val theirs = feed.publishedDate.toString().parseAsLocalDateTime()
 val theirDate = theirs.toLocalDate().toString()
 val theirTime = theirs.toLocalTime().format(DateTimeFormatter.ofPattern("hha"))
 val areTheSame = ours == theirs
@@ -43,10 +45,11 @@ println("Their RSS publish date: $theirs")
 // To set output for a job step
 // see https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#setting-an-output-parameter
 // and https://stackoverflow.com/a/59201610
-val stepsOutputFile = File(System.getenv("GITHUB_OUTPUT"))
+val stepsOutputFile = Path(System.getenv("GITHUB_OUTPUT"))
 val lineFeed: String = System.lineSeparator()
 stepsOutputFile.appendText("result=$freshness$lineFeed")
 stepsOutputFile.appendText("dateTag=$dateTag$lineFeed")
 
-fun String.parse() = runCatching { LocalDateTime.parse(this, datesPattern) }
+fun String.parseAsLocalDateTime() =
+    runCatching { LocalDateTime.parse(this, datesPattern) }
     .getOrDefault(LocalDateTime.of(1, 1, 1, 1, 1))

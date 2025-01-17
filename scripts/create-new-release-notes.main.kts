@@ -5,25 +5,27 @@
 @file:Repository("https://repo.maven.apache.org/maven2")
 @file:Repository("https://jcenter.bintray.com")
 @file:Repository("https://jitpack.io")
-@file:DependsOn("com.rometools:rome:1.16.0")
-@file:DependsOn("org.jsoup:jsoup:1.15.1")
+@file:DependsOn("com.rometools:rome:2.1.0")
+@file:DependsOn("org.jsoup:jsoup:1.18.3")
 
 import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
-import java.io.File
-import java.net.URL
+import java.net.URI
+import kotlin.io.path.Path
+import kotlin.io.path.bufferedWriter
+import kotlin.io.path.writeText
 import kotlin.time.Duration.Companion.seconds
 
-val resultFile = File("release-notes.html")
+val resultFile = Path("release-notes.html")
 val waitTime = 10.seconds
-val feedUrl = URL("https://developer.android.com/feeds/androidx-release-notes.xml")
+val feedUrl = URI("https://developer.android.com/feeds/androidx-release-notes.xml").toURL()
 val writer = resultFile.bufferedWriter()
 val reader = tryTo("initialize the feed reader") {
     // NOTE: Use this to test for a complicated release notes
-    //  XmlReader(File("test-feed-result.xml"))
+    // XmlReader(File("test-feed-result.xml"))
     XmlReader(feedUrl)
 }
 val feed = SyndFeedInput().build(reader)
@@ -47,7 +49,7 @@ Jsoup
 
 // Creates a raw text version as well in case someone needs it
 val text = Jsoup.parse(resultFile).wholeText()
-File("release-notes.txt").writeText(text)
+Path("release-notes.txt").writeText(text)
 
 // TODO: Duplicate; use the retry.main.kts script.
 //  See other scripts for example usage.
@@ -125,12 +127,20 @@ fun Document.extractChangelog(id: String) = this
     .takeWhile { it.`is`(":not(h3)") }
     .joinToString("\n")
 
+
+
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
 
+
+
 // This is a coroutine version of the code.
-// Needs `org.jetbrains.kotlinx:kotlinx-coroutines-core`
+// Needs @file:DependsOn("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
 // which seems to not work in Kotlin scripts.
-// Probably fixed in Kotlin 1.7
+// Probably fixed in Kotlin 1.7 or newer
 /*
 fun main() = runBlocking {
     val init = async(Dispatchers.IO) {
