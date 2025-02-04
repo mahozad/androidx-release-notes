@@ -66,81 +66,91 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Media3: v1.6.0-alpha02</h2>
-<p>January 30, 2025</p>
-<p><code translate="no" dir="ltr">androidx.media3:media3-*:1.6.0-alpha02</code> is released. Version 1.6.0-alpha02 contains <a href="https://github.com/androidx/media/commits/1.6.0-alpha02">these commits</a>.</p>
+<h2>Core 1.7.0: Core Core-ktx 1.7.0-alpha01</h2>
+<p>February 03, 2025</p>
+<p><code translate="no" dir="ltr">androidx.test:core:1.7.0-alpha01</code> and <code translate="no" dir="ltr">androidx.test:core-ktx:1.7.0-alpha01</code> are released.</p>
+<p><strong>Bug Fixes</strong> * Fix <code translate="no" dir="ltr">Rect</code> handling in <code translate="no" dir="ltr">ViewCapture</code> for SDK &gt;= 34 for non root views. * Fix bug reporting the status code when PixelCopy fails in ViewCapture.generateBitmapFromPixelCopy. * Improving wording of a failure message.</p>
+<p><strong>API Changes</strong></p>
 <ul>
- <li>Common Library: 
-  <ul>
-   <li>Fix bug in <code translate="no" dir="ltr">SimpleBasePlayer</code> where setting a new <code translate="no" dir="ltr">currentMediaItemIndex</code> in <code translate="no" dir="ltr">State</code> after <code translate="no" dir="ltr">setPlaylist</code> with <code translate="no" dir="ltr">null</code> <code translate="no" dir="ltr">MediaMetadata</code> does not reevaluate the metadata (<a href="https://github.com/androidx/media/issues/1940">#1940</a>).</li>
-  </ul></li>
- <li>ExoPlayer: 
-  <ul>
-   <li>Add experimental 'ExoPlayer' pre-warming support for playback using <code translate="no" dir="ltr">MediaCodecVideoRenderer</code>. You can configure <code translate="no" dir="ltr">DefaultRenderersFactory</code> through <code translate="no" dir="ltr">experimentalSetEnableMediaCodecVideoRendererPrewarming</code> to provide a secondary <code translate="no" dir="ltr">MediaCodecVideoRenderer</code> to <code translate="no" dir="ltr">ExoPlayer</code>. If enabled, <code translate="no" dir="ltr">ExoPlayer</code> pre-processes the video of consecutive media items during playback to reduce media item transition latency.</li>
-   <li>Fix issue where additional decode-only frames may be displayed in quick succession when transitioning to content media after a mid-roll ad.</li>
-   <li>Make <code translate="no" dir="ltr">DefaultRenderersFactory</code> add two <code translate="no" dir="ltr">MetadataRenderer</code> instances to enable apps to receive two different schemes of metadata by default.</li>
-   <li>Initialize <code translate="no" dir="ltr">DeviceInfo</code> and device volume asynchronously (if enabled using <code translate="no" dir="ltr">setDeviceVolumeControlEnabled</code>). These values aren't available instantly after <code translate="no" dir="ltr">ExoPlayer.Builder.build()</code>, and <code translate="no" dir="ltr">Player.Listener</code> notifies changes through <code translate="no" dir="ltr">onDeviceInfoChanged</code> and <code translate="no" dir="ltr">onDeviceVolumeChanged</code>.</li>
-   <li>Reevaluate whether the ongoing load of a chunk should be cancelled when playback is paused (<a href="https://github.com/androidx/media/pull/1785">#1785</a>).</li>
-  </ul></li>
- <li>Transformer: 
-  <ul>
-   <li>Enable support for Android platform diagnostics using <code translate="no" dir="ltr">MediaMetricsManager</code>. Transformer forwards editing events and performance data to the platform, which helps to provide system performance and debugging information on the device. This data may also be collected by Google <a href="https://support.google.com/accounts/answer/6078260">if sharing usage and diagnostics data is enabled</a> by the user of the device. Apps can opt-out of contributing to platform diagnostics for Transformer with <code translate="no" dir="ltr">Transformer.Builder.setUsePlatformDiagnostics(false)</code>.</li>
-   <li>Split <code translate="no" dir="ltr">InAppMuxer</code> into <code translate="no" dir="ltr">InAppMp4Muxer</code> and <code translate="no" dir="ltr">InAppFragmentedMp4Muxer</code>. You use <code translate="no" dir="ltr">InAppMp4Muxer</code> to produce a non-fragmented MP4 file, while <code translate="no" dir="ltr">InAppFragmentedMp4Muxer</code> is for producing a fragmented MP4 file.</li>
-   <li>Move <code translate="no" dir="ltr">Muxer</code> interface from <code translate="no" dir="ltr">media3-muxer</code> to <code translate="no" dir="ltr">media3-transformer</code>.</li>
-   <li>Add support for transcoding and transmuxing Dolby Vision (profile 8) format.</li>
-  </ul></li>
- <li>Extractors: 
-  <ul>
-   <li>Fix handling of NAL units with lengths expressed in 1 or 2 bytes (rather than 4).</li>
-   <li>Fix <code translate="no" dir="ltr">ArrayIndexOutOfBoundsException</code> in MP4 edit lists when the edit list starts at a non-sync frame with no preceding sync frame (<a href="https://github.com/androidx/media/issues/2062">#2062</a>).</li>
-  </ul></li>
- <li>Audio: 
-  <ul>
-   <li>Don't bypass <code translate="no" dir="ltr">SonicAudioProcessor</code> when <code translate="no" dir="ltr">SpeedChangingAudioProcessor</code> is configured with default parameters.</li>
-   <li>Fix underflow in <code translate="no" dir="ltr">Sonic#getOutputSize()</code> that could cause <code translate="no" dir="ltr">DefaultAudioSink</code> to stall.</li>
-   <li>Fix <code translate="no" dir="ltr">MediaCodecAudioRenderer.getDurationToProgressUs()</code> and <code translate="no" dir="ltr">DecoderAudioRenderer.getDurationToProgressUs()</code> so that seeks correctly reset the provided durations.</li>
-  </ul></li>
- <li>Text: 
-  <ul>
-   <li>TTML: Add support for referencing <code translate="no" dir="ltr">tts:origin</code> and <code translate="no" dir="ltr">tts:extent</code> using <code translate="no" dir="ltr">style</code> (<a href="https://github.com/google/ExoPlayer/issues/2953">#2953</a>).</li>
-   <li>Restrict WebVTT and SubRip timestamps to exactly 3 decimal places. Previously we incorrectly parsed any number of decimal places but always assumed the value was in milliseconds, leading to incorrect timestamps (<a href="https://github.com/androidx/media/issues/1997">#1997</a>).</li>
-   <li>Add support for VobSub subtitles (<a href="https://github.com/google/ExoPlayer/issues/8260">#8260</a>).</li>
-   <li>Fix playback hanging when a playlist contains clipped items with CEA-608 or CEA-708 captions.</li>
-   <li>Fix <code translate="no" dir="ltr">IllegalStateException</code> when an SSA file contains a cue with zero duration (start and end time equal) (<a href="https://github.com/androidx/media/issues/2052">#2052</a>).</li>
-   <li>Suppress (and log) subtitle parsing errors when subtitles are muxed into the same container as audio and video (<a href="https://github.com/androidx/media/issues/2052">#2052</a>).</li>
-  </ul></li>
- <li>Muxers: 
-  <ul>
-   <li>Renamed <code translate="no" dir="ltr">setSampleCopyEnabled()</code> method to <code translate="no" dir="ltr">setSampleCopyingEnabled()</code> in both <code translate="no" dir="ltr">Mp4Muxer.Builder</code> and <code translate="no" dir="ltr">FragmentedMp4Muxer.Builder</code>.</li>
-   <li><code translate="no" dir="ltr">Mp4Muxer.addTrack()</code> and <code translate="no" dir="ltr">FragmentedMp4Muxer.addTrack()</code> now return an <code translate="no" dir="ltr">int</code> track ID instead of a <code translate="no" dir="ltr">TrackToken</code>.</li>
-   <li><code translate="no" dir="ltr">Mp4Muxer</code> and <code translate="no" dir="ltr">FragmentedMp4Muxer</code> no longer implement <code translate="no" dir="ltr">Muxer</code> interface.</li>
-  </ul></li>
- <li>Session: 
-  <ul>
-   <li>Fix bug where calling a <code translate="no" dir="ltr">Player</code> method on a <code translate="no" dir="ltr">MediaController</code> connected to a legacy session dropped changes from a pending update.</li>
-  </ul></li>
- <li>UI: 
-  <ul>
-   <li>Add <code translate="no" dir="ltr">PresentationState</code> state holder class and the corresponding <code translate="no" dir="ltr">rememberPresentationState</code> Composable to <code translate="no" dir="ltr">media3-ui-compose</code>.</li>
-  </ul></li>
- <li>HLS Extension: 
-  <ul>
-   <li>Parse <code translate="no" dir="ltr">SUPPLEMENTAL-CODECS</code> tag from HLS playlist to detect Dolby Vision formats (<a href="https://github.com/androidx/media/pull/1785">#1785</a>).</li>
-  </ul></li>
- <li>DASH Extension: 
-  <ul>
-   <li>Fix issue when calculating the update interval for ad insertion in multi-period live streams (<a href="https://github.com/androidx/media/issues/1698">#1698</a>).</li>
-   <li>Parse <code translate="no" dir="ltr">scte214:supplementalCodecs</code> attribute from DASH manifest to detect Dolby Vision formats (<a href="https://github.com/androidx/media/pull/1785">#1785</a>).</li>
-   <li>Improve handling of period transitions in live streams where the period contains media samples beyond the declared period duration (<a href="https://github.com/androidx/media/issues/1698">#1698</a>).</li>
-  </ul></li>
- <li>Demo app: 
-  <ul>
-   <li>Use <code translate="no" dir="ltr">PresentationState</code> to control the aspect ratio of <code translate="no" dir="ltr">PlayerSurface</code> Composable. This depends on the ContentScale type and covers it with a shutter-overlay before the first frame is rendered.</li>
-  </ul></li>
- <li>Remove deprecated symbols: 
-  <ul>
-   <li>Removed <code translate="no" dir="ltr">ExoPlayer.VideoComponent</code>, <code translate="no" dir="ltr">ExoPlayer.AudioComponent</code>, <code translate="no" dir="ltr">ExoPlayer.TextComponent</code> and <code translate="no" dir="ltr">ExoPlayer.DeviceComponent</code>.</li>
-  </ul></li>
+ <li>Update to minSdkVersion 21</li>
+</ul>
+
+<h2>Espresso 3.7.0: Espresso 3.7.0-alpha01</h2>
+<p>February 03, 2025</p>
+<p>The following artifacts were released:</p>
+<ul>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-accessibility:3.7.0-alpha01</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-core:3.7.0-alpha01</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-contrib:3.7.0-alpha01</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-idling-resource:3.7.0-alpha01</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-intents:3.7.0-alpha01</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-remote:3.7.0-alpha01</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-web:3.7.0-alpha01</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-concurrent:3.7.0-alpha01</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-net:3.7.0-alpha01</code></li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fix deadlock in espresso in Robolectric INSTRUMENTATION_TEST + paused looper.</li>
+ <li>Refactor espresso's MessageQueue access into a TestLooperManagerCompat class, and use new TestLooperManager APIs when available.</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Update to minSdkVersion 21</li>
+</ul>
+
+<h2>Test: </h2>
+
+
+<h2>Test: </h2>
+
+
+<h2>Test: </h2>
+
+
+<h2>Monitor 1.8.0: monitor 1.8.0-alpha01</h2>
+<p>February 03, 2025</p>
+<p><code translate="no" dir="ltr">androidx.test:monitor:1.8.0-alpha01</code> is released.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Update to minSdkVersion 21</li>
+ <li>Make ReflectionException a RuntimeException</li>
+</ul>
+
+<h2>Orchestrator 1.6.0: orchestrator 1.6.0-alpha02</h2>
+<p>February 03, 2025</p>
+<p><code translate="no" dir="ltr">androidx.test:orchestrator:1.6.0-alpha02</code> is released.</p>
+
+<h2>Runner 1.7.0: runner 1.7.0-alpha01</h2>
+<p>February 03, 2025</p>
+<p><code translate="no" dir="ltr">androidx.test:runner:1.7.0-alpha01</code> is released.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Exceptions during <code translate="no" dir="ltr">@AfterClass</code> were not being reported via <code translate="no" dir="ltr">InstrumentationResultPrinter</code>.</li>
+ <li>Exceptions arising in AndroidJUnitRunner.buildRequest are now handled.</li>
+ <li>Assumption failures during a ClassRule or BeforeClass are now reported more consistently via <code translate="no" dir="ltr">InstrumentationResultPrinter</code></li>
+ <li>Clarify SdkSuppress reference docs</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Update to minSdkVersion 21</li>
+ <li>Deprecate androidx.test.filters.Suppress in favor of org.junit.Ignore</li>
+</ul>
+
+<h2>Rules 1.7.0: rules 1.7.0-alpha01</h2>
+<p>February 03, 2025</p>
+<p><code translate="no" dir="ltr">androidx.test:rules:1.7.0-alpha01</code> is released.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Update to minSdkVersion 21</li>
+</ul>
+
+<h2>Services 1.6.0: services 1.6.0-alpha02</h2>
+<p>February 03, 2025</p>
+<p><code translate="no" dir="ltr">androidx.test.services:test-services:1.6.0-alpha02</code> <code translate="no" dir="ltr">androidx.test.services:storage:1.6.0-alpha02</code> are released.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>The obsolete FileObserver protocol has been removed in favor of the LocalSocket-based protocol.</li>
 </ul>
 </body>
 </html>
