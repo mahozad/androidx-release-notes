@@ -66,91 +66,32 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Core 1.7.0: Core Core-ktx 1.7.0-alpha01</h2>
-<p>February 03, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test:core:1.7.0-alpha01</code> and <code translate="no" dir="ltr">androidx.test:core-ktx:1.7.0-alpha01</code> are released.</p>
-<p><strong>Bug Fixes</strong> * Fix <code translate="no" dir="ltr">Rect</code> handling in <code translate="no" dir="ltr">ViewCapture</code> for SDK &gt;= 34 for non root views. * Fix bug reporting the status code when PixelCopy fails in ViewCapture.generateBitmapFromPixelCopy. * Improving wording of a failure message.</p>
-<p><strong>API Changes</strong></p>
+<h2>Media3: v1.6.0-alpha03</h2>
+<p>February 06, 2025</p>
+<p><code translate="no" dir="ltr">androidx.media3:media3-*:1.6.0-alpha03</code> is released. Version 1.6.0-alpha03 contains <a href="https://github.com/androidx/media/commits/1.6.0-alpha03">these commits</a>.</p>
 <ul>
- <li>Update to minSdkVersion 21</li>
-</ul>
-
-<h2>Espresso 3.7.0: Espresso 3.7.0-alpha01</h2>
-<p>February 03, 2025</p>
-<p>The following artifacts were released:</p>
-<ul>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-accessibility:3.7.0-alpha01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-core:3.7.0-alpha01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-contrib:3.7.0-alpha01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-idling-resource:3.7.0-alpha01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-intents:3.7.0-alpha01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-remote:3.7.0-alpha01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-web:3.7.0-alpha01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-concurrent:3.7.0-alpha01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-net:3.7.0-alpha01</code></li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Fix deadlock in espresso in Robolectric INSTRUMENTATION_TEST + paused looper.</li>
- <li>Refactor espresso's MessageQueue access into a TestLooperManagerCompat class, and use new TestLooperManager APIs when available.</li>
-</ul>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Update to minSdkVersion 21</li>
-</ul>
-
-<h2>Test: </h2>
-
-
-<h2>Test: </h2>
-
-
-<h2>Test: </h2>
-
-
-<h2>Monitor 1.8.0: monitor 1.8.0-alpha01</h2>
-<p>February 03, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test:monitor:1.8.0-alpha01</code> is released.</p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Update to minSdkVersion 21</li>
- <li>Make ReflectionException a RuntimeException</li>
-</ul>
-
-<h2>Orchestrator 1.6.0: orchestrator 1.6.0-alpha02</h2>
-<p>February 03, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test:orchestrator:1.6.0-alpha02</code> is released.</p>
-
-<h2>Runner 1.7.0: runner 1.7.0-alpha01</h2>
-<p>February 03, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test:runner:1.7.0-alpha01</code> is released.</p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Exceptions during <code translate="no" dir="ltr">@AfterClass</code> were not being reported via <code translate="no" dir="ltr">InstrumentationResultPrinter</code>.</li>
- <li>Exceptions arising in AndroidJUnitRunner.buildRequest are now handled.</li>
- <li>Assumption failures during a ClassRule or BeforeClass are now reported more consistently via <code translate="no" dir="ltr">InstrumentationResultPrinter</code></li>
- <li>Clarify SdkSuppress reference docs</li>
-</ul>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Update to minSdkVersion 21</li>
- <li>Deprecate androidx.test.filters.Suppress in favor of org.junit.Ignore</li>
-</ul>
-
-<h2>Rules 1.7.0: rules 1.7.0-alpha01</h2>
-<p>February 03, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test:rules:1.7.0-alpha01</code> is released.</p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Update to minSdkVersion 21</li>
-</ul>
-
-<h2>Services 1.6.0: services 1.6.0-alpha02</h2>
-<p>February 03, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test.services:test-services:1.6.0-alpha02</code> <code translate="no" dir="ltr">androidx.test.services:storage:1.6.0-alpha02</code> are released.</p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>The obsolete FileObserver protocol has been removed in favor of the LocalSocket-based protocol.</li>
+ <li>ExoPlayer: 
+  <ul>
+   <li>Add option to <code translate="no" dir="ltr">ClippingMediaSource</code> to allow clipping in unseekable media.</li>
+   <li>Fix bug where seeking with pre-warming could block following media item transition.</li>
+  </ul></li>
+ <li>Audio: 
+  <ul>
+   <li>Make <code translate="no" dir="ltr">androidx.media3.common.audio.SonicAudioProcessor</code> final.</li>
+  </ul></li>
+ <li>Video: 
+  <ul>
+   <li>Change <code translate="no" dir="ltr">MediaCodecVideoRenderer.shouldUsePlaceholderSurface</code> to protected so that applications can override to block usage of placeholder surfaces (<a href="https://github.com/androidx/media/pull/1905">#1905</a>).</li>
+   <li>Add experimental <code translate="no" dir="ltr">ExoPlayer</code> AV1 sample dependency parsing to speed up seeking. Enable it with the new <code translate="no" dir="ltr">DefaultRenderersFactory.experimentalSetParseAv1SampleDependencies</code> API.</li>
+  </ul></li>
+ <li>Muxers: 
+  <ul>
+   <li>Disable <code translate="no" dir="ltr">Mp4Muxer</code> sample batching and copying by default.</li>
+  </ul></li>
+ <li>Remove deprecated symbols: 
+  <ul>
+   <li>Removed <code translate="no" dir="ltr">androidx.media3.exoplayer.audio.SonicAudioProcessor</code>.</li>
+  </ul></li>
 </ul>
 </body>
 </html>
