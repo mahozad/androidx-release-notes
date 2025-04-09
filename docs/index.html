@@ -66,159 +66,460 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Core 1.7.0: Core Core-ktx 1.7.0-alpha02</h2>
-<p>March 27, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test:core:1.7.0-alpha02</code> and <code translate="no" dir="ltr">androidx.test:core-ktx:1.7.0-alpha02</code> are released.</p>
-<p><strong>Bug Fixes</strong></p>
+<h2>Activity: v1.11.0-beta01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.activity:activity:1.11.0-beta01</code>, <code translate="no" dir="ltr">androidx.activity:activity-compose:1.11.0-beta01</code>, and <code translate="no" dir="ltr">androidx.activity:activity-ktx:1.11.0-beta01</code> are released. Version 1.11.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/78132378b67c86698d1ade3dc368c9f15d738a71..4c37298a97c16270c139eb812ddadaba03e23a52/activity">these commits</a>.</p>
+
+<h2>Annotation-Experimental: v1.5.0-beta01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.annotation:annotation-experimental:1.5.0-beta01</code> is released. Version 1.5.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c71a0ac68935256ff7027557d5396130c71eb54d..4c37298a97c16270c139eb812ddadaba03e23a52/annotation/annotation-experimental">these commits</a>.</p>
+<p><strong>Important changes</strong></p>
 <ul>
- <li>Update bazel toolchain: 
-  <ul>
-   <li>bazel version 7.5.0</li>
-   <li>rules_jvm_external 6.7</li>
-   <li>rules_java 8.6.3</li>
-   <li>rules_kotlin 2.1.3</li>
-   <li>rules_android 0.6.3</li>
-  </ul></li>
- <li>Update dependencies to: 
-  <ul>
-   <li>androidx.annotation 1.7.0</li>
-   <li>androidx.concurrent futures 1.2.0</li>
-   <li>kotlin 2.1.0</li>
-   <li>kotlin coroutines 1.10.1</li>
-  </ul></li>
+ <li>This library now targets Kotlin 2.0 language level and requires KGP 2.0.0 or newer (<a href="https://android-review.googlesource.com/#/q/Idb6b5d6ae1625ab870ffe74f9790ffabc82a63b4">Idb6b5</a>)</li>
 </ul>
 
-<h2>Espresso 3.7.0: Espresso 3.7.0-alpha02</h2>
-<p>March 27, 2025</p>
-<p>The following artifacts were released:</p>
+<h2>Asynclayoutinflater: v1.1.0</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.asynclayoutinflater:asynclayoutinflater:1.1.0</code> and <code translate="no" dir="ltr">androidx.asynclayoutinflater:asynclayoutinflater-appcompat:1.1.0</code> are released. Version 1.1.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f85ba4f521f334ee3e92ab0ff3359be2d281c2b9..7dd3136de5363becb496bfdb2c98bf89d4eb7305/asynclayoutinflater">these commits</a>.</p>
+<p><strong>Important changes since 1.0.0</strong></p>
 <ul>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-accessibility:3.7.0-alpha02</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-core:3.7.0-alpha02</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-contrib:3.7.0-alpha02</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-idling-resource:3.7.0-alpha02</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-intents:3.7.0-alpha02</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-remote:3.7.0-alpha02</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-web:3.7.0-alpha02</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-concurrent:3.7.0-alpha02</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-net:3.7.0-alpha02</code></li>
+ <li>Allows configuring a <code translate="no" dir="ltr">AsyncLayoutFactory</code> when initializing <code translate="no" dir="ltr">AsyncLayoutInflater</code>. For AppCompat context, this can be provided through <code translate="no" dir="ltr">AsyncAppCompatFactory</code> which initializes AppCompat views correctly.</li>
+ <li>The <code translate="no" dir="ltr">inflate</code> API accepts an executor on which <code translate="no" dir="ltr">OnInflateFinishedListener</code> callback can be triggered.</li>
+</ul>
+
+<h2>Benchmark: v1.4.0-alpha11</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.benchmark:benchmark-*:1.4.0-alpha11</code> is released. Version 1.4.0-alpha11 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/78132378b67c86698d1ade3dc368c9f15d738a71..4c37298a97c16270c139eb812ddadaba03e23a52/benchmark">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Changed <code translate="no" dir="ltr">TraceProcessor</code>'s argument timeout: Duration to timeoutMs long for Java caller usability. (<a href="https://android-review.googlesource.com/#/q/I9fbb54a6430f0f8cd020a06bc8d1fd6475553e0a">I9fbb5</a>)</li>
+ <li>Mark <code translate="no" dir="ltr">TraceProcessor</code> constructor as internal. Callers should use <code translate="no" dir="ltr">TraceProcessor.startServer</code> or <code translate="no" dir="ltr">TraceProcessor.runServer</code>. (<a href="https://android-review.googlesource.com/#/q/Ia8c5b53db7075253ccaec6f2869b89c3a95da98f">Ia8c5b</a>)</li>
 </ul>
 <p><strong>Bug Fixes</strong></p>
 <ul>
- <li>Update bazel toolchain: 
-  <ul>
-   <li>bazel version 7.5.0</li>
-   <li>rules_jvm_external 6.7</li>
-   <li>rules_java 8.6.3</li>
-   <li>rules_kotlin 2.1.3</li>
-   <li>rules_android 0.6.3</li>
-  </ul></li>
- <li>Update dependencies to: 
-  <ul>
-   <li>androidx.annotation 1.7.0</li>
-   <li>androidx.concurrent-futures 1.2.0</li>
-   <li>kotlin 2.1.0</li>
-  </ul></li>
+ <li>When killing the application with <code translate="no" dir="ltr">MacrobenchmarkScope.killProcess</code>, validate the kill command results to prevent silent failure, and timeout error. (<a href="https://android-review.googlesource.com/#/q/I845559d616e821ff48d58cc81498f13d7160e491">I84555</a>)</li>
+</ul>
+<p><strong>Dependency Updates</strong></p>
+<ul>
+ <li>This library now targets Kotlin 2.0 language level and requires KGP 2.0.0 or newer. (<a href="https://android-review.googlesource.com/#/q/Idb6b5d6ae1625ab870ffe74f9790ffabc82a63b4">Idb6b5</a>)</li>
 </ul>
 
-<h2>Test: </h2>
-
-
-<h2>Test: </h2>
-
-
-<h2>Test: </h2>
-
-
-<h2>Monitor 1.8.0: monitor 1.8.0-alpha02</h2>
-<p>March 27, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test:monitor:1.8.0-alpha02</code> is released.</p>
-<p><strong>Bug Fixes</strong></p>
+<h2>Browser: v1.9.0-alpha02</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.browser:browser:1.9.0-alpha02</code> is released. Version 1.9.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/4c47131cd5b50c3091fc0874eb606aaac5b168fa..4c37298a97c16270c139eb812ddadaba03e23a52/browser/browser">these commits</a>.</p>
+<p><strong>New Features</strong></p>
 <ul>
- <li>Update bazel toolchain: 
-  <ul>
-   <li>bazel version 7.5.0</li>
-   <li>rules_jvm_external 6.7</li>
-   <li>rules_java 8.6.3</li>
-   <li>rules_kotlin 2.1.3</li>
-   <li>rules_android 0.6.3</li>
-  </ul></li>
- <li>Update dependencies to: 
-  <ul>
-   <li>androidx.annotation 1.7.0a</li>
-   <li>kotlin 2.1.0</li>
-  </ul></li>
+ <li>Added support for multiple Progressive Web App APIs, such as <a href="https://developer.chrome.com/docs/web-platform/launch-handler">Launch Handler</a>, <a href="https://developer.chrome.com/docs/web-platform/best-practices/url-protocol-handler">Protocol Handler</a> and <a href="https://developer.chrome.com/docs/capabilities/web-apis/file-handling">File Handler</a></li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Added overloads for <code translate="no" dir="ltr">CustomTabsClient#createPendingAuthTabSession</code>. (<a href="https://android-review.googlesource.com/#/q/I71c3acc51dc82810ca7bbf305a4c1984759e800d">I71c3a</a>)</li>
+ <li>Updated Auth Tab APIs (<a href="https://android-review.googlesource.com/#/q/Iaf9b1d7812cbb4513f286eb12c7647869b2795bf">Iaf9b1</a>)</li>
+ <li>The <code translate="no" dir="ltr">TrustedWebActivityIntent</code> now includes Launch Handler API client mode that allows a browser to use this API. (<a href="https://android-review.googlesource.com/#/q/Ifc95c96d3fc0a05b9a7504bcbba3fffb927491e3">Ifc95c</a>)</li>
+ <li>The <code translate="no" dir="ltr">TrustedWebActivityIntent</code> now includes URIs of files opened via the app's registered intent filters, and grants the browser read-write permissions to those files. (<a href="https://android-review.googlesource.com/#/q/I2134a7579830e353add0263e2fb81cd23e8a569f">I2134a</a>)</li>
+ <li><code translate="no" dir="ltr">TrustedWebActivityIntent</code> now includes the originally launched URL in its extras, adding context for the browser when used by Protocol Handlers. (<a href="https://android-review.googlesource.com/#/q/I3759aaa86304c7c050f1a582004508cbbb84b112">I3759a</a>)</li>
+ <li>Added a new API to enable/disable the close button for Custom Tabs. (<a href="https://android-review.googlesource.com/#/q/I35acd34edac715e380d64ccb1c7e71385cda53b2">I35acd</a>)</li>
+ <li>Added close button icon customization support to Auth Tab (<a href="https://android-review.googlesource.com/#/q/Iaf8772cca56d2b7e8cce6268c1901ccc67bc76c5">Iaf877</a>)</li>
 </ul>
 
-<h2>Orchestrator 1.6.0: orchestrator 1.6.0-alpha03</h2>
-<p>March 27, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test:orchestrator:1.6.0-alpha03</code> is released.</p>
+<h2>Compose Animation: v1.8.0-rc03</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.8.0-rc03</code> is released. Version 1.8.0-rc03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c0907800009c0cb37dd12c5586d620350c1975de..1b6bba717628c4c8c633c9509bfc4e4d9b89f428/compose/animation">these commits</a>.</p>
+
+<h2>Compose Foundation: v1.8.0-rc03</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.8.0-rc03</code> is released. Version 1.8.0-rc03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c0907800009c0cb37dd12c5586d620350c1975de..1b6bba717628c4c8c633c9509bfc4e4d9b89f428/compose/foundation">these commits</a>.</p>
+
+<h2>Compose Material: v1.8.0-rc03</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.8.0-rc03</code> is released. Version 1.8.0-rc03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c0907800009c0cb37dd12c5586d620350c1975de..1b6bba717628c4c8c633c9509bfc4e4d9b89f428/compose/material">these commits</a>.</p>
+
+<h2>Compose Material3: v1.3.2</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.compose.material3:material3-*:1.3.2</code> is released. Version 1.3.2 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/065f8f4c9800a64e5344e69e1a0aef65fa981370..a8c757d3d74ce0f52c23b8562468fbcc09a7e62f/compose/material3">these commits</a>.</p>
 <p><strong>Bug Fixes</strong></p>
 <ul>
- <li>Update bazel toolchain: 
-  <ul>
-   <li>bazel version 7.5.0</li>
-   <li>rules_jvm_external 6.7</li>
-   <li>rules_java 8.6.3</li>
-   <li>rules_kotlin 2.1.3</li>
-   <li>rules_android 0.6.3</li>
-  </ul></li>
+ <li><code translate="no" dir="ltr">ListItem</code> corrects its intrinsic height calculation, now reserving the appropriate amount of space in Layout.</li>
+ <li>Remove excess <code translate="no" dir="ltr">NavigationBarItem</code> label padding, correctly aligning with spec.</li>
+ <li>Corrects <code translate="no" dir="ltr">TabRow</code> Layout in RTL mode.</li>
 </ul>
 
-<h2>Runner 1.7.0: runner 1.7.0-alpha02</h2>
-<p>March 27, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test:runner:1.7.0-alpha02</code> is released.</p>
+<h2>Compose Material3: v1.4.0-alpha12</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.compose.material3:material3-*:1.4.0-alpha12</code> is released. Version 1.4.0-alpha12 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/a767811381d88baed6503d9aa2bd8defbd849351..74a1f5957757ddb19a2ebe9bddd8b81a6f833844/compose/material3">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Removed android specific parameters from <code translate="no" dir="ltr">ModalBottomSheetProperties</code> (<a href="https://android-review.googlesource.com/#/q/Iab97f15996145e8a999c1e3f9c16d3c056146b95">Iab97f</a>, <a href="https://issuetracker.google.com/issues/362539765">b/362539765</a>)</li>
+ <li>Introduce overloading functions for drag handle size defaults (<a href="https://android-review.googlesource.com/#/q/I0ed0d201a533d6e8acaa1d3128ae222fabc9eabb">I0ed0d</a>)</li>
+ <li>Add new <code translate="no" dir="ltr">NavigationSuiteScaffold</code> and <code translate="no" dir="ltr">NavigationSuiteScaffoldLayout</code> functions to support new layout types and add support for an optional primary action content. (<a href="https://android-review.googlesource.com/#/q/Ib262a707e78acfac10f440a937cfde52985485be">Ib262a</a>, <a href="https://issuetracker.google.com/issues/353144478">b/353144478</a>)</li>
+ <li>Deprecate <code translate="no" dir="ltr">Modifier.weight</code> with fill parameter in <code translate="no" dir="ltr">ButtonGroup</code>. Adding a version without fill. (<a href="https://android-review.googlesource.com/#/q/Id32bb227c53ca61b19a4e90b76c381c8e0fdbfa9">Id32bb</a>)</li>
+ <li>Rename <code translate="no" dir="ltr">xSmall-</code> and <code translate="no" dir="ltr">xLarge-</code> IconButton component defaults to spell out <code translate="no" dir="ltr">extra</code>. (<a href="https://android-review.googlesource.com/#/q/Ib6e0f3fb5bcec5700764bcd936e40b982614a393">Ib6e0f</a>)</li>
+ <li>Add new <code translate="no" dir="ltr">NavigationSuite</code>, <code translate="no" dir="ltr">NavigationSuiteItem</code> and <code translate="no" dir="ltr">NavigationSuiteColors</code> functions to support new layout types. (<a href="https://android-review.googlesource.com/#/q/I203d63abd13c9805abbd14e44452a25b9259ae58">I203d6</a>)</li>
+ <li>Add new <code translate="no" dir="ltr">NavigationSuiteTypes</code> and add new <code translate="no" dir="ltr">navigationSuiteType</code> function that include those layout choices (<a href="https://android-review.googlesource.com/#/q/If68f973b0ba82a4232c387a412cdf93a8f361d8c">If68f9</a>)</li>
+</ul>
 <p><strong>Bug Fixes</strong></p>
 <ul>
- <li>Update bazel toolchain: 
-  <ul>
-   <li>bazel version 7.5.0</li>
-   <li>rules_jvm_external 6.7</li>
-   <li>rules_java 8.6.3</li>
-   <li>rules_kotlin 2.1.3</li>
-   <li>rules_android 0.6.3</li>
-  </ul></li>
- <li>Update dependencies to: 
-  <ul>
-   <li>androidx.annotation 1.7.0</li>
-  </ul></li>
+ <li><code translate="no" dir="ltr">ColorScheme.contentColorFor</code> now maps <code translate="no" dir="ltr">surfaceDim</code> to <code translate="no" dir="ltr">onSurface</code>. (<a href="https://android-review.googlesource.com/#/q/I8891af481686a8b228134fe9003f1b60414a33c4">I8891a</a>)</li>
+ <li>Updated <code translate="no" dir="ltr">DateInputTextField</code> implementation to address an issue where the input field did not reflect programmatically set date. (<a href="https://android-review.googlesource.com/#/q/I6c8d1488c71391474c7cbc78629f0e88723d7528">I6c8d1</a>, <a href="https://issuetracker.google.com/issues/401143451">b/401143451</a>)</li>
+ <li>Fixed the talkback focus order for the navigation rail and wide navigation rail (<a href="https://android-review.googlesource.com/#/q/I6cf6f8911d170f3a5291c1d6aa308fadb38e7b9a">I6cf6f</a>, <a href="https://issuetracker.google.com/issues/407048224">b/407048224</a>)</li>
 </ul>
 
-<h2>Rules 1.7.0: rules 1.7.0-alpha02</h2>
-<p>March 27, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test:rules:1.7.0-alpha02</code> is released.</p>
+<h2>Compose Material3 Adaptive: v1.2.0-alpha03</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.compose.material3.adaptive:adaptive-*:1.2.0-alpha03</code> is released. Version 1.2.0-alpha03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/4c37298a97c16270c139eb812ddadaba03e23a52/compose/material3/adaptive">these commits</a>.</p>
 <p><strong>Bug Fixes</strong></p>
 <ul>
- <li>Update bazel toolchain: 
-  <ul>
-   <li>bazel version 7.5.0</li>
-   <li>rules_jvm_external 6.7</li>
-   <li>rules_java 8.6.3</li>
-   <li>rules_kotlin 2.1.3</li>
-   <li>rules_android 0.6.3</li>
-  </ul></li>
- <li>Update dependencies to: 
-  <ul>
-   <li>androidx.annotation 1.7.0</li>
-  </ul></li>
+ <li>​​Fix drag handle incorrectly showing on single pane layout. (<a href="https://android-review.googlesource.com/#/q/806e4434a4c7e5daf6bb1bb62f9a17ca232274b1">806e443 </a>)</li>
+</ul>
+<p><strong>Dependency Updates</strong></p>
+<ul>
+ <li>This library now targets Kotlin 2.0 language level and requires KGP 2.0.0 or newer. (<a href="https://android-review.googlesource.com/#/q/Idb6b5d6ae1625ab870ffe74f9790ffabc82a63b4">Idb6b5</a>)</li>
 </ul>
 
-<h2>Services 1.6.0: services 1.6.0-alpha03</h2>
-<p>March 27, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test.services:test-services:1.6.0-alpha03</code> <code translate="no" dir="ltr">androidx.test.services:storage:1.6.0-alpha03</code> are released.</p>
+<h2>Compose Runtime: v1.8.0-rc03</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.8.0-rc03</code> is released. Version 1.8.0-rc03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c0907800009c0cb37dd12c5586d620350c1975de..1b6bba717628c4c8c633c9509bfc4e4d9b89f428/compose/runtime">these commits</a>.</p>
+
+<h2>Compose UI: v1.8.0-rc03</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.8.0-rc03</code> is released. Version 1.8.0-rc03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c0907800009c0cb37dd12c5586d620350c1975de..1b6bba717628c4c8c633c9509bfc4e4d9b89f428/compose/ui">these commits</a>.</p>
 <p><strong>Bug Fixes</strong></p>
 <ul>
- <li>Update bazel toolchain: 
+ <li>Disables some focus interop fixes that caused a regression. (<a href="https://android.googlesource.com/platform/frameworks/support/+/b9d998943e74bb06a448d52f7c4d3378a8e7ccbd">b9d998</a>, <a href="http://issuetracker.google.com/issues/369256395">b/369256395</a>, <a href="http://issuetracker.google.com/issues/378570682">b/378570682</a>, <a href="http://issuetracker.google.com/issues/376142752">b/376142752</a>, <a href="http://issuetracker.google.com/issues/388590015">b388590015/</a>, <a href="http://issuetracker.google.com/issues/389994198">b/389994198</a>, <a href="http://issuetracker.google.com/issues/391378895">b/391378895</a>)</li>
+</ul>
+
+<h2>Core and Core-ktx: v1.16.0</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.core:core:1.16.0</code>, <code translate="no" dir="ltr">androidx.core:core-ktx:1.16.0</code>, and <code translate="no" dir="ltr">androidx.core:core-testing:1.16.0</code> are released. Version 1.16.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/bce9701663354e1ae98c908ef1b02571e36afb03..096ee90dd35920496448ba4b5c14f3979bcfee47/core">these commits</a>.</p>
+<p><strong>Important changes since 1.15.0</strong></p>
+<ul>
+ <li>Adds support for Android 16 (codename Baklava) and requires <code translate="no" dir="ltr">compileSdk = 36</code></li>
+ <li>This library now uses <a href="https://jspecify.dev/">JSpecify nullness annotations</a>, which are type-use. Kotlin developers should use the following compiler arguments to enforce correct usage: <code translate="no" dir="ltr">-Xjspecify-annotations=strict, -Xtype-enhancement-improvements-strict-mode</code> (<a href="https://android-review.googlesource.com/#/q/Iaf3e1d955e754d15c6b69b9fb397aad4b54aaf96">Iaf3e1</a>, <a href="https://issuetracker.google.com/issues/326456246">b/326456246</a>)</li>
+</ul>
+
+<h2>Core-i18n: v1.0.0</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.core:core-i18n:1.0.0</code> is released.</p>
+<p>The component makes it easier to create properly internationalized applications, focusing on two main areas:</p>
+<ul>
+ <li>Date and time formatting functionality following the best current practices, honoring user custom settings, and providing a unifying API that works properly on old and new Android versions.</li>
+ <li>A backport of <a href="https://developer.android.com/reference/android/icu/text/MessageFormat"><code translate="no" dir="ltr">android.icu.text.MessageFormat</code></a> that works on older APIs. But still useful on new Android versions because it integrates the date / time formatting mentioned above. That honors the user settings, which <code translate="no" dir="ltr">android.icu.text.MessageFormat</code> does not do.</li>
+</ul>
+<p>The component will be the vehicle to backporting new i18n APIs, adding new i18n functionality or fixes, and in general making internationalization easier.</p>
+
+<h2>Core-telecom: v1.0.0-rc01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.core:core-telecom:1.0.0-rc01</code> is released. Version 1.0.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/46295bc0b75a16f452e8e0090e8de41073d4dbb6..bb8fdda78902ccbcb2fa68a04d02e52ce8f424ba/core/core-telecom">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<p>New experimental API call extensions. The new experimental extensions added in this release are:</p>
+<ul>
+ <li>Support for a Meeting Summary Remote Extension, allowing a remote surface to receive meeting summary information (current speaker and participant count) from the connected VoIP application. (<a href="https://android.googlesource.com/platform/frameworks/support/+/7cf095f23e31d90c04dcc4738e53528a2b7a1833">7cf095f</a>)</li>
+ <li>Support for a Call Icon Extension that allows a VoIP app to send an Icon Uri to a remote <code translate="no" dir="ltr">InCallService</code> (auto, watch face, etc.). The Icon can be updated throughout the call and can have the same URI value. (<a href="https://android.googlesource.com/platform/frameworks/support/+/8e1813ebb18a7104fe85c0e8884f0c5ffd029ca4">8e1813e</a>)</li>
+</ul>
+
+<h2>Customview: v1.2.0-rc01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.customview:customview:1.2.0-rc01</code> is released. Version 1.2.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/a1d6f16bd381db2059144d27701f7d079f417ef2..7e51950bd8170b033fd13ec8fd564c7a75b7c80c/customview/customview">these commits</a>.</p>
+
+<h2>Customview Poolingcontainer: v1.1.0-rc01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.customview:customview-poolingcontainer:1.1.0-rc01</code> is released. Version 1.1.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/a1d6f16bd381db2059144d27701f7d079f417ef2..7e51950bd8170b033fd13ec8fd564c7a75b7c80c/customview/customview-poolingcontainer">these commits</a>.</p>
+
+<h2>Documentfile: v1.1.0-beta01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.documentfile:documentfile:1.1.0-beta01</code> is released. Version 1.1.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/1e0ab9e58c3c2ebe8152b7507938aef7e9c1acdc..fa21b171320cb3de44a0848d06967a15c6402770/documentfile/documentfile">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>This library now uses <a href="https://jspecify.dev/">JSpecify nullness annotations</a>, which are type-use. Kotlin developers should use the following compiler arguments to enforce correct usage: <code translate="no" dir="ltr">-Xjspecify-annotations=strict</code>, <code translate="no" dir="ltr">-Xtype-enhancement-improvements-strict-mode</code>. <a href="https://issuetracker.google.com/issues/326456246">b/326456246</a></li>
+ <li>Fix documentation issues in documentfile <a href="https://issuetracker.google.com/issues/337250687">b/337250687</a></li>
+</ul>
+
+<h2>Dynamicanimation: v1.1.0</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.dynamicanimation:dynamicanimation:1.1.0</code> and <code translate="no" dir="ltr">androidx.dynamicanimation:dynamicanimation-ktx:1.1.0</code> are released. Version 1.1.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/b82591147dfcbb8a7c0b9d03b0ff7ae5c648ad83..d5923c378c00b537f3421786eb3a50e6f6868386/dynamicanimation">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">DynamicAnimation</code> library is now stable.</li>
+</ul>
+
+<h2>GridLayout: v1.1.0</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.gridlayout:gridlayout:1.1.0</code> is released. Version 1.1.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/d97f11014f7445681568d955387d895e87f584b2..1ae17d5f1e991c672971ab50949feecb75d1e557/gridlayout/gridlayout">these commits</a>.</p>
+<p><strong>Important changes since 1.0.0</strong></p>
+<ul>
+ <li>Removed dependency on <code translate="no" dir="ltr">androidx.legacy</code> library and dropped support for legacy <code translate="no" dir="ltr">Space</code> class in GridLayout. Developers should be using the platform version of <code translate="no" dir="ltr">Space</code> (<code translate="no" dir="ltr">android.widget.Space</code>) class instead of the <code translate="no" dir="ltr">androidx.legacy</code> version.</li>
+</ul>
+
+<h2>Health Connect: v1.1.0-beta02</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.health.connect:connect-client:1.1.0-beta02</code>, <code translate="no" dir="ltr">androidx.health.connect:connect-client-external-protobuf:1.1.0-beta02</code>, and <code translate="no" dir="ltr">androidx.health.connect:connect-client-proto:1.1.0-beta02</code> are released. Version 1.1.0-beta02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/7a145e052ae61e272e91ffe285e9451b8ab71870..4c37298a97c16270c139eb812ddadaba03e23a52/health/connect">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Added experimental Personal Health Record (PHR) APIs for reading and writing medical data, based on the Fast Healthcare Interoperability Resources (FHIR®) format. PHR APIs include: 
   <ul>
-   <li>bazel version 7.5.0</li>
-   <li>rules_jvm_external 6.7</li>
-   <li>rules_java 8.6.3</li>
-   <li>rules_kotlin 2.1.3</li>
-   <li>rules_android 0.6.3</li>
+   <li>A <code translate="no" dir="ltr">FEATURE_PERSONAL_HEALTH_RECORD</code> constant to check if PHR is available through the feature availability API.</li>
+   <li>APIs for applications writing medical data sources and records.</li>
+   <li>APIs for applications reading medical data sources and records based on user-granted permissions.</li>
   </ul></li>
- <li>Update dependencies to: 
+ <li>Added experimental Mindfulness Session Record APIs (<a href="https://android-review.googlesource.com/#/q/I51c13f4c9eedf5698aedeeb176844ac58082d83a">I51c13</a>), including: 
   <ul>
-   <li>androidx.annotation 1.7.0</li>
+   <li>APIs for applications writing mindfulness session data.</li>
+   <li>APIs for applications reading mindfulness session data based on user-granted permissions.</li>
   </ul></li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>For Android U and higher, Jetpack's validation for <code translate="no" dir="ltr">ElevationGainedRecord</code>, <code translate="no" dir="ltr">FloorsClimbedRecord</code>, <code translate="no" dir="ltr">HeartRateVariabilityRmssdRecord</code>, <code translate="no" dir="ltr">HeightRecord</code>, <code translate="no" dir="ltr">HydrationRecord</code>, <code translate="no" dir="ltr">LeanBodyMassRecord</code>, <code translate="no" dir="ltr">NutritionRecord</code>, <code translate="no" dir="ltr">OxygenSaturationRecord</code>, <code translate="no" dir="ltr">RespiratoryRateRecord</code>,<code translate="no" dir="ltr">RestingHeartRateRecord</code>, <code translate="no" dir="ltr">StepsRecord</code>, <code translate="no" dir="ltr">TotalCaloriesBurnedRecord</code>, <code translate="no" dir="ltr">Vo2MaxRecord</code>, <code translate="no" dir="ltr">WeightRecord</code>, and <code translate="no" dir="ltr">WheelchairPushesRecord</code> values has been replaced with the platform's validation. (<a href="https://android-review.googlesource.com/#/q/I0f40d8aaff9a3379039e7ca9bff72cd717ec5cac">I0f40d</a>)</li>
+</ul>
+
+<h2>Health Connect Testing: v1.0.0-alpha03</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.health.connect:connect-testing:1.0.0-alpha03</code> is released. Version 1.0.0-alpha03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/fd7408b73d9aac0f18431c22580d9ab612278b1e..4c37298a97c16270c139eb812ddadaba03e23a52/health/connect/connect-testing">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">Metadata.populatedWithTestValues</code> will preserve original values if an override is not provided. (<a href="https://android-review.googlesource.com/#/q/I3ee275a32bd1124da47710d7cbb1d41327a96133">I3ee27</a>)</li>
+ <li>Only update changelogs when deleting existing records. (<a href="https://android-review.googlesource.com/#/q/I74a1622801821a41f3d36d4d307577d0212106c3">I74a16</a>)</li>
+</ul>
+
+<h2>Heifwriter: v1.1.0-beta01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.heifwriter:heifwriter:1.1.0-beta01</code> is released with no notable changes. Version 1.1.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/24c00eb294d9cda579d8d6e48a29497fe0f8d3f7..4c37298a97c16270c139eb812ddadaba03e23a52/heifwriter/heifwriter">these commits</a>.</p>
+
+<h2>ink: v1.0.0-alpha04</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.ink:ink-*:1.0.0-alpha04</code> is released. Version 1.0.0-alpha04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/24c00eb294d9cda579d8d6e48a29497fe0f8d3f7..4c37298a97c16270c139eb812ddadaba03e23a52/ink">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Introduces new experimental APIs for custom <code translate="no" dir="ltr">BrushFamily</code> objects, enabling new brushes like Pencil and Laser Pointer. The API allows for loading brushes defined by this proto. (<a href="https://android-review.googlesource.com/#/q/I8809a675a5527c1a7bc2f519e041a8af1ed693b3">I8809a</a>)</li>
+</ul>
+
+<h2>Leanback Leanback-Preference: v1.2.0-rc01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.leanback:leanback:1.2.0-rc01</code> and <code translate="no" dir="ltr">androidx.leanback:leanback-preference:1.2.0-rc01</code> are released with no notable changes. Version 1.2.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/971f5e8c81d9498c6a481c9f49e33ceb7e57dda0..2a52a63eed2e88250592e5aafcb9d9aa77ddef06/leanback">these commits</a>.</p>
+
+<h2>Leanback-Grid: v1.0.0-rc01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.leanback:leanback-grid:1.0.0-rc01</code> is released with no notable changes. Version 1.0.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/971f5e8c81d9498c6a481c9f49e33ceb7e57dda0..2a52a63eed2e88250592e5aafcb9d9aa77ddef06/leanback/leanback-grid">these commits</a>.</p>
+
+<h2>Leanback-Paging: v1.1.0-rc01</h2>
+<p>April 7, 2021</p>
+<p><code translate="no" dir="ltr">androidx.leanback:leanback:1.1.0-rc01</code> and <code translate="no" dir="ltr">androidx.leanback:leanback-preference:1.1.0-rc01</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/38a668d3ef95f40ad28d6e735a2c3eb95ae4cf63..bf8af1081ee3ce8c6dbea9e75c37f53dd8c0553b/leanback">Version 1.1.0-rc01 contains these commits.</a></p>
+<ul>
+ <li>Fixed view leaks in <code translate="no" dir="ltr">SearchSupportFragment()</code> (<a href="https://android.googlesource.com/platform/frameworks/support/+/6c47a1e08882d4932ace063ff2d1ed11f0fe37da">6c47a1</a>, <a href="https://issuetracker.google.com/issues/171909417">b/171909417</a>)</li>
+ <li>Made speech recognizer optional for <code translate="no" dir="ltr">SearchSupportFragment</code> (<a href="https://android.googlesource.com/platform/frameworks/support/+/4ff949b813f4954533390ed87672771c45d60bc4">4ff949</a>,<a href="https://issuetracker.google.com/issues/169936953">b/169936953</a>)</li>
+</ul>
+
+<h2>Lifecycle: v2.9.0-beta01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.lifecycle:lifecycle-*:2.9.0-beta01</code> is released. Version 2.9.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/78132378b67c86698d1ade3dc368c9f15d738a71..64e37c2d3d42028c9ab14070feedcab6b5a9e982/lifecycle">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">Lifecycle ViewModel Compose</code> now uses the same Kotlin Multiplatform setup as <a href="/jetpack/androidx/releases/compose-runtime#1.7.1">Compose Runtime 1.7.1</a> and higher - the <code translate="no" dir="ltr">-desktop</code> artifacts are now removed and <code translate="no" dir="ltr">-jvmStubs</code> and <code translate="no" dir="ltr">-linuxx64Stubs</code> artifacts have been added. None of these targets are meant to be used, they are placeholders to help Jetbrains Compose efforts. (<a href="https://android-review.googlesource.com/#/q/I5cb14cb1dc5bc462961763252b2b3726f85145cb">I5cb14</a>, <a href="https://issuetracker.google.com/issues/406592090">b/406592090</a>)</li>
+</ul>
+<p><strong>Dependency Updates</strong></p>
+<ul>
+ <li>This library now targets Kotlin 2.0 language level and requires KGP 2.0.0 or newer. (<a href="https://android-review.googlesource.com/#/q/Idb6b5d6ae1625ab870ffe74f9790ffabc82a63b4">Idb6b5</a>)</li>
+ <li><code translate="no" dir="ltr">Lifecycle ViewModel Compose</code> now depends on Compose 1.7.8. (<a href="https://android-review.googlesource.com/#/q/I5cb14cb1dc5bc462961763252b2b3726f85145cb">I5cb14</a>, <a href="https://issuetracker.google.com/issues/406592090">b/406592090</a>)</li>
+</ul>
+
+<h2>Navigation: v2.9.0-beta01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.navigation:navigation-*:2.9.0-beta01</code> is released. Version 2.9.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/78132378b67c86698d1ade3dc368c9f15d738a71..64e37c2d3d42028c9ab14070feedcab6b5a9e982/navigation">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>The common API of <code translate="no" dir="ltr">parseStringAsNavUri</code> has been changed to a <code translate="no" dir="ltr">NavUri</code> factory function that takes a String. (<a href="https://android-review.googlesource.com/#/q/I4db6eeb13f86b3dbd987f9b55a49e9a45a8d0b38">I4db6e</a>, <a href="https://issuetracker.google.com/issues/403616316">b/403616316</a>)</li>
+</ul>
+<p><strong>Dependency Updates</strong></p>
+<ul>
+ <li>This library now targets Kotlin 2.0 language level and requires KGP 2.0.0 or newer. (<a href="https://android-review.googlesource.com/#/q/Idb6b5d6ae1625ab870ffe74f9790ffabc82a63b4">Idb6b5</a>)</li>
+</ul>
+
+<h2>Print: v1.1.0-rc01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.print:print:1.1.0-rc01</code> is released. Version 1.1.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/234e23e470a5e7f81291f6acd12d538146dc010b..ebf16b28ce2d18fb383e00c130ce68ec1ffa1143/print/print">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>This library now uses <a href="https://jspecify.dev/">JSpecify nullness annotations</a>, which are type-use. Kotlin developers should use the following compiler arguments to enforce correct usage: <code translate="no" dir="ltr">-Xjspecify-annotations=strict</code>, <code translate="no" dir="ltr">-Xtype-enhancement-improvements-strict-mode</code> (<a href="https://android-review.googlesource.com/#/q/If585e20f8e06ac265ebe3238e697e2b9c108fc75">If585e</a>, <a href="https://issuetracker.google.com/issues/326456246">b/326456246</a>)</li>
+ <li>Removed manual outlining of access to new platform APIs since this happens automatically via API modeling when using R8 with AGP 7.3 or later (e.g. R8 version 3.3) and for all builds when using AGP 8.1 or later (e.g. D8 version 8.1). Clients who are not using AGP are advised to update to D8 version 8.1 or later. See <a href="https://medium.com/androiddevelopers/mitigating-soft-verification-issues-in-r8-and-d8-7e9e06827dfd">this article</a> for more details. (<a href="https://android-review.googlesource.com/#/q/If6b4ccfca0a943b45971a422b58949b13a10bada">If6b4c</a>, <a href="https://issuetracker.google.com/issues/345472586">b/345472586</a>)</li>
+</ul>
+
+<h2>RecyclerView-Selection: v1.2.0-beta01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.recyclerview:recyclerview-selection:1.2.0-beta01</code> is released. Version 1.2.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/3d6f168394d1dd14e1d6f5b6dc4a0d405cb1a26a..b22977a837281f01683d3fa7c8703e97de2518a4/recyclerview/recyclerview-selection">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Deprecated <code translate="no" dir="ltr">ViewCompat.LAYOUT_DIRECTION_</code> APIs (<a href="https://android-review.googlesource.com/#/q/I5171051c40ebe77a9ac6690abfe18810d794d99d">I51710</a>, <a href="https://issuetracker.google.com/issues/317055535">b/317055535</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>This library now uses <a href="https://jspecify.dev/">JSpecify nullness annotations</a>, which are type-use. Kotlin developers should use the following compiler arguments to enforce correct usage: <code translate="no" dir="ltr">-Xjspecify-annotations=strict</code>, <code translate="no" dir="ltr">-Xtype-enhancement-improvements-strict-mode</code>. (<a href="https://android-review.googlesource.com/#/q/I03b80dbabc45393ade3436280e82f17ee050b9b7">I03b80</a>, <a href="https://issuetracker.google.com/issues/326456246">b/326456246</a>)</li>
+</ul>
+
+<h2>Room: v2.7.0</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.room:room-*:2.7.0</code> is released. Version 2.7.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/55a3f2ab7dff00891c1744db27450f9f1471bff7..ba49ce890ee5d5dd8caf7246ad43ec01d6b9e0e6/room">these commits</a>.</p>
+<p><strong>Important changes since 2.6.0</strong></p>
+<ul>
+ <li><strong>Kotlin Multiplatform (KMP) Support:</strong> In this release, Room has been refactored to become a Kotlin Multiplatform (KMP) library. Current supported platforms are Android, iOS, JVM (Desktop), native Mac and native Linux. For more information on how to get started using Room KMP, please refer to the <a href="/kotlin/multiplatform/room">official Room KMP documentation</a>. As part of the KMP support, Room can also be configured with an <a href="/kotlin/multiplatform/sqlite"><code translate="no" dir="ltr">SQLiteDriver</code></a>, for information on how to migrate an existing app to the driver APIs and to Room KMP, see the <a href="/kotlin/multiplatform/sqlite">migration documentation</a>.</li>
+ <li><strong>Kotlin Code Generation on KSP</strong> has been turned ON by default if processing is done via KSP. For KAPT or Java only projects, Room will still generate Java sources.</li>
+ <li><strong>Kotlin 2.0 and KSP2:</strong> Room now targets Kotlin language 2.0 and will require projects to also compile with Kotlin 2.0 and equivalent or higher language version. Support for KSP2 is also added and is recommended when using Room with Kotlin 2.0 or higher.</li>
+</ul>
+
+<h2>Savedstate: v1.3.0-beta01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.savedstate:savedstate-*:1.3.0-beta01</code> is released. Version 1.3.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/78132378b67c86698d1ade3dc368c9f15d738a71..64e37c2d3d42028c9ab14070feedcab6b5a9e982/savedstate">these commits</a>.</p>
+<p><strong>Dependency Updates</strong></p>
+<ul>
+ <li>This library now targets Kotlin 2.0 language level and requires KGP 2.0.0 or newer. (<a href="https://android-review.googlesource.com/#/q/Idb6b5d6ae1625ab870ffe74f9790ffabc82a63b4">Idb6b5</a>)</li>
+</ul>
+
+<h2>Security: v1.1.0-alpha07</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.security:security-crypto:1.1.0-alpha07</code> and <code translate="no" dir="ltr">androidx.security:security-crypto-ktx:1.1.0-alpha07</code> are released. Version 1.1.0-alpha07 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/617e5f259a688901040e1f508ecd2d6deb84e6b8..4c37298a97c16270c139eb812ddadaba03e23a52/security">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Deprecated all APIs in favour of existing platform APIs and direct use of Android Keystore.</li>
+</ul>
+
+<h2>Sqlite: v2.5.0</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.sqlite:sqlite-*:2.5.0</code> is released. Version 2.5.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c53731a05bcf93fc76e9934fd0b0d76cb2bbe34f..185681c8628221c6ed490c001383096e41e1c5c9/sqlite">these commits</a>.</p>
+<p><strong>Important changes since 2.4.0</strong></p>
+<ul>
+ <li><strong>Kotlin Multi-Platform (KMP) Support:</strong> With the release of Room KMP version 2.7.0 the <code translate="no" dir="ltr">SQLite</code> APIs that enable Room to be KMP have also been updated. The package <code translate="no" dir="ltr">andriodx.sqlite</code> contains three interfaces that define low-level <code translate="no" dir="ltr">SQLite</code> APIs: <code translate="no" dir="ltr">SQLiteDriver</code>, <code translate="no" dir="ltr">SQLiteConnection</code> and <code translate="no" dir="ltr">SQLiteStatement</code>. The artifact <code translate="no" dir="ltr">androidx.sqlite:sqlite-framework</code> offers implementation of the interfaces for Android and iOS natively, while <code translate="no" dir="ltr">androidx.sqlite:sqlite-bundled</code> offers an implementation that uses SQLite compiled from source (also known as “bundled SQLite”). For more information about the <code translate="no" dir="ltr">SQLite</code> Driver API refer to the <a href="/kotlin/multiplatform/sqlite">official SQLite KMP documentation</a>.</li>
+</ul>
+
+<h2>Tracing: v1.3.0-rc01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.tracing:tracing:1.3.0-rc01</code>, <code translate="no" dir="ltr">androidx.tracing:tracing-android:1.3.0-rc01</code>, and <code translate="no" dir="ltr">androidx.tracing:tracing-ktx:1.3.0-rc01</code> are released with no changes since the last beta. Version 1.3.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c7c2a80dc6576c43cb049b40c7c250b6cbf34f4e..9eda98421361ea345fb9c84976278706ca6e84ac/tracing">these commits</a>.</p>
+
+<h2>TV Provider: v1.1.0-beta01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.tvprovider:tvprovider:1.1.0-beta01</code> is released. Version 1.1.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/96eb302ee1740ba656c90c9fb27df3723a1a89c1..1f50b1ce3e6505df3f1906c60bbf6b1f9d845af0/tvprovider/tvprovider">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Fixed a crash in <code translate="no" dir="ltr">PreviewChannelHelper.getAllChannels()</code>. (<a href="https://android-review.googlesource.com/#/q/I5041f69e658dec535930c478f674cf5a29dd57bf">I5041f</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>This library now uses <a href="https://jspecify.dev/">JSpecify nullness annotations</a>, which are type-use. Kotlin developers should use the following compiler arguments to enforce correct usage: <code translate="no" dir="ltr">-Xjspecify-annotations=strict</code>, <code translate="no" dir="ltr">-Xtype-enhancement-improvements-strict-mode</code>. (<a href="https://android-review.googlesource.com/#/q/I4fcdf3ed392d15751627922d586eac18f821d0d2">I4fcdf</a>, <a href="https://issuetracker.google.com/issues/326456246">b/326456246</a>)</li>
+</ul>
+<p><strong>External Contribution</strong></p>
+<ul>
+ <li>Removed <code translate="no" dir="ltr">RestrictTo(LIBRARY)</code> annotation from <code translate="no" dir="ltr">TvContractCompact.PreviewProgramColumns</code> interface for public access of aspect ratio. (<a href="https://android-review.googlesource.com/#/q/Id610a80aa6017ea88586fdb78ef2254e27ad4bb9">Id610a</a>, <a href="https://issuetracker.google.com/issues/138150076">b/138150076</a>)</li>
+ <li>Removed <code translate="no" dir="ltr">RestrictTo(LIBRARY)</code> annotation from <code translate="no" dir="ltr">PreviewProgram.PROJECTION</code> and <code translate="no" dir="ltr">WatchNextProgram.PROJECTION</code> for making them public (<a href="https://android-review.googlesource.com/#/q/I042568f082661ca0c10cb0f757a6715f499b52cc">I04256</a>, <a href="https://issuetracker.google.com/issues/138150076">b/138150076</a>)</li>
+</ul>
+
+<h2>Wear Compose: v1.5.0-alpha13</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.wear.compose:compose-*:1.5.0-alpha13</code> is released. Version 1.5.0-alpha13 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/78132378b67c86698d1ade3dc368c9f15d738a71..4c37298a97c16270c139eb812ddadaba03e23a52/wear/compose">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Projects released with Kotlin 2.0 require KGP 2.0.0 or newer to be consumed (<a href="https://android-review.googlesource.com/#/q/Idb6b5d6ae1625ab870ffe74f9790ffabc82a63b4">Idb6b5</a>)</li>
+ <li>Added <code translate="no" dir="ltr">targetPage</code> property to <code translate="no" dir="ltr">PagerState</code> (<a href="https://android-review.googlesource.com/#/q/I4de8bd987798efc1150fdfcaad8a19e2f92db9c5">I4de8b</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Prevent unnecessary recomposition during predictive back. (<a href="https://android-review.googlesource.com/#/q/Iecd6d67e18f316cb6cadd0783052fe9609af48ce">Iecd6d</a>)</li>
+ <li>Fixed <code translate="no" dir="ltr">ScrollInfoProvider</code>’s <code translate="no" dir="ltr">isScrollable</code> property to return the current value. (<a href="https://android-review.googlesource.com/#/q/Icbfb8d0ca90620e7d7693cac28717c6e73aa007d">Icbfb8</a>)</li>
+</ul>
+
+<h2>Wear Compose Material3: v1.0.0-alpha36</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.wear.compose:compose-material3:1.0.0-alpha36</code> is released. Version 1.0.0-alpha36 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/78132378b67c86698d1ade3dc368c9f15d738a71..4c37298a97c16270c139eb812ddadaba03e23a52/wear/compose/compose-material3">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Replaced <code translate="no" dir="ltr">ButtonDefaults.imageBackgroundButtonColors</code> with <code translate="no" dir="ltr">ImageButton</code>, <code translate="no" dir="ltr">ButtonDefaults.imageButtonColors</code>, <code translate="no" dir="ltr">ButtonDefaults.containerPainter</code> and <code translate="no" dir="ltr">ButtonDefaults.disabledContainerPainter</code>. And similar changes for Card. The painters are removed from <code translate="no" dir="ltr">ButtonColors</code> and <code translate="no" dir="ltr">CardColors</code>. (<a href="https://android-review.googlesource.com/#/q/I8c6a141bdaa046953bf5c354808905f019f04a9f">I8c6a1</a>)</li>
+ <li>Updated placeholders to simplify the API. We now provide two Modifiers, <code translate="no" dir="ltr">Modifier.placeholderShimmer</code> to apply a shimmer effect at the component level, and <code translate="no" dir="ltr">Modifier.placeholder</code> to apply a mask on top of unloaded content (<a href="https://android-review.googlesource.com/#/q/Iaee7a9eabf64ed21d6b61aa92c8f03e4839c3ea2">Iaee7a</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Integrated overscroll into the <code translate="no" dir="ltr">ScrollIndicator</code>. (<a href="https://android-review.googlesource.com/#/q/Icfb7f4d02ccbf592b21c02d956b4ce09b39d4023">Icfb7f</a>)</li>
+ <li>Address blank backgrounds and missing dialogs when launching material3 dialogs. (<a href="https://android-review.googlesource.com/#/q/Ice59724a2d7f43d84bbfa0abbfd70588629cfb8b">Ice597</a>)</li>
+ <li>Fixed issues in <code translate="no" dir="ltr">FadingExpandingLabel</code> when text spans multiple lines. (<a href="https://android-review.googlesource.com/#/q/I04eb73accbba82348bce40827edd882d6e8861fd">I04eb7</a>)</li>
+ <li>Updated padding between primary and secondary labels on buttons. (<a href="https://android-review.googlesource.com/#/q/I99b7babb8e35d15a9fef843a38f8f1cc07575989">I99b7b</a>)</li>
+ <li><code translate="no" dir="ltr">ArcLarge</code> has been reduced from <code translate="no" dir="ltr">20sp</code> to <code translate="no" dir="ltr">18sp</code>, and letter spacings on <code translate="no" dir="ltr">ArcLarge</code> and <code translate="no" dir="ltr">ArcSmall</code> have been updated. <code translate="no" dir="ltr">ConfirmationDialog</code>/<code translate="no" dir="ltr">OpenOnPhoneDialog</code> now use the default <code translate="no" dir="ltr">ArcLarge</code> instead of overriding it to <code translate="no" dir="ltr">18sp</code>. (<a href="https://android-review.googlesource.com/#/q/Id39a8d0270ce2e81c7fa8b4465e8182dbfd25994">Id39a8</a>)</li>
+</ul>
+<p><strong>Dependency Updates</strong></p>
+<ul>
+ <li>This library now targets Kotlin 2.0 language level and requires KGP 2.0.0 or newer. (<a href="https://android-review.googlesource.com/#/q/Idb6b5d6ae1625ab870ffe74f9790ffabc82a63b4">Idb6b5</a>)</li>
+</ul>
+
+<h2>wear protolayout: v1.3.0-beta01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.wear.protolayout:protolayout-*:1.3.0-beta01</code> is released. Version 1.3.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/7a145e052ae61e272e91ffe285e9451b8ab71870..4c37298a97c16270c139eb812ddadaba03e23a52/wear/protolayout">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<p>The 1.3.0-beta01 release of Wear ProtoLayout indicates that this release of the library is feature complete and the API is locked (except where marked as experimental). Wear ProtoLayout 1.3 includes the following new functionalities and APIs:</p>
+<ul>
+ <li>Material 3 design comes to the watch, with components and layouts that are optimized for the round display and scale appropriately from small to large screen sizes 
+  <ul>
+   <li>This includes Kotlin-only, <code translate="no" dir="ltr">protolayout-material3</code> library with more Compose-like APIs for the following components and features:</li>
+   <li>Dynamic color theme coming from the system and watch face with the latest Material3 theme for colors, shapes and typography</li>
+   <li><code translate="no" dir="ltr">MaterialScope</code> for taking care of all opinionated defaults and easier customization</li>
+   <li><code translate="no" dir="ltr">iconEdgeButton</code>, <code translate="no" dir="ltr">textEdgeButton</code></li>
+   <li><code translate="no" dir="ltr">iconButton</code>, <code translate="no" dir="ltr">textButton</code>, <code translate="no" dir="ltr">button</code>, <code translate="no" dir="ltr">imageButton</code>, <code translate="no" dir="ltr">avatarButton</code>, <code translate="no" dir="ltr">compactButton</code></li>
+   <li><code translate="no" dir="ltr">titleCard</code>, <code translate="no" dir="ltr">appCard</code>, <code translate="no" dir="ltr">graphicDataCard</code>, <code translate="no" dir="ltr">iconDataCard</code>, <code translate="no" dir="ltr">textDataCard</code></li>
+   <li><code translate="no" dir="ltr">circularProgressIndicator</code>, <code translate="no" dir="ltr">segmentedCircularProgressIndicator</code></li>
+   <li><code translate="no" dir="ltr">primaryLayout</code>, <code translate="no" dir="ltr">buttonGroup</code></li>
+   <li>All components work across any SDK levels and ProtoLayout Renderer version, supplying sensible fallbacks where applicable</li>
+  </ul></li>
+ <li>More Kotlin-friendly, Compose-like APIs for base ProtoLayout elements 
+  <ul>
+   <li><code translate="no" dir="ltr">LayoutModifier</code> with ability to add the most of modifiers as chained functions (<code translate="no" dir="ltr">padding</code>, <code translate="no" dir="ltr">contentDescription</code> (including <code translate="no" dir="ltr">clearSemantics</code>), <code translate="no" dir="ltr">background</code>, <code translate="no" dir="ltr">clip</code>, <code translate="no" dir="ltr">opacity</code> etc.), convertible to the existing <code translate="no" dir="ltr">Modifiers</code> object</li>
+   <li><code translate="no" dir="ltr">LayoutColors</code> and <code translate="no" dir="ltr">LayoutString</code> as types with easier support for using dynamic fields and constraints</li>
+   <li><code translate="no" dir="ltr">text</code> and <code translate="no" dir="ltr">fontStyle</code></li>
+   <li>better map support for <code translate="no" dir="ltr">StateBuilder</code>, including <code translate="no" dir="ltr">DynamicDataMap</code> and factory methods such as <code translate="no" dir="ltr">intAppDataKey</code> for easier creation of <code translate="no" dir="ltr">AppDataKey</code> objects</li>
+  </ul></li>
+ <li>Lottie animations support including option to set different triggers on when animation should start, for example when layout is loaded or when layout becomes visible 
+  <ul>
+   <li>Improved gradient support:</li>
+   <li>Linear gradient API as part of <code translate="no" dir="ltr">Brush</code> that can be used in <code translate="no" dir="ltr">Background</code> modifiers for elements such as <code translate="no" dir="ltr">Box</code>, <code translate="no" dir="ltr">Spacer</code>, etc. …</li>
+   <li>Allow dynamic color values in <code translate="no" dir="ltr">ColorStop</code> used for linear and sweep gradient</li>
+   <li>Existing Sweep Gradient in arc objects now supports dynamic colors and start and end angles</li>
+  </ul></li>
+ <li>Platform data binding in <code translate="no" dir="ltr">protolayout-expression</code> to receive information anytime that layout’s visibility is changed, which for example can be use to hide certain parts of the layout while tile is being swiped to</li>
+ <li>Testing library - <code translate="no" dir="ltr">protolayout-testing</code> - has been added to support easier Unit test coverage for any ProtoLayout elements</li>
+ <li>New element <code translate="no" dir="ltr">DashedArcLine</code> with improved set of features so that line can have dashes, as opposed to the existing <code translate="no" dir="ltr">ArcLine</code></li>
+ <li><code translate="no" dir="ltr">ArcSpacer</code> support for setting its length in DP dimension instead of degrees</li>
+ <li>Added roundness <code translate="no" dir="ltr">FontSetting</code> axis applicable to some fonts</li>
+</ul>
+
+<h2>Wear Tiles: v1.5.0-beta01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.wear.tiles:tiles-*:1.5.0-beta01</code> is released. Version 1.5.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/7a145e052ae61e272e91ffe285e9451b8ab71870..4c37298a97c16270c139eb812ddadaba03e23a52/wear/tiles">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<p>The 1.5.0-beta01 release of Wear Tiles indicates that this release of the library is feature complete and the API is locked (except where marked as experimental). Wear Tiles 1.5 includes the following new functionalities and APIs:</p>
+<ul>
+ <li>Added new API <code translate="no" dir="ltr">TileService.onRecentInteractionEvents()</code> for processing interaction tile events (Enter / Leave) in batches. 
+  <ul>
+   <li>The existing APIs in <code translate="no" dir="ltr">TileService</code> for <code translate="no" dir="ltr">onEnterEvent</code> and <code translate="no" dir="ltr">onLeaveEvent</code> are deprecated and won’t work from SDK 36+ for Apps targeting API 36 or more</li>
+  </ul></li>
+ <li>Critical bug fix for any clients targeting SDK higher than 34 and requesting a tile update on API 34 that would cause a <code translate="no" dir="ltr">SecurityException</code>.</li>
+ <li>Starting from Wear 6 (SDK level 36+), all Tiles will be displayed in a system font that is defined by each device.</li>
+</ul>
+
+<h2>Webkit: v1.14.0-alpha01</h2>
+<p>April 9, 2025</p>
+<p><code translate="no" dir="ltr">androidx.webkit:webkit:1.14.0-alpha01</code> is released. Version 1.14.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/41a38e8ec90b022b61301d545a235195bc6a6f9a..4c37298a97c16270c139eb812ddadaba03e23a52/webkit/webkit">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Introducing the <code translate="no" dir="ltr">PaymentRequest</code> API for invoking Android native payment apps through <code translate="no" dir="ltr">org.chromium.intent.action.PAY</code> intent. <code translate="no" dir="ltr">PaymentRequest</code> is disabled by default and WebView host apps can call <code translate="no" dir="ltr">WebSettingsCompat.setPaymentRequestEnabled(settings, true)</code> to enable it. In addition, <code translate="no" dir="ltr">PaymentRequest</code> requires a <code translate="no" dir="ltr">&lt;queries&gt;</code> tag in <code translate="no" dir="ltr">AndroidManifest.xml</code>. See documentation for <code translate="no" dir="ltr">setPaymentRequestEnabled()</code> for more information. (<a href="https://android-review.googlesource.com/#/q/I3304e1745c01af08db25e4367fb579a388d496ea">I3304e</a>, <a href="https://issuetracker.google.com/issues/404920055">b/404920055</a>)</li>
+ <li>Introducing Experimental Navigation Callbacks. This release introduces experimental APIs for enhanced web navigation tracking and management within <code translate="no" dir="ltr">WebView</code>. These APIs provide detailed information about navigation events. Key Features: 
+  <ul>
+   <li><code translate="no" dir="ltr">WebNavigationClient</code> Interface: Introduces a new interface, <code translate="no" dir="ltr">WebNavigationClient</code>, with callbacks for navigation events:</li>
+   <li><code translate="no" dir="ltr">onNavigationStarted(Navigation navigation)</code>: Notifies when a navigation begins.</li>
+   <li><code translate="no" dir="ltr">onNavigationRedirected(Navigation navigation)</code>: Notifies when a navigation is redirected.</li>
+   <li><code translate="no" dir="ltr">onNavigationCompleted(Navigation navigation)</code>: Notifies when a navigation completes.</li>
+   <li><code translate="no" dir="ltr">Navigation</code> Interface: Provides detailed information about a navigation, including: URL, page initiation status, same-document status, reload status, history status, back/forward status, commit status, error page status, status code, and session restore status. The <code translate="no" dir="ltr">Navigation</code> object serves as a unique identifier for each navigation, allowing developers to correlate related navigation events.</li>
+   <li><code translate="no" dir="ltr">Page</code> class: Introduces the <code translate="no" dir="ltr">Page</code> class, which serves as a key for page-associated data. (<a href="https://android-review.googlesource.com/#/q/I351a6012bdba52adecacda05ebf9b5d6d53b1eae">I351a6</a>)</li>
+  </ul></li>
+ <li>Introduce a new experimental API to toggle the behaviour of caching provider objects. (<a href="https://android-review.googlesource.com/#/q/I146361a920334de704be30bcc46569076516203e">I14636</a>)</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Updated the <code translate="no" dir="ltr">PROFILE_URL_PREFETCH</code> feature value in <code translate="no" dir="ltr">WebViewFeature</code>. (<a href="https://android-review.googlesource.com/#/q/I606fd63c5425e96d196a72d5469c05a893669ac6">I606fd</a>)</li>
+ <li>Adds <code translate="no" dir="ltr">WebViewCompat#saveState</code>, akin to <code translate="no" dir="ltr">WebView#saveState</code>, but allows restricting the size of the returned state and deciding whether or not to save forward history entries. (<a href="https://android-review.googlesource.com/#/q/Iea7d6f518e58aaf4c6e518c85c65271608904561">Iea7d6</a>)</li>
+ <li>Add <code translate="no" dir="ltr">maxPrerenders</code> config to <code translate="no" dir="ltr">SpeculativeLoadingConfig</code> API (<a href="https://android-review.googlesource.com/#/q/I67245b2f422f413b92829f7f6ea234bfd9390f74">I67245</a>)</li>
 </ul>
 </body>
 </html>
