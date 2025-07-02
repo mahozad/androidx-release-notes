@@ -66,64 +66,235 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Core 1.7.0: Core Core-ktx 1.7.0-beta01</h2>
-<p>June 30, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test:core:1.7.0-beta01</code> and <code translate="no" dir="ltr">androidx.test:core-ktx:1.7.0-beta01</code> are released.</p>
-
-<h2>Espresso 3.7.0: Espresso 3.7.0-beta01</h2>
-<p>June 30, 2025</p>
-<p>The following artifacts were released:</p>
+<h2>Activity: v1.12.0-alpha04</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.activity:activity:1.12.0-alpha04</code>, <code translate="no" dir="ltr">androidx.activity:activity-compose:1.12.0-alpha04</code>, and <code translate="no" dir="ltr">androidx.activity:activity-ktx:1.12.0-alpha04</code> are released. Version 1.12.0-alpha04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/e8af6ab7417811bf386c52a59ab5d0b94d194eeb..1b437892629a2cdedb46d9b7232575987b2cc6b5/activity">these commits</a>.</p>
+<p><strong>Dependency Changes</strong></p>
 <ul>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-accessibility:3.7.0-beta01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-core:3.7.0-beta01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-contrib:3.7.0-beta01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-idling-resource:3.7.0-beta01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-intents:3.7.0-beta01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-remote:3.7.0-beta01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-web:3.7.0-beta01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-concurrent:3.7.0-beta01</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-net:3.7.0-beta01</code></li>
+ <li>Activity now depends on <a href="/jetpack/androidx/releases/navigationevent#1.0.0-alpha04">NavigationEvent Alpha04</a></li>
 </ul>
 
-<h2>Test: </h2>
+<h2>AppSearch: v1.1.0</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.appsearch:appsearch-*:1.1.0</code> is released. Version 1.1.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/bfcc16b55545366a116d37026ec4fe09c76be5dc..1ba9efeef17e71a00ddd145f3d0c5c2de2544c2c/appsearch">these commits</a>.</p>
 
+<h2>Browser: v1.9.0-beta01</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.browser:browser:1.9.0-beta01</code> is released. Version 1.9.0-beta01 contains no changes since the previous alpha version.</p>
 
-<h2>Test: </h2>
+<h2>Compose Animation: v1.9.0-beta02</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.9.0-beta02</code> is released. Version 1.9.0-beta02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/3a0aa7a0552da83ba3994838f5db40d0d7a6196f..d578548e34459870db64b61d8788d83f2cf49f54/compose/animation">these commits</a>.</p>
 
-
-<h2>Test: </h2>
-
-
-<h2>Monitor 1.8.0: monitor 1.8.0-beta01</h2>
-<p>June 30, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test:monitor:1.8.0-beta01</code> is released.</p>
+<h2>Compose Foundation: v1.9.0-beta02</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.9.0-beta02</code> is released. Version 1.9.0-beta02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/3a0aa7a0552da83ba3994838f5db40d0d7a6196f..d578548e34459870db64b61d8788d83f2cf49f54/compose/foundation">these commits</a>.</p>
 <p><strong>New Features</strong></p>
 <ul>
- <li>Adds @Supersedes to ServiceLoaderWrapper so it's possible to choose one implementation over another when multiple exist.</li>
+ <li>Support smart items in context menu and selection toolbar.</li>
 </ul>
-
-<h2>Orchestrator 1.6.0: orchestrator 1.6.0-beta01</h2>
-<p>June 30, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test:orchestrator:1.6.0-beta01</code> is released.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Fixed a bug where certain hardware keyboards or TV remotes fail to move cursor in new <code translate="no" dir="ltr">TextFields</code> using the directional keys, and instead switch focus to another composable. Added <code translate="no" dir="ltr">ComposeFoundationFlag.isTextFieldDpadNavigationFixEnabled</code> to be able to disable this fix for the time being if it causes an undesired behavior in an irrecoverable way. (<a href="https://android-review.googlesource.com/#/q/Ie1922b03e8ec24a0b0d35995e407a3bcd09400a0">Ie1922</a>)</li>
+</ul>
 <p><strong>Bug Fixes</strong></p>
 <ul>
- <li>Fix a bug where the instrumentation test application would not startup if the arguments passed to <code translate="no" dir="ltr">ORCHESTRATOR_FORWARDED_INSTRUMENTATION_ARGS</code> contains spaces.</li>
+ <li>Fix issue where sticky headers were not sticking if a pinned item was present. (<a href="https://android-review.googlesource.com/#/q/I9198dc5afb50bb8704113f8ba3aa89b3a652a6ac">I9198d</a>, <a href="https://issuetracker.google.com/issues/385006133">b/385006133</a>)</li>
+ <li><code translate="no" dir="ltr">TextObfuscationMode.RevealLastTyped</code> now follows the system setting “TEXT_SHOW_PASSWORD”. (<a href="https://android-review.googlesource.com/#/q/I41c0c91d93a8e4f5d3ae33fb6652997c50eb700c">I41c0c</a>)</li>
+ <li>Fixed a bug where <code translate="no" dir="ltr">BasicTextField</code> wrongly shows a “Clipboard pasted” warning when the text toolbar opens for the first time. (<a href="https://android-review.googlesource.com/#/q/I5fda2582663a8ce74f4f6b0d03452994f9695e7c">I5fda2</a>)</li>
 </ul>
 
-<h2>Runner 1.7.0: runner 1.7.0-beta01</h2>
-<p>June 30, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test:runner:1.7.0-beta01</code> is released.</p>
+<h2>Compose Material: v1.9.0-beta02</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.9.0-beta02</code> is released. Version 1.9.0-beta02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/3a0aa7a0552da83ba3994838f5db40d0d7a6196f..d578548e34459870db64b61d8788d83f2cf49f54/compose/material">these commits</a>.</p>
 
-<h2>Rules 1.7.0: rules 1.7.0-beta01</h2>
-<p>June 30, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test:rules:1.7.0-beta01</code> is released.</p>
-<p><strong>Breaking Changes</strong></p>
+<h2>Compose Material3: v1.4.0-alpha17</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.compose.material3:material3-*:1.4.0-alpha17</code> is released. Version 1.4.0-alpha17 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/e8af6ab7417811bf386c52a59ab5d0b94d194eeb..1b437892629a2cdedb46d9b7232575987b2cc6b5/compose/material3">these commits</a>.</p>
+<p><strong>New Features</strong></p>
 <ul>
- <li><code translate="no" dir="ltr">ServiceTestRule.startService</code> will now throw if the provided intent does not launch a service.</li>
+ <li>Update button group's animation to animate to 75% of the animation when clicked instead of pressed. (<a href="https://android-review.googlesource.com/#/q/593942a2659820e583a7ebbe193bcaeaf791aa0b">593942a</a>, <a href="https://issuetracker.google.com/423596967">b/423596967</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed an issue where a carousel item could, in some cases, exceed the large element size during layout calculations, that cut the whole widget. (<a href="https://android-review.googlesource.com/#/q/I1c3d7e0f6102d8987666e5a059ba93f591ddaaa0">I1c3d7</a>, <a href="https://issuetracker.google.com/issues/397489534">b/397489534</a>)</li>
+ <li>Fixed jumping past <code translate="no" dir="ltr">beforeContentPadding</code> when scrolling carousels with start and end shift offsets that overlapped. (<a href="https://android-review.googlesource.com/#/q/c3d5f3a39fce8096888709e558573b4aba467286">c3d5f3a</a>, <a href="https://issuetracker.google.com/issues/420618979">b/420618979</a>)</li>
+ <li>Update <code translate="no" dir="ltr">SwipeToDismiss</code>’ enabled behavior to observe settled state instead of current. Restores existing behavior where anchor behavior is only disabled when the component is settled at a dismissed state. (<a href="https://android-review.googlesource.com/#/q/3844e079efd0f392f65e2ba9368b87d6ad5c7e01">3844e07</a>, <a href="https://issuetracker.google.com/issues/425006844">b/425006844</a>)</li>
+ <li><code translate="no" dir="ltr">ExposedDropdownMenu</code>’s popup menu can now be opened via keyboard input. Also fix the menu is now reachable via keyboard for the editable variation. (<a href="https://android-review.googlesource.com/#/q/46ead03680650cd163468745e6438564d8dbc83a">46ead03</a>)</li>
 </ul>
 
-<h2>Services 1.6.0: services 1.6.0-beta01</h2>
-<p>June 30, 2025</p>
-<p><code translate="no" dir="ltr">androidx.test.services:test-services:1.6.0-beta01</code> <code translate="no" dir="ltr">androidx.test.services:storage:1.6.0-beta01</code> are released.</p>
+<h2>Compose Material3 Adaptive: v1.2.0-alpha08</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.compose.material3.adaptive:adaptive-*:1.2.0-alpha08</code> is released. Version 1.2.0-alpha08 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/e8af6ab7417811bf386c52a59ab5d0b94d194eeb..1b437892629a2cdedb46d9b7232575987b2cc6b5/compose/material3/adaptive">these commits</a>.</p>
+
+<h2>Compose Runtime: v1.9.0-beta02</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.9.0-beta02</code> is released. Version 1.9.0-beta02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/3a0aa7a0552da83ba3994838f5db40d0d7a6196f..d578548e34459870db64b61d8788d83f2cf49f54/compose/runtime">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Reduced the reference lifetime of values in the slot table between compositions. There are cases where a reference in a slot table could last a frame longer than necessary. (<a href="https://android-review.googlesource.com/#/q/I49e7488186782a95cb62358292b2950b5730089b">I49e74</a>, <a href="https://issuetracker.google.com/issues/418516940">b/418516940</a>)</li>
+ <li>Remove Kotlin mangle for Hot reload methods. (<a href="https://android-review.googlesource.com/#/q/Ic56a3142f763b01a14b29e1cc20937622efd21eb">Ic56a3</a>, <a href="https://issuetracker.google.com/issues/426871325">b/426871325</a>)</li>
+</ul>
+
+<h2>Compose UI: v1.9.0-beta02</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.9.0-beta02</code> is released. Version 1.9.0-beta02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/3a0aa7a0552da83ba3994838f5db40d0d7a6196f..d578548e34459870db64b61d8788d83f2cf49f54/compose/ui">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Changes companion object to experimental to match class. (<a href="https://android-review.googlesource.com/#/q/I8452aa286a2aeb8f134bc5b6d776fef71b73e9d0">I8452a</a>)</li>
+ <li>Removed <code translate="no" dir="ltr">isTrackFocusEnabled</code> experimental flag (<a href="https://android-review.googlesource.com/#/q/I003fd13c5c0c5a6062ab86d6d23a050bd4ab907e">I003fd</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>When no <code translate="no" dir="ltr">WindowInsets</code> enchroach on the content of the <code translate="no" dir="ltr">ComposeView</code>, <code translate="no" dir="ltr">WindowInsetsRulers</code> values are not provided. (<a href="https://android-review.googlesource.com/#/q/I7122141fa51344acc2351299962ccde82468113e">I71221</a>)</li>
+</ul>
+
+<h2>Concurrent: v1.3.0-rc01</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.concurrent:concurrent-futures:1.3.0-rc01</code> and <code translate="no" dir="ltr">androidx.concurrent:concurrent-futures-ktx:1.3.0-rc01</code> are released. Version 1.3.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/d9489d3b515bfdf6acfda6613e0ce61413328c42..149916a17e3b8d9820c19e689be2dc0c64d4b40c/concurrent">these commits</a>.</p>
+
+<h2>Core Splashscreen: v1.2.0-rc01</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.core:core-splashscreen:1.2.0-rc01</code> is released. Version 1.2.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/008cbd021e3a2b4d1f36ea7f48200c4692bfc169..207e91042ce50586697faf3838c2c0a808e99799/core/core-splashscreen">these commits</a>.</p>
+
+<h2>Core and Core-ktx: v1.17.0-beta01</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.core:core:1.17.0-beta01</code>, <code translate="no" dir="ltr">androidx.core:core-ktx:1.17.0-beta01</code>, and <code translate="no" dir="ltr">androidx.core:core-testing:1.17.0-beta01</code> are released. Version 1.17.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/47d093c4befba4a57515b333d4d423429253286f..1b437892629a2cdedb46d9b7232575987b2cc6b5/core">no changes</a> since the previous alpha version.</p>
+
+<h2>Emoji2: v1.6.0-beta01</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.emoji2:emoji2-*:1.6.0-beta01</code> is released. Version 1.6.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/786176dc2284c87a0e620477608e0aca9adeff15..1b437892629a2cdedb46d9b7232575987b2cc6b5/emoji2">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Support Emoji 16.0 updates</li>
+ <li>Add “emoji” suffix to the content description to make sure that we have a consistent accessibility behavior across all emoji picker apps.</li>
+</ul>
+
+<h2>Games Frame Pacing: v2.1.3</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.games:games-frame-pacing:2.1.3</code> is released. Version 2.1.3 contains <a href="https://android.googlesource.com/platform/frameworks/opt/gamesdk/+log/a29e855e6f39df2ba1ef83eb7897c257ee717d66..f81f888fe11e9540dd580edf5993232172ed3cbe/games-frame-pacing">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Enables support for 16KB page size.</li>
+</ul>
+
+<h2>Hilt: v1.3.0-alpha02</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.hilt:hilt-*:1.3.0-alpha02</code> is released. Version 1.3.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/b6c541571b9fb5471f965fc52612cb280713e5e4..1b437892629a2cdedb46d9b7232575987b2cc6b5/hilt">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>The <code translate="no" dir="ltr">hiltViewModel()</code> APIs for Compose have been moved to a new artifact (<code translate="no" dir="ltr">androidx.hilt:hilt-lifecycle-viewmodel-compose</code>) and package (<code translate="no" dir="ltr">androidx.hilt.lifecycle.viewmodel.compose</code>) such that they can be used without transitively depending on <code translate="no" dir="ltr">androidx.navigation</code>. (<a href="https://android-review.googlesource.com/#/q/Ifb2226c57e78d70a282f58bafaccabe8e3b51e7f">Ifb222</a>, <a href="https://issuetracker.google.com/issues/328104152">b/328104152</a>)</li>
+</ul>
+
+<h2>JavascriptEngine: v1.0.0</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.javascriptengine:javascriptengine:1.0.0</code> is released with no notable changes since the last rc release. Version 1.0.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/82c11d1adf6b4e2a93f8c52f42398ae45d6fe7ae..87de50e190d7e843166cedd9df75192e999fe84b/javascriptengine/javascriptengine">these commits</a>.</p>
+
+<h2>Lifecycle ViewModel Navigation3: v1.0.0-alpha03</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.lifecycle:lifecycle-viewmodel-navigation3:1.0.0-alpha03</code> and <code translate="no" dir="ltr">androidx.lifecycle:lifecycle-viewmodel-navigation3-android:1.0.0-alpha03</code> are released. Version 1.0.0-alpha03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/3a0aa7a0552da83ba3994838f5db40d0d7a6196f..c920d69612c07600c8d244ef8fe3df5ec775da88/lifecycle/lifecycle-viewmodel-navigation3">these commits</a>.</p>
+<p><strong>Dependency Changes</strong></p>
+<ul>
+ <li>Lifecycle ViewModel Navigation 3 now depends on <a href="/jetpack/androidx/releases/navigation3#1.0.0-alpha05">Navigation3 Alpha05</a></li>
+</ul>
+
+<h2>Mediarouter: v1.8.1</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.mediarouter:mediarouter:1.8.1</code> and <code translate="no" dir="ltr">androidx.mediarouter:mediarouter-testing:1.8.1</code> are released. Version 1.8.1 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f7fb264c3718c3816f1cfd173f61c34e261aa51a..0cab07c4babbff31087ac2ab8da21290b7923a35/mediarouter">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Make the selection of a selected route a no-op (<a href="https://android.googlesource.com/platform/frameworks/support/+/a2953fdeee205cfa6bddb34c9742941d0ac55471">a2953f</a>).</li>
+</ul>
+
+<h2>Navigation: v2.9.1</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.navigation:navigation-*:2.9.1</code> is released. Version 2.9.1 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/69bddec17be2c4afeb216869d5f4e1e8e6cc52cc..26d64f2a00c1485431abb846f234756531ed225c/navigation">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed an issue that caused <code translate="no" dir="ltr">NavEntries</code> that were instantiated using single top to never go beyond CREATED in their <code translate="no" dir="ltr">Lifecycle.State</code>. (<a href="https://android-review.googlesource.com/#/q/I043ba6789aa7871ab566e7176d4cb78bdbb69c66">I043ba</a>, <a href="https://issuetracker.google.com/issues/421095236">b/421095236</a>)</li>
+</ul>
+
+<h2>navigation3: v1.0.0-alpha05</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.navigation3:navigation3-*:1.0.0-alpha05</code> is released. Version 1.0.0-alpha05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/3a0aa7a0552da83ba3994838f5db40d0d7a6196f..c920d69612c07600c8d244ef8fe3df5ec775da88/navigation3">these commits</a>.</p>
+<p><strong>Behavior Changes</strong></p>
+<ul>
+ <li>The <code translate="no" dir="ltr">NavEntry</code>'s state is now strictly based on the current list of decorators passed to the <code translate="no" dir="ltr">NavDisplay</code>. This means that decorators should be swapped along your back stacks in the case of multiple back stacks in order to preserve the state of the NavEntries on the back stack. Otherwise, the states will be cleared as if the entries were popped (instead of a swap). (<a href="https://android-review.googlesource.com/#/q/I7a759e37580404cf9c3a35b1c2a8f18b3d20646e">I7a759</a>, <a href="https://issuetracker.google.com/issues/428033667">b/428033667</a>)</li>
+</ul>
+
+<h2>navigationevent: v1.0.0-alpha04</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.navigationevent:navigationevent-*:1.0.0-alpha04</code> is released. Version 1.0.0-alpha04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/5f155b8946feeab0c4075d645f88769de2577a43..1b437892629a2cdedb46d9b7232575987b2cc6b5/navigationevent">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Used <code translate="no" dir="ltr">implementedInJetBrainsFork</code> to <code translate="no" dir="ltr">navigationevent-compose</code> and added a <code translate="no" dir="ltr">commonStubs</code> target to match Compose conventions. Change <a href="/jetpack/androidx/releases/r.android.com/3656217/comment/60f6ecd7_bc116481">requested by Ivan Matkov from JetBrains</a>. (<a href="https://android.googlesource.com/platform/frameworks/support/+/f60c796970d692f0633dbc78362a4937638a2ca8">f60c79</a>)</li>
+ <li>Fixed application of the Compose compiler plugin for Kotlin/Native to ensure correct stub generation. No impact on public APIs or behavior. (<a href="https://android.googlesource.com/platform/frameworks/support/+/1890c9b8904ba5d633336bb7f877a8e61591da3b">1890c9</a>)</li>
+</ul>
+
+<h2>Paging: v3.4.0-alpha01</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.paging:paging-*:3.4.0-alpha01</code> is released. Version 3.4.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/1e6b87e344c28f71f464996b0d753a971aa1b83d..1b437892629a2cdedb46d9b7232575987b2cc6b5/paging">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Paging has added the following KMP targets: watchos, tvos, mingwX64, watchosDeviceArm64, and linuxArm64. (<a href="https://android-review.googlesource.com/#/q/I237dd5f9468c75193d460cc8c6c16083c215963e">I237dd</a>, <a href="https://android-review.googlesource.com/#/q/Ia62b3464382a7b4a7751a054d711d1be823431ff">Ia62b3</a>, <a href="https://issuetracker.google.com/issues/368046982">b/368046982</a>, <a href="https://android-review.googlesource.com/#/q/Icf15d056ce2380ca3c733fb1a93fd502f60b40e4">Icf15d</a>, <a href="https://issuetracker.google.com/issues/364652024">b/364652024</a>, <a href="https://android-review.googlesource.com/#/q/I139d36226a3d06d9768bd63302de98b576a12a48">I139d3</a>, <a href="https://issuetracker.google.com/issues/338268719">b/338268719</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Android unit tests pulling in Paging 3.3 or later will no longer throw from <code translate="no" dir="ltr">PagingLogger</code> (<a href="https://android-review.googlesource.com/#/q/Ia9400db995e7f0357cae2647cbd2cef9cf6c3398">Ia9400</a>, <a href="https://issuetracker.google.com/issues/331684448">b/331684448</a>)</li>
+ <li>Fixed bug where <code translate="no" dir="ltr">RecyclerView</code> throws <code translate="no" dir="ltr">IndexOutOfBoundsException</code> when user scrolls while updating <code translate="no" dir="ltr">RecyclerView</code> (<a href="https://android-review.googlesource.com/#/q/Id1f16a1e2cc0286458659d0bf63cf59ab3399b93">Id1f16</a>, <a href="https://issuetracker.google.com/issues/381024738">b/381024738</a>)</li>
+ <li>Fixed bug where paging was unable to trigger more loads when refreshing while scrolling. (<a href="https://android-review.googlesource.com/#/q/I60ca5c23e01c2ff28d120d10ae9b28eda57fac50">I60ca5</a>, <a href="https://issuetracker.google.com/issues/352586078">b/352586078</a>)</li>
+ <li>Fixed crash when scrolling while refreshing Paging items. (<a href="https://android-review.googlesource.com/#/q/I8c65ac87639c0d501ccab1fd44fd3adbc9147a31">I8c65a</a>, <a href="https://issuetracker.google.com/issues/347649763">b/347649763</a>)</li>
+</ul>
+
+<h2>Security-Crypto: v1.1.0-rc01</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.security:security-crypto:1.1.0-rc01</code> and <code translate="no" dir="ltr">androidx.security:security-crypto-ktx:1.1.0-rc01</code> are released. Version 1.1.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/786176dc2284c87a0e620477608e0aca9adeff15..e716aa82e6b27956a442460a66e512a8e7376ccd/security">these commits</a>.</p>
+
+<h2>Wear-Remote-Interactions: v1.2.0-alpha01</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.wear:wear-remote-interactions:1.2.0-alpha01</code> is released. Version 1.2.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c80589c1ddd2f27bbb6103e55cd3a8a1f18c5b16..1b437892629a2cdedb46d9b7232575987b2cc6b5/wear/wear-remote-interactions">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Updated <code translate="no" dir="ltr">RemoteActivityHelper.startRemoteActivity</code> to use a new public Wear SDK API (<code translate="no" dir="ltr">startRemoteActivity</code>) if it’s available (from Wear 6 onwards). (<a href="https://android-review.googlesource.com/#/q/Id1e77f5fc838470748137a612176f9bee76f6c46">Id1e77</a>)</li>
+</ul>
+
+<h2>Wear Compose: v1.5.0-beta05</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.wear.compose:compose-*:1.5.0-beta05</code> is released. Version 1.5.0-beta05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/e8af6ab7417811bf386c52a59ab5d0b94d194eeb..1b437892629a2cdedb46d9b7232575987b2cc6b5/wear/compose">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Updated the documentation to clarify usage of <code translate="no" dir="ltr">Modifier.edgeSwipeToDismiss</code> (<a href="https://android-review.googlesource.com/#/q/I78cb5ec2bdc7cb20e955d97dbc6d465fc1523074">I78cb5</a>)</li>
+ <li>Addressed bug where multiple revealed items could be shown with <code translate="no" dir="ltr">SwipeToReveal</code> in lazy lists (<a href="https://android-review.googlesource.com/#/q/I1d4f68415a7f96e5bccc8619f447867a6e97f60a">I1d4f6</a>)</li>
+ <li>Container shapes in <code translate="no" dir="ltr">TransformingLazyColumn</code> are now scaled, in order to avoid clipping the contents. (<a href="https://android-review.googlesource.com/#/q/I9221a2976ef58f6656077fe023b277760365bbd5">I9221a</a>)</li>
+ <li>The <code translate="no" dir="ltr">TimePicker</code> and <code translate="no" dir="ltr">DatePicker</code> label for hour/minute/second or year/month/day now has heading semantics for screen readers (<a href="https://android-review.googlesource.com/#/q/I77d8b950fe9adf767f202c37b96bc8c0c2ec0c0d">I77d8b</a>)</li>
+ <li>Removed the pause between loops in the indeterminate <code translate="no" dir="ltr">CircularProgressIndicator</code> (<a href="https://android-review.googlesource.com/#/q/Iaf0bb3a7202936972cf249400bafdf979e94e39c">Iaf0bb</a>)</li>
+ <li>Fixed an animation bug in <code translate="no" dir="ltr">TransformingLazyColumn</code> when items are removed. (<a href="https://android-review.googlesource.com/#/q/I73034d099ab0f2b723e20edd82a824efd5404cc9">I73034</a>)</li>
+ <li>Corrected handling of anchor items in <code translate="no" dir="ltr">TransformingLazyColumn</code> when items are removed. (<a href="https://android-review.googlesource.com/#/q/I841a80455ce4993ad58e513ee91d32d3be4fc128">I841a8</a>)</li>
+ <li><code translate="no" dir="ltr">PickerGroup</code> now animates the Pickers horizontally when autocentering is turned on and the selected (centered) picker is changed. (<a href="https://android-review.googlesource.com/#/q/Ic82c477503c828d34fed47f53e6dde223e0f2d7">Ic82c4</a>)</li>
+</ul>
+
+<h2>Webkit: v1.15.0-alpha01</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.webkit:webkit:1.15.0-alpha01</code> is released. Version 1.15.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/e0db6d8bb2835e53b913e6bf0a913b68f6aaf6d7..1b437892629a2cdedb46d9b7232575987b2cc6b5/webkit/webkit">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>A new API to set HTTP header name-value pairs on requests to specific origins.<br>
+   The <code translate="no" dir="ltr">Profile.setOriginMatchedHeader</code> method lets the application specify that the header name and value should be set on all HTTP/HTTPS requests to the origins that match the provided allowlist when sent from WebViews and service workers that use the given Profile. The API only allows a single mapping for each header name, and will throw an exception if the header name is already set.<br>
+   Use <code translate="no" dir="ltr">Profile.clearOriginMatchedHeader</code> to remove an existing mapping, and <code translate="no" dir="ltr">Profile.clearAllOriginMatchedHeaders</code> to remove all mappings. (<a href="https://android-review.googlesource.com/#/q/Ida7f131d30731734b9ca29f9e67fca95f9a429d3">Ida7f1</a>, <a href="https://issuetracker.google.com/issues/419469873">b/419469873</a>)</li>
+ <li>A new API to access and set cookies as part of <code translate="no" dir="ltr">shouldInterceptRequest</code> callbacks for WebView and Service Workers.<br>
+   App developers who currently access the <code translate="no" dir="ltr">CookieManager</code> API as part of their <code translate="no" dir="ltr">shouldInterceptRequest</code> can now enable cookie headers directly by calling <code translate="no" dir="ltr">setIncludeCookiesOnShouldInterceptRequest</code>. This will then cause WebView to add a <code translate="no" dir="ltr">Cookie</code> header to the <a href="https://developer.android.com/reference/android/webkit/WebResourceRequest#getRequestHeaders()">WebResourceRequest.getRequestHeaders()</a> map which will be the exact cookies that apply to the request. This will also correctly handle any partitioned cookies.<br>
+   Apps can provide <code translate="no" dir="ltr">Set-Cookie</code> header values through the newly added <code translate="no" dir="ltr">WebResourceResponseCompat.setCookies</code> API. The <code translate="no" dir="ltr">Set-Cookie</code> values added there will be processed by WebView as part of the response handling. (<a href="https://android-review.googlesource.com/#/q/Idbfd14469ebc1eb0278a3eae3ea18ee4272cb2c6">Idbfd1</a>, <a href="https://issuetracker.google.com/issues/414769380">b/414769380</a>)</li>
+ <li>A new experimental API to warm up the renderer process for a <code translate="no" dir="ltr">Profile</code>.<br>
+   This API can be used by applications with complex WebView lifecycles to ensure that the renderer process is running, even if all WebView instances have been destroyed. (<a href="https://android-review.googlesource.com/#/q/Ia8fc858b9b26de3abe9168c47e82cf382638cd05">Ia8fc8</a>)</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Add a new method to the experimental <a href="https://developer.android.com/reference/androidx/webkit/Navigation">Navigation</a> interface to provide the URL of the navigation. (<a href="https://android-review.googlesource.com/#/q/I1c6c0ee582cb4a6855adc9cd224569fc8bef4aef">I1c6c0</a>)</li>
+ <li>Update the Profile Prefetch feature name to clarify that the Prefetch API can now be invoked on a background thread. (<a href="https://android-review.googlesource.com/#/q/I7c83ad4effc502e1b19cc4b44e608f5e42bbe793">I7c83a</a>)</li>
+</ul>
+
+<h2>WindowManager: v1.5.0-beta01</h2>
+<p>July 2, 2025</p>
+<p><code translate="no" dir="ltr">androidx.window:window-*:1.5.0-beta01</code> is released. Version 1.5.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/b6c541571b9fb5471f965fc52612cb280713e5e4..1b437892629a2cdedb46d9b7232575987b2cc6b5/window">these commits</a>.</p>
 </body>
 </html>
