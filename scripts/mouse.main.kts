@@ -1,3 +1,5 @@
+#!/usr/bin/env kotlin
+
 import kotlin.io.path.Path
 import kotlin.io.path.writeText
 import kotlin.math.roundToInt

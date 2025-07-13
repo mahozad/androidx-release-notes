@@ -1,12 +1,12 @@
 #!/usr/bin/env kotlin
 
 @file:JvmName("ReleaseNotesGenerator")
-@file:CompilerOptions("-jvm-target", "11")
+@file:CompilerOptions("-jvm-target", "17")
 @file:Repository("https://repo.maven.apache.org/maven2")
-@file:Repository("https://jcenter.bintray.com")
-@file:Repository("https://jitpack.io")
 @file:DependsOn("com.rometools:rome:2.1.0")
-@file:DependsOn("org.jsoup:jsoup:1.18.3")
+@file:DependsOn("org.jsoup:jsoup:1.21.1")
+
+@file:Import("retry.kts")
 
 import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
@@ -17,16 +17,17 @@ import java.net.URI
 import kotlin.io.path.Path
 import kotlin.io.path.bufferedWriter
 import kotlin.io.path.writeText
-import kotlin.time.Duration.Companion.seconds
+
+typealias LinkString = String
+typealias LinkDocument = Pair<LinkString, Document>
 
 val resultFile = Path("release-notes.html")
-val waitTime = 10.seconds
 val feedUrl = URI("https://developer.android.com/feeds/androidx-release-notes.xml").toURL()
 val writer = resultFile.bufferedWriter()
 val reader = tryTo("initialize the feed reader") {
     // NOTE: Use this to test for a complicated release notes
     // XmlReader(File("test-feed-result.xml"))
-    XmlReader(feedUrl)
+    XmlReader(feedUrl.openStream())
 }
 val feed = SyndFeedInput().build(reader)
 val latestRelease = feed.entries.first()
@@ -40,9 +41,9 @@ Jsoup
     .parse(latestReleaseItems)
     .select("a")
     .asSequence()
-    .map(::toLink)
-    .map(::toDocument)
-    .map(::toReleaseNote)
+    .map(Element::toLink)
+    .map(LinkString::toLinkDocument)
+    .map(LinkDocument::toReleaseNote)
     .forEach(writer::write)
     .also { writer.close() }
     .also { reader.close() }
@@ -51,44 +52,16 @@ Jsoup
 val text = Jsoup.parse(resultFile).wholeText()
 Path("release-notes.txt").writeText(text)
 
-// TODO: Duplicate; use the retry.main.kts script.
-//  See other scripts for example usage.
-//  NOTE that currently, IntelliJ code features break when importing external scripts.
-/**
- * Try [forAtMost] times to run the block without exception.
- *
- * We could also make subsequent runs wait
- * for an [exponential delay](https://en.wikipedia.org/wiki/Exponential_backoff).
- * See [this article](https://dzone.com/articles/understanding-retry-pattern-with-exponential-back).
- *
- * I wrote this function myself.
- * It is interesting that [this solution](https://stackoverflow.com/a/46890009)
- * proposed by Roman Elizarov is very similar to mine.
- */
-fun <T> tryTo(
-    description: String,
-    forAtMost: Int = 5,
-    block: () -> T
-): T {
-    repeat(forAtMost) {
-        runCatching(block).onSuccess { return it }
-        println("Failed to $description.")
-        println("Trying again in $waitTime\n")
-        Thread.sleep(waitTime.inWholeMilliseconds)
-    }
-    error("All attempts to $description failed.")
-}
-
-fun toLink(element: Element) = element.attr("href")
+fun Element.toLink() = this.attr("href")
 
 // FIXME: Use plain Jsoup.connect()... and remove Pair creation (to)
 //  See https://github.com/jhy/jsoup/issues/1686 for the reason.
-fun toDocument(link: String) = tryTo("get $link") {
-    link to Jsoup.connect(link).get()
+fun LinkString.toLinkDocument() = tryTo("get $this") {
+    this to Jsoup.connect(this).get()
 }
 
-fun toReleaseNote(pair: Pair<String, Document>): String {
-    val (link, document) = pair
+fun LinkDocument.toReleaseNote(): String {
+    val (link, document) = this
     val id = link.substringAfter("#")
     val name = document.extractName(id)
     val version = document.extractVersion(id)
