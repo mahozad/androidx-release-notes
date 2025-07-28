@@ -1,15 +1,17 @@
 #!/usr/bin/env kotlin
 
 @file:JvmName("WebsiteUpdater")
-@file:CompilerOptions("-jvm-target", "11")
+@file:CompilerOptions("-jvm-target", "17")
 
-import java.io.File
+import kotlin.io.path.Path
+import kotlin.io.path.readText
+import kotlin.io.path.writeText
 
-val body = File("release-notes.html")
+val body = Path("release-notes.html")
     .readText()
     .trimEnd()
-val html = File("docs/template.html")
+val html = Path("docs/template.html")
     .readText()
     .replace("{{ body }}", body)
 
-File("docs/index.html").writeText(html)
+Path("docs/index.html").writeText(html)
