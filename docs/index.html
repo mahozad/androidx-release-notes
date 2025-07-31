@@ -373,6 +373,230 @@
 <p>July 30, 2025</p>
 <p><code translate="no" dir="ltr">androidx.security:security-crypto:1.1.0</code> and <code translate="no" dir="ltr">androidx.security:security-crypto-ktx:1.1.0</code> are released. Version 1.1.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/e716aa82e6b27956a442460a66e512a8e7376ccd..12e7f8e66c5e70ca5c59342b4fb6c82e6e50a37c/security">these commits</a>.</p>
 
+<h2>Core 1.7.0: Core Core-ktx 1.7.0</h2>
+<p>July 30, 2025</p>
+<p><code translate="no" dir="ltr">androidx.test:core:1.7.0</code> and <code translate="no" dir="ltr">androidx.test:core-ktx:1.7.0</code> are released.</p>
+<p>Changes since last stable release 1.6.0 include:</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fix <code translate="no" dir="ltr">Rect</code> handling in <code translate="no" dir="ltr">ViewCapture</code> for SDK &gt;= 34 for non root views.</li>
+ <li>Fix bug reporting the status code when PixelCopy fails in ViewCapture.generateBitmapFromPixelCopy.</li>
+ <li>Improving wording of a failure message.</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Update to minSdkVersion 21</li>
+</ul>
+<p><strong>Dependency Updates</strong></p>
+<ul>
+ <li>Update bazel toolchain:
+  <ul>
+   <li>bazel version 7.5.0</li>
+   <li>rules_jvm_external 6.7</li>
+   <li>rules_java 8.6.3</li>
+   <li>rules_kotlin 2.1.3</li>
+   <li>rules_android 0.6.3</li>
+  </ul></li>
+ <li>Update dependencies to:
+  <ul>
+   <li>androidx.annotation 1.7.0</li>
+   <li>androidx.concurrent futures 1.2.0</li>
+   <li>kotlin 1.9.0</li>
+   <li>kotlin coroutines 1.10.1</li>
+  </ul></li>
+</ul>
+
+<h2>Espresso 3.7.0: Espresso 3.7.0</h2>
+<p>July 30, 2025</p>
+<p>The following artifacts were released:</p>
+<ul>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-accessibility:3.7.0</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-core:3.7.0</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-contrib:3.7.0</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-idling-resource:3.7.0</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-intents:3.7.0</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-remote:3.7.0</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-web:3.7.0</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-concurrent:3.7.0</code></li>
+ <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-net:3.7.0</code></li>
+</ul>
+<p>Changes since last stable 3.6.1 release include:</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fix deadlock in espresso in Robolectric INSTRUMENTATION_TEST + paused looper.</li>
+ <li>Refactor espresso's MessageQueue access into a TestLooperManagerCompat class, and use new TestLooperManager APIs when available.</li>
+ <li>Update bazel toolchain:
+  <ul>
+   <li>bazel version 7.5.0</li>
+   <li>rules_jvm_external 6.7</li>
+   <li>rules_java 8.6.3</li>
+   <li>rules_kotlin 2.1.3</li>
+   <li>rules_android 0.6.3</li>
+  </ul></li>
+ <li>Update dependencies to:
+  <ul>
+   <li>androidx.annotation 1.7.0</li>
+   <li>androidx.concurrent-futures 1.2.0</li>
+   <li>kotlin 1.9.0</li>
+  </ul></li>
+ <li>Only hold main Looper's TestLooperManager during interrogation</li>
+ <li>Fix #2349, where multi-process + different rotation on 2 activities would instantly timeout when waiting for the UI to rotate.</li>
+ <li>Use getSystemService instead of reflective InputManager.getInstance</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Update to minSdkVersion 21</li>
+</ul>
+
+<h2>Test: </h2>
+
+
+<h2>Test: </h2>
+
+
+<h2>Test: </h2>
+
+
+<h2>Monitor 1.8.0: monitor 1.8.0</h2>
+<p>July 30, 2025</p>
+<p><code translate="no" dir="ltr">androidx.test:monitor:1.8.0</code> is released.</p>
+<p>Changes since last stable 1.7.2 release include:</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Update bazel toolchain:
+  <ul>
+   <li>bazel version 7.5.0</li>
+   <li>rules_jvm_external 6.7</li>
+   <li>rules_java 8.6.3</li>
+   <li>rules_kotlin 2.1.3</li>
+   <li>rules_android 0.6.3</li>
+  </ul></li>
+ <li>Update dependencies to:
+  <ul>
+   <li>androidx.annotation 1.7.0a</li>
+   <li>kotlin 1.9.0</li>
+  </ul></li>
+</ul>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Adds @Supersedes to ServiceLoaderWrapper so it's possible to choose one implementation over another when multiple exist.</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Update to minSdkVersion 21</li>
+ <li>Make ReflectionException a RuntimeException</li>
+</ul>
+
+<h2>Orchestrator 1.6.0: orchestrator 1.6.0</h2>
+<p>July 30, 2025</p>
+<p><code translate="no" dir="ltr">androidx.test:orchestrator:1.6.0</code> is released.</p>
+<p>Changes since last stable 1.5.1 release include:</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fix a bug where the instrumentation test application would not startup if the arguments passed to <code translate="no" dir="ltr">ORCHESTRATOR_FORWARDED_INSTRUMENTATION_ARGS</code> contains spaces.</li>
+ <li>Update bazel toolchain:
+  <ul>
+   <li>bazel version 7.5.0</li>
+   <li>rules_jvm_external 6.7</li>
+   <li>rules_java 8.6.3</li>
+   <li>rules_kotlin 2.1.3</li>
+   <li>rules_android 0.6.3</li>
+  </ul></li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Update to minSdkVersion 21</li>
+</ul>
+
+<h2>Runner 1.7.0: runner 1.7.0</h2>
+<p>July 30, 2025</p>
+<p><code translate="no" dir="ltr">androidx.test:runner:1.7.0</code> is released.</p>
+<p>Changes since last stable 1.6.1 release include:</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Update bazel toolchain:
+  <ul>
+   <li>bazel version 7.5.0</li>
+   <li>rules_jvm_external 6.7</li>
+   <li>rules_java 8.6.3</li>
+   <li>rules_kotlin 2.1.3</li>
+   <li>rules_android 0.6.3</li>
+  </ul></li>
+ <li>Update dependencies to:
+  <ul>
+   <li>androidx.annotation 1.7.0</li>
+  </ul></li>
+ <li>Exceptions during <code translate="no" dir="ltr">@AfterClass</code> were not being reported via <code translate="no" dir="ltr">InstrumentationResultPrinter</code>.</li>
+ <li>Exceptions arising in AndroidJUnitRunner.buildRequest are now handled.</li>
+ <li>Assumption failures during a ClassRule or BeforeClass are now reported more consistently via <code translate="no" dir="ltr">InstrumentationResultPrinter</code></li>
+ <li>Clarify SdkSuppress reference docs</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Update to minSdkVersion 21</li>
+ <li>Deprecate androidx.test.filters.Suppress in favor of org.junit.Ignore</li>
+</ul>
+
+<h2>Rules 1.7.0: rules 1.7.0</h2>
+<p>July 30, 2025</p>
+<p><code translate="no" dir="ltr">androidx.test:rules:1.7.0</code> is released.</p>
+<p>Changes since last stable 1.6.0 release include:</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">ServiceTestRule.startService</code> will now throw if the provided intent does not launch a service.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Update bazel toolchain:
+  <ul>
+   <li>bazel version 7.5.0</li>
+   <li>rules_jvm_external 6.7</li>
+   <li>rules_java 8.6.3</li>
+   <li>rules_kotlin 2.1.3</li>
+   <li>rules_android 0.6.3</li>
+  </ul></li>
+ <li>Update dependencies to:
+  <ul>
+   <li>androidx.annotation 1.7.0</li>
+  </ul></li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Update to minSdkVersion 21</li>
+</ul>
+
+<h2>Services 1.6.0: services 1.6.0</h2>
+<p>July 30, 2025</p>
+<p><code translate="no" dir="ltr">androidx.test.services:test-services:1.6.0</code> <code translate="no" dir="ltr">androidx.test.services:storage:1.6.0</code> are released.</p>
+<p>Changes since last stable 1.5.0 release include:</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>StackTrimmer now reports suppressed exceptions</li>
+ <li>Adding a LocalSocket-based protocol for the ShellExecutor to talk to the ShellMain. This obsoletes SpeakEasy; if androidx.test.services is killed (e.g. by the low memory killer) between the start of the app_process that invokes LocalSocketShellMain and the start of the test, the test is still able to talk to LocalSocketShellMain.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Update bazel toolchain:
+  <ul>
+   <li>bazel version 7.5.0</li>
+   <li>rules_jvm_external 6.7</li>
+   <li>rules_java 8.6.3</li>
+   <li>rules_kotlin 2.1.3</li>
+   <li>rules_android 0.6.3</li>
+  </ul></li>
+ <li>Update dependencies to:
+  <ul>
+   <li>androidx.annotation 1.7.0</li>
+  </ul></li>
+ <li>The obsolete FileObserver protocol has been removed in favor of the LocalSocket-based protocol.</li>
+ <li>TestStorage: Use input directory location for internal files</li>
+ <li>StackTrimmer: harden against exceptions coming from Failure.getMessage().</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Update to minSdkVersion 21</li>
+</ul>
+
 <h2>Transition: v1.7.0-alpha01</h2>
 <p>July 30, 2025</p>
 <p><code translate="no" dir="ltr">androidx.transition:transition:1.7.0-alpha01</code> and <code translate="no" dir="ltr">androidx.transition:transition-ktx:1.7.0-alpha01</code> are released. Version 1.7.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/184a59d7780ba90e35570b93f6513724b08c2168..5fa9d0954ece0376736164b0f7bc2ef33506ab70/transition">these commits</a>.</p>
