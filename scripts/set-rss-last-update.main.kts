@@ -1,5 +1,7 @@
 #!/usr/bin/env kotlin
 
+// See https://github.com/Kotlin/kotlin-script-examples/blob/master/jvm/main-kts/scripts/kotlinx-html.main.kts
+
 @file:JvmName("TimestampUpdater")
 @file:CompilerOptions("-jvm-target", "17")
 @file:Repository("https://repo.maven.apache.org/maven2")

@@ -1,5 +1,7 @@
 #!/usr/bin/env kotlin
 
+// See https://github.com/Kotlin/kotlin-script-examples/blob/master/jvm/main-kts/scripts/kotlinx-html.main.kts
+
 import kotlin.io.path.Path
 import kotlin.io.path.writeText
 import kotlin.math.roundToInt
