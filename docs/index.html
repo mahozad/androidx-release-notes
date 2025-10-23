@@ -310,6 +310,204 @@
  <li><code translate="no" dir="ltr">rememberLifecycleOwner</code> no longer crashes if the owner receives an <code translate="no" dir="ltr">Lifecycle.Event.ON_DESTROY</code> event before moving to <code translate="no" dir="ltr">Lifeycle.State.CREATED</code>. (<a href="https://android-review.googlesource.com/#/q/I6f98e927151c0febf1f8ea673ba19664615904b8">I6f98e</a>, <a href="https://issuetracker.google.com/issues/444594991">b/444594991</a>)</li>
 </ul>
 
+<h2>Media3: v1.9.0-alpha01</h2>
+<p>October 22, 2025</p>
+<p><code translate="no" dir="ltr">androidx.media3:media3-*:1.9.0-alpha01</code> is released. Version 1.9.0-alpha01 contains <a href="https://github.com/androidx/media/commits/1.9.0-alpha01">these commits</a>.</p>
+<ul>
+ <li>Common Library:
+  <ul>
+   <li>Update <code translate="no" dir="ltr">minSdk</code> to <code translate="no" dir="ltr">23</code> in line with other AndroidX libraries.</li>
+   <li>Add <code translate="no" dir="ltr">PlayerTransferState</code>, which facilitates transferring the playback state across <code translate="no" dir="ltr">Player</code> instances.</li>
+   <li>Add <code translate="no" dir="ltr">void mute()</code> and <code translate="no" dir="ltr">void unmute()</code> methods to Player that preserve and consequently restore Player's volume before and after setting it to zero.</li>
+   <li>Publish utility classes <code translate="no" dir="ltr">WakeLockManager</code>, <code translate="no" dir="ltr">WifiLockManager</code>, <code translate="no" dir="ltr">AudioFocusManager</code>, <code translate="no" dir="ltr">AudioBecomingNoisyManager</code> and <code translate="no" dir="ltr">StuckPlayerDetector</code> previously used by <code translate="no" dir="ltr">ExoPlayer</code> internally to allow reuse for other players (<a href="https://github.com/androidx/media/issues/1893">#1893</a>).</li>
+   <li>Fix <code translate="no" dir="ltr">ForwardingPlayer</code> listener handling when the underlying delegate player uses reference equality for comparing listener instances (<a href="https://github.com/androidx/media/issues/2675">#2675</a>).</li>
+   <li>Add a <code translate="no" dir="ltr">Player.listenTo</code> suspending extension function in the <code translate="no" dir="ltr">media3-common-ktx</code> library that specifies the particular <code translate="no" dir="ltr">Player.Events</code> that should be acted upon.</li>
+   <li>Fix a crash in <code translate="no" dir="ltr">BasePlayer.getBufferedPercentage</code> resulting from integer overflow when the reported buffered position is implausibly much larger than the reported duration (<a href="https://github.com/androidx/media/issues/2750">#2750</a>).</li>
+  </ul></li>
+ <li>ExoPlayer:
+  <ul>
+   <li>Add a stuck player detection that triggers a <code translate="no" dir="ltr">StuckPlayerException</code> player error if the player seems stuck. This happens in the following cases, where each default timeout can be configured in <code translate="no" dir="ltr">ExoPlayer.Builder</code> if required:
+    <ul>
+     <li>After 10 minutes of <code translate="no" dir="ltr">STATE_BUFFERING</code> while trying to play and no buffering progress.</li>
+     <li>After 10 seconds of <code translate="no" dir="ltr">STATE_READY</code> while trying to play and no playback progress.</li>
+     <li>After 1 minute of <code translate="no" dir="ltr">STATE_READY</code> beyond the declared duration without reaching the end of the item.</li>
+     <li>After 10 minutes with a playback suppression reason while trying to play.</li>
+    </ul></li>
+   <li>Enable wake lock handling by default to fix issues with buffering during background playback. This is equivalent to setting <code translate="no" dir="ltr">ExoPlayer.Builder.setWakeMode</code> to <code translate="no" dir="ltr">C.WAKE_MODE_LOCAL</code>.</li>
+   <li>Add listening logic to automatically update the virtual device ID when a change is reported to the <code translate="no" dir="ltr">Context</code> originally passed to <code translate="no" dir="ltr">ExoPlayer.Builder</code>.</li>
+   <li>Add <code translate="no" dir="ltr">ExoPlayer.setVirtualDeviceId</code> to manually update the virtual device ID obtained from the <code translate="no" dir="ltr">Context</code> passed to <code translate="no" dir="ltr">ExoPlayer.Builder</code>.</li>
+   <li>Ensure renderers don't consume data from the next playlist item more than 10 seconds before the end of the current item.</li>
+   <li>Add <code translate="no" dir="ltr">setSeekBackIncrementMs</code>, <code translate="no" dir="ltr">setSeekForwardIncrementMs</code> and <code translate="no" dir="ltr">setMaxSeekToPreviousPositionMs</code> to <code translate="no" dir="ltr">ExoPlayer</code> to update these settings after construction (<a href="https://github.com/androidx/media/issues/2736">#2736</a>).</li>
+   <li>Add pre-caching functionality in <code translate="no" dir="ltr">DefaultPreloadManager</code>. Apps now can return <code translate="no" dir="ltr">DefaultPreloadManager.PreloadStatus.specifiedRangeCached(startPositionMs, durationMs)</code> or <code translate="no" dir="ltr">DefaultPreloadManager.PreloadStatus.specifiedRangeCached(durationMs)</code> via <code translate="no" dir="ltr">TargetPreloadStatusControl.getTargetPreloadStatus(T rankingData)</code> to indicate that a media item needs to be pre-cached.</li>
+   <li>Use pre-caching functionality of <code translate="no" dir="ltr">DefaultPreloadManager</code> in shortform demo app.</li>
+   <li>Add <code translate="no" dir="ltr">DefaultLoadControl.Builder</code> setters for local playback and adjust default values of <code translate="no" dir="ltr">DefaultLoadControl</code> to work well with a wide range of local files.</li>
+   <li>Fix bug where setting an empty playlist can leave the player in <code translate="no" dir="ltr">STATE_READY</code> or <code translate="no" dir="ltr">STATE_BUFFERING</code>.</li>
+   <li>Enhance the preload manager APIs:
+    <ul>
+     <li>Add <code translate="no" dir="ltr">addMediaItems(List&lt;MediaItem&gt;, List&lt;T&gt;)</code> and <code translate="no" dir="ltr">addMediaSources(List&lt;MediaSource&gt;, List&lt;T&gt;)</code> that add the media items or media sources in batch, and automatically call <code translate="no" dir="ltr">invalidate()</code> afterwards.</li>
+     <li>Add <code translate="no" dir="ltr">removeMediaItems((List&lt;MediaItem&gt;)</code> and <code translate="no" dir="ltr">removeMediaSources(List&lt;MediaSource&gt;)</code> that remove the media items or media sources in batch, and make sure that preload manager does not start to preload or continue preloading any of them after removal.</li>
+     <li>Allow <code translate="no" dir="ltr">DefaultPreloadManager.setCurrentPlayingIndex(int)</code> to invalidate itself automatically. Apps don't need to call <code translate="no" dir="ltr">invalidate()</code> explicitly anymore after updating the current playing index.</li>
+    </ul></li>
+   <li>Add capability to skip keyframe reset for forward seeks within the same group of pictures while in scrubbing mode.</li>
+   <li>Add <code translate="no" dir="ltr">DefaultLoadControl.Builder.setPlayerTargetBufferBytes(String, int)</code> for apps to set a value of target buffer bytes for a player with the specified <code translate="no" dir="ltr">playerName</code>. The <code translate="no" dir="ltr">DefaultLoadControl</code> can now make decisions of each player separately based on its own allocated bytes and target buffer bytes.</li>
+   <li>Add <code translate="no" dir="ltr">SkipInfo</code> to the <code translate="no" dir="ltr">AdPlaybackState.AdGroup</code> to carry skip information for each ad in the ad group.</li>
+   <li>Fix bug where calling <code translate="no" dir="ltr">removeMediaItems(List)</code> during playing a post-roll created a crash (<a href="https://github.com/androidx/media/issues/2746">#2746</a>).</li>
+   <li>Fix some stuttering in playlist playback where frames were mistakenly always set as the last sample and rendered.</li>
+   <li>Enable retry path if player fails to generate audio session ID (<a href="https://github.com/androidx/media/issues/2382">#2382</a>, <a href="https://github.com/google/ExoPlayer/issues/2678">#2678</a>).</li>
+   <li>Add support to control the total buffer bytes for the sources in <code translate="no" dir="ltr">DefaultPreloadManager</code> to avoid total buffer bytes for preloading from growing arbitrarily. To use the default control logic, Apps can set the target buffer bytes for preloading via <code translate="no" dir="ltr">DefaultLoadControl.Builder.setPlayerTargetBufferBytes(String, int)</code> for a <code translate="no" dir="ltr">playerName</code> of <code translate="no" dir="ltr">PlayerId.Preload.name</code> ("preload"), and inject the created <code translate="no" dir="ltr">DefaultLoadControl</code> via <code translate="no" dir="ltr">DefaultPreloadManager.Builder.setLoadControl(LoadControl)</code>.</li>
+  </ul></li>
+ <li>CompositionPlayer:
+  <ul>
+   <li>Publish <code translate="no" dir="ltr">CompositionPlayer</code> under a new <code translate="no" dir="ltr">@ExperimentalApi</code> annotation to indicate it is available for experimentation, but is still under development. Some APIs are likely to change significantly in future releases, and there are known issues and limitations with some use-cases (some undocumented).</li>
+   <li>Add support for <code translate="no" dir="ltr">COMMAND_SET_AUDIO_ATTRIBUTES</code> and audio focus handling in <code translate="no" dir="ltr">CompositionPlayer</code>.</li>
+   <li>Add support for speed changing in secondary sequences in <code translate="no" dir="ltr">CompositionPlayer</code>.</li>
+  </ul></li>
+ <li>Transformer:
+  <ul>
+   <li>Use <code translate="no" dir="ltr">InAppMp4Muxer</code> as default muxer.</li>
+   <li>Add <code translate="no" dir="ltr">EditedMediaItem.Builder#setSpeed()</code> and deprecate <code translate="no" dir="ltr">Effects#createExperimentalSpeedChangingEffects()</code>.</li>
+   <li>Replace <code translate="no" dir="ltr">forceAudioTrack</code> and <code translate="no" dir="ltr">forceVideoTrack</code> with <code translate="no" dir="ltr">trackTypes</code> in <code translate="no" dir="ltr">EditedMediaItemSequence</code>.</li>
+  </ul></li>
+ <li>Track Selection:
+  <ul>
+   <li>Add <code translate="no" dir="ltr">TrackSelectionParameters.selectTextByDefault</code> to prefer the selection of any text track without specifying other more specific preferences.</li>
+   <li>Add <code translate="no" dir="ltr">preferredVideoLabels</code>, <code translate="no" dir="ltr">preferredAudioLabels</code> and <code translate="no" dir="ltr">preferredTextLabels</code> in <code translate="no" dir="ltr">TrackSelectionParameters</code> to specify a preference for tracks with a specific label, for example those read from HLS NAME tags (<a href="https://github.com/androidx/media/issues/1666">#1666</a>).</li>
+  </ul></li>
+ <li>Extractors:
+  <ul>
+   <li>FLAC: Tighten header detection to reduce the chance of finding spurious headers in the encoded FLAC data, resulting in decoding errors (<a href="https://github.com/androidx/media/issues/558">#558</a>).</li>
+   <li>MP3: Allow gaps between (and before) ID3 tags at the beginning of MP3 files (<a href="https://github.com/androidx/media/issues/811">#811</a>, <a href="https://github.com/google/ExoPlayer/issues/5718">#5718</a>).</li>
+   <li>MP4: Disambiguate between <code translate="no" dir="ltr">audio/mpeg</code> (MP3), <code translate="no" dir="ltr">audio/mpeg-L1</code> and <code translate="no" dir="ltr">audio/mpeg-L2</code> MIME types by peeking the layer value of the first sample before emitting a track format from the extractor (<a href="https://github.com/androidx/media/issues/2683">#2683</a>).</li>
+   <li>MP4: Improve sniffing efficiency of very large files by assuming a <code translate="no" dir="ltr">stbl</code> box larger than 1MB implies the file must be non-fragmented (<a href="https://github.com/androidx/media/issues/2650">#2650</a>).</li>
+   <li>Matroska: Add support for DTS-HD detection (<a href="https://github.com/google/ExoPlayer/issues/6225">#6225</a>).</li>
+   <li>Fix an issue in <code translate="no" dir="ltr">MatroskaExtractor</code> where seeking could be inaccurate for files with multiple tracks. Cue points are now correctly associated with their respective tracks, leading to more precise seeking.</li>
+   <li>MP4: Add support for <code translate="no" dir="ltr">©mvn</code> (movement name) and <code translate="no" dir="ltr">©mvi</code> (movement index) metadata, these are now emitted as <code translate="no" dir="ltr">TextInformationFrame</code> objects in <code translate="no" dir="ltr">Format.metadata</code> with IDs of <code translate="no" dir="ltr">MVNM</code> and <code translate="no" dir="ltr">MVIN</code> respectively (<a href="https://github.com/androidx/media/issues/2754">#2754</a>).</li>
+   <li>MPEG-TS: Fix <code translate="no" dir="ltr">IllegalArgumentException</code> from <code translate="no" dir="ltr">ReorderingBufferQueue</code> caused by PES packets with no timestamp (<a href="https://github.com/androidx/media/issues/2764">#2764</a>).</li>
+   <li>MP4: Ignore tracks with missing <code translate="no" dir="ltr">stsd</code> box (instead of failing to parse the whole file).</li>
+   <li>Add support for extracting HEIC Motion Photos. The <code translate="no" dir="ltr">HeifExtractor</code> can now parse HEIC files containing embedded video and audio tracks.</li>
+   <li>MP3: Change <code translate="no" dir="ltr">FLAG_ENABLE_INDEX_SEEKING</code> to prefer seeking information from metadata headers (like Xing and VBRI) when available, falling back to index-based seeking if no other seeking information is present. This improves performance for files with seeking metadata (<a href="https://github.com/androidx/media/issues/2839">#2839</a>).</li>
+  </ul></li>
+ <li>Inspector:
+  <ul>
+   <li>Introduced a new <code translate="no" dir="ltr">:media3-inspector</code> module to serve as the dedicated home for media inspection utilities. This module now houses a new <code translate="no" dir="ltr">androidx.media3.inspector.MetadataRetriever</code>, which will provide a unified API for both metadata and frame extraction. The existing <code translate="no" dir="ltr">androidx.media3.exoplayer.MetadataRetriever</code> is now deprecated in favor of this new version.</li>
+   <li>Introduced <code translate="no" dir="ltr">androidx.media3.inspector.FrameExtractor</code>, a new public API for frame extraction. This <code translate="no" dir="ltr">AutoCloseable</code> class provides a way to extract frames with support for HDR video, video effects, and custom decoder selection. It should be created via its <code translate="no" dir="ltr">Builder</code> for a specific <code translate="no" dir="ltr">MediaItem</code>.</li>
+   <li>FrameExtractor: Add <code translate="no" dir="ltr">getThumbnail()</code> to extract a representative thumbnail frame from a media file without requiring a specific timestamp.</li>
+  </ul></li>
+ <li>Audio:
+  <ul>
+   <li>Make <code translate="no" dir="ltr">AudioProcessor</code> instances aware of seeking.</li>
+   <li>Allow injecting the new <code translate="no" dir="ltr">AudioOutputProvider</code> interface into <code translate="no" dir="ltr">DefaultAudioSink.Builder</code> to support custom audio output paths. The default is <code translate="no" dir="ltr">AudioTrackAudioOutputProvider</code>.</li>
+   <li>Handle seeks in <code translate="no" dir="ltr">GainProcessor</code>.</li>
+   <li>Utilize AC-4 decoder profile and level capabilities in track format support assessment (<a href="https://github.com/androidx/media/pull/2580">#2580</a>).</li>
+   <li>Avoid potential delays caused by handling routing change callbacks at the beginning of playback (<a href="https://github.com/androidx/media/issues/2646">#2646</a>).</li>
+   <li>Allow codec reuse for EAC3, EAC3-JOC and AC-4 formats (<a href="https://github.com/androidx/media/pull/1346">#1346</a>).</li>
+   <li>Add support for float PCM samples in <code translate="no" dir="ltr">Sonic</code>.</li>
+   <li>Add support for 16 bit PCM samples in <code translate="no" dir="ltr">ToFloatPcmAudioProcessor</code>.</li>
+  </ul></li>
+ <li>Video:
+  <ul>
+   <li>Disable codec reuse for Dolby-Vision content with different profiles.</li>
+  </ul></li>
+ <li>Text:
+  <ul>
+   <li>Fix parsing of CEA-6/708 subtitles in Dolby Vision content (<a href="https://github.com/androidx/media/issues/2775">#2775</a>).</li>
+  </ul></li>
+ <li>Image:
+  <ul>
+   <li>Fix ScrubbingMode issue where player gets stuck while scrubbing a DASH thumbnail track (<a href="https://github.com/androidx/media/issues/2815">#2815</a>).</li>
+  </ul></li>
+ <li>DRM:
+  <ul>
+   <li>Change the return type of <code translate="no" dir="ltr">MediaDrmCallback</code> methods from <code translate="no" dir="ltr">byte[]</code> to a new <code translate="no" dir="ltr">MediaDrmCallback.Response</code> type, to allow returning extra optional information. This is a source breaking change, but breakages can be easily resolved by wrapping the previous <code translate="no" dir="ltr">byte[]</code> return value with <code translate="no" dir="ltr">new Response</code> before returning.</li>
+   <li>Add key request info like URL and latency to <code translate="no" dir="ltr">AnalyticsListener.onDrmKeysLoaded</code> (<a href="https://github.com/androidx/media/issues/1001">#1001</a>).</li>
+   <li>Move provisioning request data from a URL parameter to the POST body.</li>
+  </ul></li>
+ <li>Muxers:
+  <ul>
+   <li>Add <code translate="no" dir="ltr">MediaMuxerCompat</code>, a drop-in replacement for framework <code translate="no" dir="ltr">MediaMuxer</code>.</li>
+   <li>Add <code translate="no" dir="ltr">MuxerUtil.createMotionPhotoFromJpegImageAndBmffVideo()</code> to allow Motion Photo creation.</li>
+   <li>Add <code translate="no" dir="ltr">WebmMuxer</code> to allow muxing of <code translate="no" dir="ltr">OPUS</code>, <code translate="no" dir="ltr">VORBIS</code>, <code translate="no" dir="ltr">VP8</code> and <code translate="no" dir="ltr">VP9</code> media streams into a <code translate="no" dir="ltr">webm</code> file format.</li>
+  </ul></li>
+ <li>IMA extension:
+  <ul>
+   <li>Removal of custom proguard rules, so that apps can use those released in IMA android archive instead.</li>
+   <li>Add <code translate="no" dir="ltr">ImaServerSideAdInsertionUriBuilder.setNetworkCode</code>, a new API for setting the Google Ad Manager network code for the IMA SDK to handle ads identifiers as specified in Google Ad Manager settings. Network codes are optional but recommended for Full service stream requests. To find the network code, see <a href="http://support.google.com/admanager/answer/7674889">this article</a>.</li>
+   <li>Bump IMA dependency to 3.37.0 which requires enabling core library desugaring. This must also be enabled by dependent apps too. See IMA's <a href="https://developers.google.com/interactive-media-ads/docs/sdks/android/client-side/get-started#2.-add-the-ima-sdk-to-your-project">config notes</a>.</li>
+   <li>Support IMA DAI custom UI options in SSAI URI builder. Custom UI options for server side ad insertion include "Skippable" and "About This Ad" rendering support. The feature is currently available for selected publishers behind an allow list. This change also upgrades the IMA SDK version to 3.38.0 (<a href="https://developers.google.com/interactive-media-ads/docs/sdks/android/client-side/history">release notes</a>) to access the custom UI options API.</li>
+  </ul></li>
+ <li>Session:
+  <ul>
+   <li>Add new parameter to <code translate="no" dir="ltr">MediaSession.Callback.onPlaybackResumption</code> to indicate if the call happens to gather information only or to start playback (<a href="https://github.com/androidx/media/issues/1764">#1764</a>).</li>
+   <li>Update <code translate="no" dir="ltr">MediaSession.ControllerInfo.isTrusted</code> to also declare controllers from the own app as trusted (<a href="https://github.com/androidx/media/issues/2542">#2542</a>).</li>
+   <li>Add <code translate="no" dir="ltr">MediaSessionService.triggerNotificationUpdate</code> to manually trigger a notification update (<a href="https://github.com/androidx/media/issues/1833">#1833</a>).</li>
+   <li>Add <code translate="no" dir="ltr">ProgressListener</code> to custom command methods.</li>
+   <li>Change the default value for <code translate="no" dir="ltr">MediaLibrarySession.Builder.setLibraryErrorReplicationMode</code> to non fatal.</li>
+   <li>Add a <code translate="no" dir="ltr">Context</code> parameter to <code translate="no" dir="ltr">MediaButtonReceiver.onForegroundServiceStartNotAllowedException</code> (<a href="https://github.com/androidx/media/pull/2625">#2625</a>).</li>
+   <li>Read the volume control ID from the platform <code translate="no" dir="ltr">PlaybackInfo</code> instead of fetching it via binder. This ensures that playback type and volume control ID are read atomically and do match to each other.</li>
+   <li>Fix bug where <code translate="no" dir="ltr">ACTION_UP</code> key events were filtered out before passing them to the callback for custom handling. This brings parity with what media1 did and the platform does (<a href="https://github.com/androidx/media/issues/2637">#2637</a>).</li>
+   <li>Fix bug where <code translate="no" dir="ltr">getCurrentTimeline()</code> was called by <code translate="no" dir="ltr">PlayerWrapper</code> even when the command isn't available (<a href="https://github.com/androidx/media/issues/2665">#2665</a>).</li>
+   <li>Fix bug where a message was left in the message queue of the main looper which caused a memory leak after the service terminated (<a href="https://github.com/androidx/media/issues/2692">#2692</a>).</li>
+   <li>When connected to a legacy session app with a <code translate="no" dir="ltr">MediaBrowser</code>, custom commands are sent to the session only if the custom action is advertised as a custom action in <code translate="no" dir="ltr">PlaybackStateCompat</code> of the legacy session. All other custom actions are sent to the service.</li>
+   <li>Implemented <code translate="no" dir="ltr">onAudioSessionIdChanged</code> to notify media controllers when an audio session ID is set by the session (<a href="https://github.com/androidx/media/issues/244">#244</a>).</li>
+   <li>Fix bug where <code translate="no" dir="ltr">KEYCODE_HEADSETHOOK</code> did not start the player upon and media key event <code translate="no" dir="ltr">Intent</code> arriving in <code translate="no" dir="ltr">onStartCommand()</code>. This is fixed by handling 'KEYCODE_HEADSETHOOK' just like <code translate="no" dir="ltr">KEYCODE_MEDIA_PLAY_PAUSE</code> (<a href="https://github.com/androidx/media/pull/2816">#2816</a>).</li>
+   <li>Fix a bug where Surface size was not communicated between the session and the controller, resulting in the failure to apply video effects in demo-session. If you are using a controller, this might be a breaking change if your player cannot handle a <code translate="no" dir="ltr">setVideoSurfaceHolder</code> call.</li>
+   <li>Fix propagation of non-<code translate="no" dir="ltr">String</code> <code translate="no" dir="ltr">CharSequence</code> metadata values like span-styled strings (<a href="https://github.com/androidx/media/issues/2853">#2853</a>).</li>
+  </ul></li>
+ <li>UI:
+  <ul>
+   <li>Add <code translate="no" dir="ltr">ProgressStateWithTickInterval</code> class and the corresponding <code translate="no" dir="ltr">rememberProgressStateWithTickInterval</code> Composable to <code translate="no" dir="ltr">media3-ui-compose</code> module. This state holder is used in <code translate="no" dir="ltr">demo-compose</code> to display the current position and duration in text form.</li>
+   <li>Add <code translate="no" dir="ltr">MuteButtonState</code> to <code translate="no" dir="ltr">ui-compose</code> that handles muting of the <code translate="no" dir="ltr">Player</code> volume. This state holder is used in <code translate="no" dir="ltr">demo-compose</code> to display mute/unmute toggle button.</li>
+   <li>Add <code translate="no" dir="ltr">ProgressStateWithTickCount</code> classes and the corresponding <code translate="no" dir="ltr">rememberProgressStateWithTickCount</code> Composable to <code translate="no" dir="ltr">media3-ui-compose</code> module. This state holder is used in <code translate="no" dir="ltr">demo-compose</code> to display progress as a horizontal read-only progress bar.</li>
+   <li>Add <code translate="no" dir="ltr">ContentFrame</code> Composable to <code translate="no" dir="ltr">media3-ui-compose</code> which combines <code translate="no" dir="ltr">PlayerSurface</code> management with aspect ratio resizing and covering with a shutter.</li>
+   <li>Work around a known API 34 platform bug causing stretched/cropped videos when using <code translate="no" dir="ltr">SurfaceView</code> inside a Compose <code translate="no" dir="ltr">AndroidView</code> and hence affecting <code translate="no" dir="ltr">ContentFrame</code> and <code translate="no" dir="ltr">PlayerSurface</code> Composables with <code translate="no" dir="ltr">SURFACE_TYPE_SURFACE_VIEW</code> (<a href="https://github.com/androidx/media/issues/1237">#1237</a>, <a href="https://github.com/androidx/media/issues/2811">#2811</a>).</li>
+   <li>Create a new <code translate="no" dir="ltr">media3-ui-compose-material3</code> module and add Material3-themed Composables (PlayPauseButton, NextButton, PreviousButton, SeekBackButton, SeekForwardButton, RepeatButton, ShuffleButton, MuteButton) to it.</li>
+   <li>Add support for placing a media route button in the <code translate="no" dir="ltr">PlayerView</code>.</li>
+  </ul></li>
+ <li>HLS extension:
+  <ul>
+   <li>Parse HLS interstitial skip attributes.</li>
+   <li>Map skip control attributes from the HLS playlist and the asset list document into the <code translate="no" dir="ltr">AdPlaybackState</code> for public access.</li>
+   <li>Fix bug where the start time of the playlist was dropped when the EXT-X-PROGRAM-START-DATE tag defining the start time was removed from a playlist (<a href="https://github.com/androidx/media/issues/2760">#2760</a>).</li>
+   <li>Use binary search to find the segment index of a given position in the playlist (<a href="https://github.com/androidx/media/pull/2826">#2826</a>.</li>
+  </ul></li>
+ <li>DASH extension:
+  <ul>
+   <li>Fix <code translate="no" dir="ltr">UnsupportedOperationException</code> when playing DASH streams with a non-hierarchical <code translate="no" dir="ltr">data:</code> URI manifest (<a href="https://github.com/androidx/media/issues/2688">#2688</a>).</li>
+   <li>Reset <code translate="no" dir="ltr">LiveConfiguration</code> to the value provided by the <code translate="no" dir="ltr">MediaItem</code> of the <code translate="no" dir="ltr">DashMediaSource</code> when released and when the media item is updated by the user (<a href="https://github.com/androidx/media/issues/2606">#2606</a>).</li>
+   <li>Avoid crashes caused by invalid manifest updates that were not reported as player errors (<a href="https://github.com/androidx/media/issues/2805">#2805</a>).</li>
+  </ul></li>
+ <li>RTSP extension:
+  <ul>
+   <li>Handle error of missing RTP packets when processing fragmented NAL units for H264 and H265 (<a href="https://github.com/androidx/media/issues/2613">#2613</a>).</li>
+  </ul></li>
+ <li>Decoder extensions (FFmpeg, VP9, AV1, etc.):
+  <ul>
+   <li>AV1 Extension: The AV1 software decoder now uses the high-performance <code translate="no" dir="ltr">dav1d</code> library, replacing the previous <code translate="no" dir="ltr">libgav1</code> implementation for improved decoding speed.</li>
+  </ul></li>
+ <li>Cast extension:
+  <ul>
+   <li>Add <code translate="no" dir="ltr">CastPlayer.Builder</code>, which enables <code translate="no" dir="ltr">CastPlayer</code> to do both local and Cast playback. To keep the old <code translate="no" dir="ltr">CastPlayer</code> behavior of supporting only Cast playback, you can use <code translate="no" dir="ltr">RemoteCastPlayer</code>. The pre-existing <code translate="no" dir="ltr">CastPlayer</code> constructors keep their old behavior, but are deprecated in favour of using the <code translate="no" dir="ltr">CastPlayer</code> or <code translate="no" dir="ltr">RemoteCastPlayer</code> builders instead.</li>
+   <li>Stop enforcing a non-null mime type in <code translate="no" dir="ltr">DefaultMediaItemConverter</code>.</li>
+   <li>Use <code translate="no" dir="ltr">MediaItem.mediaMetadata.mediaType</code> to infer the Cast MEDIA_TYPE to use in <code translate="no" dir="ltr">DefaultCastOptionsProvider#toMediaQueueItem</code>, when available.</li>
+   <li>Enable remote to local transfers in <code translate="no" dir="ltr">DefaultCastOptionsProvider</code>.</li>
+   <li>Add support for Cast in the Session demo.</li>
+   <li>Add support for displaying a media route button on a Composable UI.</li>
+   <li>Add support for displaying a media route button on an action bar menu.</li>
+   <li>Add support for displaying a media route button as a View UI.</li>
+  </ul></li>
+ <li>Test Utilities:
+  <ul>
+   <li>Add maximum time diff for the auto-advancing behavior of <code translate="no" dir="ltr">FakeClock</code>. It defaults to 1 second, but is configurable via <code translate="no" dir="ltr">FakeClock.Builder</code>.</li>
+   <li>Add maximum time diff between messages for <code translate="no" dir="ltr">RobolectricUtil.runMainLooperUntil</code> (and <code translate="no" dir="ltr">runLooperUntil</code>). It defaults to 1 second, but is configurable via new overloads of these methods.</li>
+   <li>Move <code translate="no" dir="ltr">CapturingRenderersFactory</code> from <code translate="no" dir="ltr">test-utils</code> to <code translate="no" dir="ltr">test-utils-robolectric</code>.</li>
+  </ul></li>
+ <li>Remove deprecated symbols:
+  <ul>
+   <li>Remove deprecated <code translate="no" dir="ltr">DefaultPreloadManager</code> constructor. Use <code translate="no" dir="ltr">DefaultPreloadManager.Builder</code> instead.</li>
+   <li>Removed deprecated <code translate="no" dir="ltr">EditedMediaItemSequence</code> constructors. Use <code translate="no" dir="ltr">EditedMediaItemSequence.Builder</code> instead.</li>
+  </ul></li>
+</ul>
+
 <h2>navigation3: v1.0.0-beta01</h2>
 <p>October 22, 2025</p>
 <p><code translate="no" dir="ltr">androidx.navigation3:navigation3-*:1.0.0-beta01</code> is released. Version 1.0.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/7b8a27d59a3cd5d0aa8259755193aadbd5c119da..46bcdef6281ae0f03c3a2bb2812edfc2c0e66d05/navigation3">these commits</a>.</p>
