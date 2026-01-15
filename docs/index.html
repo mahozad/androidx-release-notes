@@ -308,7 +308,7 @@
  <li>Resolved an issue where binary data could be malformed during storage by replacing UTF-8 string handling with Base64 encoding for Web. (<a href="https://android-review.googlesource.com/#/q/Ie317819a0819ebf695547f5314505ddab3c22cb1">Ie3178</a>, <a href="https://issuetracker.google.com/473790107">b/473790107</a>)</li>
 </ul>
 
-<h2>glance wear: v1.0.0-alpha01</h2>
+<h2>Glance Wear: v1.0.0-alpha01</h2>
 <p>January 14, 2026</p>
 <p><code translate="no" dir="ltr">androidx.glance.wear:wear:1.0.0-alpha01</code> and <code translate="no" dir="ltr">androidx.glance.wear:wear-core:1.0.0-alpha01</code> are released. Version 1.0.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/adeb519268e4eeff7d0a5a9d024dbe26d88bb6ad/glance/wear">these commits</a>.</p>
 <ul>
@@ -330,6 +330,23 @@
 <p><strong>New Features</strong></p>
 <ul>
  <li>Removed support for the following KMP platforms: <code translate="no" dir="ltr">macosX64</code>, <code translate="no" dir="ltr">iosX64</code>, <code translate="no" dir="ltr">watchosX64</code>, and <code translate="no" dir="ltr">tvosX64</code> to align with <a href="https://youtrack.jetbrains.com/issue/KT-78660/meta-Deprecation-of-the-macosX64-target">Jetbrains deprecation of the macosX64 targets</a>. (<a href="https://android.googlesource.com/platform/frameworks/support/+/7cb9a4cc835cbdd98b53c1bb7bc3e0f59c6510fd">7cb9a4</a>)</li>
+</ul>
+
+<h2>Monitor 1.9.0: monitor 1.9.0-alpha01</h2>
+<p>January 14, 2026</p>
+<p><code translate="no" dir="ltr">androidx.test:monitor:1.9.0-alpha01</code> is released.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>
+  <p>Fixes missing IntentMonitor for startActivity with user overload. Now it's possible to intercept intents started with startActivityAsUser.</p>
+ </li>
+ <li>
+  <p>Adds missing override of an existing callActivityOnCreate method with PersistableBundle.</p>
+ </li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Update to minSdkVersion 23 and remove all related logic for SDKs &lt; 23</li>
 </ul>
 
 <h2>Transition: v1.7.0</h2>
