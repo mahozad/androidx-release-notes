@@ -66,73 +66,478 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Media3: 1.9.1</h2>
-<p>January 26, 2026</p>
-<p>Version 1.9.1 contains <a href="https://github.com/androidx/media/commits/1.9.1">these commits</a>.</p>
+<h2>Activity: v1.12.3</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.activity:activity:1.12.3</code>, <code translate="no" dir="ltr">androidx.activity:activity-compose:1.12.3</code>, and <code translate="no" dir="ltr">androidx.activity:activity-ktx:1.12.3</code> are released. Version 1.12.3 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/7ef667d42385c5b9200e987ab65005d1c3af7429..6aa8a5085abed345526a544f3a498c19bca795fe/activity">these commits</a>.</p>
+
+<h2>Benchmark: v1.5.0-alpha02</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.benchmark:benchmark-*:1.5.0-alpha02</code> is released. Version 1.5.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/ec985eed3cba8444e5aaa52a748333397a1298f3..715e22619094effc2ba1fd528cd9a07b1f5d0046/benchmark">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
 <ul>
- <li>Common Library:
-  <ul>
-   <li>Support date-time strings with only hours in the timezone offset (<a href="https://github.com/androidx/media/issues/2929">#2929</a>).</li>
-  </ul></li>
- <li>ExoPlayer:
-  <ul>
-   <li>Allow dynamic scheduling to slow <code translate="no" dir="ltr">doSomeWork</code> interval only after audio starts to support smoother A/V sync at beginning of playback.</li>
-   <li>Fix bug in <code translate="no" dir="ltr">DefaultLoadErrorHandlingPolicy</code> where <code translate="no" dir="ltr">FileNotFoundException</code> and similar exception types were retried multiple times.</li>
-   <li>Fix bug with dynamic scheduling where the calculated time for the next <code translate="no" dir="ltr">doSomeWork</code> was mistakenly reduced by the elapsed time of the current iteration of <code translate="no" dir="ltr">doSomeWork</code>. Addressing this hopefully extends CPU idle time and saves power.</li>
-   <li>Fix issue where some playbacks of Dolby Vision files fail when attempting to use a fallback AVC or HEVC codec.</li>
-   <li>Fix bug where loading continues after playback ended when removing the currently playing item from a playlist (<a href="https://github.com/androidx/media/issues/2873">#2873</a>).</li>
-   <li>Avoid leaking <code translate="no" dir="ltr">MediaItem</code> instances when repeatedly using <code translate="no" dir="ltr">ExoPlayer.replaceMediaItem</code> on the same item (<a href="https://github.com/androidx/media/issues/2993">#2993</a>).</li>
-   <li>Prevent potential ANRs caused by emergency wake lock releases (<a href="https://github.com/androidx/media/issues/2979">#2979</a>).</li>
-  </ul></li>
- <li>Extractors:
-  <ul>
-   <li>MP3: Parse LAME ReplayGain data (<a href="https://github.com/androidx/media/pull/2840">#2840</a>).</li>
-  </ul></li>
- <li>Audio:
-  <ul>
-   <li>Correctly remove support for <code translate="no" dir="ltr">AC4Profile22</code> and other legacy profiles when assessing AC-4 decoder support in Automotive scenarios (<a href="https://github.com/androidx/media/pull/2609">#2609</a>).</li>
-  </ul></li>
- <li>Video:
-  <ul>
-   <li>Discard video codecs on devices below API 30 when the content frame rate changes to avoid stuttering playback (<a href="https://github.com/androidx/media/issues/2941">#2941</a>).</li>
-  </ul></li>
- <li>Text:
-  <ul>
-   <li>VobSub: Fix some missing subtitles by correctly handling SPUs that either contain only a single control sequence, or have critical info split across multiple control sequences (<a href="https://github.com/androidx/media/issues/2935">#2935</a>).</li>
-  </ul></li>
- <li>IMA extension:
-  <ul>
-   <li>Bug fix: Corrected an issue where the ad MIME type did not match the MIME type provided in the IMA LOADED event. The fix now maps the ad MIME type using the ad pod index and ad position.</li>
-   <li>Add a null check before accessing result of <code translate="no" dir="ltr">getAdsManager()</code> and <code translate="no" dir="ltr">AdEvent.getAd()</code>.</li>
-  </ul></li>
- <li>Session:
-  <ul>
-   <li>Fix bug where stopping a <code translate="no" dir="ltr">MediaController</code> connected to a platform session crashed the app if stop happened during ad playback (<a href="https://github.com/androidx/media/issues/2948">#2948</a>).</li>
-   <li>Add additional verifications on <code translate="no" dir="ltr">extras</code> <code translate="no" dir="ltr">Bundle</code> instances in various classes to guard against malformed <code translate="no" dir="ltr">Bundle</code> instances sent from other processes.</li>
-   <li>Fix issue where missing commands for <code translate="no" dir="ltr">COMMAND_SEEK_NEXT</code> or <code translate="no" dir="ltr">COMMAND_SEEK_BACK</code> can cause gaps in the system media notification (<a href="https://github.com/androidx/media/issues/2976">#2976</a>).</li>
-   <li>Move bitmap scaling for notification icon off the main thread (<a href="https://github.com/androidx/media/issues/2829">#2829</a>).</li>
-   <li>Fix bug where author, writer and composer were not used as a fallback when converting from legacy <code translate="no" dir="ltr">MediaMetadataCompat</code> and <code translate="no" dir="ltr">MediaDescriptionCompat</code> (<a href="https://github.com/androidx/media/issues/3018">#3018</a>).</li>
-  </ul></li>
- <li>Downloads:
-  <ul>
-   <li>Fix potential infinite loops when a <code translate="no" dir="ltr">PriorityTooLowException</code> is handled by <code translate="no" dir="ltr">SegmentDownloader</code> (for DASH, HLS and SmoothStreaming). Custom overrides of <code translate="no" dir="ltr">SegmentDownloader</code> using the protected <code translate="no" dir="ltr">execute</code> method need to provide their task wrapped in a <code translate="no" dir="ltr">Supplier</code> so it can be recreated (<a href="https://github.com/androidx/media/issues/2931">#2931</a>).</li>
-  </ul></li>
- <li>HLS extension:
-  <ul>
-   <li>Pass the raw asset list JSON document to <code translate="no" dir="ltr">Listener.onAssetListLoadCompleted</code> callback. This is a breaking change in an unstable API that requires apps that implement this callback to add an additional argument of type <code translate="no" dir="ltr">JSONObject</code> (<a href="https://github.com/androidx/media/issues/2950">#2950</a>).</li>
-  </ul></li>
- <li>RTSP extension:
-  <ul>
-   <li>Correctly handle RTP Packets with timestamps that wrap around (<a href="https://github.com/androidx/media/issues/2930">#2930</a>).</li>
-  </ul></li>
- <li>Decoder extensions (FFmpeg, VP9, AV1, etc.):
-  <ul>
-   <li>Fix potential <code translate="no" dir="ltr">NullPointerException</code> that can occur when seeking prior to processing the first video frame (<a href="https://github.com/androidx/media/issues/2965">#2965</a>).</li>
-  </ul></li>
- <li>Cast extension:
-  <ul>
-   <li>Fix bug preventing the <code translate="no" dir="ltr">RemoteCastPlayer</code> timeline from updating correctly when replacing the playlist.</li>
-  </ul></li>
+ <li>
+  <p>Add partial support for baseline profile generation for Kotlin multi-platform modules. Typically dependencies on profiles can be defined using the <code translate="no" dir="ltr">baselineProfile</code> Gradle configuration in the dependencies block, but this doesn't currently work for KMP modules.</p>
+  <div></div>
+  <devsite-code>
+   <pre class="devsite-click-to-copy" translate="no" dir="ltr" is-upgraded syntax="Kotlin"><code translate="no" dir="ltr"><span class="devsite-syntax-n">kotlin</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-n">androidLibrary</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">namespace</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-s">"com.example.namespace"</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">compileSdk</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-m">36</span>
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-p">}</span>
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-n">sourceSets</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">androidMain</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">dependencies</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">      </span><span class="devsite-syntax-c1">// THIS DOES NOT WORK</span>
+<span class="devsite-syntax-w">      </span><span class="devsite-syntax-c1">// baselineProfile(":yourProducerProject")</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-p">}</span>
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-p">}</span>
+<span class="devsite-syntax-p">}</span>
+</code></pre>
+  </devsite-code>
+ </li>
+ <li>
+  <p>Instead you should be defining your dependencies using the <code translate="no" dir="ltr">baselineProfile</code> **extension. (<a href="https://android-review.googlesource.com/#/q/Ie19c4535ebe25ead09e22d9a5e7654c2a5d0b627">Ie19c4</a>)</p>
+  <div></div>
+  <devsite-code>
+   <pre class="devsite-click-to-copy" translate="no" dir="ltr" is-upgraded syntax="GDScript"><code translate="no" dir="ltr"><span class="devsite-syntax-n">plugins</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">id</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-s2">"org.jetbrains.kotlin.multiplatform"</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">id</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-s2">"com.android.kotlin.multiplatform.library"</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">id</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-s2">"androidx.baselineprofile.consumer"</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-p">}</span>
+
+<span class="devsite-syntax-n">kotlin</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-n">androidLibrary</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">namespace</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-s2">"com.example.namespace"</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">compileSdk</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-mi">36</span>
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-p">}</span>
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-n">sourceSets</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">androidMain</span><span class="devsite-syntax-o">.</span><span class="devsite-syntax-n">dependencies</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">      </span><span class="devsite-syntax-o">//</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">...</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-p">}</span>
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-p">}</span>
+<span class="devsite-syntax-p">}</span>
+<span class="devsite-syntax-o">//</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">Define</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">dependencies</span>
+<span class="devsite-syntax-o">//</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">This</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">works</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">!</span>
+<span class="devsite-syntax-n">baselineProfile</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-n">variants</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">androidMain</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">      </span><span class="devsite-syntax-n">from</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-n">project</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-s2">":yourProducerProject"</span><span class="devsite-syntax-p">))</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-p">}</span>
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-p">}</span>
+<span class="devsite-syntax-p">}</span>
+</code></pre>
+  </devsite-code>
+ </li>
+</ul>
+
+<h2>Camera: v1.5.3</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.camera:camera-*:1.5.3</code> is released. Version 1.5.3 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/0975f1cec9e7c5b1192d3ceb925b3178cd234957..2afad3835627a7fdd11578788696f14b7aff6017/camera">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Updated the <a href="https://developer.android.com/reference/android/media/ExifInterface">ExifInterface</a> dependency to 1.4.2. This fixes an image capture failure that occurs on devices producing JPEGs with additional (and permitted) 0xFF bytes before a marker. (<a href="https://android-review.googlesource.com/#/q/I16df449e55031529e48c806d48a0658c9b41c711">I16df4</a>)</li>
+</ul>
+
+<h2>Camera: v1.6.0-beta01</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.camera:camera-*:1.6.0-beta01</code> is released. Version 1.6.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/84753047f87d847904220ad53b1c78d1a98189c4..5fc4e0225a10d812728a4bece5a2f6e82737df85/camera">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed <code translate="no" dir="ltr">CameraExtensionsInfo</code> current type issue in CameraX 1.6.0-alpha that the LiveData object can't receive the updated type data. (<a href="https://android-review.googlesource.com/#/q/I2c7a5eb65d820bbf99fec7b4bec0175455e11063">I2c7a5</a>)</li>
+ <li>Updated the <a href="https://developer.android.com/reference/android/media/ExifInterface">ExifInterface</a> dependency to include a fix for parsing JPEGs with 0xFF padding, which resolves image capture failures on devices where the JPEG encoder adds fill bytes before markers. (<a href="https://android-review.googlesource.com/#/q/I0eb49797f167c36511bc5a2ea5c31a920f598b6d">I0eb49</a>)</li>
+</ul>
+
+<h2>Camera Feature Combination Query: v1.5.3</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.camera.featurecombinationquery:featurecombinationquery:1.5.3</code> and <code translate="no" dir="ltr">androidx.camera.featurecombinationquery:featurecombinationquery-play-services:1.5.3</code> are released. Version 1.5.3 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/0975f1cec9e7c5b1192d3ceb925b3178cd234957..2afad3835627a7fdd11578788696f14b7aff6017/camera/featurecombinationquery">these commits</a>.</p>
+
+<h2>Camera Feature Combination Query: v1.6.0-beta01</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.camera.featurecombinationquery:featurecombinationquery:1.6.0-beta01</code> and <code translate="no" dir="ltr">androidx.camera.featurecombinationquery:featurecombinationquery-play-services:1.6.0-beta01</code> are released. Version 1.6.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/84753047f87d847904220ad53b1c78d1a98189c4..5fc4e0225a10d812728a4bece5a2f6e82737df85/camera/featurecombinationquery">these commits</a>.</p>
+
+<h2>camera viewfinder: v1.5.3</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.camera.viewfinder:viewfinder-compose:1.5.3</code>, <code translate="no" dir="ltr">androidx.camera.viewfinder:viewfinder-core:1.5.3</code>, and <code translate="no" dir="ltr">androidx.camera.viewfinder:viewfinder-view:1.5.3</code> are released. Version 1.5.3 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/0975f1cec9e7c5b1192d3ceb925b3178cd234957..2afad3835627a7fdd11578788696f14b7aff6017/camera/viewfinder">these commits</a>.</p>
+
+<h2>camera viewfinder: v1.6.0-beta01</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.camera.viewfinder:viewfinder-compose:1.6.0-beta01</code>, <code translate="no" dir="ltr">androidx.camera.viewfinder:viewfinder-core:1.6.0-beta01</code>, and <code translate="no" dir="ltr">androidx.camera.viewfinder:viewfinder-view:1.6.0-beta01</code> are released. Version 1.6.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/84753047f87d847904220ad53b1c78d1a98189c4..5fc4e0225a10d812728a4bece5a2f6e82737df85/camera/viewfinder">these commits</a>.</p>
+
+<h2>Compose Animation: v1.10.2</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.10.2</code> is released. Version 1.10.2 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c09ac6669b664a348ecf964a97968cd81479dcd4..fc5dfcfe7ee3e7025b8da18f02c3d1d3fa96d75b/compose/animation">these commits</a>.</p>
+
+<h2>Compose Animation: v1.11.0-alpha04</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.11.0-alpha04</code> is released. Version 1.11.0-alpha04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/adeb519268e4eeff7d0a5a9d024dbe26d88bb6ad..715e22619094effc2ba1fd528cd9a07b1f5d0046/compose/animation">these commits</a>.</p>
+
+<h2>Compose Foundation: v1.10.2</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.10.2</code> is released. Version 1.10.2 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c09ac6669b664a348ecf964a97968cd81479dcd4..fc5dfcfe7ee3e7025b8da18f02c3d1d3fa96d75b/compose/foundation">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed a crash when navigating back from a screen with an active text selection. (<a href="https://android-review.googlesource.com/#/q/I9f5408fbfc56be0de9632d979b4c3e89a9c59139">I9f540</a>, <a href="https://issuetracker.google.com/issues/444482508">b/444482508</a>)</li>
+</ul>
+
+<h2>Compose Foundation: v1.11.0-alpha04</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.11.0-alpha04</code> is released. Version 1.11.0-alpha04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/adeb519268e4eeff7d0a5a9d024dbe26d88bb6ad..715e22619094effc2ba1fd528cd9a07b1f5d0046/compose/foundation">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Fixed a bug where <code translate="no" dir="ltr">AnchoredDraggableState</code>'s <code translate="no" dir="ltr">targetValue</code> was incorrect in some scenarios with multiple anchors at the same offset. When settled at an anchor that had the same offset as another anchor, <code translate="no" dir="ltr">targetValue</code> incorrectly returned the last of the anchors at this offset. It now returns the <code translate="no" dir="ltr">currentValue</code> when settled at the <code translate="no" dir="ltr">currentValue</code>'s offset. (<a href="https://android-review.googlesource.com/#/q/I66a7a227dbb1df035eb81d30f9e7b54d502e2d90">I66a7a</a>, <a href="https://issuetracker.google.com/issues/476365336">b/476365336</a>)</li>
+ <li>Introduced <code translate="no" dir="ltr">FlexBox</code>, a configurable layout system that is a superset of <code translate="no" dir="ltr">Row</code>, <code translate="no" dir="ltr">Column</code>, <code translate="no" dir="ltr">FlowRow</code>, and <code translate="no" dir="ltr">FlowColumn</code>. It supports features like flex-grow, flex-shrink, custom wrapping, direction change and detailed alignment control via <code translate="no" dir="ltr">FlexBoxConfig</code> and <code translate="no" dir="ltr">Modifier.flex</code>. (<a href="https://android-review.googlesource.com/#/q/I44780b3c90e0a36f4095ed83e73c9b0984ecd6f6">I44780</a>)</li>
+ <li>Introduced <code translate="no" dir="ltr">Grid</code>, a new non-lazy 2D layout composable inspired by CSS Grid. This initial version allows defining explicit grid structures with various track sizes including <code translate="no" dir="ltr">Fixed</code>, <code translate="no" dir="ltr">Percentage</code>, <code translate="no" dir="ltr">Flex</code>, and content-based options via the <code translate="no" dir="ltr">config</code> block. The core layout logic supports explicit item placement within the grid using <code translate="no" dir="ltr">Modifier.gridItem()</code>. All Grid related APIs are currently experimental and require opt-in with <code translate="no" dir="ltr">@OptIn(ExperimentalGridApi::class)</code>. We are actively seeking feedback on this new layout! (<a href="https://android-review.googlesource.com/#/q/I04907884457dbffb9653b09807c03b96506517c0">I04907</a>, <a href="https://issuetracker.google.com/issues/462550392">b/462550392</a>)</li>
+</ul>
+
+<h2>Compose Material: v1.10.2</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.10.2</code> is released. Version 1.10.2 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c09ac6669b664a348ecf964a97968cd81479dcd4..fc5dfcfe7ee3e7025b8da18f02c3d1d3fa96d75b/compose/material">these commits</a>.</p>
+
+<h2>Compose Material: v1.11.0-alpha04</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.11.0-alpha04</code> is released. Version 1.11.0-alpha04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/adeb519268e4eeff7d0a5a9d024dbe26d88bb6ad..715e22619094effc2ba1fd528cd9a07b1f5d0046/compose/material">these commits</a>.</p>
+
+<h2>Compose Material3: v1.5.0-alpha13</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.material3:material3-*:1.5.0-alpha13</code> is released. Version 1.5.0-alpha13 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/adeb519268e4eeff7d0a5a9d024dbe26d88bb6ad..c26c6f088b95903b7b9cd5e6f2092988f1e64dc3/compose/material3">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Added support for search bar <code translate="no" dir="ltr">animationSpecForContentExpand</code> and <code translate="no" dir="ltr">animationSpecForContentCollapse</code>. (<a href="https://android-review.googlesource.com/#/q/I033a5fc3e829c992a5c051d74390ee2ddfe1329d">I033a5</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed an issue where the content of an expanded <code translate="no" dir="ltr">SearchBar</code> did not use a theme-aware color (<a href="https://android-review.googlesource.com/#/q/I878e0aa496b701c61de73723e4bb22f658039e6b">I878e0</a>, <a href="https://issuetracker.google.com/issues/379441904">b/379441904</a>)</li>
+ <li>Fixed a bug where <code translate="no" dir="ltr">BottomSheetScaffold</code> would invoke <code translate="no" dir="ltr">SheetState</code>'s <code translate="no" dir="ltr">confirmValueChange</code> callback with incorrect values when passing a drag handle to <code translate="no" dir="ltr">BottomSheetScaffold</code>. Please note that <code translate="no" dir="ltr">confirmValueChange</code> should only be used to veto state changes. Use a <code translate="no" dir="ltr">snapshotFlow</code> to observe state changes. (<a href="https://android-review.googlesource.com/#/q/Ice9ee5830e802faf6c3cca96f4ac8cd8e5f7176f">Ice9ee</a>, <a href="https://issuetracker.google.com/issues/465824174">b/465824174</a>, <a href="https://issuetracker.google.com/issues/477031833">b/477031833</a>)</li>
+</ul>
+
+<h2>Compose Material3 Adaptive: v1.3.0-alpha07</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.material3.adaptive:adaptive-*:1.3.0-alpha07</code> is released. Version 1.3.0-alpha07 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/adeb519268e4eeff7d0a5a9d024dbe26d88bb6ad..c26c6f088b95903b7b9cd5e6f2092988f1e64dc3/compose/material3/adaptive">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Added a composition local to query Material adaptive scene scope. (<a href="https://android-review.googlesource.com/#/q/I2e0d96f8b3f5c1de0aa2eb929340ed276bf86285">I2e0d9</a>, <a href="https://issuetracker.google.com/issues/457721741">b/457721741</a>)</li>
+ <li>Add a boolean flag to <code translate="no" dir="ltr">PaneScaffoldDirective</code> to opt out the behavior that automatically moves the focus to the current destination pane. (<a href="https://android-review.googlesource.com/#/q/I929f5960c59f10a82b53d701eaf757da9e20f9e2">I929f5</a>, <a href="https://issuetracker.google.com/issues/445720462">b/445720462</a>)</li>
+ <li><code translate="no" dir="ltr">ListDetailSceneStrategy</code> and <code translate="no" dir="ltr">SupportingPaneSceneStrategy</code> can now opt in to handle scenes with only a single pane. (<a href="https://android-review.googlesource.com/#/q/I79384dd90efe25321d431e6c96ddce827b93cf64">I79384</a>, <a href="https://issuetracker.google.com/issues/417475283">b/417475283</a>)</li>
+</ul>
+
+<h2>remote compose: v1.0.0-alpha03</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.remote:remote-*:1.0.0-alpha03</code> is released. Version 1.0.0-alpha03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/8ae214f288619313e8689cd4ab8286c7705c1000..715e22619094effc2ba1fd528cd9a07b1f5d0046/compose/remote">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Support for different shapes &amp; <code translate="no" dir="ltr">RemoteColors</code> in <code translate="no" dir="ltr">BorderModifier</code> <a href="https://android-review.git.corp.google.com/c/platform/frameworks/support/+/3914200">0afd343</a></li>
+ <li>Add <code translate="no" dir="ltr">CombinedAction</code> to support multiple actions on click events <a href="https://android-review.git.corp.google.com/c/platform/frameworks/support/+/3908363">10e16a2</a></li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Migrated the APIs of <code translate="no" dir="ltr">RemoteColor</code> and <code translate="no" dir="ltr">RemoteBitmap</code> to use Compose types, rather than exposing Android types directly <a href="https://android-review.git.corp.google.com/c/platform/frameworks/support/+/3917393">a9bfbb8</a></li>
+ <li>Introduce a <code translate="no" dir="ltr">RemoteDensity</code> type, to allow determining whether to evaluate Density on the Player (when producing a document for a remote device), or to inline the expressions (to optimize document size when on the same device) <a href="https://android-review.git.corp.google.com/c/platform/frameworks/support/+/3914002">54352bb</a></li>
+ <li><code translate="no" dir="ltr">RemoteState constantValueOrNull</code> rename (<a href="https://android-review.googlesource.com/#/q/I6ad5caf6e8af50642e3a7696ae7ceeefce89f11f">I6ad5c</a>, <a href="https://issuetracker.google.com/issues/467050397">b/467050397</a>)</li>
+</ul>
+
+<h2>Compose Runtime: v1.10.2</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.10.2</code> is released. Version 1.10.2 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c09ac6669b664a348ecf964a97968cd81479dcd4..fc5dfcfe7ee3e7025b8da18f02c3d1d3fa96d75b/compose/runtime">these commits</a>.</p>
+
+<h2>Compose Runtime: v1.11.0-alpha04</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.11.0-alpha04</code> is released. Version 1.11.0-alpha04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/adeb519268e4eeff7d0a5a9d024dbe26d88bb6ad..715e22619094effc2ba1fd528cd9a07b1f5d0046/compose/runtime">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Ensured that <code translate="no" dir="ltr">Snapshot.sendApplyNotifications</code> calls cannot return until the necessary apply notifications have been sent. (<a href="https://android-review.googlesource.com/#/q/I95f209dbc6c08e1a847b0fc4acde586618a7c1b3">I95f20</a>, <a href="https://issuetracker.google.com/issues/418800424">b/418800424</a>)</li>
+ <li>Prevent source information stack traces downgrading to group keys in cases when source information is not present at runtime. (<a href="https://android-review.googlesource.com/#/q/If371286516f3e0cffecca02926084ea63d2793e5">If3712</a>)</li>
+ <li>Introduce <code translate="no" dir="ltr">ComposeToolingFlags</code>. These flags are intended to be permanent (as opposed to <code translate="no" dir="ltr">ComposeRuntimeFlags</code>) and are used for tooling features that have non-trivial impact on performance. (<a href="https://android-review.googlesource.com/#/q/I878638c78c6989b55a69b92e4e715dbf108f1d03">I87863</a>)</li>
+</ul>
+<p><strong>External Contribution</strong></p>
+<ul>
+ <li>New experimental <code translate="no" dir="ltr">RecomposerInfo#errorState</code> API (<a href="https://android-review.googlesource.com/#/q/I0deccd5180b3f548b52621ef1610ce731a3a1f2d">I0decc</a>)</li>
+ <li>Change <code translate="no" dir="ltr">AnnotationRetention</code> of the <code translate="no" dir="ltr">FunctionKeyMeta</code> annotation to 'BINARY' (<a href="https://android-review.googlesource.com/#/q/I53495e8be92aa7ff3da40474ff21342f05820d7a">I53495</a>)</li>
+</ul>
+
+<h2>Compose UI: v1.10.2</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.10.2</code> is released. Version 1.10.2 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/c09ac6669b664a348ecf964a97968cd81479dcd4..fc5dfcfe7ee3e7025b8da18f02c3d1d3fa96d75b/compose/ui">these commits</a>.</p>
+
+<h2>Compose UI: v1.11.0-alpha04</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.11.0-alpha04</code> is released. Version 1.11.0-alpha04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/adeb519268e4eeff7d0a5a9d024dbe26d88bb6ad..715e22619094effc2ba1fd528cd9a07b1f5d0046/compose/ui">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Exposed the <code translate="no" dir="ltr">TestCoroutineScheduler</code> to enable usage of <code translate="no" dir="ltr">runCurrent()</code> and ensure access to the shared scheduler instance. (<a href="https://android-review.googlesource.com/#/q/Iea662686f25332bd583a4512827bb5eab0fc5ad9">Iea662</a>, <a href="https://issuetracker.google.com/issues/254115946">b/254115946</a>)</li>
+ <li>Add support for walking up nested scrolling in response to <code translate="no" dir="ltr">android.R.id.accessibilityActionShowOnScreen</code> from Accessibility. (<a href="https://android-review.googlesource.com/#/q/Ib2723ce329635e565459c6021425ad0222cc02f0">Ib2723</a>, <a href="https://issuetracker.google.com/issues/431148846">b/431148846</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed conversion of custom Android RGB color space. Custom grayscale transforms were incorrectly converted between custom Compose and Android RGB color spaces.(<a href="https://android-review.googlesource.com/#/q/a2b7e44c1117c3851ac500d1f4a196445d5ebd45">ebd45</a>,<a href="https://issuetracker.google.com/issues/377021410">b/377021410</a>)</li>
+</ul>
+
+<h2>credentials providerevents: v1.0.0-alpha05</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.credentials.providerevents:providerevents:1.0.0-alpha05</code> and <code translate="no" dir="ltr">androidx.credentials.providerevents:providerevents-play-services:1.0.0-alpha05</code> are released. Version 1.0.0-alpha05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/ec985eed3cba8444e5aaa52a748333397a1298f3..c26c6f088b95903b7b9cd5e6f2092988f1e64dc3/credentials/providerevents">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Removed the unit test dependencies from the artifact. (<a href="https://android-review.googlesource.com/#/q/Ib02d923a0db5b278500fdec8195ecdfbb64431b6">Ib02d9</a>)</li>
+</ul>
+
+<h2>DataStore: v1.3.0-alpha05</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.datastore:datastore-*:1.3.0-alpha05</code> is released. Version 1.3.0-alpha05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/adeb519268e4eeff7d0a5a9d024dbe26d88bb6ad..b0ea337f3538c22dae2295d6a9265ab0c753e301/datastore">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Baseline profiles added to datastore. (<a href="https://android.googlesource.com/platform/frameworks/support/+/654945eb08b1ecc8c71165b7b7f0c194b16c86c4">3916245</a>,<a href="https://issuetracker.google.com/469127532">b/469127532</a>).</li>
+ <li>Implement WASM/JS support in DataStore via <code translate="no" dir="ltr">localStorage</code>. This creates a distinct advantage over the existing <code translate="no" dir="ltr">sessionStorage</code> implementation by enabling cross-tab event notifications and synchronization. (<a href="https://android-review.googlesource.com/#/q/I6724679fbb62d92acd1d7e8891e52f1dbfb2efed">I67246</a>, <a href="https://issuetracker.google.com/issues/441511612">b/441511612</a>)</li>
+</ul>
+
+<h2>Games-Activity: v4.4.0-rc01</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.games:games-activity:4.4.0-rc01</code> is released. Version 4.4.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/opt/gamesdk/+log/8f89733591eaa8e79de6ddbbb5936c8ac8904ec0..a0843d96af70d1044505bfb95f9ec3b2a68c5f99/game-activity">these commits</a>.</p>
+
+<h2>Games-Text-Input: v4.3.0-rc01</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.games:games-text-input:4.3.0-rc01</code> is released. Version 4.3.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/opt/gamesdk/+log/8f89733591eaa8e79de6ddbbb5936c8ac8904ec0..3450aac6bad7ff5ecdf68d518d3bc0c9183641d9/game-text-input">these commits</a>.</p>
+
+<h2>Glance Wear: v1.0.0-alpha02</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.glance.wear:wear:1.0.0-alpha02</code> and <code translate="no" dir="ltr">androidx.glance.wear:wear-core:1.0.0-alpha02</code> are released. Version 1.0.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/adeb519268e4eeff7d0a5a9d024dbe26d88bb6ad..715e22619094effc2ba1fd528cd9a07b1f5d0046/glance/wear">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Re-map FULLSCREEN to LARGE in Widget params (<a href="https://android.googlesource.com/platform/frameworks/support/+/ad78d95768ffb0c857248b01e2b485cbf1da2282">ad78d95</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed usage of DataStore that would prevent multiple widget instances of being shown (<a href="https://android.googlesource.com/platform/frameworks/support/+/474f3e45918122164889e5a04802b7dd000c530e">474f3e4</a>)</li>
+</ul>
+
+<h2>Navigation: v2.9.7</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.navigation:navigation-*:2.9.7</code> is released. Version 2.9.7 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/35a9607626f7b80b5418beb35a698f22307e6be3..b96b5bbc32fcbc06328fef80c17f1dda4533fb4b/navigation">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Navigation <code translate="no" dir="ltr">SafeArgs</code> no longer has configuration caching issues when being used with Google Services. (<a href="https://android-review.googlesource.com/#/q/I57cda144676def56d47091ed93e25c9fe068d6f3">I57cda</a>, <a href="https://issuetracker.google.com/issues/458071608">b/458071608</a>)</li>
+ <li>Fixed the test <code translate="no" dir="ltr">SavedStateHandle</code> constructor in navigation-testing not decoding <code translate="no" dir="ltr">List&lt;String&gt;</code>. (<a href="https://android-review.googlesource.com/#/q/I26aac57f7b645c6419a9b770052e08fa8f5d6ad3">I26aac</a>,<a href="https://issuetracker.google.com/issues/454180135">b/454180135</a>)</li>
+</ul>
+
+<h2>navigation3: v1.1.0-alpha03</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.navigation3:navigation3-*:1.1.0-alpha03</code> is released. Version 1.1.0-alpha03 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/d4384815af3bab6af755069a70ea0c492e015e9f..b0ea337f3538c22dae2295d6a9265ab0c753e301/navigation3">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>You can now dynamically add metadata with consideration for the entry key via the <code translate="no" dir="ltr">EntryProvider</code> DSL. (<a href="https://android-review.googlesource.com/#/q/I942fb23e416c3b8c79ef5422ead6ce738200cbb0">I942fb</a>, <a href="https://issuetracker.google.com/issues/474416976">b/474416976</a>)</li>
+</ul>
+
+<h2>navigationevent: v1.0.2</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.navigationevent:navigationevent-*:1.0.2</code> is released. Version 1.0.2 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/2604e5169fbd9436ac2d09b32572afd4a5bb32ae..a7bd43e4ff5a6c4f70a22b93597ac88425fe5e84/navigationevent">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fix crash when using <code translate="no" dir="ltr">NavigationEventHandler</code> in Android Studio Previews. The handler now detects inspection mode and does nothing, allowing the Preview to render without a provided dispatcher. (<a href="https://android-review.googlesource.com/#/q/I370f2b4ece299d9053239739b54b63833ae55c25">I370f2</a>, <a href="https://issuetracker.google.com/issues/454313986">b/454313986</a>).</li>
+</ul>
+
+<h2>Paging: v3.4.0</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.paging:paging-*:3.4.0</code> is released. Version 3.4.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/1e6b87e344c28f71f464996b0d753a971aa1b83d..f9bfc2c700440f809fc6b8a9565788c078861187/paging">these commits</a>.</p>
+<p><strong>Important changes since 3.3.0:</strong></p>
+<ul>
+ <li>Added more KMP targets to <code translate="no" dir="ltr">paging-common</code>, <code translate="no" dir="ltr">paging-testing</code>, and <code translate="no" dir="ltr">paging-compose</code>. In total they all now support JVM(Android and Desktop), Native (Linux, iOS, watchOS, tvOS, macOS, MinGW), and Web (JavaScript, WasmJS)</li>
+ <li><code translate="no" dir="ltr">paging-common</code>, <code translate="no" dir="ltr">paging-testing</code>, and <code translate="no" dir="ltr">paging-compose</code> has removed support for <code translate="no" dir="ltr">macosX64</code>, <code translate="no" dir="ltr">iosX64</code>, <code translate="no" dir="ltr">watchosX64</code>, and <code translate="no" dir="ltr">tvosX64</code> to align with Jetbrains deprecation of the macosX64 targets.</li>
+ <li>Added a new <code translate="no" dir="ltr">PagingState</code> API <code translate="no" dir="ltr">closestItemAroundPosition</code> to retrieve the loaded item that is closest to the target position and matches the input predicate. This can be used to generate item-based refresh keys where the ideal anchorable item is around but not at the exact target position.</li>
+</ul>
+
+<h2>Tracing: v2.0.0-alpha01</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.tracing:tracing-*:2.0.0-alpha01</code> is released. Version 2.0.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/120ca6e0a3f4f240334c74efe9f9da0038522135..715e22619094effc2ba1fd528cd9a07b1f5d0046/tracing">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<p>AndroidX Tracing 2.0 introduces a significant new API surface for low-overhead, in-process tracing, as a complement to the existing <code translate="no" dir="ltr">android.os.Tracing</code>-based APIs in Tracing 1.0. The new APIs are available both on Android and host JVM, which enables host tools to emit low overhead traces for performance analysis, using the same standard Perfetto trace format.</p>
+<p>Emitted traces are supported both by Android Studio and Perfetto, and can be recorded with an expanded feature set including tagging slices with metadata (such as function arguments!), and coroutine context trace propagation.</p>
+<p>This initial alpha is only meant for in-process tracing workflows, and does not yet integrate with Android OS tracing or Studio Profiler System Tracing - these will be coming in a future alpha.</p>
+<div></div>
+<devsite-code>
+ <pre class="devsite-click-to-copy" translate="no" dir="ltr" is-upgraded syntax="MySQL"><code translate="no" dir="ltr"><span class="devsite-syntax-w">  </span><span class="devsite-syntax-cm">/**</span>
+<span class="devsite-syntax-cm">  * A [TraceSink] defines how traces are serialized.</span>
+<span class="devsite-syntax-cm">  *</span>
+<span class="devsite-syntax-cm">  * [androidx.tracing.wire.TraceSink] uses the `Perfetto` trace packet format.</span>
+<span class="devsite-syntax-cm">  */</span>
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-n">fun</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">createSink</span><span class="devsite-syntax-p">()</span><span class="devsite-syntax-o">:</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">TraceSink</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-err">{</span>
+<span class="devsite-syntax-w">      </span><span class="devsite-syntax-n">val</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">outputDirectory</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-k">File</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-cm">/* pathname = */</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-s2">"/tmp/perfetto"</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-w">      </span><span class="devsite-syntax-o">//</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">We</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">are</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-k">using</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">the</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">factory</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-k">function</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">defined</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-k">in</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">androidx</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-n">tracing</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-n">wire</span>
+<span class="devsite-syntax-w">      </span><span class="devsite-syntax-k">return</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">TraceSink</span><span class="devsite-syntax-p">(</span>
+<span class="devsite-syntax-w">          </span><span class="devsite-syntax-n">sequenceId</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-mi">1</span><span class="devsite-syntax-p">,</span>
+<span class="devsite-syntax-w">          </span><span class="devsite-syntax-k">directory</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">outputDirectory</span>
+<span class="devsite-syntax-w">      </span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-err">}</span>
+
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-cm">/**</span>
+<span class="devsite-syntax-cm">  * Creates a new instance of [androidx.tracing.TraceDriver].</span>
+<span class="devsite-syntax-cm">  */</span>
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-n">fun</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">createTraceDriver</span><span class="devsite-syntax-p">()</span><span class="devsite-syntax-o">:</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">TraceDriver</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-err">{</span>
+<span class="devsite-syntax-w">      </span><span class="devsite-syntax-o">//</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">We</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">are</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-k">using</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">a</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">factory</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-k">function</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-k">from</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">androidx</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-n">tracing</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-n">wire</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">here</span><span class="devsite-syntax-p">.</span>
+<span class="devsite-syntax-w">      </span><span class="devsite-syntax-o">//</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n devsite-syntax-n-Quoted">`isEnabled`</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">controls</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">whether</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">tracing</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-k">is</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">enabled</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-k">for</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">the</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">application</span><span class="devsite-syntax-p">.</span>
+<span class="devsite-syntax-w">      </span><span class="devsite-syntax-n">val</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">driver</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">TraceDriver</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-n">sink</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">createSink</span><span class="devsite-syntax-p">(),</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">isEnabled</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-no">true</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-w">      </span><span class="devsite-syntax-k">return</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">driver</span>
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-err">}</span>
+
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-n">fun</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">main</span><span class="devsite-syntax-p">()</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-err">{</span>
+<span class="devsite-syntax-w">      </span><span class="devsite-syntax-n">val</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">driver</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">createTraceDriver</span><span class="devsite-syntax-p">()</span>
+<span class="devsite-syntax-w">      </span><span class="devsite-syntax-n">driver</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-k">use</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-err">{</span>
+<span class="devsite-syntax-w">          </span><span class="devsite-syntax-n">driver</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-n">tracer</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-n">trace</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-n">category</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">CATEGORY_MAIN</span><span class="devsite-syntax-p">,</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-k">name</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-s2">"basic"</span><span class="devsite-syntax-p">)</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-err">{</span>
+<span class="devsite-syntax-w">              </span><span class="devsite-syntax-n">Thread</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-nf">sleep</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-n">100L</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-w">          </span><span class="devsite-syntax-err">}</span>
+<span class="devsite-syntax-w">      </span><span class="devsite-syntax-err">}</span>
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-err">}</span>
+</code></pre>
+</devsite-code>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Make <code translate="no" dir="ltr">Tracer</code> a property of the <code translate="no" dir="ltr">TraceDriver</code>. (<a href="https://android-review.googlesource.com/#/q/Iabd9ba2480899caead685ac8de6eb5bda9acbcf5">Iabd9b</a>)</li>
+ <li>Add support for manual context propagation. (<a href="https://android-review.googlesource.com/#/q/I899ff885093bc3e8f833f7bce9dad0b6fcff4f22">I899ff</a>)</li>
+ <li>Add the ability to add call stack information in a trace section. (<a href="https://android-review.googlesource.com/#/q/If6a1bb6e42067edb07407f50f3b21f76f92050d5">If6a1b</a>)</li>
+ <li>Introduce the new <code translate="no" dir="ltr">androidx.tracing</code> APIs. (<a href="https://android-review.googlesource.com/#/q/I5102b729b491fc5e1504cd35e3f2ec36ae7e956c">I5102b</a>)</li>
+ <li>Allow instant events to contain metadata, and add counters to instants &amp; counters. (<a href="https://android-review.googlesource.com/#/q/Ia2ed354e4d089af676f2a1afb4bb91a0240d291c">Ia2ed3</a>)</li>
+ <li>Reduce the surface area of the API annotated with <code translate="no" dir="ltr">@DelicateTracingApi</code>. Nothing in the top level API should require the use of <code translate="no" dir="ltr">@DelicateTracingApi</code>. (<a href="https://android-review.googlesource.com/#/q/I565e0af46c42ce679c9bc519bb1dad9abb51aba4">I565e0</a>)</li>
+ <li>Simplify context propagation by unifying <code translate="no" dir="ltr">PropagationToken</code>s. (<a href="https://android-review.googlesource.com/#/q/Iab83943fadb3f1be4daad0ae2df73d1237bfcec0">Iab839</a>)</li>
+ <li>Stabilize <code translate="no" dir="ltr">BlackHole</code> APIs in <code translate="no" dir="ltr">androidx.benchmark</code>. (<a href="https://android-review.googlesource.com/#/q/I2b67e946c722511244434954a53e9b2f06b631db">I2b67e</a>, <a href="https://issuetracker.google.com/issues/451749438">b/451749438</a>)</li>
+ <li>Add the ability to annotate the trace section as a root span. (<a href="https://android-review.googlesource.com/#/q/Ic836578e5a3804a1b1d556e2471ba20038331394">Ic8365</a>)</li>
+ <li>Allow the developer to explicit about propagation tokens. (<a href="https://android-review.googlesource.com/#/q/I06bb1f7fc5325729bfb57fc64b252b0e99a35a1c">I06bb1</a>)</li>
+ <li>Renamed <code translate="no" dir="ltr">MetadataHandleCloseable</code> to <code translate="no" dir="ltr">EventMetadataCloseable</code>, and <code translate="no" dir="ltr">MetadataHandle</code> to <code translate="no" dir="ltr">EventMetadata</code>. Also added an optional <code translate="no" dir="ltr">CoroutinePropagationToken</code> argument to <code translate="no" dir="ltr">Tracer.traceCoroutine</code> to allow the developer to explicitly specify the propagation token to use. (<a href="https://android-review.googlesource.com/#/q/I219f7c761508f9684501cbfe2d647b01a771846c">I219f7</a>, <a href="https://issuetracker.google.com/issues/454147392">b/454147392</a>)</li>
+ <li>Introduced a new <code translate="no" dir="ltr">Tracer</code> entry point which gives developers a lot more control on how to trace. (<a href="https://android-review.googlesource.com/#/q/I24a7beebedc49000a9692fb8f261c9bb52e6b8b6">I24a7b</a>)</li>
+ <li>Add the ability to control how context propagation happens in a <code translate="no" dir="ltr">SliceTrack</code>. (<a href="https://android-review.googlesource.com/#/q/Ieb8fc64f524236d7e1ae7f66e90f6943e7cd1e89">Ieb8fc</a>)</li>
+ <li><code translate="no" dir="ltr">fillCount</code> in <code translate="no" dir="ltr">PooledTracePacketArray</code> is now correctly marked volatile. (<a href="https://android-review.googlesource.com/#/q/I75d2c61941fff6b1c63aef5093052d32ce17ac74">I75d2c</a>)</li>
+ <li>Mark <code translate="no" dir="ltr">MetadataEntry</code> <code translate="no" dir="ltr">@DelicateTracingApi</code>. (<a href="https://android-review.googlesource.com/#/q/I8c723b68800f7d935d0f9f00290257be7a6e933a">I8c723</a>)</li>
+ <li>Add the ability for a <code translate="no" dir="ltr">TraceSink</code> to be able to handle lost trace events (when the pool is exhausted). (<a href="https://android-review.googlesource.com/#/q/I3b374096285623722e234ae41294f92ed98c6766">I3b374</a>)</li>
+ <li>Add the ability to conditionally emit trace events based on a predicate. (<a href="https://android-review.googlesource.com/#/q/I621b4bfc7f92543860287d68f3db9d61d1e7fb1e">I621b4</a>)</li>
+ <li>Add the ability to add categories to a trace event. (<a href="https://android-review.googlesource.com/#/q/I449c20d2db21cb97872542d1645f8315ba73bcf1">I449c2</a>)</li>
+ <li>Mark <code translate="no" dir="ltr">TraceEvent</code>, <code translate="no" dir="ltr">PooledTracePacketArray</code> as <code translate="no" dir="ltr">DelicateTracingApi</code>. (<a href="https://android-review.googlesource.com/#/q/Iaac6d4636f8279cc4f1fb7ad45ea5844eea6061c">Iaac6d</a>)</li>
+ <li>Make <code translate="no" dir="ltr">ProcessTrack.id</code>, <code translate="no" dir="ltr">ThreadTrack.id</code>, <code translate="no" dir="ltr">ThreadTrack.name</code>, <code translate="no" dir="ltr">CounterTrack.name</code> and <code translate="no" dir="ltr">CounterTrack.parent</code> public. (<a href="https://android-review.googlesource.com/#/q/I8121061710c8068c60beabad6aca5302a11723e2">I81210</a>)</li>
+ <li>Renamed the <code translate="no" dir="ltr">SliceTrack.traceFlow()</code> API to <code translate="no" dir="ltr">traceCoroutine()</code>. (<a href="https://android-review.googlesource.com/#/q/I79ad05e8bad90e629d9c9d6706d874ef1066e371">I79ad0</a>)</li>
+ <li>Add the ability to add contextual information to slices via debug annotations in a Perfetto trace. (<a href="https://android-review.googlesource.com/#/q/Ic2b563d405a62139cadaefcb3a20de0e26512712">Ic2b56</a>)</li>
+ <li>Make it possible to construct an instance of <code translate="no" dir="ltr">WireTraceSink</code> with a <code translate="no" dir="ltr">File</code> / <code translate="no" dir="ltr">OutputStream</code>. (<a href="https://android-review.googlesource.com/#/q/Iecea0d0f72b8a31ca68dd1c6d046bd06249cae94">Iecea0</a>)</li>
+ <li>Removing obsolete <code translate="no" dir="ltr">@RequiresApi(21)</code> annotations (<a href="https://android-review.googlesource.com/#/q/Ic47923dcc82f4b7c4638fadb10c2c0268b414fcd">Ic4792</a>)</li>
+</ul>
+
+<h2>Wear: v1.4.0-rc01</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.wear:wear:1.4.0-rc01</code> is released. Version 1.4.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f005cd28feebaa370904e6437c9ca3d465f5ac4f..75a4eb8f88ca34fde313ecae1e46c343519a44e6/wear/wear">these commits</a>.</p>
+<ul>
+ <li>There are no new changes between the beta01 and rc01.</li>
+</ul>
+
+<h2>Wear-Remote-Interactions: v1.2.0-rc01</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.wear:wear-remote-interactions:1.2.0-rc01</code> is released. Version 1.2.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f005cd28feebaa370904e6437c9ca3d465f5ac4f..7b41731cd36163f3e218f3d341cf22b377fdf90c/wear/wear-remote-interactions">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Updated dependency on Play Basement version which contained CVE-2022-2390 vulnerability.</li>
+</ul>
+
+<h2>Wear Compose: v1.6.0-alpha09</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.wear.compose:compose-*:1.6.0-alpha09</code> is released. Version 1.6.0-alpha09 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/adeb519268e4eeff7d0a5a9d024dbe26d88bb6ad..715e22619094effc2ba1fd528cd9a07b1f5d0046/wear/compose">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Rename <code translate="no" dir="ltr">PagerScaffoldDefaults.SnapPositionalThreshold</code> to <code translate="no" dir="ltr">LowSnapPositionalThreshold</code> and <code translate="no" dir="ltr">RotaryScrollableDefaults.SnapSensitivity</code> to <code translate="no" dir="ltr">LowSnapSensitivity</code> (<a href="https://android-review.googlesource.com/#/q/I157eec4234682eea8f1179d43b449ac827562e4d">I157ee</a>, <a href="https://issuetracker.google.com/issues/449949891">b/449949891</a>)</li>
+ <li>Removed modifier from <code translate="no" dir="ltr">SwipeDismissableSceneStrategy</code>. (<a href="https://android-review.googlesource.com/#/q/Iff30fdadbd3eaae83a2d7645df19440752877f7b">Iff30f</a>, <a href="https://issuetracker.google.com/issues/449949891">b/449949891</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fix rotary over-scroll animation lag in snap behavior (<a href="https://android-review.googlesource.com/#/q/I7db89ce826fe42b2211db761d3c9f80a6eced994">I7db89</a>, <a href="https://issuetracker.google.com/issues/474016470">b/474016470</a>)</li>
+ <li>Fix <code translate="no" dir="ltr">SwipeDismissableSceneStrategy</code> blocking system back on API 36+ (<a href="https://android-review.googlesource.com/#/q/Icf20b2217dc07efeb44223fd2c797d03ecaf40fa">Icf20b</a>, <a href="https://issuetracker.google.com/issues/476105162">b/476105162</a>)</li>
+ <li>Fix <code translate="no" dir="ltr">SwitchButton</code> animation to scale/fade as a complete shape (<a href="https://android-review.googlesource.com/#/q/I7a7eb896ce9b1a693150b05ff84399eb62c75770">I7a7eb</a>, <a href="https://issuetracker.google.com/issues/378644361">b/378644361</a>)</li>
+ <li>Improve <code translate="no" dir="ltr">CheckboxButton</code> check icon intro rotation animation (<a href="https://android-review.googlesource.com/#/q/I89944a8892edf9ce6700692487076bd83c86ca6f">I89944</a>, <a href="https://issuetracker.google.com/issues/378646769">b/378646769</a>)</li>
+</ul>
+
+<h2>wear protolayout: v1.4.0-alpha05</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.wear.protolayout:protolayout-*:1.4.0-alpha05</code> is released. Version 1.4.0-alpha05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/adeb519268e4eeff7d0a5a9d024dbe26d88bb6ad..715e22619094effc2ba1fd528cd9a07b1f5d0046/wear/protolayout">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>A new kotlin <code translate="no" dir="ltr">Transformation</code> modifier has been added. (<a href="https://android-review.googlesource.com/#/q/I195a75d32fec3fea75102a9ee4c7e472990b014f">I195a7</a>, <a href="https://issuetracker.google.com/issues/397169191">b/397169191</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>We have fixed the issue with better resource handling by removing stateful <code translate="no" dir="ltr">ProtoLayoutScope</code> from <code translate="no" dir="ltr">TileService</code>. (<a href="https://android-review.googlesource.com/#/q/I5dc0abfbb5aa41721dd75f14765ccde449229611">I5dc0a</a>, <a href="https://issuetracker.google.com/issues/474614772">b/474614772</a>)</li>
+</ul>
+
+<h2>Wear Tiles: v1.6.0-alpha05</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.wear.tiles:tiles-*:1.6.0-alpha05</code> is released. Version 1.6.0-alpha05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/adeb519268e4eeff7d0a5a9d024dbe26d88bb6ad..715e22619094effc2ba1fd528cd9a07b1f5d0046/wear/tiles">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>We have added metadata keys for the major/minor Tiles schema version as an XML tag. (<a href="https://android-review.googlesource.com/#/q/I2cf66dea93dbc5015f911e882fd554ffc7e13959">I2cf66</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>We have fixed the issue with better resource handling by removing stateful <code translate="no" dir="ltr">ProtoLayoutScope</code> from <code translate="no" dir="ltr">TileService</code> and fixed the issue about keys for holding the resources data. (<a href="https://android-review.googlesource.com/#/q/I5dc0abfbb5aa41721dd75f14765ccde449229611">I5dc0a</a>, <a href="https://issuetracker.google.com/issues/474614772">b/474614772</a>)</li>
+ <li>Code for unbinding service when update is requested is run on the main thread for testing environments. (<a href="https://android.googlesource.com/platform/frameworks/support/+/8fd73481386146814ffa434121bf60df419ba86e">8fd7348</a>)</li>
+</ul>
+
+<h2>WorkManager: v2.11.1</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.work:work-*:2.11.1</code> is released. Version 2.11.1 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/d99a439061701df265e4fb9fcab131bac078be6b..5a3057b3fba2ecd31580689419aff5f082f9efdc/work">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fix network state constraint from passing while connectivity is blocked on Android 15 and above. (<a href="https://android-review.googlesource.com/#/q/I5abb7f65b095a0feefa8e2645baa742f48049cae">I5abb7</a>, <a href="https://issuetracker.google.com/issues/465016918">b/465016918</a>)</li>
+ <li>Fixed network constraint tracking not considering blocked state for its initial value. (<a href="https://android-review.googlesource.com/#/q/I8a0a2c029957335892d12a2df33a23ae0b77ab3e">I8a0a2</a>, <a href="https://issuetracker.google.com/issues/452081708">b/452081708</a>)</li>
+ <li>Fixed an issue with network request constraint passing while connectivity is blocked on Android 15 and above. (<a href="https://android-review.googlesource.com/#/q/I60f241226361660db8513575fd4f8095b340069e">I60f24</a>, <a href="https://issuetracker.google.com/issues/452081708">b/452081708</a>)</li>
+</ul>
+
+<h2>ARCore for Jetpack XR: v1.0.0-alpha10</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.xr.arcore:arcore-*:1.0.0-alpha10</code> is released. Version 1.0.0-alpha10 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/66babaed0f95f7d1aa432812f146f6f7ef81eb7b..dee6404678a4a9ffe984428550062cb96908292e/xr/arcore">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Introduces <code translate="no" dir="ltr">TiltGesture</code> API, providing a reactive <code translate="no" dir="ltr">Flow</code> for stable detection of device tilt (UP/DOWN) state with transition progress. (<a href="https://android-review.googlesource.com/#/q/Ic269f4bc5ffebcb1b51bde774529e2ea3a05c9a4">Ic269f</a>, <a href="https://issuetracker.google.com/issues/448152779">b/448152779</a>)</li>
+ <li>ARCore for Jetpack XR now uses the XR Runtime Logging mechanism. See <code translate="no" dir="ltr">androidx.xr.runtime.Log</code> for more information. (<a href="https://android-review.googlesource.com/#/q/I52735a844218c098129bcf05f9bdedeafc7b16c7">l52735</a>, <a href="https://issuetracker.google.com/issues/448697662">b/448697662</a>)</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">Geospatial.createPoseFromGeospatialPose</code> now works on OpenXR-enabled devices. (<a href="https://android-review.googlesource.com/#/q/I362c64c97acceeae44113defe10533a59a803f13">l362c6</a>)</li>
+</ul>
+
+<h2>Jetpack Compose for XR: v1.0.0-alpha10</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.xr.compose:compose:1.0.0-alpha10</code> and <code translate="no" dir="ltr">androidx.xr.compose:compose-testing:1.0.0-alpha10</code> are released. Version 1.0.0-alpha10 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/7e4042dc841f56cd0fc47060f4a1efbf76486ca2..0da43ebb1f8dc8fba8df8f2cf05d8164688aa0ab/xr/compose">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Removing deprecated API - <code translate="no" dir="ltr">ApplicationSubspace</code> (<a href="https://android-review.googlesource.com/#/q/Ia6596f3badd4d09cc25cfd4006ad9ccf946b28c2">Ia6596</a>, <a href="https://issuetracker.google.com/issues/468345186">b/468345186</a>)</li>
+ <li>Updated <code translate="no" dir="ltr">SpatialShape</code> to a sealed interface (<a href="https://android-review.googlesource.com/#/q/I7e3f54b3057ab2ce8d59c0e6de42eb9fa6166aa1">I7e3f5</a>, <a href="https://issuetracker.google.com/issues/460426800">b/460426800</a>)</li>
+ <li>Removing Deprecated APIs in <code translate="no" dir="ltr">SpatialAlignment</code>. (<a href="https://android-review.googlesource.com/#/q/Ib0b61182a03595362e8275dbee9b8a85da966970">Ib0b61</a>, <a href="https://issuetracker.google.com/issues/468011887">b/468011887</a>)</li>
+ <li>Deprecating <code translate="no" dir="ltr">SpatialLayoutSpacer</code> and introducing <code translate="no" dir="ltr">SpatialSpacer</code>. (<a href="https://android-review.googlesource.com/#/q/I2ebf3c6229719e75b9832090197eaed37c772e23">I2ebf3</a>, <a href="https://issuetracker.google.com/issues/466071383">b/466071383</a>)</li>
+ <li>Updated <code translate="no" dir="ltr">UserSubspace</code> API to replace "lazy locking" terminology with "soft locking". (<a href="https://android-review.googlesource.com/#/q/I9ded16a27b9b634d1e9b8698722db43ffbc8e3a9">I9ded1</a>, <a href="https://issuetracker.google.com/issues/464035984">b/464035984</a>)</li>
+</ul>
+
+<h2>Material Design for XR: v1.0.0-alpha14</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.xr.compose.material3:material3:1.0.0-alpha14</code> is released. Version 1.0.0-alpha14 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/deb96499dfe95073f5c1215c1287787683cb1e92..715e22619094effc2ba1fd528cd9a07b1f5d0046/xr/compose/material3/material3">these commits</a>.</p>
+
+<h2>Jetpack Compose Glimmer: v1.0.0-alpha05</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.xr.glimmer:glimmer:1.0.0-alpha05</code> is released. Version 1.0.0-alpha05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/adeb519268e4eeff7d0a5a9d024dbe26d88bb6ad..b0ea337f3538c22dae2295d6a9265ab0c753e301/xr/glimmer/glimmer">these commits</a>.</p>
+
+<h2>XR Projected: v1.0.0-alpha04</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.xr.projected:projected:1.0.0-alpha04</code> and <code translate="no" dir="ltr">androidx.xr.projected:projected-binding:1.0.0-alpha04</code> are released. Version 1.0.0-alpha04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/9750bafc0c1ba237e91ada68cd21a7de0a4b4676..5dd0fe5f4702e29b6874a10d29459dc59f0d8502/xr/projected/projected">these commits</a>.</p>
+
+<h2>XR Runtime: v1.0.0-alpha10</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.xr.runtime:runtime-*:1.0.0-alpha10</code> is released. Version 1.0.0-alpha10 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/5dd54df7c7f82386d2da53e696750df346d47550..6d802bc724002ae38712673fb300c314f88fdd9e/xr/runtime">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">ConfigMode.HeadTrackingMode</code> is replaced with <code translate="no" dir="ltr">ConfigMode.HeadTrackingMode</code>. (<a href="https://android-review.googlesource.com/#/q/Ie273ef58cbd8187d33e91b344d37107187002990">le273e</a>, <a href="https://issuetracker.google.com/issues/467150206">b/467150206</a>)</li>
+ <li>Removed Quaternion's <code translate="no" dir="ltr">toNormalized</code>, <code translate="no" dir="ltr">times(float)</code>, <code translate="no" dir="ltr">div(float)</code> methods. These methods are redundant given that all Quaternions are normalized at construction time and given that the class is immutable. (<a href="https://android-review.googlesource.com/#/q/I558fcff3211fc4a9122262b548936b2b877735e4">l558fc</a>, <a href="https://issuetracker.google.com/issues/460210457">b/460210457</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Added documentation to <code translate="no" dir="ltr">Session.create</code> that illustrates how to avoid creating a session on the application’s main thread. (<a href="https://android-review.googlesource.com/#/q/Ie5554bace05cf2c51ee824d381fdff8f676500fa">le5554</a>, <a href="https://issuetracker.google.com/issues/463687170">b/463687170</a>)</li>
+ <li>Prevented applications from creating a <code translate="no" dir="ltr">BoundingBox</code> with a <code translate="no" dir="ltr">NaN</code> value. (<a href="https://android-review.googlesource.com/#/q/I58c146fae497ce72857f7547df157eaeff9d7081">l58c14</a>, <a href="https://issuetracker.google.com/issues/464025895">b/464025895</a>)</li>
+</ul>
+
+<h2>Jetpack SceneCore: v1.0.0-alpha11</h2>
+<p>January 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.xr.scenecore:scenecore-*:1.0.0-alpha11</code> is released. Version 1.0.0-alpha11 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/bac172b1818f60ee3cd443ab6ae6596338aa5215..858c4795b789900a14f261bc90ed7e375af2b9be/xr/scenecore">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Renames <code translate="no" dir="ltr">PerceivedResolutionResult.InvalidCameraView</code> to <code translate="no" dir="ltr">PerceivedResolutionResult.InvalidRenderViewpoint</code> as the <code translate="no" dir="ltr">getPerceivedResolution</code> APIs now rely on ARCore's <code translate="no" dir="ltr">RenderViewpoint</code> API instead of <code translate="no" dir="ltr">CameraViewScenePose</code>. This name better reflects the new implementation. (<a href="https://android-review.googlesource.com/#/q/I8c967b7b3091f445716aae2d7ca552a0ae4bdb9b">I8c967</a>, <a href="https://issuetracker.google.com/issues/446989745">b/446989745</a>, <a href="https://issuetracker.google.com/issues/419311998">b/419311998</a>)</li>
+ <li>The <code translate="no" dir="ltr">PanelEntity</code>/<code translate="no" dir="ltr">SurfaceEntity.getPerceivedResolution</code> methods now take a <code translate="no" dir="ltr">RenderViewpoint</code> provided by the developer as an argument. Before, the runtime arbitrarily chose the <code translate="no" dir="ltr">RenderViewpoint</code> used in the perceived resolution calculation. (<a href="https://android-review.googlesource.com/#/q/I8c967b7b3091f445716aae2d7ca552a0ae4bdb9b">I8c967</a>, <a href="https://issuetracker.google.com/issues/446989745">b/446989745</a>, <a href="https://issuetracker.google.com/issues/419311998">b/419311998</a>)</li>
+ <li>Removed <code translate="no" dir="ltr">SpatialUser</code>, <code translate="no" dir="ltr">ScenePose.Head</code>, and <code translate="no" dir="ltr">ScenePose.CameraView</code>. The functionality of these APIs is covered by the <code translate="no" dir="ltr">ArDevice</code> and <code translate="no" dir="ltr">RenderViewpoint</code> APIs within ARCore for Jetpack XR. To obtain a <code translate="no" dir="ltr">ScenePose</code> corresponding to the user's head or left or right eye, developers can use <code translate="no" dir="ltr">PerceptionSpace.getScenePoseFromPerceptionPose</code> with the appropriate pose obtained using ARCore APIs. (<a href="https://android-review.googlesource.com/#/q/I2f69c3d74f123f64efe2c7c9d41826a2f0f1ae28">I2f69c</a>, <a href="https://issuetracker.google.com/issues/446989745">b/446989745</a>)</li>
 </ul>
 </body>
 </html>
