@@ -66,133 +66,14 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Compose Material3: v1.5.0-alpha21</h2>
-<p>June 03, 2026</p>
-<p><code translate="no" dir="ltr">androidx.compose.material3:material3-*:1.5.0-alpha21</code> is released. Version 1.5.0-alpha21 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/b5d2acb5ad0a36c9d2aba8feb4c7951165f30fbe..bd4a359dc5de8a63e1994022d4282b98de45c418/compose/material3">these commits</a>.</p>
-<p><strong>API Changes</strong></p>
+<h2>Media3: 1.8.1</h2>
+<p>May 21, 2026</p>
+<p>Version 1.8.1 contains the following <a href="https://github.com/androidx/media/commits/1.8.1">commits</a>.</p>
 <ul>
- <li>Add shapes to timepicker component API (<a href="https://android-review.googlesource.com/#/q/I57f28998a4d9e8712394b45bdd3d2e79bf78cb55">I57f28</a>, <a href="https://issuetracker.google.com/issues/441573791">b/441573791</a>)</li>
- <li>Added <code translate="no" dir="ltr">compressionLimit</code> to <code translate="no" dir="ltr">animateWidth</code> that specifies the padding of the item being compressed which indicates the maximum compression that the item can be squished by. Deprecating the <code translate="no" dir="ltr">animateWidth</code> API without this <code translate="no" dir="ltr">compressionLimit</code> parameter. (<a href="https://android-review.googlesource.com/#/q/I4a7253bd1fb8b95a70958a4c8fb154324d566f20">I4a725</a>, <a href="https://issuetracker.google.com/issues/418822334">b/418822334</a>, <a href="https://issuetracker.google.com/issues/403281052">b/403281052</a>)</li>
- <li><code translate="no" dir="ltr">BottomSheet</code> and <code translate="no" dir="ltr">ModalBottomSheet</code> <code translate="no" dir="ltr">PartiallyExpanded</code> anchor is no longer programmatically removed based on layout conditions. Users now explicitly control this anchor via <code translate="no" dir="ltr">rememberBottomSheetState</code>. Legacy behavior for these components can be enabled via disabling <code translate="no" dir="ltr">isBottomSheetPartiallyExpandedDeterministicEnabled</code> feature flag or by leveraging deprecated <code translate="no" dir="ltr">rememberModalBottomSheetState</code> and <code translate="no" dir="ltr">rememberStandardBottomSheetState</code> functions. <code translate="no" dir="ltr">isAnchoredDraggableComponentsAnchorRecoveryEnabled</code> has now been removed from feature flags. (<a href="https://android-review.googlesource.com/#/q/Ia416719592d05f705e67eb7351a70d1aaf335363">Ia4167</a>, <a href="https://issuetracker.google.com/issues/478210200">b/478210200</a>, <a href="https://issuetracker.google.com/issues/512076811">b/512076811</a>)</li>
- <li>Reintroduces experimental tag for <code translate="no" dir="ltr">PullToRefreshDefaults.loadingIndicatorColor</code> and <code translate="no" dir="ltr">PullToRefreshDefaults.loadingIndicatorContainerColor</code> (<a href="https://android-review.googlesource.com/#/q/Ib9d151f52ab743a1124335010579aff6d5812824">Ib9d15</a>, <a href="https://issuetracker.google.com/issues/513225663">b/513225663</a>)</li>
- <li>Updated the <code translate="no" dir="ltr">SelectableChipColors</code> parameters to be public (<a href="https://android-review.googlesource.com/#/q/I559e07e6fd666b9bcce01bbcbcc3bed91d82a921">I559e0</a>, <a href="https://issuetracker.google.com/issues/512576750">b/512576750</a>)</li>
- <li>Add <code translate="no" dir="ltr">horizontalArrangement</code> parameter to <code translate="no" dir="ltr">MenuItems</code> (<a href="https://android-review.googlesource.com/#/q/Ie8088baa0340f3455f69380071cd23614eb98032">Ie8088</a>, <a href="https://issuetracker.google.com/issues/497891817">b/497891817</a>)</li>
- <li>Re-mark Button's <code translate="no" dir="ltr">contentPaddingFor</code> function as experimental. (<a href="https://android-review.googlesource.com/#/q/I07d3ee89337f467552e6053dbfc5588c345e81ee">I07d3e</a>, <a href="https://issuetracker.google.com/issues/500355872">b/500355872</a>)</li>
- <li>Introduced <code translate="no" dir="ltr">roundedShape</code> and <code translate="no" dir="ltr">tonalColors()</code> in both <code translate="no" dir="ltr">TextFieldDefaults</code> and <code translate="no" dir="ltr">OutlinedTextFieldDefaults</code>, which are the visual configurations for expressive style. (<a href="https://android-review.googlesource.com/#/q/Id9185e6356df12f82e08953120846a6a1a34515a">Id9185</a>, <a href="https://issuetracker.google.com/issues/448728288">b/448728288</a>)</li>
- <li>Deprecated <code translate="no" dir="ltr">TextFieldLabelPosition.Attached</code>, and introduced <code translate="no" dir="ltr">Inside</code> and <code translate="no" dir="ltr">Cutout</code> subtypes, which allows more customizability like an <code translate="no" dir="ltr">OutlinedTextField</code> with inside label placement. Also deprecated <code translate="no" dir="ltr">OutlinedTextFieldDefaults.contentPadding()</code>, and introduced <code translate="no" dir="ltr">OutlinedTextFieldDefaults.contentPaddingWithLabel()</code> and <code translate="no" dir="ltr">OutlinedTextFieldDefaults.contentPaddingWithoutLabel()</code> to support both label positions. (<a href="https://android-review.googlesource.com/#/q/I40f625168c7da2ffb815a8ba8c79cac00567ad8b">I40f62</a>, <a href="https://issuetracker.google.com/issues/448728288">b/448728288</a>)</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Fixed an accessibility issue in <code translate="no" dir="ltr">TimePicker</code> where keyboard focus was lost when switching from hours to minutes on the dial. Improved accessibility of keyboard focus. (<a href="https://android-review.googlesource.com/#/q/I7dd813b7f601da51cb6f1494b6b861f367d3a235">I7dd81</a>, <a href="https://issuetracker.google.com/issues/498361169">b/498361169</a>)</li>
-</ul>
-<p><strong>External Contribution</strong></p>
-<ul>
- <li>Improved BottomSheet dismiss gesture physics for a smoother experience. (<a href="https://android-review.googlesource.com/#/q/I21df57847dc0f9d20132109032e46351e34b1a7d">I21df5</a>)</li>
-</ul>
-
-<h2>remote compose: v1.0.0-alpha12</h2>
-<p>June 03, 2026</p>
-<p><code translate="no" dir="ltr">androidx.compose.remote:remote-*:1.0.0-alpha12</code> is released. Version 1.0.0-alpha12 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/34c838042ff03be46cb1ed8e20535acf880a70bf..d0d5e8b902b1ded8854df7d27fa1d1ee14e3bb4c/compose/remote">these commits</a>.</p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Modifiers <code translate="no" dir="ltr">onTouchCancel(varargs action)</code> and <code translate="no" dir="ltr">onTouchCancel(List&lt;Action&gt;)</code> were changed to <code translate="no" dir="ltr">onTouchCancel(action)</code>. Use <code translate="no" dir="ltr">CombinedAction</code> for a list of actions. (<a href="https://android-review.googlesource.com/#/q/Ia7b5a65a7caf05639b8a454896aa171ee5405da9">Ia7b5a</a>, <a href="https://issuetracker.google.com/issues/498881738">b/498881738</a>)</li>
- <li>Expose <code translate="no" dir="ltr">RemoteBoolean</code> static factory. (<a href="https://android-review.googlesource.com/#/q/Ifedb65e7648d911d9a836aa362e83658e045bbbb">Ifedb6</a>, <a href="https://issuetracker.google.com/issues/484137042">b/484137042</a>)</li>
- <li>Exposed <code translate="no" dir="ltr">hostAction</code> and <code translate="no" dir="ltr">combinedAction</code> factory functions to allow external usage. (<a href="https://android-review.googlesource.com/#/q/I78002dd845c9b99e84af3710168c1491000b19c1">I78002</a>)</li>
- <li>Add <code translate="no" dir="ltr">RemoteContentPreview</code>, <code translate="no" dir="ltr">RemoteDocumentPreview</code> and <code translate="no" dir="ltr">RemotePreviewWrapper</code> functions for previewing Remote Compose content. (<a href="https://android-review.googlesource.com/#/q/I706ae78988c920ff868acbde94396578a96c17fa">I706ae</a>, <a href="https://issuetracker.google.com/issues/507379403">b/507379403</a>)</li>
-</ul>
-
-<h2>Core and Core-ktx: v1.19.0</h2>
-<p>June 03, 2026</p>
-<p><code translate="no" dir="ltr">androidx.core:core:1.19.0</code>, <code translate="no" dir="ltr">androidx.core:core-ktx:1.19.0</code>, and <code translate="no" dir="ltr">androidx.core:core-testing:1.19.0</code> are released. Version 1.19.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/d0311626e34d3399038ccd85c9ea91f7297de350..ee961773bd6a83b5a65e1eded92c3ac09e4fe81f/core">these commits</a>.</p>
-<p><strong>Important changes since 1.18.0:</strong></p>
-
-<h2>Glance Wear: v1.0.0-alpha11</h2>
-<p>June 03, 2026</p>
-<p><code translate="no" dir="ltr">androidx.glance.wear:wear:1.0.0-alpha11</code>, <code translate="no" dir="ltr">androidx.glance.wear:wear-core:1.0.0-alpha11</code>, and <code translate="no" dir="ltr">androidx.glance.wear:wear-tooling-preview:1.0.0-alpha11</code> are released. Version 1.0.0-alpha11 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/b5d2acb5ad0a36c9d2aba8feb4c7951165f30fbe..59d7db8fc3c97056707d1f7a4b415c80d9a8688a/glance/wear">these commits</a>.</p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>We have added <code translate="no" dir="ltr">WearWidgetPreview</code> for previewing Wear Widgets in Android Studio. (<a href="https://android-review.googlesource.com/#/q/I36504163576c4869ecd67732321dc7535edf3467">I36504</a>, <a href="https://issuetracker.google.com/issues/485147770">b/485147770</a>)</li>
- <li>Expose <code translate="no" dir="ltr">is*Available</code> (<code translate="no" dir="ltr">isDailyStepsAvailable</code>, etc.) variables to verify if the related health data type is available and valid. (<a href="https://android-review.googlesource.com/#/q/Ib98a78eec469c425b2ab8f3b231e9fae562437e0">Ib98a7</a>, <a href="https://issuetracker.google.com/issues/498179656">b/498179656</a>)</li>
- <li>Added <code translate="no" dir="ltr">triggerUpdateAll</code> API to <code translate="no" dir="ltr">GlanceWearWidget</code> to trigger update on all widgets of the given app. (<a href="https://android-review.googlesource.com/#/q/I6ab20fe37b23d531d38c622e31acdbe4e1b83f3c">I6ab20</a>, <a href="https://issuetracker.google.com/issues/510896410">b/510896410</a>)</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Include Renderer version information in the <code translate="no" dir="ltr">WearWidgetParams</code> as internal field to prevent breakage in the document generated with the alpha10 version. (<a href="https://android-review.googlesource.com/#/q/Idcf8e6e180db390b74d2b283920d1f81dfb797b2">Idcf8e</a>, <a href="https://issuetracker.google.com/issues/511263591">b/511263591</a>, <a href="https://issuetracker.google.com/issues/512830184">b/512830184</a>)</li>
- <li>Trigger force pull update flow in debug mode or emulator for Wear Widgets.</li>
-</ul>
-
-<h2>Hilt: v1.4.0-rc01</h2>
-<p>June 03, 2026</p>
-<p><code translate="no" dir="ltr">androidx.hilt:hilt-*:1.4.0-rc01</code> is released. Version 1.4.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/df4b49eda6f6834b6bc4c8aa30a581fa577a511e..c66bb6dc33517adb67ab112e01dc90717615caa7/hilt">these commits</a>.</p>
-<p>No significant changes since version 1.4.0-alpha01.</p>
-
-<h2>Lifecycle: v2.11.0-rc01</h2>
-<p>June 03, 2026</p>
-<p><code translate="no" dir="ltr">androidx.lifecycle:lifecycle-*:2.11.0-rc01</code> is released. Version 2.11.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/2539c25fdfa11866cf01ef266f0ddc10b0143658..1acbc411583af0e0f1acc3a641afb771352fd43f/lifecycle">these commits</a>.</p>
-
-<h2>Navigation3: v1.2.0-alpha04</h2>
-<p>June 03, 2026</p>
-<p><code translate="no" dir="ltr">androidx.navigation3:navigation3-*:1.2.0-alpha04</code> is released. Version 1.2.0-alpha04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/ed0627453f51baab21d30d8ca8f74a50ff1cfa7a..d0d5e8b902b1ded8854df7d27fa1d1ee14e3bb4c/navigation3">these commits</a>.</p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Fixed overlay animation issue where nested overlays such as <code translate="no" dir="ltr">ModalBottomSheet</code> are re-aniamting unexpectedly when the overlays above it are popped. (<a href="https://android-review.googlesource.com/#/q/Ia2b9e35ce6873dce20a8c9c8c7a51fa549174c9e">Ia2b9e</a>, <a href="https://issuetracker.google.com/issues/502624496">b/502624496</a>)</li>
-</ul>
-
-<h2>Room 3.0: v3.0.0-alpha06</h2>
-<p>June 03, 2026</p>
-<p><code translate="no" dir="ltr">androidx.room3:room3-*:3.0.0-alpha06</code> is released. Version 3.0.0-alpha06 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/3301965961089ff8ab504bdda95cc8992393d5d0..40de3d755751fba59277168d32c60d70350ea98d/room3">these commits</a>.</p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Add a new annotation property in <code translate="no" dir="ltr">@Entity</code> called <code translate="no" dir="ltr">withoutRowId</code> that when set to true will create the backing SQLite table using the <code translate="no" dir="ltr">WITHOUT ROWID</code> option. (<a href="https://android-review.googlesource.com/#/q/Idb48efe8710d42bb2d9e225c693af92280973421">Idb48e</a>, <a href="https://issuetracker.google.com/issues/472790803">b/472790803</a>)</li>
-</ul>
-
-<h2>Sqlite: v2.7.0-alpha06</h2>
-<p>June 03, 2026</p>
-<p><code translate="no" dir="ltr">androidx.sqlite:sqlite-*:2.7.0-alpha06</code> is released. Version 2.7.0-alpha06 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/ed0627453f51baab21d30d8ca8f74a50ff1cfa7a..d0d5e8b902b1ded8854df7d27fa1d1ee14e3bb4c/sqlite">these commits</a>.</p>
-<p>No significant changes since version 2.7.0-alpha05.</p>
-
-<h2>Wear-Input 1.1.0: v1.1.0</h2>
-<p>August 18, 2021</p>
-<p><code translate="no" dir="ltr">androidx.wear:wear-input:1.1.0</code> and <code translate="no" dir="ltr">androidx.wear:wear-input-testing:1.1.0</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/1d48419d620e931d6c410d4dedb2788d95a8fc98..bf82de2481a345e3246890808ee52363d69194fc/wear">Version 1.1.0 contains these commits.</a></p>
-<p><strong>Important changes since 1.0.0</strong></p>
-<ul>
- <li>Added <code translate="no" dir="ltr">RemoteInputIntentHelper</code>.
+ <li>Effect:
   <ul>
-   <li>This class can be used to build a RemoteInput Intent. This can then be used to request input from your users in a customisable activity.</li>
+   <li>Explicitly set <code translate="no" dir="ltr">GL_DRAW_BUFFER</code> and <code translate="no" dir="ltr">GL_READ_BUFFER</code> when transitioning from surfaceless context.</li>
   </ul></li>
 </ul>
-
-<h2>Wear Compose: v1.7.0-alpha04</h2>
-<p>June 03, 2026</p>
-<p><code translate="no" dir="ltr">androidx.wear.compose:compose-*:1.7.0-alpha04</code> is released. Version 1.7.0-alpha04 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/ba1ad80843e7ebc1cd4308ee040181e82066ba73..9b1298adf7e57b8ba7d6b360e5101ab73973afdb/wear/compose">these commits</a>.</p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Added <code translate="no" dir="ltr">RevealState</code>.drag(), <code translate="no" dir="ltr">SwipeToRevealDragScope</code>, and exposed custom <code translate="no" dir="ltr">flingBehavior</code> in <code translate="no" dir="ltr">SwipeToReveal</code> to enable programmatic control over swipe gestures, offsets, and settling animations. (<a href="https://android-review.googlesource.com/#/q/Ibfe560061482f812fdcf4034502ef28298fad1f0">Ibfe56</a>, [b/484185090]</li>
- <li>Expanded <code translate="no" dir="ltr">OneHandedGestureIndicator</code> to support both Primary and Dismiss actions, migrating its binding architecture to <code translate="no" dir="ltr">InteractionSource</code> for automated lifecycle management. (<a href="https://android-review.googlesource.com/#/q/I7e893bf4d2361009e1191a6f067f2a49eddf9b52">I7e893</a>, [b/512836472]</li>
- <li>Added new gesture-based scrolling for ScalingLazyColumn-based components and Alert Dialogs. This update introduces a default 50% screen scroll for better predictability and includes an optional snap-to-item mode for precise navigation. (<a href="https://android-review.googlesource.com/#/q/Ie9cfb41d40d8768f7efd2e5b6b79891d9268252d">Ie9cfb</a>, [b/509639667]</li>
- <li>Replace Wear Compose Material3's <code translate="no" dir="ltr">isOneHandedGesturesInAlertDialogEnabled</code> flag with <code translate="no" dir="ltr">LocalOneHandedGestureEnabled</code> <code translate="no" dir="ltr">CompositionLocal</code>, which can be used to disable one-handed gestures across component hierarchies. (<a href="https://android-review.googlesource.com/#/q/Ib9240dbca32f4ec7e530366d72159f653985b94e">Ib9240</a>, [b/516777416]</li>
- <li>Deprecated <code translate="no" dir="ltr">ButtonDefaults</code>.<code translate="no" dir="ltr">ExtraSmallIconSize</code> and <code translate="no" dir="ltr">ButtonDefaults</code>.<code translate="no" dir="ltr">SmallIconSize</code>. These defaults were specific to <code translate="no" dir="ltr">CompactButton</code> and have been moved to <code translate="no" dir="ltr">CompactButtonDefaults</code>.<code translate="no" dir="ltr">ExtraSmallIconSize</code> and <code translate="no" dir="ltr">CompactButtonDefaults</code>.<code translate="no" dir="ltr">SmallIconSize</code> respectively. (<a href="https://android-review.googlesource.com/#/q/Id747c86188b7f7df01c58f77a7d12e532fbe76d1">Id747c</a>, [b/513588028]</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Fix <code translate="no" dir="ltr">EdgeButton</code> animation on fast fling. (<a href="https://android-review.googlesource.com/#/q/I88215003236bed78f01f7976b749dd73b25246f9">I88215</a>, [b/512700520]</li>
- <li>Fix <code translate="no" dir="ltr">AppScaffold</code> <code translate="no" dir="ltr">TimeText</code> not updating on recomposition. (<a href="https://android-review.googlesource.com/#/q/Iecea5050f981342ad18034a2bf800647f5a1b019">Iecea5</a>, [b/512439755]</li>
- <li><code translate="no" dir="ltr">ScreenScaffold</code> should explicitly use the <code translate="no" dir="ltr">PaddingValues</code> provided by the inner content lambda. (<a href="https://android-review.googlesource.com/#/q/I20d71f391cd7a44a7efc583a5b563efc191dcc36">I20d71</a>, [b/512355364]</li>
- <li>Introduced @<code translate="no" dir="ltr">FrequentlyChangingValue</code> and @<code translate="no" dir="ltr">RememberInComposition</code> annotations to provide lint warnings to prevent performance issues caused by reading high-frequency state updates or failing to remember objects during composition. (<a href="https://android-review.googlesource.com/#/q/I955f46838ba9be2cb45ef156f2f5b56bd7a3cf15">I955f4</a>, [b/409488336]</li>
- <li>Ensure the ripple effect originates from the center of the button when a one-handed gesture is triggered for <code translate="no" dir="ltr">Button</code> composables. (<a href="https://android-review.googlesource.com/#/q/Ie61ec20ba4c34f6cc1cd9cf9ce1e8df2ced4be03">Ie61ec</a>, [b/514600304]</li>
- <li>Resolved a key collision issue in <code translate="no" dir="ltr">Modifier.oneHandedGesture</code> by incorporating gesture action and priority into the auto-generated key. (<a href="https://android-review.googlesource.com/#/q/I4976095af42d4f44383840972bc6a3ae6ba9b279">I49760</a>, [b/517045657]</li>
-</ul>
-
-<h2>Wear Remote Compose Material 3: v1.0.0-alpha05</h2>
-<p>June 03, 2026</p>
-<p><code translate="no" dir="ltr">androidx.wear.compose.remote:remote-material3:1.0.0-alpha05</code> is released. Version 1.0.0-alpha05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/b5d2acb5ad0a36c9d2aba8feb4c7951165f30fbe..d0d5e8b902b1ded8854df7d27fa1d1ee14e3bb4c/wear/compose/remote/remote-material3">these commits</a>.</p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Fix <code translate="no" dir="ltr">RemoteTypography</code> constructor. (<a href="https://android-review.googlesource.com/#/q/I7efa2db26a459ec0ebd9b062e17a4dd06a6a6964">bf0c0b2</a>)</li>
-</ul>
-
-<h2>Jetpack Compose Glimmer: v1.0.0-alpha14</h2>
-<p>June 03, 2026</p>
-<p><code translate="no" dir="ltr">androidx.xr.glimmer:glimmer:1.0.0-alpha14</code> and <code translate="no" dir="ltr">androidx.xr.glimmer:glimmer-google-fonts:1.0.0-alpha14</code> are released. Version 1.0.0-alpha14 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/b5d2acb5ad0a36c9d2aba8feb4c7951165f30fbe..7a823b9c87199a8590f9279bc70102656ba758d4/xr/glimmer">these commits</a>.</p>
 </body>
 </html>
