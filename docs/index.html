@@ -66,178 +66,636 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Media3: 1.11.0-alpha01</h2>
+<h2>appfunctions: v1.0.0-alpha10</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.appfunctions:appfunctions:1.0.0-alpha10</code>, <code translate="no" dir="ltr">androidx.appfunctions:appfunctions-compiler:1.0.0-alpha10</code>, and <code translate="no" dir="ltr">androidx.appfunctions:appfunctions-testing:1.0.0-alpha10</code> are released. Version 1.0.0-alpha10 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/05192460aef562f83eca3446674026b917977615..072655e27a9e07e74cc1493667526ee98f3de919/appfunctions">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
 <ul>
- <li>Common library:
-  <ul>
-   <li>Add <code translate="no" dir="ltr">Format.channelMask</code> to explicitly represent the audio channel mask, and a new <code translate="no" dir="ltr">Util.getAudioTrackChannelConfig(Format)</code> overload to safely resolve it.</li>
-   <li>Upgrade Kotlin from 2.0.20 to 2.2.0.</li>
-  </ul></li>
- <li>ExoPlayer:
-  <ul>
-   <li>Fix a timing-dependent concurrency bug that could cause an <code translate="no" dir="ltr">IllegalStateException</code> or <code translate="no" dir="ltr">IndexOutOfBoundsException</code> in ExoPlayer.</li>
-   <li>Relax ad group count checks in <code translate="no" dir="ltr">AdsMediaSource</code> to allow the ad group count to decrease when an ad group is fully processed (<code translate="no" dir="ltr">hasUnplayedAds()</code> is <code translate="no" dir="ltr">false</code>), accommodating dynamic ad group resizing during reset workflows.</li>
-   <li>Add support for ads in multi-period content (e.g., DASH) by splitting and offsetting the <code translate="no" dir="ltr">AdPlaybackState</code> for each period.</li>
-   <li>Add <code translate="no" dir="ltr">getFlags()</code> and <code translate="no" dir="ltr">FLAG_STRICT_DURATION</code> to <code translate="no" dir="ltr">SampleStream</code> to allow streams to report flags, and update renderers to check these flags dynamically.</li>
-   <li>Fall back to the frame rate estimator in <code translate="no" dir="ltr">MediaCodecVideoRenderer</code> and to the codec output format in <code translate="no" dir="ltr">MediaCodecAudioRenderer</code> to calculate the codec operating rate when the stream formats do not provide a valid value, and avoid unnecessary codec resets.</li>
-   <li>Remove clipping of content for client-side inserted ads in the core player. Instead, <code translate="no" dir="ltr">AdsMediaSource</code> takes care of the clipping logic. Custom client-side inserted ads sources need to be updated to implement the content clipping internally.</li>
-   <li>Mark tracks with a well-formed but unrecognized codec profile or level as <code translate="no" dir="ltr">supported=NO_EXCEEDS_CAPABILITIES</code> instead of <code translate="no" dir="ltr">supported=YES</code> (which is how tracks with missing or malformed profile or level info are marked). This ensures these tracks (which are unlikely to be supported by the device) are not selected when there are better-supported alternatives.</li>
-   <li>Add <code translate="no" dir="ltr">DefaultPreloadManager.SimpleRankingDataComparator</code>, which is a <code translate="no" dir="ltr">RankingDataComparator</code> that compares the ranks of the media items based on their distances to the index of the current playing media item. Apps can override its <code translate="no" dir="ltr">compare(Integer, Integer)</code> method if a more fine-tuned comparison logic is needed. The custom <code translate="no" dir="ltr">SimpleRankingDataComparator</code> can be injected via a new constructor of <code translate="no" dir="ltr">DefaultPreloadManager.Builder</code>.</li>
-   <li>Reduce the OOM risk of <code translate="no" dir="ltr">DefaultLoadControl.prioritizeTimeOverSizeThresholds</code> by falling back to buffer byte size limits if available heap memory seems tight.</li>
-   <li>Align handling of still images when <code translate="no" dir="ltr">MediaItem.imageDurationUs</code> is not set: JPEG and HEIC still images now 'play' with a very short default duration (the same way PNG and other images previously behaved).</li>
-   <li>Add <code translate="no" dir="ltr">MediaSource.prepareSource(MediaSourceCaller, PlayerId, BandwidthMeter)</code> to plumb <code translate="no" dir="ltr">BandwidthMeter</code> to <code translate="no" dir="ltr">MediaSource</code>. The deprecated method with custom implementation will still be called by default though, it is recommended to implement the new method and use <code translate="no" dir="ltr">BandwidthMeter.getTransferListener()</code> to get parity to the old method.</li>
-   <li>In <code translate="no" dir="ltr">DefaultBandwidthMeter</code>, add support for a custom <code translate="no" dir="ltr">InitialBitrateSupplier</code>. This allows apps to provide their own logic for determining the initial bitrate estimate, which will be used on creation of <code translate="no" dir="ltr">DefaultBandwidthMeter</code> and on network type changes. The supplier can be set via <code translate="no" dir="ltr">DefaultBandwidthMeter.Builder.setInitialBitrateSupplier()</code>.</li>
-   <li>Enable dynamic scheduling by default. <code translate="no" dir="ltr">ExoPlayer</code> playback work loop will run dynamically as opposed to on a static interval.</li>
-   <li>Remove an unnecessary reset that can occur when joining tracks with pre-roll samples to active playback.</li>
-   <li>In <code translate="no" dir="ltr">DefaultBandwidthMeter</code>, optimize <code translate="no" dir="ltr">getInitialBitrateCountryGroupAssignment</code> to return the country group assignments packed into a 32-bit integer instead of an array, reducing code size and avoiding allocations.</li>
-   <li>Fix <code translate="no" dir="ltr">AudioTrack</code> initialization failures on some devices by ensuring the retry logic always attempts a minimum of 1 second buffer size if other retries (by halving the buffer size) are unsuccessful (<a href="https://github.com/androidx/media/issues/3207">#3207</a>).</li>
-   <li>Fix codec issue on some devices where the codec was swallowing all samples if previously flushed before receiving input buffers.</li>
-   <li>Add experimental <code translate="no" dir="ltr">ExoPlayer.Builder.enablePerStreamMediaProgression()</code> to allow advancing media processing on a per-stream basis. This reduces startup latency between playlist items and avoids playback becoming "stuck" with very short content (<a href="https://github.com/androidx/media/issues/3122">#3122</a>).</li>
-   <li>Fix race condition related to audio session id usage where the initial audio session id auto-generated by <code translate="no" dir="ltr">ExoPlayer</code> would be used instead of the value set by <code translate="no" dir="ltr">setAudioSessionId</code> (<a href="https://github.com/androidx/media/issues/3241">#3241</a>).</li>
-   <li>Add experimental HAGC (ST 2094-50) timed metadata playback support for progressive media (e.g. MP4, Matroska). The player automatically merges HAGC metadata tracks with the associated video track and delivers the metadata out-of-band to the decoder on API 37+ devices. This behavior can be disabled via <code translate="no" dir="ltr">DefaultMediaSourceFactory.setExperimentalEnableHagcPlayback(false)</code>.</li>
-  </ul></li>
- <li>CompositionPlayer:
-  <ul>
-   <li>Fix an issue where <code translate="no" dir="ltr">TrackSelector</code> instances were not being released.</li>
-  </ul></li>
- <li>Transformer:
-  <ul>
-   <li>Fix an issue where <code translate="no" dir="ltr">ExportResult.fileSizeBytes</code> may be over-reported.</li>
-  </ul></li>
- <li>Track selection:
-  <ul>
-   <li>Expose <code translate="no" dir="ltr">BaseTrackSelection.DEFAULT_FORMAT_COMPARATOR</code> and add <code translate="no" dir="ltr">AdaptiveTrackSelection.Factory.setTrackFormatComparator</code> to allow custom format ordering and ABR selection priority beyond bitrate-only ordering.</li>
-  </ul></li>
- <li>Extractors:
-  <ul>
-   <li>MP4, MP3, and FLAC: Add <code translate="no" dir="ltr">FLAG_DISABLE_ARTWORK_METADATA</code> to allow discarding attached pictures and cover art metadata during container parsing to reduce runtime memory consumption (<a href="https://github.com/androidx/media/issues/2077">#2077</a>). This can also be enabled centrally via <code translate="no" dir="ltr">DefaultExtractorsFactory.setDisableArtworkMetadata</code>.</li>
-   <li>MP4: Add support for extracting ITU-T T.35 (<code translate="no" dir="ltr">it35</code>) timed metadata tracks.</li>
-   <li>MP4: Add support for extracting chapter metadata (both Nero and QuickTime formats). QuickTime chapters are preferred if both are present. The extracted chapter information is exposed as <code translate="no" dir="ltr">Chapter</code> entries within the track's <code translate="no" dir="ltr">Metadata</code>, allowing for native chapter navigation in MP4, M4A, and M4B files (such as audiobooks and podcasts) (<a href="https://github.com/androidx/media/issues/2803">#2803</a>).</li>
-   <li>WAV, Matroska, and MP4: Add support for 64-bit floating point PCM audio (<a href="https://github.com/androidx/media/pull/3090">#3090</a>).</li>
-   <li>Matroska: Use codec bitstream metadata to populate accurate <code translate="no" dir="ltr">ColorInfo</code>.</li>
-   <li>MP4: Add support for seeking in fragmented MP4 files using the <code translate="no" dir="ltr">mfra</code> box when a <code translate="no" dir="ltr">sidx</code> box is not present. To enable this, provide <code translate="no" dir="ltr">FLAG_READ_MFRA_FOR_SEEK_MAP</code> to the <code translate="no" dir="ltr">FragmentedMp4Extractor</code>, which is now done by default in <code translate="no" dir="ltr">DefaultExtractorsFactory</code> (<a href="https://github.com/androidx/media/issues/3088">#3088</a>).</li>
-   <li>Ignore <code translate="no" dir="ltr">av1C</code> data with unsupported version.</li>
-   <li>MP4: Add support for big-endian floating point PCM in <code translate="no" dir="ltr">fpcm</code> boxes.</li>
-   <li>Matroska: Parse chapter info to <code translate="no" dir="ltr">Chapter</code> entries in a track's <code translate="no" dir="ltr">Metadata</code>.</li>
-   <li>MPEG-TS: Improve extraction of DTS-HD and DTS Express streams by combining the Core and Extension Substream into a single sample, fixing playback issues where the two were previously output as separate samples (<a href="https://github.com/androidx/media/pull/3147">#3147</a>).</li>
-   <li>MP4: Prevent infinite loops and out-of-bounds reads when parsing empty <code translate="no" dir="ltr">ilst</code> metadata tag items (<a href="https://github.com/androidx/media/pull/3191">#3191</a>).</li>
-   <li>MPEG-TS: Ensure the last frame is rendered for streams where the last PES packet has a known length (<a href="https://github.com/androidx/media/pull/3206">#3206</a>).</li>
-   <li>MP3: Fix bitrate reporting for files with Xing and VBRI header.</li>
-   <li>Matroska: Handle tracks defined in the last cluster (<a href="https://github.com/androidx/media/issues/3250">#3250</a>).</li>
-   <li>Matroska: Add support for ALAC (<a href="https://github.com/androidx/media/pull/3268">#3268</a>).</li>
-   <li>MP4: Allow variable length <code translate="no" dir="ltr">sgpd</code> boxes in fragmented MP4 files (<a href="https://github.com/androidx/media/pull/3243">#3243</a>).</li>
-  </ul></li>
- <li>Audio:
-  <ul>
-   <li>Add a 100ms grace period in ExoPlayer's audio renderers when transitioning from ready to not-ready state, to debounce transient underruns and avoid unexpected buffering states during active playout (<a href="https://github.com/androidx/media/issues/3210">#3210</a>).</li>
-   <li>Change the default PCM buffer size logic in <code translate="no" dir="ltr">DefaultAudioTrackBufferSizeProvider</code> to use a fixed 500ms buffer to make it less device dependent.</li>
-   <li>Update <code translate="no" dir="ltr">MediaCodecAudioRenderer</code> to extract the spatial channelMask from the platform decoder, allowing <code translate="no" dir="ltr">DefaultAudioSink</code> to use this explicit mask instead of inferring one from the channel count.</li>
-   <li>Convert parameters of <code translate="no" dir="ltr">AudioSink.configure</code> to data class. Custom overrides of <code translate="no" dir="ltr">ForwardingAudioSink.configure</code> need to be migrated to the new method signature.</li>
-   <li>Add support for maintaining pitch when time-stretching an audio stream with <code translate="no" dir="ltr">EditedMediaItem.Builder#setSpeed(SpeedParameters)</code>.</li>
-   <li>Enhance <code translate="no" dir="ltr">ToFloatPcmAudioProcessor</code> to support converting 8-bit PCM, 16-bit big-endian PCM, and 64-bit floating point PCM to 32-bit floating point PCM (<a href="https://github.com/androidx/media/pull/3090">#3090</a>).</li>
-   <li>Change return value of <code translate="no" dir="ltr">DecoderAudioRenderer.getChannelMapping</code> to <code translate="no" dir="ltr">ImmutableIntArray</code>.</li>
-   <li>Fix bug where playback gets stuck when playing a playlist of gapless audio in compressed offload mode.</li>
-   <li>Forward <code translate="no" dir="ltr">Timeline</code> and period UID to <code translate="no" dir="ltr">AudioSink.configure</code> and <code translate="no" dir="ltr">AudioProcessor.StreamMetadata</code> to provide playlist context to the audio processors (<a href="https://github.com/androidx/media/issues/418">#418</a>).</li>
-   <li>Set correct <code translate="no" dir="ltr">AudioProcessor.StreamMetadata.positionOffsetUs</code> to allow time-based audio processing (<a href="https://github.com/androidx/media/issues/418">#418</a>).</li>
-   <li>Add support for big endian 32-bit and 64-bit floating point PCM.</li>
-  </ul></li>
- <li>Video:
-  <ul>
-   <li>Fix video joining logic to count dropped buffers during joining as skipped instead of dropped.</li>
-   <li>Fix immediate rendering decision when setting new surface to avoid frame drops on devices that don't support placeholder surfaces.</li>
-   <li>Fix frame rate estimation in <code translate="no" dir="ltr">MediaCodecVideoRenderer</code> to be more accurate by accounting for dropped or skipped frames.</li>
-   <li>Allow configuration of the threshold used to schedule frames early. The default is 50ms but one can customize the value through <code translate="no" dir="ltr">MediaCodecVideoRenderer.Builder.setMaxEarlyUsThreshold()</code>.</li>
-  </ul></li>
- <li>Text:
-  <ul>
-   <li>TTML: Fallback to <code translate="no" dir="ltr">displayAlign</code> from <code translate="no" dir="ltr">style</code> for regions (<a href="https://github.com/androidx/media/issues/2559">#2559</a>).</li>
-   <li>TTML: Inherit cue start time from parent of <code translate="no" dir="ltr">&lt;p&gt;</code> elements (<a href="https://github.com/androidx/media/issues/3246">#3246</a>).</li>
-  </ul></li>
- <li>Metadata:
-  <ul>
-   <li>Add <code translate="no" dir="ltr">MediaMetadata.discSubtitle</code> field and parse it from ID3v2.4 <code translate="no" dir="ltr">TSST</code> and Vorbis <code translate="no" dir="ltr">DISCSUBTITLE</code> data.</li>
-   <li>Parse disc number &amp; count from ID3 <code translate="no" dir="ltr">TPOS</code> frame.</li>
-  </ul></li>
- <li>Effect:
-  <ul>
-   <li>Clear redraw state in <code translate="no" dir="ltr">FinalShaderProgramWrapper</code> when flushing to prevent the player from freezing when seeking.</li>
-  </ul></li>
- <li>Muxers:
-  <ul>
-   <li>Add support for track references (the <code translate="no" dir="ltr">tref</code> box) in <code translate="no" dir="ltr">Mp4Muxer</code> via a new <code translate="no" dir="ltr">addTrackReference</code> API. This allows establishing relationships between tracks, such as linking a metadata track to the video track it describes.</li>
-   <li>Add <code translate="no" dir="ltr">OggMuxer</code> to allow muxing of <code translate="no" dir="ltr">OPUS</code> or <code translate="no" dir="ltr">VORBIS</code> media streams into the <code translate="no" dir="ltr">ogg</code> file format.</li>
-   <li>Add <code translate="no" dir="ltr">WavMuxer</code> for WAV file generation (supports integer and floating-point PCM).</li>
-   <li>Add <code translate="no" dir="ltr">setAttemptStreamableOutputEnabled</code> to <code translate="no" dir="ltr">InAppMp4Muxer.Factory</code> to allow writing smaller non-streamable files without reserved space.</li>
-   <li>Add support for IAMF audio in <code translate="no" dir="ltr">Mp4Muxer</code> and <code translate="no" dir="ltr">FragmentedMp4Muxer</code>.</li>
-  </ul></li>
- <li>IMA extension:
-  <ul>
-   <li>Add <code translate="no" dir="ltr">ImaServerSideAdInsertionMediaSource.AdsLoader.Builder.setPauseAdSlot</code> to allow providing an ad slot to use for pause ads.</li>
-   <li>Fix bug where back-to-back skippable VAST ads show the skip button immediately on the second ad (<a href="https://github.com/androidx/media/issues/3165">#3165</a>).</li>
-  </ul></li>
- <li>Session:
-  <ul>
-   <li>Fix potential deadlocks and <code translate="no" dir="ltr">IllegalStateException</code> crashes inside <code translate="no" dir="ltr">MediaNotificationManager</code> when using a session with a background thread player looper.</li>
-   <li>Enforce stricter threading requirements for <code translate="no" dir="ltr">MediaSession</code> methods. Void methods now automatically post execution to the application looper thread, and state accessors (getters) explicitly throw an <code translate="no" dir="ltr">IllegalStateException</code> if called from a thread other than the application looper.</li>
-   <li>Fix an out-of-bounds timeline merge crash (<code translate="no" dir="ltr">IllegalStateException</code> in <code translate="no" dir="ltr">MediaUtils.mergePlayerInfo</code>) by tracking state consistency per-controller on the session side.</li>
-   <li>Add <code translate="no" dir="ltr">androidx.media3.session.MediaSessionManager</code> to provide support for querying active media sessions and returning Media3 <code translate="no" dir="ltr">SessionToken</code> instances.</li>
-   <li>Change default behavior of <code translate="no" dir="ltr">MediaSession.Callback.onConnect</code> if the method is not overridden to only provide read access to untrusted controllers.</li>
-   <li>Add support to override package name while creating <code translate="no" dir="ltr">MediaSession</code> via a new API <code translate="no" dir="ltr">MediaSession.Builder#setPackageNameOverride</code>. The caller must have <code translate="no" dir="ltr">android.permission.OVERRIDE_MEDIA_SESSION_OWNER</code> permission to override the package name of the session.</li>
-   <li>Add <code translate="no" dir="ltr">MediaSession.Callback.onConnectAsync()</code>. The new method allows to asynchronously process the connection attempt of a controller. Apps can return an immediate <code translate="no" dir="ltr">Future</code> with <code translate="no" dir="ltr">Futures.immediateFuture(ConnectionResult)</code> to achieve the previous behaviour. It's recommended to migrate to the new method because <code translate="no" dir="ltr">Callback.onConnect</code> is a candidate to be deprecated.</li>
-   <li>Fix issue where Bluetooth AVRCP browsing didn't recognise <code translate="no" dir="ltr">MediaLibraryService</code> on API 36 and 37.</li>
-  </ul></li>
- <li>UI:
-  <ul>
-   <li>Fix first frame rendering at the wrong size when <code translate="no" dir="ltr">ContentFrame</code> is recomposed mid-playback (<a href="https://github.com/androidx/media/issues/3238">#3238</a>).</li>
-   <li>Add <code translate="no" dir="ltr">CurrentMediaItemState</code> class and the corresponding <code translate="no" dir="ltr">rememberCurrentMediaItemState</code> Composable to <code translate="no" dir="ltr">media3-ui-compose</code> module. This state holder is used in <code translate="no" dir="ltr">demo-compose</code> to display various metadata information about the currently playing <code translate="no" dir="ltr">MediaItem</code>.</li>
-   <li>Add <code translate="no" dir="ltr">PlaylistState</code> class and the corresponding <code translate="no" dir="ltr">rememberPlaylistState</code> Composable to <code translate="no" dir="ltr">media3-ui-compose</code> module. This state holder is used in <code translate="no" dir="ltr">demo-compose</code> to display various metadata information about the <code translate="no" dir="ltr">MediaItems</code> set on the Player.</li>
-   <li>Add fastforwarding/slow motion API to <code translate="no" dir="ltr">PlaybackSpeedState</code>. Use this functionality in <code translate="no" dir="ltr">demo-compose</code> to showcase fastforwarding with a long press.</li>
-   <li>Add <code translate="no" dir="ltr">MiniController</code> composable to <code translate="no" dir="ltr">media3-ui-compose-material3</code> module. It provides a compact affordance to control the <code translate="no" dir="ltr">Player</code> while displaying the title, artist, artwork, and progress of the current media item.</li>
-   <li>Add <code translate="no" dir="ltr">ErrorState</code> class and the corresponding <code translate="no" dir="ltr">rememberErrorState</code> Composable to <code translate="no" dir="ltr">media3-ui-compose</code> module. Add <code translate="no" dir="ltr">ErrorText</code> Composable to <code translate="no" dir="ltr">media3-ui-compose-material3</code> and make it a default overlay on the <code translate="no" dir="ltr">Player</code>.</li>
-   <li>Publish <code translate="no" dir="ltr">PlayerDefaults</code> object with composables for <code translate="no" dir="ltr">TopControls</code>, <code translate="no" dir="ltr">CenterControls</code>, <code translate="no" dir="ltr">BottomControls</code>, and <code translate="no" dir="ltr">ErrorOverlay</code>.</li>
-   <li>Add <code translate="no" dir="ltr">FocusRequester</code> to <code translate="no" dir="ltr">Player</code> Composable and its content slots.</li>
-   <li>Publish <code translate="no" dir="ltr">PlayerPool</code> (<code translate="no" dir="ltr">common-ktx</code>) and <code translate="no" dir="ltr">rememberPooledPlayer</code> (<code translate="no" dir="ltr">ui-compose</code>) to support preloading of <code translate="no" dir="ltr">MediaItems</code> in sliding window UI environments. Showcase this functionality in <code translate="no" dir="ltr">demo-compose</code> with a new <code translate="no" dir="ltr">ShortFormPlayerScreen</code>.</li>
-  </ul></li>
- <li>Ktor extension:
-  <ul>
-   <li>Add a new <code translate="no" dir="ltr">media3-datasource-ktor</code> extension module providing a <code translate="no" dir="ltr">KtorDataSource</code> backed by the <a href="https://ktor.io/">Ktor</a> HTTP stack.</li>
-  </ul></li>
- <li>HLS extension:
-  <ul>
-   <li>Add support for HLS Content Steering and Pathway Cloning (<a href="https://github.com/androidx/media/issues/1689">#1689</a>).</li>
-   <li>Add <code translate="no" dir="ltr">setWithAssetListReset</code> to <code translate="no" dir="ltr">HlsInterstitialsAdsLoader</code> to allow apps to reset fully processed asset list interstitials back to an unavailable state for on-demand re-resolution.</li>
-  </ul></li>
- <li>DASH extension:
-  <ul>
-   <li>Separate CEA closed captions into different <code translate="no" dir="ltr">TrackGroup</code>s based on language (<a href="https://github.com/androidx/media/issues/3113">#3113</a>).</li>
-  </ul></li>
- <li>RTSP extension:
-  <ul>
-   <li>Fix transient playback stalls or failures during RTSP playback preparation caused by UDP port binding errors.</li>
-  </ul></li>
- <li>Cast extension:
-  <ul>
-   <li>Add new <code translate="no" dir="ltr">CastParams</code> class to allow configuration of Cast by calling <code translate="no" dir="ltr">Cast.initialize(CastParams)</code>.</li>
-   <li>Add new <code translate="no" dir="ltr">CastParams.getShowSystemOutputSwitcherOnCastIconClick()</code> option, which triggers the use of the SystemUI Output Switcher instead of the in-app Cast device picker when available.</li>
-  </ul></li>
- <li>Test utilities:
-  <ul>
-   <li>Expand <code translate="no" dir="ltr">DataSourceContractTest</code> to include support for <code translate="no" dir="ltr">POST</code> requests with headers &amp; bodies, add some <code translate="no" dir="ltr">POST</code> resources to <code translate="no" dir="ltr">HttpDataSourceTestEnv</code>, and add assertions for the expected HTTP method, headers &amp; body in <code translate="no" dir="ltr">WebServerDispatcher</code>.</li>
-   <li>Tighten assertions in <code translate="no" dir="ltr">DataSourceContractTest</code> for lengths returned from <code translate="no" dir="ltr">DataSource.open()</code>. Resources that may result in <code translate="no" dir="ltr">C.LENGTH_UNSET</code> should indicate this by using <code translate="no" dir="ltr">TestResource.Builder.setMayResolveToUnknownLength(boolean)</code>.</li>
-  </ul></li>
- <li>Remove deprecated symbols:
-  <ul>
-   <li>Remove <code translate="no" dir="ltr">androidx.media3.exoplayer.MetadataRetriever</code>. Use <code translate="no" dir="ltr">androidx.media3.inspector.MetadataRetriever</code> instead.</li>
-   <li>Remove <code translate="no" dir="ltr">androidx.media3.exoplayer.MediaExtractorCompat</code>. Use <code translate="no" dir="ltr">androidx.media3.inspector.MediaExtractorCompat</code> instead.</li>
-   <li>Remove <code translate="no" dir="ltr">Mp4Extractor.FLAG_READ_MOTION_PHOTO_METADATA</code>. Use <code translate="no" dir="ltr">HeifExtractor</code> to extract motion photo metadata from HEIC files instead.</li>
-   <li>Remove <code translate="no" dir="ltr">androidx.media3.extractor.metadata.mp4.MotionPhotoMetadata</code>. Use <code translate="no" dir="ltr">androidx.media3.extractor.metadata.MotionPhotoMetadata</code> instead.</li>
-   <li>Remove <code translate="no" dir="ltr">androidx.media3.extractor.DummyTrackOutput</code>. Use <code translate="no" dir="ltr">androidx.media3.extractor.DiscardingTrackOutput</code> instead.</li>
-   <li>Remove <code translate="no" dir="ltr">androidx.media3.extractor.DummyExtractorOutput</code>. Use <code translate="no" dir="ltr">androidx.media3.extractor.NoOpExtractorOutput</code> instead.</li>
-  </ul></li>
- <li>Build
-  <ul>
-   <li>Updated the <code translate="no" dir="ltr">README.md</code> instructions for depending on Media3 locally to use Gradle Composite Builds (<code translate="no" dir="ltr">includeBuild</code>). The <code translate="no" dir="ltr">core_settings.gradle</code> script has been removed, and the <code translate="no" dir="ltr">androidxMediaModulePrefix</code> and <code translate="no" dir="ltr">androidxMediaEnableMidiModule</code> properties are no longer used.</li>
-  </ul></li>
+ <li>Added <code translate="no" dir="ltr">AppFunctionServiceEntryPoint</code>. All AppFunction annotation must be declared within the <code translate="no" dir="ltr">AppFunctionService</code> that is annotated with <code translate="no" dir="ltr">AppFunctionServiceEntryPoint</code> (<a href="https://android-review.googlesource.com/#/q/Idc5d5a5cc0f3a20f5d8f0e4387f8e6dd43a2f260">Idc5d5</a>, <a href="https://issuetracker.google.com/issues/463909015">b/463909015</a>)</li>
+ <li>Moved <code translate="no" dir="ltr">AppFunction</code> and <code translate="no" dir="ltr">AppFunctionConfiguration</code> APIs . <code translate="no" dir="ltr">AppFunctionConfiguration</code> will be removed in future release as it will be replaced by <code translate="no" dir="ltr">AppFunctionServiceEntryPoint</code> (<a href="https://android-review.googlesource.com/#/q/Iaff2378a969f282d667f00db5f59ae3bb733de85">Iaff23</a>, <a href="https://android-review.googlesource.com/#/q/I4cf3efd8a640ad221d2224dae3e09ae5e20b78e4">I4cf3e</a>, <a href="https://issuetracker.google.com/issues/517876475">b/517876475</a>)</li>
+ <li>Updated <code translate="no" dir="ltr">AppFunctionService</code> API to support callback (<a href="https://android-review.googlesource.com/#/q/I6e0d71c9606633315664390e567b66f928fa0189">I6e0d7</a>, <a href="https://issuetracker.google.com/issues/519880977">b/519880977</a>)</li>
+ <li>Add <code translate="no" dir="ltr">searchAppFunctions</code> API (<a href="https://android-review.googlesource.com/#/q/I8c0f99fd6f4c548b23dbbfa95c2bd55b4b995b31">I8c0f9</a>, <a href="https://android-review.googlesource.com/#/q/I1fa27e6a02a8c70d7539796c14159f859e3c46f5">I1fa27</a>, <a href="https://issuetracker.google.com/issues/494239238">b/494239238</a>)</li>
+ <li>Added <code translate="no" dir="ltr">functionNames</code> to <code translate="no" dir="ltr">AppFunctionSearchSpec</code> (<a href="https://android-review.googlesource.com/#/q/I95f535e4de738e45132eeab61a115d253e369b8a">I95f53</a>, <a href="https://issuetracker.google.com/issues/494239238">b/494239238</a>)</li>
+ <li>Added <code translate="no" dir="ltr">AppFunctionInstruction</code> annotation (<a href="https://android-review.googlesource.com/#/q/I21120525ca7f0be0307395ab0aa2f4905fff5c04">I21120</a>, <a href="https://issuetracker.google.com/issues/488994214">b/488994214</a>)</li>
+ <li>Added <code translate="no" dir="ltr">AppFunctionSignature</code> annotation and accompanying constants to declare runtime registered app function signatures. (<a href="https://android-review.googlesource.com/#/q/I82a0564aa3a8c7c227cd9527b8a2a70db4fe9621">I82a05</a>, <a href="https://android-review.googlesource.com/#/q/Ie23619350211671447abdcc2f157c67912ada33e">Ie2361</a>, <a href="https://android-review.googlesource.com/#/q/Ib6bb2c7263026b537a5a322abaa57e45577847be">Ib6bb2</a>)</li>
 </ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Omit <code translate="no" dir="ltr">enabledByDefault</code> from generated XML for <code translate="no" dir="ltr">AppFunctionSignatures</code> (<a href="https://android-review.googlesource.com/#/q/Ie299615ae35eacf4cff5d1ce58e6bae5294962c7">Ie2996</a>, <a href="https://issuetracker.google.com/issues/501032667">b/501032667</a>)</li>
+</ul>
+
+<h2>Benchmark: v1.5.0-alpha07</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.benchmark:benchmark-*:1.5.0-alpha07</code> is released. Version 1.5.0-alpha07 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/e29a10982f4299b1fa812e229d76792092a62814..9f8ede00031b52b69e66d6e8c646ea5f79999279/benchmark">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Simplified Perfetto trace capture on device. (<a href="https://android-review.googlesource.com/#/q/I488105051127008a7f6f75134b5355746f86d5f2">I48810</a>)</li>
+ <li>Move the experimental <code translate="no" dir="ltr">TraceProcessor.runServer</code> extension APIs from <code translate="no" dir="ltr">androidx.benchmark:benchmark-macro</code> to <code translate="no" dir="ltr">androidx.benchmark:benchmark-common</code>, and to the <code translate="no" dir="ltr">androidx.benchmark</code> package. This will enable their use in microbenchmarks in the future. (<a href="https://android-review.googlesource.com/#/q/Ie25bb43b47988ed2c21cf6ca886a606eb7163ded">Ie25bb</a>, <a href="https://issuetracker.google.com/issues/393640753">b/393640753</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Update traceprocessor implementation (as well as unbundled Perfetto Trace capture) to use Perfetto v56.0 (<a href="https://android-review.googlesource.com/#/q/I8fb9d610c519232f0eacb4f8884cb028f831db06">I8fb9d</a>)</li>
+ <li>Set <code translate="no" dir="ltr">androidx.benchmark.requireAot</code> and <code translate="no" dir="ltr">androidx.benchmark.requireAot</code> to true by default. These safer defaults ensure that compilation is performed ahead of running microbenchmarks (on by default with the benchmark gradle plugin when using AGP 8.4+), and that <code translate="no" dir="ltr">measureRepeated</code> is not used on the main thread, where it can cause ANRs. (<a href="https://android-review.googlesource.com/#/q/I1bc3c293625765d568a35fb9efdfec3a59706285">I1bc3c</a>, <a href="https://issuetracker.google.com/issues/379115078">b/379115078</a>)</li>
+ <li>Increased perfetto kill timeout from 5 to 30 seconds (for benchmark captured Perfetto sessions only). Added clearer error logging when the issue occurs. (<a href="https://android-review.googlesource.com/#/q/If188f2f5f9319f7e26c4df1899e7da4ce399988d">If188f</a>, <a href="https://issuetracker.google.com/issues/435589290">b/435589290</a>)</li>
+</ul>
+
+<h2>CameraX: v1.7.0-alpha02</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.camera:camera-*:1.7.0-alpha02</code> is released. Version 1.7.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/1a508f033de883ba2853b9f9ae1853eec7010638..01f3396e92df911805f22836f27c7057324e40ff/camera">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">CameraXViewfinder</code> now supports built-in gestures for pinch-to-zoom and tap-to-focus, and adds support for screen flash and stream state. <code translate="no" dir="ltr">FocusState</code> is now public in viewfinder-core to allow monitoring tap-to-focus results. (<a href="https://android-review.googlesource.com/#/q/I66a17527c5faa563006f6807a33c757a6f35588d">I66a17</a>, <a href="https://issuetracker.google.com/issues/522549890">b/522549890</a>)</li>
+ <li>Added <code translate="no" dir="ltr">isAutoRotationEnabled</code> to <code translate="no" dir="ltr">SessionConfig.Builder</code> , <code translate="no" dir="ltr">HighSpeedVideoSessionConfig.Builder</code>, <code translate="no" dir="ltr">ExtensionSessionConfig.Builder</code> and introduced a Kotlin DSL factory functions for them. This allows setting the appropriate rotation automatically based on device sensors. (<a href="https://android-review.googlesource.com/#/q/I5b4a358e049ec7b70a8a356941fcd52c423a22eb">I5b4a3</a>, <a href="https://issuetracker.google.com/issues/510752515">b/510752515</a>)</li>
+ <li>Added <code translate="no" dir="ltr">TransformationMode</code> property to <code translate="no" dir="ltr">TransformationInfo</code> to support apps to use <code translate="no" dir="ltr">OpenGL</code> pipeline in <code translate="no" dir="ltr">EMBEDDED</code> mode. (<a href="https://android-review.googlesource.com/#/q/Id1de19ff50ddf96e0045e39344c99d08bb773d76">Id1de1</a>, <a href="https://issuetracker.google.com/issues/487826941">b/487826941</a>)</li>
+ <li>Added <code translate="no" dir="ltr">isNightModeIndicatorSupported()</code> and <code translate="no" dir="ltr">getNightModeIndicator()</code> to <code translate="no" dir="ltr">CameraInfo</code> to determine when the environment conditions meet the criteria for Night Mode. (<a href="https://android-review.googlesource.com/#/q/Iae47b9dc4c84a7a28d128a699d70a91f33cbfa10">Iae47b</a>, <a href="https://issuetracker.google.com/issues/499389465">b/499389465</a>)</li>
+ <li>Exposed ImageAnalysis.OUTPUT_IMAGE_FORMAT_PRIVATE and ImageProxy.getHardwareBuffer() as public API to support GPU based ImageAnalysis. (<a href="https://android-review.googlesource.com/#/q/I41cb33fd1088845381917bf1cb1c4549aa1a81f0">I41cb3</a>, <a href="https://issuetracker.google.com/issues/496022391">b/496022391</a>, <a href="https://issuetracker.google.com/issues/492934501">b/492934501</a>)</li>
+ <li>ExtensionsManager#getExtensionEnabledCameraSelector is now deprecated. Please use the new ExtensionSessionConfig API for enabling extension modes. (<a href="https://android-review.googlesource.com/#/q/I2b33690421bc67f641e75a07677a44f90ad6415b">I2b336</a>, <a href="https://issuetracker.google.com/issues/473715607">b/473715607</a>)</li>
+ <li>Added support for visual styling of camera frames during concurrent camera composition. You can now customize:</li>
+ <li>Rounded Corners: Use setRoundedCornerRatio(float) to apply normalized rounding (0.0 to 1.0) to frame edges.</li>
+ <li>Borders: Use setBorderWidthRatio(float) and setBorderColor(int) to add a decorative frame with consistent thickness (<a href="https://android-review.googlesource.com/#/q/I18a07232c32cec03c8870af11dff906cc7f0432c">I18a07</a>, <a href="https://issuetracker.google.com/issues/366349205">b/366349205</a>)</li>
+ <li>Updated CompositionSettings to enforce non-negative z-order and added validation to ConcurrentCamera.setCompositionSettings to ensure it's called with the correct number of settings in a valid composition mode. (<a href="https://android-review.googlesource.com/#/q/If660d93ccec6bb7b392b8dadd8e31099d6de8462">If660d</a>, <a href="https://issuetracker.google.com/issues/496951658">b/496951658</a>)</li>
+ <li>Added getNightModeIndicator() and isNightModeIndicatorAvailable() to CameraExtensionsInfo to allow applications to monitor whether the current environment is in a night mode condition when using camera extensions. (<a href="https://android-review.googlesource.com/#/q/I62bb4fa008ce4741a7d3aaf0c4baf84e2760c3fe">I62bb4</a>, <a href="https://issuetracker.google.com/issues/499389465">b/499389465</a>)</li>
+ <li>Added support for <code translate="no" dir="ltr">QHD</code> video quality in VideoCapture. (<a href="https://android-review.googlesource.com/#/q/I0ac20e49bc483837aa7b75202d66027e35702a0e">I0ac20</a>, <a href="https://issuetracker.google.com/issues/501305592">b/501305592</a>)</li>
+ <li>Added <code translate="no" dir="ltr">Recorder.Builder.setTargetAudioChannelCount(int)</code> and <code translate="no" dir="ltr">Recorder.getTargetAudioChannelCount()</code> to allow developers to set an explicit audio channel count. (<a href="https://android-review.googlesource.com/#/q/I6bee0f5529b0197f29da3d38afe78e1a953f1b11">I6bee0</a>, <a href="https://issuetracker.google.com/issues/441895100">b/441895100</a>)</li>
+ <li>Added <code translate="no" dir="ltr">Recorder.Builder.setTargetAudioEncodingBitRate(int)</code> to allow setting a target audio encoding bitrate. (<a href="https://android-review.googlesource.com/#/q/I290629fec64c929312b463dff10c1661a321979f">I29062</a>, <a href="https://issuetracker.google.com/issues/241151504">b/241151504</a>)</li>
+ <li>Added the ConcurrentCamera.setCompositionSettings API to allow apps to update composition of the current camera dynamically after the lifecycle has been bound. Additionally, a new setZOrder API in CompositionSettings.Builder enables precise control over the rendering order of overlapping camera streams. (<a href="https://android-review.googlesource.com/#/q/I90528a4854fee1ae1ca35f2ed2c8525041530359">I90528</a>, <a href="https://issuetracker.google.com/issues/473702287">b/473702287</a>)</li>
+ <li>Introduced APIs for granular control over encoding formats. Developers can now discover device-supported formats using <code translate="no" dir="ltr">Recorder.getSupportedVideoMimeTypes()</code> and <code translate="no" dir="ltr">getSupportedAudioMimeTypes()</code>, which are currently experimental. Preferred formats can be explicitly configured via <code translate="no" dir="ltr">Recorder.Builder.setVideoMimeType()</code> and <code translate="no" dir="ltr">setAudioMimeType()</code>. Additionally, <code translate="no" dir="ltr">Recorder.getVideoCapabilities(CameraInfo, String)</code> allows querying camera-specific capabilities, such as supported qualities and dynamic ranges, for a chosen codec. (<a href="https://android-review.googlesource.com/#/q/I4620ee6da2c7d9dbe9df0d1733ea15ad0f63178b">I4620e</a>, <a href="https://issuetracker.google.com/issues/491319384">b/491319384</a>)</li>
+ <li>Added CameraController.setAutoRotationEnabled(boolean) to allow disabling the automatic device rotation listener. (<a href="https://android-review.googlesource.com/#/q/Ia0c03f7f818de36595e55cd437a78e22b9a3eb3b">Ia0c03</a>, <a href="https://issuetracker.google.com/issues/449573627">b/449573627</a>)</li>
+ <li>Added AE/AWB locking support in FocusMeteringAction via a new setLockingMode API. This also allows updating 3A regions without locking focus, enabling the camera to remain in continuous autofocus mode while updating the focus area. (<a href="https://android-review.googlesource.com/#/q/I6416f818d2c99e2f98ee545be51b8ce38cce6cd2">I6416f</a>, <a href="https://issuetracker.google.com/issues/481624745">b/481624745</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Remove requirement for <code translate="no" dir="ltr">compileSdk 37</code> (<a href="https://android-review.googlesource.com/#/q/If78b4fbdec15e6b1d6ad34a487ae10b2e2494325">If78b4</a>)</li>
+ <li>Fixed <code translate="no" dir="ltr">CameraXViewfinder</code> transformation issues in <code translate="no" dir="ltr">EMBEDDED</code> mode when <code translate="no" dir="ltr">OpenGL</code> pipeline is enabled by <code translate="no" dir="ltr">CameraX</code> for binding more <code translate="no" dir="ltr">UseCases</code> or surface processing. (<a href="https://android-review.googlesource.com/#/q/I3e637c4985ff2d82aeea4856cd51cd02b4ae5f39">I3e637</a>, <a href="https://issuetracker.google.com/issues/487826941">b/487826941</a>)</li>
+ <li>Updated tests and activities to use ExtensionSessionConfig instead of the deprecated getExtensionEnabledCameraSelector API. (<a href="https://android-review.googlesource.com/#/q/I765d8a105b98dc5b360a54fa5b9dc912818581b5">I765d8</a>, <a href="https://issuetracker.google.com/issues/473715607">b/473715607</a>)</li>
+ <li>Fixed a compilation error "Cannot access class 'ListenableFuture'". (<a href="https://android-review.googlesource.com/#/q/Ic8cba6ae5318d3e6098cc54042c6aebba837996e">Ic8cba</a>, <a href="https://issuetracker.google.com/issues/497571473">b/497571473</a>)</li>
+ <li>Updated Compose compileSdk to API 37. This means that a minimum AGP version of 9.2.0 is required when using Compose. (<a href="https://android-review.googlesource.com/#/q/Id45cdca34ef948e06259b2dd9adc901b7c930492">Id45cd</a>, <a href="https://issuetracker.google.com/issues/413674743">b/413674743</a>)</li>
+</ul>
+
+<h2>Camera Feature Combination Query: v1.7.0-alpha02</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.camera.featurecombinationquery:featurecombinationquery:1.7.0-alpha02</code> and <code translate="no" dir="ltr">androidx.camera.featurecombinationquery:featurecombinationquery-play-services:1.7.0-alpha02</code> are released. Version 1.7.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/1a508f033de883ba2853b9f9ae1853eec7010638..01f3396e92df911805f22836f27c7057324e40ff/camera/featurecombinationquery">these commits</a>.</p>
+
+<h2>camera viewfinder: v1.7.0-alpha02</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.camera.viewfinder:viewfinder-compose:1.7.0-alpha02</code>, <code translate="no" dir="ltr">androidx.camera.viewfinder:viewfinder-core:1.7.0-alpha02</code>, and <code translate="no" dir="ltr">androidx.camera.viewfinder:viewfinder-view:1.7.0-alpha02</code> are released. Version 1.7.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/1a508f033de883ba2853b9f9ae1853eec7010638..01f3396e92df911805f22836f27c7057324e40ff/camera/viewfinder">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">CameraXViewfinder</code> now supports built-in gestures for pinch-to-zoom and tap-to-focus, and adds support for screen flash and stream state. <code translate="no" dir="ltr">FocusState</code> is now public in viewfinder-core to allow monitoring tap-to-focus results. (<a href="https://android-review.googlesource.com/#/q/I66a17527c5faa563006f6807a33c757a6f35588d">I66a17</a>, <a href="https://issuetracker.google.com/issues/522549890">b/522549890</a>)</li>
+ <li>Added <code translate="no" dir="ltr">TransformationMode</code> property to <code translate="no" dir="ltr">TransformationInfo</code> to support apps to use <code translate="no" dir="ltr">OpenGL</code> pipeline in <code translate="no" dir="ltr">EMBEDDED</code> mode. (<a href="https://android-review.googlesource.com/#/q/Id1de19ff50ddf96e0045e39344c99d08bb773d76">Id1de1</a>, <a href="https://issuetracker.google.com/issues/487826941">b/487826941</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Remove requirement for <code translate="no" dir="ltr">compileSdk 37</code> (<a href="https://android-review.googlesource.com/#/q/If78b4fbdec15e6b1d6ad34a487ae10b2e2494325">If78b4</a>)</li>
+</ul>
+
+<h2>Compose Animation: v1.11.4</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.11.4</code> is released. Version 1.11.4 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/b3fb8849de357e09c2efc963c36a1012543ca411..854220f44ea8ea80fee824a6c5a045f39bede289/compose/animation">these commits</a>.</p>
+
+<h2>Compose Animation: v1.12.0-beta02</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.animation:animation-*:1.12.0-beta02</code> is released. Version 1.12.0-beta02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/40b1610b08564489b3f6a426cd8833f8615bfc68..aa883d8aa3e51057610bdf6e76ff9753350fa02c/compose/animation">these commits</a>.</p>
+
+<h2>Compose Foundation: v1.11.4</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.11.4</code> is released. Version 1.11.4 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/b3fb8849de357e09c2efc963c36a1012543ca411..854220f44ea8ea80fee824a6c5a045f39bede289/compose/foundation">these commits</a>.</p>
+
+<h2>Compose Foundation: v1.12.0-beta02</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.foundation:foundation-*:1.12.0-beta02</code> is released. Version 1.12.0-beta02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/40b1610b08564489b3f6a426cd8833f8615bfc68..aa883d8aa3e51057610bdf6e76ff9753350fa02c/compose/foundation">these commits</a>.</p>
+
+<h2>Compose Material: v1.11.4</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.11.4</code> is released. Version 1.11.4 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/b3fb8849de357e09c2efc963c36a1012543ca411..854220f44ea8ea80fee824a6c5a045f39bede289/compose/material">these commits</a>.</p>
+
+<h2>Compose Material: v1.12.0-beta02</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.material:material-*:1.12.0-beta02</code> is released. Version 1.12.0-beta02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/40b1610b08564489b3f6a426cd8833f8615bfc68..aa883d8aa3e51057610bdf6e76ff9753350fa02c/compose/material">these commits</a>.</p>
+
+<h2>Compose Material3: v1.5.0-alpha23</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.material3:material3-*:1.5.0-alpha23</code> is released. Version 1.5.0-alpha23 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/14c2f2ed81d0f61a3227641684cd875e95dd6529..b65b78b30c22d688ff24192747e67d1acca21fb7/compose/material3">these commits</a>.</p>
+<p><strong>Features</strong> - <em>expressive timepicker</em> component (<a href="https://android-review.googlesource.com/#/q/Iaa45fd694328fce77fb45628672edb1d33135d8d">Iaa45f</a>) - Added new non-interactive variants of standard list item and segmented list item which follow Material Expressive specifications. The non-expressive version has been deprecated. (<a href="https://android-review.googlesource.com/#/q/Ide4de27c32c25243b6b0a7d38cabce1a582bc56f">Ide4de</a>, <a href="https://issuetracker.google.com/issues/491994186">b/491994186</a>)</p>
+<p><strong>Behavioral Change</strong> - Fix issue where minimum height of expressive list items did not change based on lines of content. The feature flag <code translate="no" dir="ltr">isExpressiveListItemHeightBasedOnTextLinesFixEnabled</code> has been introduced to aid migration. (<a href="https://android-review.googlesource.com/#/q/Ibbb91f82e91a31eeee578da5f2242f500952ce1a">Ibbb91</a>, <a href="https://issuetracker.google.com/issues/484693233">b/484693233</a>)</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Expressive list item APIs are no longer experimental. (<a href="https://android-review.googlesource.com/#/q/I2836a6d2eebbdb98e97eb4038b3b2bd50e8873bd">I2836a</a>)</li>
+ <li>Remove <code translate="no" dir="ltr">ComponentOverride</code> APIs (<a href="https://android-review.googlesource.com/#/q/I820c4aec6fad21ed544189b2dfbaeb6d6a6a6964">I820c4</a>)</li>
+ <li>Remove unused offset parameter from <code translate="no" dir="ltr">DropdownMenuPopup</code>. Added the default menu properties into the menu defaults. Updated the naming for groups label from <code translate="no" dir="ltr">MenuDefaults.Label</code> to <code translate="no" dir="ltr">MenuDefaults.DropdownMenuGroupLabel</code>. Added <code translate="no" dir="ltr">disabledContainerColor</code> into <code translate="no" dir="ltr">MenuDefaults.selectableItemColors</code> and <code translate="no" dir="ltr">MenuDefaults.selectableItemVibrantColors</code>. Added <code translate="no" dir="ltr">Modifier</code> parameter to composable functions in <code translate="no" dir="ltr">MenuDefaults</code> that return a layout. (<a href="https://android-review.googlesource.com/#/q/I3d2b19381f46df852d6290b39b199d44fbfde480">I3d2b1</a>)</li>
+ <li>Added a public <code translate="no" dir="ltr">flingAnimationSpec</code> getter to <code translate="no" dir="ltr">TopAppBarDefaults</code> to expose the default fling animation spec. (<a href="https://android-review.googlesource.com/#/q/Ic1daa778e40e6800ceabe55a69934efb9b3e6590">Ic1daa</a>)</li>
+ <li>Graduate <code translate="no" dir="ltr">TopAppBar</code>, <code translate="no" dir="ltr">MediumFlexibleTopAppBar</code>,<code translate="no" dir="ltr">LargeTopAppBar</code>,<code translate="no" dir="ltr">LargeFlexibleTopAppBar</code>,<code translate="no" dir="ltr">TwoRowsTopAppBar</code>,<code translate="no" dir="ltr">FlexibleBottomAppBar</code>,<code translate="no" dir="ltr">FlexibleContentPadding</code>,<code translate="no" dir="ltr">FlexibleBottomAppBarHeight</code>,<code translate="no" dir="ltr">FlexibleHorizontalArrangement</code>,<code translate="no" dir="ltr">FlexibleFixedHorizontalArrangement</code> to non-experimental. These APIs and variables no longer require the @<code translate="no" dir="ltr">ExperimentalMaterial3ExpressiveApi</code> opt-in. (<a href="https://android-review.googlesource.com/#/q/Ia4af6dae6ed1456102e3eaaf785d0d19c37182cb">Ia4af6</a>)</li>
+ <li>Graduate <code translate="no" dir="ltr">ExpandedDockedSearchBarWithGap</code> and <code translate="no" dir="ltr">ExpandedFullScreenContainedSearchBar</code> to non-experimental (<a href="https://android-review.googlesource.com/#/q/Ie152d5cd5129bab9c7b103a81c96420d7195f58e">Ie152d</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Cleans up API information (<a href="https://android-review.googlesource.com/#/q/Ia8066818f7e33220445aaeafa9ecc0668cc4818b">Ia8066</a>)</li>
+ <li>Fix <code translate="no" dir="ltr">Scaffold</code>'s keyboard navigation order. (<a href="https://android-review.googlesource.com/#/q/I77194c764667a8299eb6348c62aea118295ecb33">I77194</a>, <a href="https://issuetracker.google.com/issues/462577176">b/462577176</a>)</li>
+ <li>Remove requirement for <code translate="no" dir="ltr">compileSdk 37</code> (<a href="https://android-review.googlesource.com/#/q/If78b4fbdec15e6b1d6ad34a487ae10b2e2494325">If78b4</a>)</li>
+ <li>Add a11y support for ScrollField component. More specifically, ScrollField now implements selectable and animates to the selected item on click with selected/unselected announcements in Talkback. (<a href="https://android-review.googlesource.com/#/q/I7bdb7b4570771b82ddc36eed830c9a797c2b825b">I7bdb7</a>)</li>
+ <li>Fix bug where there is extra bottom padding if the nav suite scaffold's content has ime padding set. (<a href="https://android-review.googlesource.com/#/q/I86d9d14f60eb60390e6edf946b9b8c00be8878ac">I86d9d</a>, <a href="https://issuetracker.google.com/issues/389467593">b/389467593</a>)</li>
+</ul>
+
+<h2>remote compose: v1.0.0-alpha14</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.remote:remote-*:1.0.0-alpha14</code> is released. Version 1.0.0-alpha14 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/14c2f2ed81d0f61a3227641684cd875e95dd6529..19660b9e1b2fec4a9528fe80ce0a432c0fa2f825/compose/remote">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Exposed <code translate="no" dir="ltr">RemoteDensityBehavior</code> and density-behavior-aware constructors in <code translate="no" dir="ltr">RemoteCreationDisplayInfo</code> as public APIs. (<a href="https://android-review.googlesource.com/#/q/Iafca2bc0a818adc3221019ae10d231a5b5cff936">Iafca2</a>, <a href="https://issuetracker.google.com/issues/524921038">b/524921038</a>)</li>
+ <li>Exposed <code translate="no" dir="ltr">densityBehavior</code> in <code translate="no" dir="ltr">RemoteCreationDisplayInfo</code> and <code translate="no" dir="ltr">RemoteComposeCreationState</code>. (<a href="https://android-review.googlesource.com/#/q/Iae938d26aee08db4a59a6d396432f5a262cb723d">Iae938</a>, <a href="https://issuetracker.google.com/issues/524921038">b/524921038</a>)</li>
+ <li>Made <code translate="no" dir="ltr">RemoteComposeCreationComposeFlags</code> public. (<a href="https://android-review.googlesource.com/#/q/I1f899d3ca7d8a6ab7dfb8af097c09fcd495bad6a">I1f899</a>, <a href="https://issuetracker.google.com/issues/467532762">b/467532762</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Added lint check to warn about usage of standard Compose <code translate="no" dir="ltr">CompositionLocals</code> in @<code translate="no" dir="ltr">RemoteComposable</code>. (<a href="https://android-review.googlesource.com/#/q/Ic12bac59c6fc1097287169b70f88a5c94fb8feb4">Ic12ba</a>)</li>
+ <li>Remove requirement for <code translate="no" dir="ltr">compileSdk 37</code> (<a href="https://android-review.googlesource.com/#/q/If78b4fbdec15e6b1d6ad34a487ae10b2e2494325">If78b4</a>)</li>
+ <li>Removed obsolete <code translate="no" dir="ltr">rememberRemoteStringList</code> documentation. (<a href="https://android-review.googlesource.com/#/q/I997226c23a46b4ac4de259149f475e5f3b0c1cb0">I99722</a>)</li>
+ <li>Fixed font weight adjustment rendering when adjustment is undefined. (<a href="https://android-review.googlesource.com/#/q/I167040c9f4d0f2ad0b4bb62e9bdba3bf9fe8a990">I16704</a>, <a href="https://issuetracker.google.com/issues/522050705">b/522050705</a>)</li>
+ <li>Aligned <code translate="no" dir="ltr">BorderModifier</code> to Compose behavior to draw inside the component bounds. (<a href="https://android-review.googlesource.com/#/q/Iae36c594ac9584e6c22137f333c0777d6a6a6964">Iae36c</a>)</li>
+ <li>Fixed <code translate="no" dir="ltr">RemoteComposeWriter</code> to serialize <code translate="no" dir="ltr">DOC_PROFILES</code> in the constructor. (<a href="https://android-review.googlesource.com/#/q/I3bbead427c7c5912fdf9b814c170e2173c0291e1">I3bbea</a>)</li>
+ <li>Fixed <code translate="no" dir="ltr">RemoteModifier.background</code> native support for dynamic colors. (<a href="https://android-review.googlesource.com/#/q/If4f047c8adda89450ba6e3f77610eb47267a607e">If4f04</a>, <a href="https://issuetracker.google.com/issues/499049643">b/499049643</a>)</li>
+</ul>
+<p><strong>Features</strong> - Added <code translate="no" dir="ltr">typefaceResolver</code> parameter to <code translate="no" dir="ltr">RemoteDocumentPlayer</code>. (<a href="https://android-review.googlesource.com/#/q/Ie7cdaac587f703fd117276d2bd5ef60b6a6a6964">Ie7cda</a>, <a href="https://issuetracker.google.com/issues/524621320">b/524621320</a>) - Added custom component support for the Compose player. (<a href="https://android-review.googlesource.com/#/q/Ic055912ecb7002f8f8a1c71d59283709c3fc563e">Ic0559</a>) - Optimized select operations where both alternatives are the same. (<a href="https://android-review.googlesource.com/#/q/I55b9e1cfeb8f22d841ade26762727eeade54ed01">I55b9e</a>, <a href="https://issuetracker.google.com/issues/390355362">b/390355362</a>)</p>
+
+<h2>Compose Runtime: v1.11.4</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.11.4</code> is released. Version 1.11.4 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/b3fb8849de357e09c2efc963c36a1012543ca411..854220f44ea8ea80fee824a6c5a045f39bede289/compose/runtime">these commits</a>.</p>
+
+<h2>Compose Runtime: v1.12.0-beta02</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.runtime:runtime-*:1.12.0-beta02</code> is released. Version 1.12.0-beta02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/40b1610b08564489b3f6a426cd8833f8615bfc68..aa883d8aa3e51057610bdf6e76ff9753350fa02c/compose/runtime">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed an <code translate="no" dir="ltr">ArrayIndexOutOfBoundsException</code> in the <code translate="no" dir="ltr">LinkComposer</code> when using nested <code translate="no" dir="ltr">MovableContent</code>. (<a href="https://android-review.googlesource.com/#/q/I85daf75aa5dd28409289dcee04ad49a808e0da3e">I85daf</a>)</li>
+</ul>
+
+<h2>Compose UI: v1.11.4</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.11.4</code> is released. Version 1.11.4 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/b3fb8849de357e09c2efc963c36a1012543ca411..854220f44ea8ea80fee824a6c5a045f39bede289/compose/ui">these commits</a>.</p>
+
+<h2>Compose UI: v1.12.0-beta02</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.compose.ui:ui-*:1.12.0-beta02</code> is released. Version 1.12.0-beta02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/40b1610b08564489b3f6a426cd8833f8615bfc68..aa883d8aa3e51057610bdf6e76ff9753350fa02c/compose/ui">these commits</a>.</p>
+
+<h2>Core: v1.0.0-alpha03</h2>
+<p>August 23, 2023</p>
+<p><code translate="no" dir="ltr">androidx.core:core-performance:1.0.0-alpha03</code>, <code translate="no" dir="ltr">androidx.core:core-performance-play-services:1.0.0-alpha03</code>, and <code translate="no" dir="ltr">androidx.core:core-performance-testing:1.0.0-alpha03</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/3315f1ef094c312203fe26841287902916fbedf5/core">Version 1.0.0-alpha03 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Initial library implementation of <code translate="no" dir="ltr">core-performance-testing</code>, containing test doubles for core-performance.</li>
+ <li>Initial library implementation or <code translate="no" dir="ltr">core-performance-play-services</code>. Google specific implementation provides up to date media performance class information.</li>
+</ul>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Add optional module providing media performance class from Google Play Services.</li>
+ <li>core-performance constructors changed to support optional implementation.</li>
+</ul>
+<h4 id="core-performance-1.0.0-alpha02" data-text="Version 1.0.0-alpha02" tabindex="-1">Version 1.0.0-alpha02</h4>
+<p>March 23, 2022</p>
+<p><code translate="no" dir="ltr">androidx.core:core-performance:1.0.0-alpha02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/06ef778a6fb9a726319016bd80d441a13c3e851c/core/core-performance">Version 1.0.0-alpha02 contains these commits.</a></p>
+<p><strong>New Features</strong></p>
+<ul>
+ <li>Provide an easy and reliable mechanism for developers to identify at runtime the device’s level of performance in order to deliver an optimized app experience.</li>
+ <li>This initial release uses a list of hand-tested devices that are granted performance class values higher than the level declared in Build.VERSION.MEDIA_PERFORMANCE_CLASS</li>
+</ul>
+<h4 id="1.0.0-alpha01" data-text="Version 1.0.0-alpha01" tabindex="-1">Version 1.0.0-alpha01</h4>
+<p>December 15, 2021</p>
+<p><code translate="no" dir="ltr">androidx.core:core-performance:1.0.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/301586664b5aad60548f21866cad502d524dbf9f/core/core-performance">Version 1.0.0-alpha01 contains these commits.</a></p>
+
+<h2>Fragment: v1.9.0-alpha02</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.fragment:fragment-*:1.9.0-alpha02</code> is released. Version 1.9.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/14c2f2ed81d0f61a3227641684cd875e95dd6529..9fc03893cb70909cdef7303e9f1c7dd1fa6d6a63/fragment">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Add a <code translate="no" dir="ltr">maxLifecycle</code> parameter to the <code translate="no" dir="ltr">AndroidFragment</code> composable. This allows you to cap the lifecycle state of the embedded <code translate="no" dir="ltr">Fragment</code>, giving you finer control over its behavior in complex UI setups like pagers or tabs. (<a href="https://android-review.googlesource.com/#/q/Ie99b57c34f67ace9b940096754877e35db0769b3">Ie99b5</a>, <a href="https://issuetracker.google.com/issues/526109804">b/526109804</a>)</li>
+ <li>Fragment library now supports system tracing of the lifecycle event via <a href="/jetpack/androidx/releases/jetpack/androidx/releases/tracing">Jetpack Tracing</a>. (<a href="https://android-review.googlesource.com/#/q/Ibc63b1894f2b1c8dc192d45fcf02ef6c8afba54f">Ibc63b</a>, <a href="https://issuetracker.google.com/issues/112161409">b/112161409</a>)</li>
+</ul>
+
+<h2>Glance: v1.3.0-alpha02</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.glance:glance-*:1.3.0-alpha02</code> is released. Version 1.3.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/b5d2acb5ad0a36c9d2aba8feb4c7951165f30fbe..ba3014c143b9c9782fe30bc766c5dced55e13453/glance">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">androidx.benchmark</code> now has a <code translate="no" dir="ltr">minSdk</code> of 24. (<a href="https://android-review.googlesource.com/#/q/Ic2a8500af8a2bf092fcc1b27d9a599aa5f3b81d7">Ic2a85</a>)</li>
+ <li>Remove permission check from <code translate="no" dir="ltr">heartRateAccuracy</code> (<a href="https://android-review.googlesource.com/#/q/I14269c1e05223e2b3b851749b40cf24b61e6be15">I14269</a>, <a href="https://issuetracker.google.com/issues/522444636">b/522444636</a>)</li>
+ <li>Rename <code translate="no" dir="ltr">androidx.glance.wear.health.DataType</code> to <code translate="no" dir="ltr">androidx.glance.wear.health.HealthData</code> (<a href="https://android-review.googlesource.com/#/q/I4cb0b961829680053b1611b153d0c5ce9f5dcb0c">I4cb0b</a>, <a href="https://issuetracker.google.com/issues/516746689">b/516746689</a>)</li>
+ <li>Added <code translate="no" dir="ltr">AssociateWithGlanceWearWidget</code> that <strong>must</strong> be used on the <code translate="no" dir="ltr">GlanceWearWidgetService</code> to provide which implementation of <code translate="no" dir="ltr">GlanceWearWidget</code> it is associated to. For example: <code translate="no" dir="ltr">@AssociateWithGlanceWearWidget(MyGlanceWearWidget::class)\n class MyGlanceWearWidgetService : GlanceWearWidgetService() {\n override val widget = MyGlanceWearWidget()\n }</code> (<a href="https://android-review.googlesource.com/#/q/Ifcabb316a0dc3fcd5fc0d5a5878fe8ad281ed8ad">Ifcabb</a>, <a href="https://issuetracker.google.com/issues/514679763">b/514679763</a>)</li>
+ <li>Add <code translate="no" dir="ltr">image</code> brush to <code translate="no" dir="ltr">WearWidgetBrush</code> to support bitmap backgrounds in Wear Widgets. (<a href="https://android-review.googlesource.com/#/q/I9a22801ae1d5e5d5fe473a51b153f3e0e8e97312">I9a228</a>, <a href="https://issuetracker.google.com/issues/513481558">b/513481558</a>)</li>
+ <li>Expose <code translate="no" dir="ltr">isHeartRateBpmAvailable</code> to determine if <code translate="no" dir="ltr">heartRateBpm</code> is available on the host. (<a href="https://android-review.googlesource.com/#/q/I5999d40f4cd432e921a7b10ecdff67d566f0d06c">I5999d</a>, <a href="https://issuetracker.google.com/issues/514641567">b/514641567</a>)</li>
+ <li>Expose <code translate="no" dir="ltr">RemoteInt</code> compare operators. (<a href="https://android-review.googlesource.com/#/q/I5fe3d4e06e25650003dcea04cdef1c252612bf06">I5fe3d</a>, <a href="https://issuetracker.google.com/issues/513228889">b/513228889</a>)</li>
+ <li>Exposed <code translate="no" dir="ltr">captureRemoteDocument</code> Flow API and a new <code translate="no" dir="ltr">captureSingleRemoteDocument</code> overload (which takes <code translate="no" dir="ltr">RemoteCreationDisplayInfo</code>) as public APIs. (<a href="https://android-review.googlesource.com/#/q/I87b0ef46ca9cbaae9375053ab8d0618921aa1957">I87b0e</a>, <a href="https://issuetracker.google.com/issues/513228889">b/513228889</a>)</li>
+ <li>Made <code translate="no" dir="ltr">PendingIntentAction</code> safe for IDE previews by deferring <code translate="no" dir="ltr">PendingIntent</code> access via a lambda and returning a no-op action in preview mode. (<a href="https://android-review.googlesource.com/#/q/I43b37f5d603065a63f99e3e41d0e0a1b76ad6c53">I43b37</a>, <a href="https://issuetracker.google.com/issues/512403924">b/512403924</a>)</li>
+ <li>Remove unused snap scrolling constant (<a href="https://android-review.googlesource.com/#/q/Ib6df66a8a4c18df5aaadb3240c4d2f3669831924">Ib6df6</a>)</li>
+ <li>Add <code translate="no" dir="ltr">WearWidgetPreview</code> for previewing Wear Widget in Android Studio (<a href="https://android-review.googlesource.com/#/q/I36504163576c4869ecd67732321dc7535edf3467">I36504</a>, <a href="https://issuetracker.google.com/issues/485147770">b/485147770</a>)</li>
+ <li>Expose <code translate="no" dir="ltr">is*Available</code> variables to verify if the related data type is available and valid. (<a href="https://android-review.googlesource.com/#/q/Ib98a78eec469c425b2ab8f3b231e9fae562437e0">Ib98a7</a>, <a href="https://issuetracker.google.com/issues/498179656">b/498179656</a>)</li>
+ <li>Added <code translate="no" dir="ltr">triggerUpdateAll</code> API to <code translate="no" dir="ltr">GlanceWearWidget</code>. (<a href="https://android-review.googlesource.com/#/q/I6ab20fe37b23d531d38c622e31acdbe4e1b83f3c">I6ab20</a>, <a href="https://issuetracker.google.com/issues/510896410">b/510896410</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Propagate LocalInspectionMode to Remote Compose capture phase (<a href="https://android-review.googlesource.com/#/q/I6a56b8d53fd8b094bbd40db648b9dd116b129859">I6a56b</a>, <a href="https://issuetracker.google.com/issues/512403924">b/512403924</a>)</li>
+ <li>Include rendering schema version info in the WearWidgetParams (<a href="https://android-review.googlesource.com/#/q/Idcf8e6e180db390b74d2b283920d1f81dfb797b2">Idcf8e</a>, <a href="https://issuetracker.google.com/issues/511263591">b/511263591</a>, <a href="https://issuetracker.google.com/issues/512830184">b/512830184</a>)</li>
+</ul>
+
+<h2>Glance Wear: v1.0.0-alpha13</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.glance.wear:wear:1.0.0-alpha13</code>, <code translate="no" dir="ltr">androidx.glance.wear:wear-core:1.0.0-alpha13</code>, and <code translate="no" dir="ltr">androidx.glance.wear:wear-tooling-preview:1.0.0-alpha13</code> are released. Version 1.0.0-alpha13 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/14c2f2ed81d0f61a3227641684cd875e95dd6529..ba3014c143b9c9782fe30bc766c5dced55e13453/glance/wear">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Removed the permission check from <code translate="no" dir="ltr">heartRateAccuracy</code> (<a href="https://android-review.googlesource.com/#/q/I14269c1e05223e2b3b851749b40cf24b61e6be15">I14269</a>, <a href="https://issuetracker.google.com/issues/522444636">b/522444636</a>)</li>
+</ul>
+<p><strong>Bug fixes</strong></p>
+<ul>
+ <li>We have tweaked the Squircle shaped Wear widget params for preview per UX feedback</li>
+</ul>
+
+<h2>Hilt: v1.4.0</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.hilt:hilt-*:1.4.0</code> is released. Version 1.4.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/d697e229a0933b8ef4811164e4b20f24eafafe4b..75d4094b91b0cc2c2b688143f684ec39b7c4172d/hilt">these commits</a>.</p>
+
+<h2>Loader: v1.2.0-alpha01</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.loader:loader:1.2.0-alpha01</code> is released. Version 1.2.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f9158f48961e6c6fcc619334eb9790561a5d9cdb/loader/loader">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>This library now uses <a href="https://jspecify.dev/">JSpecify nullness annotations</a>, which are type-use. Kotlin developers should use the following compiler arguments to enforce correct usage: -Xjspecify-annotations=strict, -Xtype-enhancement-improvements-strict-mode (<a href="https://android-review.googlesource.com/#/q/Ib5eb3626c41d53cac5bd4175b5c5da6e05f91250">Ib5eb3</a>, <a href="https://issuetracker.google.com/issues/326456246">b/326456246</a>)</li>
+ <li>Deprecated <code translate="no" dir="ltr">androidx.core.os.CancellationSignal</code>. Usages should be replaced with the platform-provided <code translate="no" dir="ltr">android.os.CancellationSignal</code>. (<a href="https://android-review.googlesource.com/#/q/Id45f69a0b9cee7515d3f5b35dde3b3b037f8bd3a">Id45f6</a>, <a href="https://issuetracker.google.com/issues/309499026">b/309499026</a>, <a href="https://issuetracker.google.com/issues/309054079">b/309054079</a>)</li>
+</ul>
+
+<h2>Navigation: v2.10.0-alpha06</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.navigation:navigation-*:2.10.0-alpha06</code> is released. Version 2.10.0-alpha06 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/ed0627453f51baab21d30d8ca8f74a50ff1cfa7a..ba3014c143b9c9782fe30bc766c5dced55e13453/navigation">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Modified <code translate="no" dir="ltr">handleDeepLink</code> to ensure only recognized deep links are handled (<a href="https://android-review.googlesource.com/#/q/Id4fe399e00c3afc5e85d60778be5b020a058be95">Id4fe3</a>, <a href="https://issuetracker.google.com/issues/509640056">b/509640056</a>)</li>
+ <li>Changed <code translate="no" dir="ltr">ComposableFragment</code> to use the fully qualified name from the destination instead of a fragment argument to inflate composable functions. (<a href="https://android-review.googlesource.com/#/q/I65dedd09ce677da6d1b30139f2488890e6db5033">I65ded</a>, <a href="https://issuetracker.google.com/issues/509640586">b/509640586</a>)</li>
+ <li>Fixed a crash in <code translate="no" dir="ltr">FragmentNavigator</code> that caused legitimate Fragments to throw an <code translate="no" dir="ltr">IllegalArgumentException</code> when operations are optimized out. (<a href="https://android-review.googlesource.com/#/q/I093b09ab6503e93938c7ce5d94275dccd7de4534">I093b0</a>, <a href="https://issuetracker.google.com/issues/340202276">b/340202276</a>)</li>
+ <li>Fixed an error in Navigation with Fragments where setting the graph programmatically would fail to be restored properly. (<a href="https://android-review.googlesource.com/#/q/I412513f82942ba143ded2555bb5d576cb7d3178e">I41251</a>, <a href="https://issuetracker.google.com/issues/321147435">b/321147435</a>)</li>
+</ul>
+
+<h2>Navigation3: v1.1.4</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.navigation3:navigation3-*:1.1.4</code> is released. Version 1.1.4 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/258497755004be3f071eb9572543a052b665b407..a93f4841a72f48f4d873afc522c7f2678e6316ba/navigation3">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed popped entry disappearing immediately when popping to an entry that has a nested metadata containing lambda values. (<a href="https://android-review.googlesource.com/#/q/Idb872842a3aa174716e063fb9dd16506b41a031e">Idb872</a>, <a href="https://issuetracker.google.com/issues/520494430">b/520494430</a>)</li>
+</ul>
+
+<h2>Navigation3: v1.2.0-alpha05</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.navigation3:navigation3-*:1.2.0-alpha05</code> is released. Version 1.2.0-alpha05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/d0d5e8b902b1ded8854df7d27fa1d1ee14e3bb4c..98641569d70837298aa655adb1e99af419b8702a/navigation3">these commits</a>.</p>
+<p><strong>New API</strong></p>
+<ul>
+ <li>Added a <code translate="no" dir="ltr">rememberResultEventBus</code> api which returns a <code translate="no" dir="ltr">ResultEventBus</code> that can be passed to <code translate="no" dir="ltr">rememberResultEventBusNavEntryDecorator</code>. This allows hoisting a <code translate="no" dir="ltr">ResultEventBus</code> outside the <code translate="no" dir="ltr">ResultEventBusNavEntryDecorator</code>. (<a href="https://android-review.googlesource.com/#/q/Ia655ba3cd739841eb0820db60d089c951ba3b621">Ia655b</a>, <a href="https://issuetracker.google.com/issues/516995400">b/516995400</a>)</li>
+</ul>
+<p>DeepLinkRequest - Added two KMP-compatible constructors - one that takes a DeepLinkUri and one that takes a raw string uri. (<a href="https://android-review.googlesource.com/#/q/I3c088a7b0b9c7e33368a38aef4def31583cb4a22">I3c088</a>, <a href="https://issuetracker.google.com/issues/513200887">b/513200887</a>, <a href="https://issuetracker.google.com/issues/522194187">b/522194187</a>) - (Android only) Added a constructor that takes an <code translate="no" dir="ltr">Intent</code>. (<a href="https://android-review.googlesource.com/#/q/Ia0498ab9209688ccaeb28ebbf8b3da8ef2a9255e">Ia0498</a>, <a href="https://issuetracker.google.com/issues/513200887">b/513200887</a>, <a href="https://issuetracker.google.com/issues/522194187">b/522194187</a>) - All constructors have an additional <code translate="no" dir="ltr">extras</code> field for a <code translate="no" dir="ltr">Map&lt;String, Any&gt;</code> to attach additional request information. (<a href="https://android-review.googlesource.com/#/q/If81d5766720fd14676d03a817f47a5a91be13260">If81d5</a>, <a href="https://issuetracker.google.com/issues/513200887">b/513200887</a>) - A new <code translate="no" dir="ltr">requestExtras</code> dsl is added as a type safe way to build a map of extras. The dsl provides a <code translate="no" dir="ltr">put</code> function to store pairs of <code translate="no" dir="ltr">RequestExtrasKey</code> to <code translate="no" dir="ltr">Any</code>. The <code translate="no" dir="ltr">Map&lt;String, Any&gt;.get(key)</code> extension function can be used to read from the map with a <code translate="no" dir="ltr">RequestExtrasKey</code>(<a href="https://android-review.googlesource.com/#/q/I5091c3821acb4fab2b8d908741522a246501fbe8">I5091c</a>, <a href="https://issuetracker.google.com/issues/513200887">b/513200887</a>) - (Android only) Added an <code translate="no" dir="ltr">ActionExtrasKey</code> and <code translate="no" dir="ltr">actionExtra</code> function to create an extras map with <code translate="no" dir="ltr">ActionExtrasKey</code>. (<a href="https://android-review.googlesource.com/#/q/Id0c902d432be2e7f4fd6e23f49ea87444815994e">Id0c90</a>, [b/513200887] - Added a <code translate="no" dir="ltr">MimeTypeExtrasKey</code> and <code translate="no" dir="ltr">mimeTypeExtra</code> function to create an extras map with <code translate="no" dir="ltr">MimeTypeExtrasKey</code>. (<a href="https://android-review.googlesource.com/#/q/I85131ce001439654dba5859909bb7b00dfb04b09">I85131</a>, <a href="https://issuetracker.google.com/issues/513200887">b/513200887</a>)</p>
+<p>DeepLinkMatcher - Added <code translate="no" dir="ltr">DeepLinkMatcher.mimeTypeFilter</code> and <code translate="no" dir="ltr">DeepLinkMatcher.actionFilter</code> functions to create <code translate="no" dir="ltr">DeepLinkMatcher.Filters</code> that filter <code translate="no" dir="ltr">DeepLinkRequest</code> by <code translate="no" dir="ltr">mimeType</code> or <code translate="no" dir="ltr">action</code> (Android only). Both filters match by string equality and is case-insensitive. (<a href="https://android-review.googlesource.com/#/q/Ie7e67577a5be205ed0ed369622afc8231f3ef658">Ie7e67</a>, <a href="https://issuetracker.google.com/issues/513191950">b/513191950</a>)</p>
+<p><strong>API Changes</strong></p>
+<p>DeepLinkRequest - Remove <code translate="no" dir="ltr">fromAction</code> factory function. To create a request associated with an Action, use the new <code translate="no" dir="ltr">DeepLinkRequest.extras</code> field.(<a href="https://android-review.googlesource.com/#/q/Id0c902d432be2e7f4fd6e23f49ea87444815994e">Id0c90</a>, <a href="https://issuetracker.google.com/issues/513200887">b/513200887</a>) - Removed <code translate="no" dir="ltr">fromMimeType</code> factory function. To create a request associated with a mimeType, use the new <code translate="no" dir="ltr">DeepLinkRequest.extras</code> field. (<a href="https://android-review.googlesource.com/#/q/I85131ce001439654dba5859909bb7b00dfb04b09">I85131</a>, <a href="https://issuetracker.google.com/issues/513200887">b/513200887</a>) - (Android-only) Removed <code translate="no" dir="ltr">fromIntent</code> factory function. Replaced by a new constructor that takes an Intent and extras map. (<a href="https://android-review.googlesource.com/#/q/Ia0498ab9209688ccaeb28ebbf8b3da8ef2a9255e">Ia0498</a>, <a href="https://issuetracker.google.com/issues/513200887">b/513200887</a>, <a href="https://issuetracker.google.com/issues/522194187">b/522194187</a>) - Removed factory functions <code translate="no" dir="ltr">fromUri</code> and <code translate="no" dir="ltr">fromUriString</code>. Replaced by new constructors that either take a <code translate="no" dir="ltr">DeepLinkUri</code> or a raw string uri. (<a href="https://android-review.googlesource.com/#/q/Id5b6ff02d270b377f2c7dc5abd35633ed371d19e">Id5b6f</a>, <a href="https://issuetracker.google.com/issues/522194187">b/522194187</a>) - <code translate="no" dir="ltr">DeepLinkMatcher</code>, <code translate="no" dir="ltr">DeepLinkMatcher.MatchResult</code> and their subclasses now take a covariant T (out T) so that hierarchical keys will not need type casting with used with Matchers. (<a href="https://android-review.googlesource.com/#/q/I1e45364f85d56731a1e11b8975932845f00f03d8">I1e453</a>, <a href="https://issuetracker.google.com/issues/525094876">b/525094876</a>) - The <code translate="no" dir="ltr">UriMatchResult</code> constructor param for arguments map now defaults to an empty map. (<a href="https://android-review.googlesource.com/#/q/I3acdd8c52f289a08dcc980f7ba8bb04fff6b1b21">I3acdd</a>) - <code translate="no" dir="ltr">DeepLinkMatcher.Filter</code> abstract class is now a functional interface. The <code translate="no" dir="ltr">filter</code> constructor field is removed and instead should be passed directly in the subclass. (<a href="https://android-review.googlesource.com/#/q/I9eb7dca74c96b799e4357766434205c5fec1f4c8">I9eb7d</a>, <a href="https://issuetracker.google.com/issues/522194187">b/522194187</a>)</p>
+<p><strong>Bug Fixes</strong> - Fixed popped entry disappearing immediately when popping to an entry that has a nested metadata containing lambda values. (<a href="https://android-review.googlesource.com/#/q/Idb872842a3aa174716e063fb9dd16506b41a031e">Idb872</a>, <a href="https://issuetracker.google.com/issues/520494430">b/520494430</a>) - Fixed <code translate="no" dir="ltr">UriDeepLinkMatcher</code> so that it will return a null <code translate="no" dir="ltr">UriMatchResult</code> instead of throwing <code translate="no" dir="ltr">MissingFieldException</code> when required arguments are missing during matching. (<a href="https://android-review.googlesource.com/#/q/I5322fc616c79d5d5f07c7805de49a3e599b31b3d">I5322f</a>, <a href="https://issuetracker.google.com/issues/524663005">b/524663005</a>) - A <code translate="no" dir="ltr">UriDeeplinkMatcher</code> containing uri with https scheme can only be matched with requests that also have https scheme. (<a href="https://android-review.googlesource.com/#/q/Ibfe229d8d1f87a78bc20a61f636fd2d8546fde40">Ibfe22</a>, <a href="https://issuetracker.google.com/issues/522304329">b/522304329</a>) - Fix <code translate="no" dir="ltr">UriDeepLinkMatcher</code> to correctly identify <code translate="no" dir="ltr">http</code> scheme as a positive match with <code translate="no" dir="ltr">https</code> when matching a <code translate="no" dir="ltr">DeepLinkRequest</code> to a <code translate="no" dir="ltr">UriDeepLinkMatcher</code>. (<a href="https://android-review.googlesource.com/#/q/I3a62b073c8f0b7011b8d273108c37be619b253b9">I3a62b</a>, <a href="https://issuetracker.google.com/issues/518804264">b/518804264</a>) - <code translate="no" dir="ltr">DeepLinkMatcher.MatchResult</code> comparator now returns 0 by default when two results are equal. (<a href="https://android-review.googlesource.com/#/q/I48ddb462bd2cc20c8a5873cd197510544ae20f4c">I48ddb</a>, <a href="https://issuetracker.google.com/issues/518841353">b/518841353</a>) - <code translate="no" dir="ltr">UriDeepLinkMatcher</code> will now return a null <code translate="no" dir="ltr">UriMatchResult</code> instead of throwing an exception when match request fails due to missing required arguments. (<a href="https://android-review.googlesource.com/#/q/I669a7c413950739664300f55ba3540c79c9e8888">I669a7</a>, <a href="https://issuetracker.google.com/issues/470282247">b/470282247</a>, <a href="https://issuetracker.google.com/issues/512923412">b/512923412</a>)</p>
+
+<h2>navigationevent: v1.2.0-alpha01</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.navigationevent:navigationevent-*:1.2.0-alpha01</code> is released. Version 1.2.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/97aec8dd133e0797a82bc84ea401f5d85ccb74f2..ba3014c143b9c9782fe30bc766c5dced55e13453/navigationevent">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li><code translate="no" dir="ltr">androidx.benchmark</code> now has a <code translate="no" dir="ltr">minSdk</code> of 24. (<a href="https://android-review.googlesource.com/#/q/Ic2a8500af8a2bf092fcc1b27d9a599aa5f3b81d7">Ic2a85</a>)</li>
+ <li>Add onForwardCompletedFallback to TestNavigationEventDispatcherOwner to enable tracking and testing of unhandled forward navigation events. (<a href="https://android-review.googlesource.com/#/q/I6bbd7eef2bc2f56a10769c377d8f1a0b498d221e">I6bbd7</a>)</li>
+ <li>Add navigationEventInput to TestNavigationEventDispatcherOwner to simplify simulating navigation events in tests. (<a href="https://android-review.googlesource.com/#/q/I3ef4851622a1380135c025173fe612547adee466">I3ef48</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Cleans up API information (<a href="https://android-review.googlesource.com/#/q/Ia8066818f7e33220445aaeafa9ecc0668cc4818b">Ia8066</a>)</li>
+ <li>Ignore navigation events dispatched to disconnected inputs. Previously, dispatching events to a removed input would throw an <code translate="no" dir="ltr">IllegalStateException</code>. (<a href="https://android-review.googlesource.com/#/q/I1a8bc17f000b7a0f99ee107c0c09889e14841817">I1a8bc</a>, <a href="https://issuetracker.google.com/issues/515890298">b/515890298</a>)</li>
+ <li>Prevent symbol duplication with older JetBrains fork versions when upgrading to Compose Multiplatform 1.11.0. (<a href="https://android-review.googlesource.com/#/q/I4cc4dce0b07c38f6a624780d012816b5d0e200cd">I4cc4d</a>)</li>
+</ul>
+<p>There are no release notes for this artifact.</p>
+
+<h2>Palette: v1.1.0-alpha01</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.palette:palette:1.1.0-alpha01</code> and <code translate="no" dir="ltr">androidx.palette:palette-ktx:1.1.0-alpha01</code> are released. Version 1.1.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/3392a424178238fa2c15db77b28bb528a3dbf0ea/palette">these commits</a>.</p>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>This library now uses <a href="https://jspecify.dev/">JSpecify nullness annotations</a>, which are type-use. Kotlin developers should use the following compiler arguments to enforce correct usage: -Xjspecify-annotations=strict, -Xtype-enhancement-improvements-strict-mode (<a href="https://android-review.googlesource.com/#/q/Ideef8b4d207f18f08546de9d4c85c93ab7356b64">Ideef8</a>, <a href="https://issuetracker.google.com/issues/326456246">b/326456246</a>)</li>
+ <li>Merged public and experimental API files for n- thru t-paths (<a href="https://android-review.googlesource.com/#/q/I103c708874e07493c33c4ee76472978faa62ad31">I103c7</a>, <a href="https://issuetracker.google.com/issues/278769092">b/278769092</a>)</li>
+</ul>
+<p><strong>External Contribution</strong></p>
+<ul>
+ <li>Merge palette-ktx into the palette library. All Kotlin extensions are now part of the main palette artifact. palette-ktx is now an empty artifact for compatibility. (<a href="https://android-review.googlesource.com/#/q/I3f1df19145c7bfd91704c730d2d24aa5a6796359">I3f1df</a>)</li>
+</ul>
+<p>There are no release notes for this artifact.</p>
+<devsite-hats-survey class="nocontent" data-nosnippet hats-id="VxqvKSur40kxBYCLVTd0SSGykbno" listnr-id="5207477"></devsite-hats-survey>
+
+<h2>Pdf: v1.0.0-alpha19</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.pdf:pdf-*:1.0.0-alpha19</code> is released. Version 1.0.0-alpha19 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/df4b49eda6f6834b6bc4c8aa30a581fa577a511e..41275634d9349e095b3315e43a89c309144ec03f/pdf">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Make <code translate="no" dir="ltr">AnnotationView</code> public (<a href="https://android-review.googlesource.com/#/q/I8219f3ec9aaf1586f8e5bac4a5ec7b69717dfeb1">I8219f</a>)</li>
+ <li>Make <code translate="no" dir="ltr">EditablePdfDocument</code> and annotations classes public. (<a href="https://android-review.googlesource.com/#/q/I5b9620044fb502cdf92ab5faddbc323d48690bf5">I5b962</a>)</li>
+ <li>Introduced new pdf-core submodule (<a href="https://android-review.googlesource.com/#/q/Iea331e51c6f9f068275043fb0a5ab2c1832f8e91">Iea331</a>)</li>
+ <li>Relocated core pdf apis to new pdf-core artifact to decouple document models from the view implementation. (<a href="https://android-review.googlesource.com/#/q/I26e1f805337a6e8ba23d2a35ab4d450a5962625b">I26e1f</a>)</li>
+ <li>Expose <code translate="no" dir="ltr">OcrProvider</code> APIs to support image-based text recognition (<a href="https://android-review.googlesource.com/#/q/I5271b0bc0eb29dc9c1a6aa75948984d458f362a8">I5271b</a>)</li>
+ <li>Removed the deprecated parameterless <code translate="no" dir="ltr">onLoadDocumentSuccess()</code> method from <code translate="no" dir="ltr">PdfViewerFragment</code> and the deprecated <code translate="no" dir="ltr">isLinearized</code> property from <code translate="no" dir="ltr">PdfDocument</code>. (<a href="https://android-review.googlesource.com/#/q/I6b7ab5f1d90d1d7c11a223aea1ca39c5a457150b">I6b7ab</a>)</li>
+ <li>Autofill support for form filling is enabled.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed an issue where horizontal scrolling was unreliable at page edges because scroll direction was not accounted for when managing touch event interception. (<a href="https://android-review.googlesource.com/#/q/I6bda5e7d9d9eed51ebafdf41aeb2a71f20140fa4">I6bda5</a>, <a href="https://issuetracker.google.com/issues/505645009">b/505645009</a>)</li>
+ <li>Fixed an issue to ensure the fast scroller is always displayed when accessibility is enabled. (<a href="https://android-review.googlesource.com/#/q/Idaf5e67bcccf57cad5a48c986349777b5d6ce091">Idaf5e</a>, <a href="https://issuetracker.google.com/issues/513082550">b/513082550</a>)</li>
+</ul>
+
+<h2>photopicker: v1.0.0-alpha02</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.photopicker:photopicker:1.0.0-alpha02</code>, <code translate="no" dir="ltr">androidx.photopicker:photopicker-compose:1.0.0-alpha02</code>, and <code translate="no" dir="ltr">androidx.photopicker:photopicker-testing:1.0.0-alpha02</code> are released. Version 1.0.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/786176dc2284c87a0e620477608e0aca9adeff15..f7668b81600bdf22bc975d3fc38e6fd22c94b585/photopicker">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>Lowered the <code translate="no" dir="ltr">minSdk</code> of the androidx.photopicker:photopicker and androidx.photopicker:photopicker-compose libraries to 23, while the APIs still require to be called starting from 34. (<a href="https://android-review.googlesource.com/#/q/I94e42624e79d97494629acedd891ad318e5733c7">I94e42</a>, <a href="https://issuetracker.google.com/issues/524083018">b/524083018</a>)</li>
+ <li>Updating Embedded PhotoPicker Compose APIs (removing AbstractEmbeddedPhotoPickerState, renaming and change visibility of some fields from EmbeddedPhotoPickerState) (<a href="https://android-review.googlesource.com/#/q/Ie32c9a86b3c826863b727fdc90d909a4c5dfd84e">Ie32c9</a>, <a href="https://issuetracker.google.com/issues/449786033">b/449786033</a>)</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Updated Compose compileSdk to API 37. This means that a minimum AGP version of 9.2.0 is required when using Compose. (<a href="https://android-review.googlesource.com/#/q/Ic748a207afaadaa5d1061603adae2028637bf85c">Ic748a</a>, <a href="https://issuetracker.google.com/issues/413674743">b/413674743</a>)</li>
+</ul>
+
+<h2>Room 3.0: v3.0.0</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.room3:room3-*:3.0.0</code> is released. Version 3.0.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/1a508f033de883ba2853b9f9ae1853eec7010638..7fac77ef3619a0ad0872dbab2d86247263ebf2ab/room3">these commits</a>.</p>
+<p><strong>Major features of 3.0.0:</strong></p>
+<p>Room 3.0 (package <code translate="no" dir="ltr">androidx.room3</code>) is a major version update of Room 2.x package (<code translate="no" dir="ltr">androidx.room</code>) that focuses on Kotlin Multiplatform (KMP).</p>
+<p>The core annotation APIs are kept the same along with the main components:</p>
+<ul>
+ <li>An abstract class that extends <code translate="no" dir="ltr">androidx.room3.RoomDatabase</code> and is annotated with <code translate="no" dir="ltr">@Database</code> is the entry point for Room's annotation processor.</li>
+ <li>The database declaration has one or more data classes describing the database schema and are annotated with <code translate="no" dir="ltr">@Entity</code>.</li>
+ <li>Database operations are defined in <code translate="no" dir="ltr">@Dao</code> declarations that contains query functions whose SQL statements are defined via the <code translate="no" dir="ltr">@Query</code> annotation.</li>
+ <li>At runtime, the database implementation can be obtained via a <code translate="no" dir="ltr">RoomDatabase.Builder</code> which is also used to configure the database.</li>
+</ul>
+<p>Most of the documentation in the <a href="https://developer.android.com/training/data-storage/room">Save data in a local database using Room</a> guide is still relevant to Room 3.0.</p>
+<p>The major breaking differences between Room 2.x are as follows:</p>
+<ul>
+ <li>New package, <code translate="no" dir="ltr">androidx.room3</code>.</li>
+ <li>SupportSQLite APIs are no longer supported, unless you are using the <code translate="no" dir="ltr">androidx.room3:room3-sqlite-wrapper</code>.</li>
+ <li>All database operations are now Coroutine APIs based.</li>
+ <li>Kotlin code generation only.</li>
+ <li>Kotlin Symbol Processing (KSP) is required.</li>
+</ul>
+<p>Along with breaking changes, Room 3.0 brings in new functionality compared to 2.x:</p>
+<ul>
+ <li>JS and WasmJS Support</li>
+ <li>Custom DAO Return Types</li>
+ <li>FTS5 support via <code translate="no" dir="ltr">@Fts5</code> annotation</li>
+ <li>Kotlin default parameter value support</li>
+ <li><code translate="no" dir="ltr">PrimaryKey.algorihtm</code> property to specify the primary key generating algorithm</li>
+ <li>Ability to create tables 'WITHOUT ROWID'</li>
+ <li>Composite relationship column with <code translate="no" dir="ltr">@Relation</code></li>
+</ul>
+<p><strong>New Package</strong></p>
+<p>To prevent compatibility issues with existing Room 2.x implementations and for libraries with transitive dependencies to Room (for example, WorkManager), Room 3.0 resides in a new package, which means it also has a new maven group and artifact ids. For example, <code translate="no" dir="ltr">androidx.room:room-runtime</code> has become <code translate="no" dir="ltr">androidx.room3:room3-runtime</code> and classes such as <code translate="no" dir="ltr">androidx.room.RoomDatabase</code> will now be located at <code translate="no" dir="ltr">androidx.room3.RoomDatabase</code>.</p>
+<p><strong>No SupportSQLite APIs</strong></p>
+<p>Room 3.0 is fully backed by the <a href="https://developer.android.com/kotlin/multiplatform/sqlite#sqlite-driver">SQLiteDriver APIs</a> and no longer references <code translate="no" dir="ltr">SupportSQLite</code> types such as <code translate="no" dir="ltr">SupportSQLiteDatabase</code> or Android types such as <code translate="no" dir="ltr">Cursor</code>. This is the most significant change between Room 3.0 and 2.x since the <code translate="no" dir="ltr">RoomDatabase</code> APIs that mirrored <code translate="no" dir="ltr">SupportSQLiteDatabase</code> along with the API to get a <code translate="no" dir="ltr">SupportSQLiteOpenHelper</code> have been removed. A <code translate="no" dir="ltr">SQLiteDriver</code> is now <em>required</em> to build a <code translate="no" dir="ltr">RoomDatabase</code>.</p>
+<p>For example, APIs for direct database operations are replaced by driver equivalents:</p>
+<div></div>
+<devsite-code>
+ <pre class="devsite-click-to-copy" translate="no" dir="ltr" is-upgraded syntax="Kotlin"><code translate="no" dir="ltr"><span class="devsite-syntax-c1">// Room 2.x</span>
+<span class="devsite-syntax-n">roomDatabase</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">runInTransaction</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">...</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">}</span>
+
+<span class="devsite-syntax-c1">// Room 3.x</span>
+<span class="devsite-syntax-n">roomDatabase</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">withWriteTransaction</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">...</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">}</span>
+</code></pre>
+</devsite-code>
+<div></div>
+<devsite-code>
+ <pre class="devsite-click-to-copy" translate="no" dir="ltr" is-upgraded syntax="Kotlin"><code translate="no" dir="ltr"><span class="devsite-syntax-c1">// Room 2.x</span>
+<span class="devsite-syntax-n">roomDatabase</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">query</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-s">"SELECT * FROM Song"</span><span class="devsite-syntax-p">).</span><span class="devsite-syntax-na">use</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">cursor</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">-</span>&gt;<span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">...</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">}</span>
+
+<span class="devsite-syntax-c1">// Room 3.x</span>
+<span class="devsite-syntax-n">roomDatabase</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">useReaderConnection</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">connection</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">-</span>&gt;
+<span class="devsite-syntax-w">  </span><span class="devsite-syntax-n">connection</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">usePrepared</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-s">"SELECT * FROM Song"</span><span class="devsite-syntax-p">)</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">stmt</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">-</span>&gt;<span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">...</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">}</span>
+<span class="devsite-syntax-p">}</span>
+</code></pre>
+</devsite-code>
+<p>Callback APIs that had as argument a <code translate="no" dir="ltr">SupportSQLiteDatabase</code> have also been replaced by their equivalent API that has a <code translate="no" dir="ltr">SQLiteConnection</code> as argument. These are migrations callback functions such as <code translate="no" dir="ltr">Migration.onMigrate()</code> and <code translate="no" dir="ltr">AutoMigrationSpec.onPostMigrate()</code> along with database callbacks such as <code translate="no" dir="ltr">RoomDatabase.Callback.onCreate()</code>, <code translate="no" dir="ltr">RoomDatabase.Callback.onOpen()</code>, etc.</p>
+<p>If Room was being used in a KMP project, then migrating to 3.0 is simpler as it mostly involves updating import references, otherwise the same migration strategy from Room in Android-only to KMP applies, see the <a href="https://developer.android.com/kotlin/multiplatform/room#migrate">Room KMP Migration Guide</a>.</p>
+<p><strong>SupportSQLite Wrapper</strong></p>
+<p>Room 3.x preserves the SupportSQLite wrapper created in 2.x to ease migrations and is now located in a new artifact <code translate="no" dir="ltr">androidx.room3:room3-sqlite-wrapper</code>. The compatibility API allows you to convert a <code translate="no" dir="ltr">RoomDatabase</code> into a <code translate="no" dir="ltr">SupportSQLiteDatabase</code>. Invocations of <code translate="no" dir="ltr">roomDatabase.openHelper.writableDatabase</code> can be replaced by <code translate="no" dir="ltr">roomDatabase.getSupportWrapper()</code>.</p>
+<p><strong>Kotlin and Coroutines First</strong></p>
+<p>To better evolve the library, Room 3.0 only generates Kotlin code and is only a Kotlin Symbol Processor (KSP). Compared to Room 2.x there is no Java code generation and configuration of annotation processor via KAPT or JavaAP is no longer possible in Room 3.0. Note that KSP is able to process Java sources and the Room compiler will generate code for database, entities or DAOs whose source declarations are in Java. It is recommended to have a multi-module project where Room usage is concentrated and the Kotlin Gradle Plugin and KSP can be applied without affecting the rest of the codebase.</p>
+<p>Room 3.0 also requires the use of Coroutines, and more specifically DAO functions have to be suspending unless they are returning a reactive type, such as a <code translate="no" dir="ltr">Flow</code> or a custom DAO return type. Room APIs to perform database operations are also suspend functions, such as <code translate="no" dir="ltr">RoomDatabase.useReaderConnection</code> and <code translate="no" dir="ltr">RoomDatabase.useWriterConnection</code>.</p>
+<p>As opposed to Room 2.x it is no longer possible to configure a <code translate="no" dir="ltr">RoomDatabase</code> with an <code translate="no" dir="ltr">Executor</code>, instead a <code translate="no" dir="ltr">CoroutineContext</code> along with a dispatcher can be provided via the database's builder.</p>
+<p><code translate="no" dir="ltr">InvalidationTracker</code> APIs in Room 3.0 are <code translate="no" dir="ltr">Flow</code> based, <code translate="no" dir="ltr">InvalidationTracker.Observer</code> is removed along with its relevant APIs <code translate="no" dir="ltr">addObserver</code> and <code translate="no" dir="ltr">removeObserver</code>. The mechanism to react to database operation is through Coroutine Flows that can be created via the <code translate="no" dir="ltr">createFlow()</code> API in the <code translate="no" dir="ltr">InvalidationTracker</code>.</p>
+<p>Example usage:</p>
+<div></div>
+<devsite-code>
+ <pre class="devsite-click-to-copy" translate="no" dir="ltr" is-upgraded syntax="Kotlin"><code translate="no" dir="ltr"><span class="devsite-syntax-kd">fun</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-nf">getArtistTours</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-n">from</span><span class="devsite-syntax-p">:</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">Date</span><span class="devsite-syntax-p">,</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">to</span><span class="devsite-syntax-p">:</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">Date</span><span class="devsite-syntax-p">):</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">Flow&lt;Map&lt;Artist</span><span class="devsite-syntax-p">,</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">TourState</span>&gt;&gt;<span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-k">return</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">db</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">invalidationTracker</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">createFlow</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-s">"Artist"</span><span class="devsite-syntax-p">).</span><span class="devsite-syntax-na">map</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">_</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">-</span>&gt;
+<span class="devsite-syntax-w">        </span><span class="devsite-syntax-kd">val</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-nv">artists</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">artistsDao</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">getAllArtists</span><span class="devsite-syntax-p">()</span>
+<span class="devsite-syntax-w">        </span><span class="devsite-syntax-kd">val</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-nv">tours</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">tourService</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">fetchStates</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-n">artists</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">map</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-nb">it</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">id</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">})</span>
+<span class="devsite-syntax-w">        </span><span class="devsite-syntax-n">associateTours</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-n">artists</span><span class="devsite-syntax-p">,</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">tours</span><span class="devsite-syntax-p">,</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">from</span><span class="devsite-syntax-p">,</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">to</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-p">}</span>
+<span class="devsite-syntax-p">}</span>
+</code></pre>
+</devsite-code>
+<p><strong>Web Support</strong></p>
+<p>The Room 3.0 release adds JavaScript and WasmJs as KMP targets. Combined with the release of the <code translate="no" dir="ltr">SQLiteDriver</code> interfaces (<code translate="no" dir="ltr">androidx.sqlite:sqlite</code>) that also target JavaScript and WasmJs and a new driver <code translate="no" dir="ltr">WebWorkerSQLiteDriver</code> located in the new artifact <code translate="no" dir="ltr">androidx.sqlite:sqlite-web</code>, it is possible to use Room in common code that targets all major KMP platforms.</p>
+<p>Due to the asynchronous nature of the web platforms, Room APIs that took <code translate="no" dir="ltr">SQLiteStatement</code> as argument are now suspend functions. Example of these functions are <code translate="no" dir="ltr">Migration.onMigrate()</code>, <code translate="no" dir="ltr">RoomDatabase.Callback.onCreate()</code>, <code translate="no" dir="ltr">PooledConnection.usePrepared()</code> and others. In the driver APIs the asynchronous APIs are common on all platforms and the synchronous are common for non-web targets. Therefore a project that does not target web can continue to use the synchronous APIs (<code translate="no" dir="ltr">SQLiteDriver.open()</code>, <code translate="no" dir="ltr">SQLiteConnection.prepare()</code> and <code translate="no" dir="ltr">SQLiteStatement.step()</code>) in common code. Meanwhile a project that only targets web must use the asynchronous APIs (<code translate="no" dir="ltr">SQLiteDriver.openAsync()</code>, <code translate="no" dir="ltr">SQLiteConnection.prepareAsync()</code> and <code translate="no" dir="ltr">SQLiteStatement.stepAsync()</code>).</p>
+<p>For convenience the <code translate="no" dir="ltr">androidx.sqlite</code> package also added suspend extension functions with the synchronous names of the mentioned APIs (with the addition of <code translate="no" dir="ltr">SQLiteConnection.executeSQL</code>), these APIs are recommended when the project targets both web and non-web platforms since the APIs are expect / actual declarations that will call the right variant based on the platforms. These are the APIs Room's runtime use and enable driver usage in common code for all supported platforms.</p>
+<p>Example usage:</p>
+<div></div>
+<devsite-code>
+ <pre class="devsite-click-to-copy" translate="no" dir="ltr" is-upgraded syntax="Kotlin"><code translate="no" dir="ltr"><span class="devsite-syntax-k">import</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-nn">androidx.sqlite.executeSQL</span>
+<span class="devsite-syntax-k">import</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-nn">androidx.sqlite.step</span>
+
+<span class="devsite-syntax-n">roomDatabase</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">useWriterConnection</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">connection</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">-</span>&gt;
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-kd">val</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-nv">deletedSongs</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">connection</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">usePrepared</span><span class="devsite-syntax-p">(</span>
+<span class="devsite-syntax-w">        </span><span class="devsite-syntax-s">"SELECT count(*) FROM Song"</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-p">)</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">stmt</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">-</span>&gt;
+<span class="devsite-syntax-w">        </span><span class="devsite-syntax-n">stmt</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">step</span><span class="devsite-syntax-p">()</span>
+<span class="devsite-syntax-w">        </span><span class="devsite-syntax-n">stmt</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">getLong</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-m">0</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-p">}</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">connection</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">executeSQL</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-s">"DELETE FROM Song"</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">deletedSongs</span>
+<span class="devsite-syntax-p">}</span>
+</code></pre>
+</devsite-code>
+<p>The <code translate="no" dir="ltr">WebWorkerSQLiteDriver</code> is an implementation of a <code translate="no" dir="ltr">SQLiteDriver</code> that communicates with a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API">Web Worker</a> for performing database operation off the main thread and enables storing the database in the Origin Private File System (OPFS). To instantiate the driver a worker that implements a simple communication protocol is required, the protocol is described in the <a href="https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:sqlite/sqlite-web/src/commonMain/kotlin/androidx/sqlite/driver/web/WebWorkerSQLiteDriver.kt">WebWorkerSQLiteDriver KDoc</a>.</p>
+<p>Currently the <code translate="no" dir="ltr">WebWorkerSQLiteDriver</code> does not ship with a default worker that implements the communication protocol, but as an example, the androidx codebase contains a <a href="https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:sqlite/sqlite-web-worker-test/web-worker/worker.js">worker implementation</a> that can be used in your project. It uses <a href="https://sqlite.org/wasm/doc/trunk/index.md">SQLite's WASM</a> and stores the database in OPFS. The example worker is published as a local NPM package and thanks to <a href="https://kotlinlang.org/docs/using-packages-from-npm.html">Kotlin's support for NPM dependencies</a>, a small KMP module can be created to serve the worker.</p>
+<p>See the following <a href="https://github.com/danysantiago/room-web-demo/">GitHub project</a> demonstrating the usage of a local web worker for Room.</p>
+<p>Once a worker is set up in the project, then configuring Room for the Web is similar to other platforms:</p>
+<div></div>
+<devsite-code>
+ <pre class="devsite-click-to-copy" translate="no" dir="ltr" is-upgraded syntax="Kotlin"><code translate="no" dir="ltr"><span class="devsite-syntax-kd">fun</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-nf">createDatabase</span><span class="devsite-syntax-p">():</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">MusicDatabase</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-k">return</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">Room</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">databaseBuilder&lt;MusicDatabase&gt;</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-s">"music.db"</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-w">        </span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">setDriver</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-n">WebWorkerSQLiteDriver</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-n">createWorker</span><span class="devsite-syntax-p">()))</span>
+<span class="devsite-syntax-w">        </span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">build</span><span class="devsite-syntax-p">()</span>
+<span class="devsite-syntax-p">}</span>
+
+<span class="devsite-syntax-kd">fun</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-nf">createWorker</span><span class="devsite-syntax-p">()</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">Worker</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-n">js</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-s">"""new URL("sqlite-web-worker/worker.js", import.meta.url)"""</span><span class="devsite-syntax-p">))</span>
+</code></pre>
+</devsite-code>
+<p>A future version of the Web driver might contain a default worker published in NPM, making the web setup simpler.</p>
+<p><strong>Custom DAO Return Types</strong></p>
+<p>Various DAO return type integrations such as those for RxJava and Paging have been transformed to use a new API in Room 3.0 called DAO return type converters. A DAO return type converter function (<code translate="no" dir="ltr">@DaoReturnTypeConverter</code>) enables transforming the result of a DAO function into a custom type defined by the annotated function. These functions enable participating in Room's generated code that transforms query results into data objects. Classes that contain DAO return type converters have to be registered via the <code translate="no" dir="ltr">@DaoReturnTypeConverters</code> annotations in the <code translate="no" dir="ltr">@Database</code> or <code translate="no" dir="ltr">@Dao</code> declarations.</p>
+<p>For example, to have a DAO query return a <code translate="no" dir="ltr">PagingSource</code>, the converter class located in <code translate="no" dir="ltr">androidx.room3:room3-paging</code> must now be registered:</p>
+<div></div>
+<devsite-code>
+ <pre class="devsite-click-to-copy" translate="no" dir="ltr" is-upgraded syntax="Kotlin"><code translate="no" dir="ltr"><span class="devsite-syntax-nd">@Dao</span>
+<span class="devsite-syntax-nd">@DaoReturnTypeConverters</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-n">PagingSourceDaoReturnTypeConverter</span><span class="devsite-syntax-o">::</span><span class="devsite-syntax-n">class</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-kd">interface</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-nc">MusicDao</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-nd">@Query</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-s">"SELECT * FROM Song)</span>
+<span class="devsite-syntax-s">    fun getSongsPaginated(): PagingSource&lt;Int, Song&gt;</span>
+<span class="devsite-syntax-s">}</span>
+</code></pre>
+</devsite-code>
+<p>Existing integrations have been moved to DAO return type converters:</p>
+<table>
+ <thead>
+  <tr>
+   <th>Return Type</th>
+   <th>Converter class</th>
+   <th>Artifact</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td>PagingSource</td>
+   <td>PagingSourceDaoReturnTypeConverter</td>
+   <td>androidx.room3:room3-paging</td>
+  </tr>
+  <tr>
+   <td>Observable, Flowable, Completable, Single, Maybe</td>
+   <td>RxDaoReturnTypeConverters</td>
+   <td>androidx.room3:room3-rxjava3</td>
+  </tr>
+  <tr>
+   <td>ListenableFuture</td>
+   <td>GuavaDaoReturnTypeConverter</td>
+   <td>androidx.room3:room3-guava</td>
+  </tr>
+  <tr>
+   <td>LiveData</td>
+   <td>LiveDataDaoReturnTypeConverter</td>
+   <td>androidx.room3:room3-livedata</td>
+  </tr>
+ </tbody>
+</table>
+<p></p>
+<p>Like column type converters, DAO return type converters can be defined by the application. For example, an application could declare a <code translate="no" dir="ltr">@DaoReturnTypeConverter</code> for the web type <code translate="no" dir="ltr">kotlin.js.Promise</code>.</p>
+<div></div>
+<devsite-code>
+ <pre class="devsite-click-to-copy" translate="no" dir="ltr" is-upgraded syntax="Kotlin"><code translate="no" dir="ltr"><span class="devsite-syntax-kd">object</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-nc">PromiseDaoReturnTypeConverter</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-nd">@DaoReturnTypeConverter</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-o">[</span><span class="devsite-syntax-n">OperationType</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">READ</span><span class="devsite-syntax-p">,</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">OperationType</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">WRITE</span><span class="devsite-syntax-o">]</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-kd">fun</span><span class="devsite-syntax-w"> </span>&lt;<span class="devsite-syntax-nf">T</span>&gt;<span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">convert</span><span class="devsite-syntax-p">(</span>
+<span class="devsite-syntax-w">        </span><span class="devsite-syntax-n">db</span><span class="devsite-syntax-p">:</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">RoomDatabase</span><span class="devsite-syntax-p">,</span>
+<span class="devsite-syntax-w">        </span><span class="devsite-syntax-n">executeAndConvert</span><span class="devsite-syntax-p">:</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">suspend</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">()</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">-</span>&gt;<span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">T</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-p">):</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">Promise&lt;T&gt;</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">        </span><span class="devsite-syntax-k">return</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">db</span><span class="devsite-syntax-p">.</span><span class="devsite-syntax-na">getCoroutineScope</span><span class="devsite-syntax-p">().</span><span class="devsite-syntax-na">promise</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">executeAndConvert</span><span class="devsite-syntax-p">()</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">}</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-p">}</span>
+<span class="devsite-syntax-p">}</span>
+</code></pre>
+</devsite-code>
+<p>The above converter then allows DAO query functions to return <code translate="no" dir="ltr">Promise</code>:</p>
+<div></div>
+<devsite-code>
+ <pre class="devsite-click-to-copy" translate="no" dir="ltr" is-upgraded syntax="Kotlin"><code translate="no" dir="ltr"><span class="devsite-syntax-nd">@Dao</span>
+<span class="devsite-syntax-nd">@DaoReturnTypeConverters</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-n">PromiseDaoReturnTypeConverter</span><span class="devsite-syntax-o">::</span><span class="devsite-syntax-n">class</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-kd">interface</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-nc">MusicDao</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-nd">@Query</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-s">"SELECT * FROM Song"</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-kd">fun</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-nf">getAllSongs</span><span class="devsite-syntax-p">():</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">Promise&lt;List&lt;Song&gt;</span>&gt;
+<span class="devsite-syntax-p">}</span>
+</code></pre>
+</devsite-code>
+<p>A <code translate="no" dir="ltr">@DaoReturnTypeConverter</code> function has a few requirements in the amount of parameter it must have and its types. The possible parameters are:</p>
+<ul>
+ <li><code translate="no" dir="ltr">db: RoomDatabase</code>: (Optional) Provides access to the <code translate="no" dir="ltr">RoomDatabase</code> instance, which can be useful for performing additional database operations or accessing the coroutine scope.</li>
+ <li><code translate="no" dir="ltr">tableNames: Array&lt;String&gt;</code>: (Optional) Contains the accessed tables of the query, useful for supporting observable / reactive types when combined with Room's <code translate="no" dir="ltr">InvalidationTracker.createFlow()</code> API.</li>
+ <li><code translate="no" dir="ltr">rawQuery: RoomRawQuery</code>: (Optional) Contains at runtime an instance of the query, enabling transformations such as the <code translate="no" dir="ltr">LIMIT</code> / <code translate="no" dir="ltr">OFFSET</code> strategy implemented by the <code translate="no" dir="ltr">PagingSourceDaoReturnTypeConverter</code>.</li>
+ <li><code translate="no" dir="ltr">executeAndConvert: suspend () -&gt; T</code>: (Required) The Room generated function that will execute the query and parse its result into data objects.</li>
+</ul>
+<p>For more information about the requirements for creating a DAO return type converter, see the <a href="https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:room3/room3-common/src/commonMain/kotlin/androidx/room3/DaoReturnTypeConverter.kt">KDoc on the <code translate="no" dir="ltr">@DaoReturnTypeConverter</code> API</a>.</p>
+
+<h2>Sqlite: v2.7.0</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.sqlite:sqlite-*:2.7.0</code> is released. Version 2.7.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/fe30df161d480829efb21f37ff67a9f8cac9c620..190a3431c064ca5e90e451b3443714ae684b8127/sqlite">these commits</a>.</p>
+<p><strong>Important changes since 2.6.0:</strong></p>
+<ul>
+ <li>Add js and wasmJs targets to <code translate="no" dir="ltr">androidx.sqlite:sqlite</code> along with asynchronous version of the driver APIs: <code translate="no" dir="ltr">SQLiteDriver.open()</code>, <code translate="no" dir="ltr">SQLiteConnection.prepare()</code> and <code translate="no" dir="ltr">SQLiteStatement.step()</code> for the web targets.</li>
+ <li>Existing projects that don't target web can continue using the synchronous APIs in common code, but once a project targets web then only the asynchronous APIs are available. For convenience a new artifact <code translate="no" dir="ltr">andriodx.sqlite:sqlite-async</code> includes top-level suspend functions that use the synchronous naming scheme (along with <code translate="no" dir="ltr">executeSQL</code>) and are expect / actual declarations that will invoke the right variant based on the platform. It is recommended to use these APIs for common code targeting both web and non-web targets.</li>
+ <li>This release also includes a new artifact <code translate="no" dir="ltr">androidx.sqlite:sqlite-web</code> which contains <code translate="no" dir="ltr">WebWorkerSQLiteDriver</code>, a <code translate="no" dir="ltr">SQLiteDriver</code> implementation for the web that communicates with a Web Worker to perform database operation via a simple messaging protocol. The protocol is documented in the <code translate="no" dir="ltr">WebWorkerSQLiteDriver</code> and even though there is no default worker implementation with the artifact, one can be provided via the constructor. For a more concrete example on how this new artifact can be used, check out the <a href="https://developer.android.com/jetpack/androidx/releases/room3#3.0.0-alpha01">Room 3.0 release notes</a>.</li>
+</ul>
+
+<h2>Test Uiautomator: v2.4.0</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.test.uiautomator:uiautomator:2.4.0</code>, <code translate="no" dir="ltr">androidx.test.uiautomator:uiautomator-shell:2.4.0</code>, and <code translate="no" dir="ltr">androidx.test.uiautomator:uiautomator-shell-android:2.4.0</code> are released. Version 2.4.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/4f8d91d904a453dc1b9661cb43ea02b62436a1e6..ec9022d156846f24e22bec3e475d4206d6f321ea/test/uiautomator">these commits</a>.</p>
+<p><strong>Important changes since 2.3.0:</strong></p>
+
+<h2>Wear Compose: v1.7.0-alpha05</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.wear.compose:compose-*:1.7.0-alpha05</code> is released. Version 1.7.0-alpha05 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/a69fea942830b4bac43dd1c2bc9346b0a5282b19..ba3014c143b9c9782fe30bc766c5dced55e13453/wear/compose">these commits</a>.</p>
+<p><strong>API Changes</strong></p>
+<ul>
+ <li>
+  <p>Added the <code translate="no" dir="ltr">TransformingLazyColumnFirstLayoutItemProvider</code> interface in Foundation to enable customization of content that shifts direction during content updates, accompanied by out-of-the-box <code translate="no" dir="ltr">rememberTransformingLazyColumnFirstLayoutItemProvider</code> and <code translate="no" dir="ltr">rememberTransformingLazyColumnFirstVisibleItemProvider</code> implementations in Material3. (<a href="https://android-review.googlesource.com/#/q/I54814a394938dadb417e34d16a7a187b92f092fc">I54814</a>, <a href="https://issuetracker.google.com/issues/503353428">b/503353428</a>)</p>
+ </li>
+ <li>
+  <p>Renamed the fallback parameter from <code translate="no" dir="ltr">current</code> to <code translate="no" dir="ltr">centerItem</code> in <code translate="no" dir="ltr">TransformingLazyColumnFirstLayoutItemProvider</code>. Added <code translate="no" dir="ltr">TransformingLazyColumnState</code> extensions <code translate="no" dir="ltr">firstVisibleItemLayoutItemInfo</code> and <code translate="no" dir="ltr">layoutItemInfoOf</code>, and updated <code translate="no" dir="ltr">rememberTransformingLazyColumnFirstLayoutItemProvider</code> to use a clean, parameter-based lambda. (<a href="https://android-review.googlesource.com/#/q/I9a8d94990418f580ba59d5e6b4dac6def8c953dd">I9a8d9</a>, <a href="https://issuetracker.google.com/issues/503353428">b/503353428</a>)</p>
+ </li>
+ <li>
+  <p>Add overloads for multi-slot Material3 Button and Card content, for use with one-handed gestures. (<a href="https://android-review.googlesource.com/#/q/I74ccbf8c9a64e8426559120f1afc83013f92224b">I74ccb</a>, <a href="https://issuetracker.google.com/issues/515718015">b/515718015</a>, <a href="https://issuetracker.google.com/issues/490343658">b/490343658</a>)</p>
+ </li>
+ <li>
+  <p>Add accessibility support to one-handed gestures. (<a href="https://android-review.googlesource.com/#/q/I0054d69fd9beb16f5833a5bab2dcd5b2117a9bc6">I0054d</a>, <a href="https://issuetracker.google.com/issues/519085906">b/519085906</a>)</p>
+ </li>
+ <li>
+  <p>Rename <code translate="no" dir="ltr">OneHandedGestureDefaults.scrollToNextItem()</code> to <code translate="no" dir="ltr">OneHandedGestureDefaults.scrollDownToNextItem</code> and add <code translate="no" dir="ltr">wrapAround</code> parameter to <code translate="no" dir="ltr">OneHandedGestureDefaults</code> scroll functions (<a href="https://android-review.googlesource.com/#/q/I940ce1acf7f723f5949fd71ef427d3b1c8a90650">I940ce</a>, <a href="https://issuetracker.google.com/issues/509639667">b/509639667</a>)</p>
+ </li>
+ <li>
+  <p>Add non-composable <code translate="no" dir="ltr">Modifier.oneHandedGesture()</code> if developer wants to provide the key manually. (<a href="https://android-review.googlesource.com/#/q/I191e1f1b463ecf44b942d577aa63822bed6d9486">I191e1</a>, <a href="https://issuetracker.google.com/issues/504712626">b/504712626</a>)</p>
+ </li>
+ <li>
+  <p>Rename <code translate="no" dir="ltr">offsetOf</code> API in <code translate="no" dir="ltr">RevealState</code> to <code translate="no" dir="ltr">positionOf</code>. (<a href="https://android-review.googlesource.com/#/q/I2675f234b169c4d7fc9d5f80dd0cee119140f10f">I2675f</a>, <a href="https://issuetracker.google.com/issues/522387997">b/522387997</a>)</p>
+ </li>
+ <li>
+  <p>Introduced <code translate="no" dir="ltr">actionContentSpacing</code> parameter to <code translate="no" dir="ltr">SwipeToReveal</code>, allowing developers to customize the distance between action slots and the content. (<a href="https://android-review.googlesource.com/#/q/I2abaffb3006cb7fce409c1b0d3d8321049e74a81">I2abaf</a>, <a href="https://issuetracker.google.com/issues/507073912">b/507073912</a>)</p>
+ </li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ <li>Fixed an issue in <code translate="no" dir="ltr">ScreenScaffold</code> where recompositions could cause un-remembered <code translate="no" dir="ltr">ScrollInfoProvider</code> to reset scroll tracking state. (<a href="https://android-review.googlesource.com/#/q/I98f6d37223f8a89646fc42e69f89fa04616516ab">I98f6d</a>, <a href="https://issuetracker.google.com/issues/524620765">b/524620765</a>)</li>
+ <li><code translate="no" dir="ltr">TransformingLazyColumn</code> scrollbar color follows gesture indicator background color during indicator animation (<a href="https://android-review.googlesource.com/#/q/I353fbc3a69482f1f5f41dc4397134b4d4b83cb40">I353fb</a>, <a href="https://issuetracker.google.com/issues/524915104">b/524915104</a>)</li>
+ <li>Changed <code translate="no" dir="ltr">OneHandedGestureIndicator</code> default <code translate="no" dir="ltr">gestureIndicatorTint</code> to <code translate="no" dir="ltr">LocalContentColor</code> (<a href="https://android-review.googlesource.com/#/q/I1abd338803b0b4ebda8ae9ecb7ccaa0c52c01e45">I1abd3</a>, <a href="https://issuetracker.google.com/issues/524228063">b/524228063</a>)</li>
+ <li>Parameterize the content description of <code translate="no" dir="ltr">DatePicker</code>'s day and year pickers to support localization. (<a href="https://android-review.googlesource.com/#/q/I5dcd93282b696aabaf41ef66e0ae4a9178cca4a3">I5dcd9</a>, <a href="https://issuetracker.google.com/issues/430563857">b/430563857</a>)</li>
+ <li>Introduce adaptive display frequencies to <code translate="no" dir="ltr">GestureIndicators</code> based on whether an indicator renders inside or outside its host UI component. (<a href="https://android-review.googlesource.com/#/q/Ic618f9bb9d7da96fb83504e4d6c39f843ec6703f">Ic618f</a>, <a href="https://issuetracker.google.com/issues/515071642">b/515071642</a>)</li>
+ <li>Fix concurrency issue when triggering one-handed gestures (<a href="https://android-review.googlesource.com/#/q/I7b95fdc4d94a32ef9088cabbe53cf63b06fcbe4f">I7b95f</a>, <a href="https://issuetracker.google.com/issues/512086558">b/512086558</a>)</li>
+</ul>
+
+<h2>Wear Remote Compose Material 3: </h2>
+
+
+<h2>wear protolayout: v1.4.1</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.wear.protolayout:protolayout-*:1.4.1</code> is released. Version 1.4.1 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/50d7308cb64d77392a80697500e504863780ca24..81d018cf57252f81bc13a95eb11dc08f2e3bf723/wear/protolayout">these commits</a>.</p>
+<p><strong>Vulnerability &amp; Security Fixes</strong></p>
+<ul>
+ <li>Enforced a <code translate="no" dir="ltr">2048px</code> dimension limit and <code translate="no" dir="ltr">20MB</code> raw size maximum on images to <strong>prevent memory exhaustion</strong>.</li>
+ <li><strong>Enforced layout depth checks</strong> by fixing a bug that allowed deep layouts to skip depth enforcement during fingerprint optimizations.</li>
+ <li><strong>Prevented an array bounds exception/crash</strong> caused by unbounded gap parameters in <code translate="no" dir="ltr">DashedArcLine</code>.</li>
+ <li>Replaced uncaught <code translate="no" dir="ltr">IllegalArgumentExceptions</code> with <strong>safer error logging and node invalidation in expression pipeline</strong>.</li>
+ <li>Fixed an uncaught <code translate="no" dir="ltr">NullPointerException</code> when <strong>processing malformed image URIs</strong>.</li>
+</ul>
+
+<h2>Wear Tiles: v1.6.1</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.wear.tiles:tiles-*:1.6.1</code> is released. Version 1.6.1 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/50d7308cb64d77392a80697500e504863780ca24..81d018cf57252f81bc13a95eb11dc08f2e3bf723/wear/tiles">these commits</a>.</p>
+<p><strong>Vulnerability &amp; Security Fixes</strong></p>
+<ul>
+ <li>Fixed a potential <code translate="no" dir="ltr">IllegalStateException</code> race condition in <code translate="no" dir="ltr">TilesConnectionBinder</code> that occurred during service connection callbacks called from unexpected threads.</li>
+</ul>
+
+<h2>Webkit: </h2>
+
+
+<h2>Jetpack Compose Glimmer: v1.0.0-alpha15</h2>
+<p>July 01, 2026</p>
+<p><code translate="no" dir="ltr">androidx.xr.glimmer:glimmer:1.0.0-alpha15</code> and <code translate="no" dir="ltr">androidx.xr.glimmer:glimmer-google-fonts:1.0.0-alpha15</code> are released. Version 1.0.0-alpha15 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/d0d5e8b902b1ded8854df7d27fa1d1ee14e3bb4c..f7668b81600bdf22bc975d3fc38e6fd22c94b585/xr/glimmer">these commits</a>.</p>
 </body>
 </html>
