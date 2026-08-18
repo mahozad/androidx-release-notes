@@ -39,6 +39,11 @@ val latestReleaseItems = latestRelease.contents.first().value
 writer.write("""<base href="https://developer.android.com/" target="_blank"/>""")
 writer.write("\n\n")
 
+// To prevent GitHub release body from exceeding 125000 chars
+// because GitHub does not allow that
+val gitHubReleaseMaxAllowedChars = 125_000
+var releaseCharCount = 0
+
 Jsoup
     .parse(latestReleaseItems)
     .select("a")
@@ -46,7 +51,14 @@ Jsoup
     .map(Element::toLink)
     .map(LinkString::toLinkDocument)
     .map(LinkDocument::toReleaseNote)
-    .forEach(writer::write)
+    .forEach {
+        if (releaseCharCount + it.length < gitHubReleaseMaxAllowedChars) {
+            releaseCharCount += it.length
+            writer.write(it)
+        } else {
+            // TODO: Do something
+        }
+    }
     .also { writer.close() }
     .also { reader.close() }
 
