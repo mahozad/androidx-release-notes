@@ -66,310 +66,47 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Activity: </h2>
-
-
-<h2>Annotation: </h2>
-
-
-<h2>Benchmark: </h2>
-
-
-<h2>Car App: </h2>
-
-
-<h2>Collection: </h2>
-
-
-<h2>Compose Animation: </h2>
-
-
-<h2>Compose Animation: </h2>
-
-
-<h2>Compose Foundation: </h2>
-
-
-<h2>Compose Foundation: </h2>
-
-
-<h2>Compose Material: </h2>
-
-
-<h2>Compose Material: </h2>
-
-
-<h2>Compose Material 3: </h2>
-
-
-<h2>Compose Material 3 Adaptive: </h2>
-
-
-<h2>remote compose: </h2>
-
-
-<h2>Compose Remote Foundation: v1.0.0-alpha02</h2>
-<p>September 09, 2026</p>
-<p><code translate="no" dir="ltr">androidx.compose.remote.foundation:foundation:1.0.0-alpha02</code> is released. Version 1.0.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f3ed195f0c9ef9eafe437351d974c9ec49ecc2ea..e4bd62f853853bf3522ed15681c58ef28b09ed44/compose/remote/foundation/foundation">these commits</a>.</p>
-<p><strong>Bug Fixes</strong></p>
+<h2>Media3: 1.11.1</h2>
+<p>September 10, 2026</p>
 <ul>
- <li><code translate="no" dir="ltr">compileSdk</code> for Compose libraries updated to 37.1. This will require transitively updating <code translate="no" dir="ltr">compileSdk</code> for all apps and libraries using Compose. (<a href="https://android-review.googlesource.com/#/q/I05b0f9385d2b99ddcc4041b2ce2d96aea3bd391e">I05b0f</a>)</li>
+ <li>ExoPlayer:
+  <ul>
+   <li>Move the flag to enable/disable HAGC metadata for progressive media from <code translate="no" dir="ltr">MediaSource.Factory</code> to <code translate="no" dir="ltr">ExtractorsFactory</code>. The previous <code translate="no" dir="ltr">setExperimentalEnableHagcPlayback</code> method is removed and replaced by <code translate="no" dir="ltr">ExtractorsFactory.setParseHagcMetadata</code>. This also resolves an issue where disabling didn't work for Matroska/WebM containers.</li>
+   <li>Fix a playback stall caused when prewarming a non-transitioning secondary renderer.</li>
+   <li>Fix pre-warming issue where the <code translate="no" dir="ltr">Surface</code> should be returned to the primary renderer when a seek resets and disables both renderers.</li>
+   <li>Fix <code translate="no" dir="ltr">ArrayIndexOutOfBoundsException</code> when a live timeline refresh moves the default position past a server-side inserted ad that is currently being played (<a href="https://github.com/androidx/media/issues/3348">#3348</a>).</li>
+   <li>Fix a scrubbing mode issue where stale video frames could be briefly displayed when seeking with <code translate="no" dir="ltr">ScrubbingModeParameters.allowSkippingMediaCodecFlush</code> enabled.</li>
+  </ul></li>
+ <li>Extractors:
+  <ul>
+   <li>Matroska: Fix issue where Tracks placed after clusters wouldn't result in a seekable timeline (<a href="https://github.com/androidx/media/issues/3377">#3377</a>).</li>
+  </ul></li>
+ <li>Audio:
+  <ul>
+   <li>Fix buffer size calculation in <code translate="no" dir="ltr">SilenceSkippingAudioProcessor</code> so that the minimum silence duration is not incorrectly scaled down by the frame size (<a href="https://github.com/androidx/media/pull/3271">#3271</a>).</li>
+   <li>Fix 8-bit PCM handling in <code translate="no" dir="ltr">PcmAudioUtil</code> to treat samples as unsigned as defined by Android (<a href="https://github.com/androidx/media/pull/3271">#3271</a>).</li>
+   <li>Fix offload issue in which playback could stall during pre-roll or gapless transitions due to limited hardware buffer sizes.</li>
+   <li>Fix bug in <code translate="no" dir="ltr">DefaultAudioSink</code> where release count doesn't decrease when playback thread is no longer alive (<a href="https://github.com/androidx/media/issues/3338">#3338</a>).</li>
+  </ul></li>
+ <li>Session:
+  <ul>
+   <li>Fix <code translate="no" dir="ltr">NullPointerException</code> when an in-process <code translate="no" dir="ltr">MediaController</code> is released from a <code translate="no" dir="ltr">Player.Listener</code> callback (<a href="https://github.com/androidx/media/issues/3375">#3375</a>).</li>
+   <li>Fix deadlock on the main thread when a legacy <code translate="no" dir="ltr">MediaBrowser</code> connects to a service returning an asynchronous result from <code translate="no" dir="ltr">onGetLibraryRoot()</code> or <code translate="no" dir="ltr">onConnectAsync()</code> (<a href="https://github.com/androidx/media/issues/3393">#3393</a>).</li>
+  </ul></li>
+ <li>HLS extension:
+  <ul>
+   <li>Fix calculation of content resume offset when the target segment for snapping is not yet in the playlist (<a href="https://github.com/androidx/media/issues/3322">#3322</a>).</li>
+   <li>Fix an issue where a fully consumed <code translate="no" dir="ltr">HlsMediaChunk</code> retries loading on receiving <code translate="no" dir="ltr">EOFException</code> from the extractor (<a href="https://github.com/androidx/media/issues/3350">#3350</a>).</li>
+  </ul></li>
+ <li>DASH extension:
+  <ul>
+   <li>Fix incorrect sample timestamp calculation for image tracks with a <code translate="no" dir="ltr">presentationTimeOffset</code> (<a href="https://github.com/androidx/media/issues/3334">#3334</a>).</li>
+  </ul></li>
+ <li>Decoder extensions (FFmpeg, VP9, AV1, etc.):
+  <ul>
+   <li>Opus: Fix memory corruption when multiple <code translate="no" dir="ltr">OpusDecoder</code> instances are initialized concurrently.</li>
+   <li>MPEG-H: Fix memory leak, truncation of non-ASCII characters, and potential native crash under low-memory conditions when sending commands to the <code translate="no" dir="ltr">MpeghUiManager</code> (<a href="https://github.com/androidx/media/issues/3365">#3365</a>).</li>
+  </ul></li>
 </ul>
-
-<h2>Compose Runtime: </h2>
-
-
-<h2>Compose Runtime: </h2>
-
-
-<h2>Compose UI: </h2>
-
-
-<h2>Compose UI: </h2>
-
-
-<h2>Core Ultra Wideband (UWB): </h2>
-
-
-<h2>credentials providerevents: </h2>
-
-
-<h2>DataStore: </h2>
-
-
-<h2>Emoji2: </h2>
-
-
-<h2>Glance Adaptive: v1.0.0-alpha02</h2>
-<p>September 09, 2026</p>
-<p><code translate="no" dir="ltr">androidx.glance.adaptive:adaptive-appwidget:1.0.0-alpha02</code>, <code translate="no" dir="ltr">androidx.glance.adaptive:adaptive-core:1.0.0-alpha02</code>, and <code translate="no" dir="ltr">androidx.glance.adaptive:adaptive-wear:1.0.0-alpha02</code> are released. Version 1.0.0-alpha02 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f3ed195f0c9ef9eafe437351d974c9ec49ecc2ea..e4bd62f853853bf3522ed15681c58ef28b09ed44/glance/adaptive">these commits</a>.</p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li><code translate="no" dir="ltr">compileSdk</code> for Compose libraries updated to 37.1. This will require transitively updating <code translate="no" dir="ltr">compileSdk</code> for all apps and libraries using Compose. (<a href="https://android-review.googlesource.com/#/q/I05b0f9385d2b99ddcc4041b2ce2d96aea3bd391e">I05b0f</a>)</li>
-</ul>
-<h4 id="1.0.0-alpha01" data-text="Version 1.0.0-alpha01" tabindex="-1">Version 1.0.0-alpha01</h4>
-<p>August 26, 2026</p>
-<p><code translate="no" dir="ltr">androidx.glance.adaptive:adaptive-appwidget:1.0.0-alpha01</code>, <code translate="no" dir="ltr">androidx.glance.adaptive:adaptive-core:1.0.0-alpha01</code>, and <code translate="no" dir="ltr">androidx.glance.adaptive:adaptive-wear:1.0.0-alpha01</code> are released. Version 1.0.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/f3ed195f0c9ef9eafe437351d974c9ec49ecc2ea/glance/adaptive">these commits</a>.</p>
-<p>This is the initial release of the Glance Adaptive library - the library for building template-first <code translate="no" dir="ltr">RemoteCompose</code> Widgets for multiple form factors and surfaces across Android ecosystem.</p>
-<devsite-hats-survey class="nocontent" data-nosnippet hats-id="VxqvKSur40kxBYCLVTd0SSGykbno" listnr-id="5207477"></devsite-hats-survey>
-
-<h2>Glance Wear: </h2>
-
-
-<h2>Heifwriter: </h2>
-
-
-<h2>ink: </h2>
-
-
-<h2>Lifecycle: </h2>
-
-
-<h2>Mediarouter: </h2>
-
-
-<h2>Navigation: </h2>
-
-
-<h2>navigation3: </h2>
-
-
-<h2>Room: </h2>
-
-
-<h2>Room 3.0: </h2>
-
-
-<h2>Room 3.0: </h2>
-
-
-<h2>Savedstate: </h2>
-
-
-<h2>Security: v1.0.0</h2>
-<p>July 30, 2025</p>
-<p><code translate="no" dir="ltr">androidx.security:security-app-authenticator:1.0.0</code> and <code translate="no" dir="ltr">androidx.security:security-app-authenticator-testing:1.0.0</code> are released. Version 1.0.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/5a63cd1b3ff7a88c2b3df6bbe7dcf4c4290a9e8e..12e7f8e66c5e70ca5c59342b4fb6c82e6e50a37c/security">these commits</a>.</p>
-<h4 id="security-app-authenticator-testing-1.0.0-rc01" data-text="Version 1.0.0-rc01" tabindex="-1">Version 1.0.0-rc01</h4>
-<p>May 20, 2025</p>
-<p><code translate="no" dir="ltr">androidx.security:security-app-authenticator:1.0.0-rc01</code> and <code translate="no" dir="ltr">androidx.security:security-app-authenticator-testing:1.0.0-rc01</code> are released. Version 1.0.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/638a8d3a474af45f6ad5fdc3d6d1836ea42d1778..5a63cd1b3ff7a88c2b3df6bbe7dcf4c4290a9e8e/security">these commits</a>.</p>
-<h4 id="security-app-authenticator-1.0.0-rc01" data-text="Version 1.0.0-rc01" tabindex="-1">Version 1.0.0-rc01</h4>
-<p>May 20, 2025</p>
-<p><code translate="no" dir="ltr">androidx.security:security-app-authenticator:1.0.0-rc01</code> and <code translate="no" dir="ltr">androidx.security:security-app-authenticator-testing:1.0.0-rc01</code> are released. Version 1.0.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/638a8d3a474af45f6ad5fdc3d6d1836ea42d1778..5a63cd1b3ff7a88c2b3df6bbe7dcf4c4290a9e8e/security">these commits</a>.</p>
-<h4 id="security-app-authenticator-testing-1.0.0-beta01" data-text="Version 1.0.0-beta01" tabindex="-1">Version 1.0.0-beta01</h4>
-<p>March 6, 2024</p>
-<p><code translate="no" dir="ltr">androidx.security:security-app-authenticator:1.0.0-beta01</code> and <code translate="no" dir="ltr">androidx.security:security-app-authenticator-testing:1.0.0-beta01</code> are released. Version 1.0.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/9174577f8a57ba4ae4958cc31787ea4db3b2b44a..638a8d3a474af45f6ad5fdc3d6d1836ea42d1778/security">these commits</a>.</p>
-<h4 id="security-app-authenticator-1.0.0-beta01" data-text="Version 1.0.0-beta01" tabindex="-1">Version 1.0.0-beta01</h4>
-<p>March 6, 2024</p>
-<p><code translate="no" dir="ltr">androidx.security:security-app-authenticator:1.0.0-beta01</code> and <code translate="no" dir="ltr">androidx.security:security-app-authenticator-testing:1.0.0-beta01</code> are released. Version 1.0.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/9174577f8a57ba4ae4958cc31787ea4db3b2b44a..638a8d3a474af45f6ad5fdc3d6d1836ea42d1778/security">these commits</a>.</p>
-<h4 id="security-app-authenticator-1.0.0-alpha03" data-text="Version 1.0.0-alpha03" tabindex="-1">Version 1.0.0-alpha03</h4>
-<p>December 13, 2023</p>
-<p><code translate="no" dir="ltr">androidx.security:security-app-authenticator:1.0.0-alpha03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/86ff5b4bb956431ec884586ce0aea0127e189ec4..9174577f8a57ba4ae4958cc31787ea4db3b2b44a/security/security-app-authenticator">Version 1.0.0-alpha03 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Added support for use cases where the UID / PID of the package to be verified is not available; the APIs now support cases such as <code translate="no" dir="ltr">startActivityForResult</code> and activities / receivers where the calling app's identity is shared via <code translate="no" dir="ltr">[Activity|Broadcast]Options#setShareIdentityEnabled</code>.</li>
- <li>The behavior of <code translate="no" dir="ltr">[check|enforce]CallingAppIdentity(String, String)</code> has been updated to support these new use cases; these methods will no longer default to using <code translate="no" dir="ltr">Binder#getCalling[Uid|Pid]</code> but will instead skip verification of the calling package's UID if it is not explicitly provided. (<a href="https://android-review.googlesource.com/#/q/I1851bd20049e5be1d208a24633423080c5e38f7c">I1851b</a>)</li>
-</ul>
-<h4 id="security-app-authenticator-testing-1.0.0-alpha02" data-text="Version 1.0.0-alpha02" tabindex="-1">Version 1.0.0-alpha02</h4>
-<p>December 13, 2023</p>
-<p><code translate="no" dir="ltr">androidx.security:security-app-authenticator-testing:1.0.0-alpha02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/86ff5b4bb956431ec884586ce0aea0127e189ec4..9174577f8a57ba4ae4958cc31787ea4db3b2b44a/security/security-app-authenticator-testing">Version 1.0.0-alpha02 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Updated test for new API behavior that no longer assumes <code translate="no" dir="ltr">Binder#getCalling[Uid|Pid]</code> when not provided to the <code translate="no" dir="ltr">[check|enforce]CallingAppIdentity</code> APIs. (<a href="https://android-review.googlesource.com/#/q/I1851bd20049e5be1d208a24633423080c5e38f7c">I1851b</a>)</li>
-</ul>
-<h4 id="security-app-authenticator-1.0.0-alpha02" data-text="Version 1.0.0-alpha02" tabindex="-1">Version 1.0.0-alpha02</h4>
-<p>June 2, 2021</p>
-<p><code translate="no" dir="ltr">androidx.security:security-app-authenticator:1.0.0-alpha02</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/3d6f168394d1dd14e1d6f5b6dc4a0d405cb1a26a..86ff5b4bb956431ec884586ce0aea0127e189ec4/security/security-app-authenticator">Version 1.0.0-alpha02 contains these commits.</a></p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>In preparation to support the new <code translate="no" dir="ltr">knownSigner</code> permission protection flag introduced in Android 12, the digestAlgorithm attribute can no longer be specified in the configuration; instead all certificate digests should be computed using SHA-256.</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>All certificate digests provided in the configuration are now normalized to ensure a successful signature match can be reported both when the digest is computed at runtime as well as when an explicit signing identity is defined when using the testing library.</li>
-</ul>
-<h4 id="security-app-authenticator-testing-1.0.0-alpha01" data-text="Version 1.0.0-alpha01" tabindex="-1">Version 1.0.0-alpha01</h4>
-<p>June 2, 2021</p>
-<p><code translate="no" dir="ltr">androidx.security:security-app-authenticator-testing:1.0.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/86ff5b4bb956431ec884586ce0aea0127e189ec4/security/security-app-authenticator-testing">Version 1.0.0-alpha01 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
-<p>This testing library provides a builder that can be used to configure an injectable AppAuthenticator to meet the requirements of the test. This library supports several methods to configure the AppAuthenticator:</p>
-<ul>
- <li>A generic test policy can be specified that reports a signature match for all packages declared in the configuration.</li>
- <li>Individual packages can be specified to return a signature match with all other packages reporting no match.</li>
- <li>Explicit signing identities can be set for each package; the resulting AppAuthenticator will then only report a signature match if the provided identity matches the declaration in the configuration file.</li>
- <li>Packages can also be treated as not installed or having an explicit uid.</li>
-</ul>
-<h4 id="security-app-authenticator-1.0.0-alpha01" data-text="Version 1.0.0-alpha01" tabindex="-1">Version 1.0.0-alpha01</h4>
-<p>May 5, 2021</p>
-<p><code translate="no" dir="ltr">androidx.security:security-app-authenticator:1.0.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/3d6f168394d1dd14e1d6f5b6dc4a0d405cb1a26a/security/security-app-authenticator">Version 1.0.0-alpha01 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
-<p>AppAuthenticator is a new library aimed at simplifying verification of app trust based on signing identity. An app just needs to specify an XML configuration file containing the package names and signing identities of trusted apps, and the library will take care of verifying the signing identity of apps at runtime.</p>
-
-<h2>Security: v1.1.0</h2>
-<p>July 30, 2025</p>
-<p><code translate="no" dir="ltr">androidx.security:security-crypto:1.1.0</code> and <code translate="no" dir="ltr">androidx.security:security-crypto-ktx:1.1.0</code> are released. Version 1.1.0 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/e716aa82e6b27956a442460a66e512a8e7376ccd..12e7f8e66c5e70ca5c59342b4fb6c82e6e50a37c/security">these commits</a>.</p>
-<h4 id="1.1.0-rc01" data-text="Version 1.1.0-rc01" tabindex="-1">Version 1.1.0-rc01</h4>
-<p>July 2, 2025</p>
-<p><code translate="no" dir="ltr">androidx.security:security-crypto:1.1.0-rc01</code> and <code translate="no" dir="ltr">androidx.security:security-crypto-ktx:1.1.0-rc01</code> are released. Version 1.1.0-rc01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/786176dc2284c87a0e620477608e0aca9adeff15..e716aa82e6b27956a442460a66e512a8e7376ccd/security">these commits</a>.</p>
-<h4 id="security-crypto-1.1.0-beta01" data-text="Version 1.1.0-beta01" tabindex="-1">Version 1.1.0-beta01</h4>
-<p>June 4, 2025</p>
-<p><code translate="no" dir="ltr">androidx.security:security-crypto:1.1.0-beta01</code> and <code translate="no" dir="ltr">androidx.security:security-crypto-ktx:1.1.0-beta01</code> are released. Version 1.1.0-beta01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/4c37298a97c16270c139eb812ddadaba03e23a52..786176dc2284c87a0e620477608e0aca9adeff15/security">these commits</a>.</p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Deprecated all APIs in favour of existing platform APIs and direct use of Android Keystore.</li>
-</ul>
-<h4 id="security-crypto-1.1.0-alpha07" data-text="Version 1.1.0-alpha07" tabindex="-1">Version 1.1.0-alpha07</h4>
-<p>April 9, 2025</p>
-<p><code translate="no" dir="ltr">androidx.security:security-crypto:1.1.0-alpha07</code> and <code translate="no" dir="ltr">androidx.security:security-crypto-ktx:1.1.0-alpha07</code> are released. Version 1.1.0-alpha07 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/617e5f259a688901040e1f508ecd2d6deb84e6b8..4c37298a97c16270c139eb812ddadaba03e23a52/security">these commits</a>.</p>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Deprecated all APIs in favour of existing platform APIs and direct use of Android Keystore.</li>
-</ul>
-<h4 id="security-crypto-1.1.0-alpha06" data-text="Version 1.1.0-alpha06" tabindex="-1">Version 1.1.0-alpha06</h4>
-<p>April 19, 2023</p>
-<p><code translate="no" dir="ltr">androidx.security:security-crypto:1.1.0-alpha06</code> and <code translate="no" dir="ltr">androidx.security:security-crypto-ktx:1.1.0-alpha06</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/d5d49509dce56dc77715207ebb30b068e3e70eb5..617e5f259a688901040e1f508ecd2d6deb84e6b8/security">Version 1.1.0-alpha06 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Updated Tink dependency to 1.8.0</li>
-</ul>
-<h4 id="security-crypto-1.1.0-alpha05" data-text="Version 1.1.0-alpha05" tabindex="-1">Version 1.1.0-alpha05</h4>
-<p>February 22, 2023</p>
-<p><code translate="no" dir="ltr">androidx.security:security-crypto:1.1.0-alpha05</code> and <code translate="no" dir="ltr">androidx.security:security-crypto-ktx:1.1.0-alpha05</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/a1e318590b217ecfce1b2de17eed2f18b6a680bb..d5d49509dce56dc77715207ebb30b068e3e70eb5/security">Version 1.1.0-alpha05 contains these commits.</a></p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Fixed a race condition in <code translate="no" dir="ltr">MasterKeys.getOrCreate</code> (<a href="https://android-review.googlesource.com/#/q/I3391e7ba62acfa942432eba402e74d64e2e5e98a">I3391e</a>, <a href="https://issuetracker.google.com/issues/268572037">b/268572037</a>)</li>
-</ul>
-<h4 id="security-crypto-1.1.0-alpha04" data-text="Version 1.1.0-alpha04" tabindex="-1">Version 1.1.0-alpha04</h4>
-<p>November 9, 2022</p>
-<p><code translate="no" dir="ltr">androidx.security:security-crypto:1.1.0-alpha04</code> and <code translate="no" dir="ltr">androidx.security:security-crypto-ktx:1.1.0-alpha04</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/66681ad83c328d0dd821b943bb3d375f02c1db61..a1e318590b217ecfce1b2de17eed2f18b6a680bb/security">Version 1.1.0-alpha04 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Removed log message “keyset not found, will generate a new one” on first app launch. (<a href="https://issuetracker.google.com/issues/185219606">b/185219606</a>)</li>
- <li>Upgraded Tink dependency to version 1.7.0.</li>
-</ul>
-<p><strong>API Changes</strong></p>
-<ul>
- <li>Changes <code translate="no" dir="ltr">EncryptedFile#openFileInput()</code> to throw a <code translate="no" dir="ltr">FileNotFoundException</code>, rather than a generic <code translate="no" dir="ltr">IOException</code> when the requested file doesn't exist. (<a href="https://android-review.googlesource.com/#/q/I80e415bfd53e9e9f3b9a456d50b6b90c0a00c621">I80e41</a>, <a href="https://issuetracker.google.com/issues/148804719">b/148804719</a>)</li>
- <li>Updated 'MasterKeys' class to require Android M rather than each of its methods. (<a href="https://android-review.googlesource.com/#/q/I8b4b8354c197af50300ab37f7d1aeed8fdcd79df">I8b4b8</a>)</li>
- <li>Changes all preference getters on <code translate="no" dir="ltr">EncryptedSharedPreferences</code> (ex <code translate="no" dir="ltr">#getString</code>, <code translate="no" dir="ltr">#getInt</code>) to throw <code translate="no" dir="ltr">SecurityException</code> in rare circumstances where the type of a value can not be matched with one of the defined enum variants. (<a href="https://issuetracker.google.com/issues/241699427">b/241699427</a>)</li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Synchronized security-crypto-ktx library’s minimum SDK version with security-crypto by lowering it to v21 (<a href="https://issuetracker.google.com/issues/193550375">b/193550375</a>)</li>
- <li>Fixed concurrency bug when building multiple <code translate="no" dir="ltr">EncryptedFile</code>s (<a href="https://issuetracker.google.com/issues/136590547">b/136590547</a>)</li>
-</ul>
-<p><strong>External Contribution</strong></p>
-<ul>
- <li>Received a fix for <code translate="no" dir="ltr">EncryptedSharedPreferences.Editor#remove</code> from chr.ibbotson@gmail.com (<a href="https://issuetracker.google.com/issues/224994760">b/224994760</a>, <a href="https://issuetracker.google.com/issues/134197835">b/134197835</a>, <a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/2163645">f44d44d</a>)</li>
-</ul>
-<h4 id="security-crypto-ktx-1.1.0-alpha03" data-text="Security-Crypto-Ktx Version 1.1.0-alpha03" tabindex="-1">Security-Crypto-Ktx Version 1.1.0-alpha03</h4>
-<p>May 18, 2021</p>
-<p><code translate="no" dir="ltr">androidx.security:security-crypto-ktx:1.1.0-alpha03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/316f882e649c600372170f013a18515f590f490d..66681ad83c328d0dd821b943bb3d375f02c1db61/security/security-crypto-ktx">Version 1.1.0-alpha03 contains these commits.</a></p>
-<p>Updated to match <code translate="no" dir="ltr">androidx.security:security-crypto:1.1.0-alpha03</code>.</p>
-<h4 id="security-crypto-1.1.0-alpha03" data-text="Version 1.1.0-alpha03" tabindex="-1">Version 1.1.0-alpha03</h4>
-<p>December 2, 2020</p>
-<p><code translate="no" dir="ltr">androidx.security:security-crypto:1.1.0-alpha03</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/316f882e649c600372170f013a18515f590f490d..38a668d3ef95f40ad28d6e735a2c3eb95ae4cf63/security/crypto">Version 1.1.0-alpha03 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Updated Tink to stable release <code translate="no" dir="ltr">1.5.0</code></li>
-</ul>
-<h4 id="security-crypto-1.1.0-alpha02" data-text="Version 1.1.0-alpha02" tabindex="-1">Version 1.1.0-alpha02</h4>
-<p>August 5, 2020</p>
-<p><code translate="no" dir="ltr">androidx.security:security-crypto:1.1.0-alpha02</code> and <code translate="no" dir="ltr">androidx.security:security-crypto-ktx:1.1.0-alpha02</code> are released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/316f882e649c600372170f013a18515f590f490d/security">Version 1.1.0-alpha02 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Updated Tink to stable release <code translate="no" dir="ltr">1.4.0</code></li>
-</ul>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Tink update should fix R8 and Proguard issues with shaded Protobuf dependency.</li>
- <li>Tink update should gracefully handle AndroidKeyStore concurrency failures.</li>
-</ul>
-<p><strong>External Contribution</strong></p>
-<ul>
- <li>clear <code translate="no" dir="ltr">mKeysChanged</code> on apply, fix for EncryptedSharedPreferences (<a href="https://android-review.googlesource.com/c/platform/frameworks/support/+/1323026">aosp/1323026</a>)</li>
-</ul>
-<h4 id="security-crypto-1.1.0-alpha01" data-text="Version 1.1.0-alpha01" tabindex="-1">Version 1.1.0-alpha01</h4>
-<p>June 10, 2020</p>
-<p><code translate="no" dir="ltr">androidx.security:security-crypto:1.1.0-alpha01</code> is released. <a href="https://android.googlesource.com/platform/frameworks/support/+log/6be101c2241593fee3ef9ab4e1fb337b485f2f9a..945594abd75f83bd14daf4fbcd8621796161281e/security/crypto">Version 1.1.0-alpha01 contains these commits.</a></p>
-<p><strong>New Features</strong></p>
-<ul>
- <li>Lollipop (API Level 21+) is now supported. Please note that the AndroidKeyStore is <em>not</em> used for API 21 and 22. (<a href="https://android-review.googlesource.com/#/q/I7c12d205273e4b652271865e53ff6c406632f407">I7c12d</a>, <a href="https://issuetracker.google.com/issues/132325342">b/132325342</a>)</li>
- <li>New MasterKey class provides more options for keys, also deprecating MasterKeys to support new features and versions of Android that do not have KeyGenParamSpec.</li>
-</ul>
-
-<h2>Sqlite: </h2>
-
-
-<h2>Sqlite: </h2>
-
-
-<h2>Tracing: </h2>
-
-
-<h2>Wear Compose: </h2>
-
-
-<h2>Wear Remote Compose Material 3: </h2>
-
-
-<h2>Webkit: </h2>
-
-
-<h2>ARCore for Jetpack XR: </h2>
-
-
-<h2>Jetpack Compose Glimmer: </h2>
-
-
-<h2>XR Projected: </h2>
-
-
-<h2>XR Runtime: </h2>
-
-
-<h2>XR Runtime: </h2>
-
-
-<h2>Jetpack SceneCore: </h2>
 </body>
 </html>
