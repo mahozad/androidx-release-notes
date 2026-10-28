@@ -66,14 +66,88 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Media3: v1.12.0-alpha02</h2>
-<p>October 26, 2026</p>
-<p>Version 1.12.0-alpha02 contains the following <a href="https://github.com/androidx/media/commits/1.12.0-alpha02">commits</a>.</p>
-<ul>
- <li>Effect Play services:
-  <ul>
-   <li>Introduce a new <code translate="no" dir="ltr">media3-effect-play-services</code> module providing Google Play services media effects, including <code translate="no" dir="ltr">EnhancementSessionDecorator</code> for video enhancement and <code translate="no" dir="ltr">StudioSoundAudioProcessor</code> for audio source separation.</li>
-  </ul></li>
-</ul>
+<h2>Appstate Statestore: v1.0.0-alpha01</h2>
+<p>October 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.appstate.statestore:statestore-*:1.0.0-alpha01</code> is released. Version 1.0.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/56ca943f55b3d53ce513a0fa356fe8fe4c43fe9f/appstate/statestore">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<p><a href="https://developer.android.com/reference/kotlin/androidx/appstate/statestore/package-summary"><code translate="no" dir="ltr">AppState StateStore</code></a> is a new library built on the Compose runtime that acts as a wrapper to provide custom integrations. The <code translate="no" dir="ltr">androidx.appstate.statestore</code> artifact provides the library APIs and it also comes with a <code translate="no" dir="ltr">androidx.appstate.statestore:statestore-datastore</code> artifact for state persistence. Developers can use <code translate="no" dir="ltr">StateStore</code> to hoist their snapshot state into their application layer and the datastore integration to persist that state.</p>
+<div></div>
+<devsite-code>
+ <pre class="devsite-click-to-copy" translate="no" dir="ltr" is-upgraded syntax="Perl6" syntax-guessed><code translate="no" dir="ltr"><span class="devsite-syntax-k">class</span> <span class="devsite-syntax-n">MyApplication</span> : <span class="devsite-syntax-n">Application</span>() {
+    <span class="devsite-syntax-nb">val</span> <span class="devsite-syntax-n">stateStore</span> = <span class="devsite-syntax-n">StateStore</span>()
+    <span class="devsite-syntax-nb">private</span> <span class="devsite-syntax-nb">val</span> <span class="devsite-syntax-nb">scope</span> = <span class="devsite-syntax-n">CoroutineScope</span>(<span class="devsite-syntax-n">SupervisorJob</span>() + <span class="devsite-syntax-n">Dispatchers</span>.<span class="devsite-syntax-n">Default</span>)
+
+    <span class="devsite-syntax-n">override</span> <span class="devsite-syntax-n">fun</span> <span class="devsite-syntax-n">onCreate</span>() {
+        <span class="devsite-syntax-n">super</span>.<span class="devsite-syntax-n">onCreate</span>()
+
+        <span class="devsite-syntax-nb">scope</span>.<span class="devsite-syntax-n">launch</span> {
+            // <span class="devsite-syntax-n">Start</span> <span class="devsite-syntax-n">the</span> <span class="devsite-syntax-n">listener</span> <span class="devsite-syntax-nb">in</span> <span class="devsite-syntax-n">a</span> <span class="devsite-syntax-nb">child</span> <span class="devsite-syntax-n">coroutine</span> <span class="devsite-syntax-nb">so</span> <span class="devsite-syntax-n">it</span> <span class="devsite-syntax-n">doesn't</span> <span class="devsite-syntax-nb">block</span> <span class="devsite-syntax-n">the</span> <span class="devsite-syntax-n">outer</span> <span class="devsite-syntax-nb">scope</span>
+            <span class="devsite-syntax-n">launch</span> {
+                <span class="devsite-syntax-k">try</span> {
+                    <span class="devsite-syntax-n">stateStore</span>
+                        .<span class="devsite-syntax-n">syncToDataStore</span>(<span class="devsite-syntax-n">dataStoreFile</span>(<span class="devsite-syntax-s">"settings"</span>).<span class="devsite-syntax-n">absolutePath</span>, <span class="devsite-syntax-n">this</span>)
+                } <span class="devsite-syntax-n">catch</span> (<span class="devsite-syntax-n">e:</span> <span class="devsite-syntax-nb">Exception</span>) {
+                    <span class="devsite-syntax-nb">e</span>.<span class="devsite-syntax-n">printStackTrace</span>()
+                }
+            }
+        }
+    }
+}
+</code></pre>
+</devsite-code>
+<devsite-hats-survey class="nocontent" data-nosnippet hats-id="VxqvKSur40kxBYCLVTd0SSGykbno" listnr-id="5207477"></devsite-hats-survey>
+
+<h2>Appstate Transform: v1.0.0-alpha01</h2>
+<p>October 28, 2026</p>
+<p><code translate="no" dir="ltr">androidx.appstate.transform:transform-*:1.0.0-alpha01</code> is released. Version 1.0.0-alpha01 contains <a href="https://android.googlesource.com/platform/frameworks/support/+log/56ca943f55b3d53ce513a0fa356fe8fe4c43fe9f/appstate/transform">these commits</a>.</p>
+<p><strong>New Features</strong></p>
+<p><a href="https://developer.android.com/reference/kotlin/androidx/appstate/transform/package-summary"><code translate="no" dir="ltr">AppState Transform</code></a> is a new library built on the Compose runtime that allows for running a composition outside of your UI. The <code translate="no" dir="ltr">androidx.appstate.transform:transform</code> artifact provides the library APIs and it also comes with a <code translate="no" dir="ltr">androidx.appstate.transform:transform-testing</code> artifact for testing. Developers can use Transform to manage their composition anywhere within their app.</p>
+<div></div>
+<devsite-code>
+ <pre class="devsite-click-to-copy" translate="no" dir="ltr" is-upgraded syntax="GDScript" syntax-guessed><code translate="no" dir="ltr"><span class="devsite-syntax-o">//</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">With</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">helper</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">function</span>
+<span class="devsite-syntax-k">var</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">sourceState</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">by</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">mutableStateOf</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-mi">0</span><span class="devsite-syntax-p">)</span>
+
+<span class="devsite-syntax-n">val</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">state</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">transform</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-n">initialValue</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-mi">0</span><span class="devsite-syntax-p">,</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">scope</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">myCoroutineScope</span><span class="devsite-syntax-p">)</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-o">//</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">any</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">time</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">this</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">state</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">changes</span><span class="devsite-syntax-p">,</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">this</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">lambda</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">will</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">update</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">sourceState</span>
+<span class="devsite-syntax-p">}</span>
+
+<span class="devsite-syntax-o">//</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">With</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">TransformScope</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">directly</span>
+<span class="devsite-syntax-n">val</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">transformScope</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">TransformScope</span><span class="devsite-syntax-p">()</span>
+
+<span class="devsite-syntax-k">var</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">sourceState</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">by</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">mutableStateOf</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-mi">0</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-n">val</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">state</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">transformScope</span><span class="devsite-syntax-o">.</span><span class="devsite-syntax-n">launchTransform</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-n">initialValue</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-mi">0</span><span class="devsite-syntax-p">)</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-o">//</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">any</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">time</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">this</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">state</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">changes</span><span class="devsite-syntax-p">,</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">this</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">lambda</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">will</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">update</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">sourceState</span>
+<span class="devsite-syntax-p">}</span>
+
+<span class="devsite-syntax-n">myCoroutineScope</span><span class="devsite-syntax-o">.</span><span class="devsite-syntax-n">launch</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">try</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">        </span><span class="devsite-syntax-n">transformScope</span><span class="devsite-syntax-o">.</span><span class="devsite-syntax-n">run</span><span class="devsite-syntax-p">()</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-p">}</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">finally</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">        </span><span class="devsite-syntax-n">state</span><span class="devsite-syntax-o">.</span><span class="devsite-syntax-n">dispose</span><span class="devsite-syntax-p">()</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-p">}</span>
+<span class="devsite-syntax-p">}</span>
+
+<span class="devsite-syntax-o">//</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">In</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">test</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">with</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">the</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">new</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">transformTest</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">API</span>
+<span class="devsite-syntax-err">@</span><span class="devsite-syntax-n">Test</span>
+<span class="devsite-syntax-n">fun</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">testStateUpdate</span><span class="devsite-syntax-p">()</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">transformTest</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-k">var</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">sourceState</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">by</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">mutableStateOf</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-mi">0</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">val</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">state</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">transform</span><span class="devsite-syntax-p">(</span>
+<span class="devsite-syntax-w">        </span><span class="devsite-syntax-n">initialValue</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-mi">0</span><span class="devsite-syntax-p">,</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">scope</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">backgroundScope</span><span class="devsite-syntax-p">,</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">dispatcher</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-n">testDispatcher</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-p">)</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-p">{</span>
+<span class="devsite-syntax-w">        </span><span class="devsite-syntax-n">sourceState</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-p">}</span>
+
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">assertThat</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-n">state</span><span class="devsite-syntax-o">.</span><span class="devsite-syntax-n">value</span><span class="devsite-syntax-p">)</span><span class="devsite-syntax-o">.</span><span class="devsite-syntax-n">isEqualTo</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-mi">0</span><span class="devsite-syntax-p">)</span>
+
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">sourceState</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-o">=</span><span class="devsite-syntax-w"> </span><span class="devsite-syntax-mi">1</span>
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">advance</span><span class="devsite-syntax-p">()</span>
+
+<span class="devsite-syntax-w">    </span><span class="devsite-syntax-n">assertThat</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-n">state</span><span class="devsite-syntax-o">.</span><span class="devsite-syntax-n">value</span><span class="devsite-syntax-p">)</span><span class="devsite-syntax-o">.</span><span class="devsite-syntax-n">isEqualTo</span><span class="devsite-syntax-p">(</span><span class="devsite-syntax-mi">1</span><span class="devsite-syntax-p">)</span>
+<span class="devsite-syntax-p">}</span>
+</code></pre>
+</devsite-code>
+<devsite-hats-survey class="nocontent" data-nosnippet hats-id="VxqvKSur40kxBYCLVTd0SSGykbno" listnr-id="5207477"></devsite-hats-survey>
 </body>
 </html>
