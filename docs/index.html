@@ -66,55 +66,131 @@
 <hr>
 <base href="https://developer.android.com/" target="_blank"/>
 
-<h2>Core 1.8.0: Core Core-ktx 1.8.0-alpha04</h2>
-<p>November 09, 2026</p>
-<p><code translate="no" dir="ltr">androidx.test:core:1.8.0-alpha04</code> and <code translate="no" dir="ltr">androidx.test:core-ktx:1.8.0-alpha04</code> are released.</p>
-
-<h2>Test: </h2>
-
-
-<h2>Espresso 3.8.0: Espresso 3.8.0-alpha04</h2>
-<p>November 09, 2026</p>
-<p>The following artifacts were released:</p>
+<h2>Media3: v1.12.0-beta01</h2>
+<p>November 11, 2026</p>
+<p>Version 1.12.0-beta01 contains the following <a href="https://github.com/androidx/media/commits/1.12.0-beta01">commits</a>.</p>
 <ul>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-accessibility:3.8.0-alpha04</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-core:3.8.0-alpha04</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-contrib:3.8.0-alpha04</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-idling-resource:3.8.0-alpha04</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-intents:3.8.0-alpha04</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-remote:3.8.0-alpha04</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso:espresso-web:3.8.0-alpha04</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-concurrent:3.8.0-alpha04</code></li>
- <li><code translate="no" dir="ltr">androidx.test.espresso.idling:idling-net:3.8.0-alpha04</code></li>
+ <li>Common Library:
+  <ul>
+   <li>Reduce <code translate="no" dir="ltr">C.DEFAULT_BUFFER_SEGMENT_SIZE</code> from <code translate="no" dir="ltr">65536</code> to <code translate="no" dir="ltr">65520</code> so each buffer allocation (including its <code translate="no" dir="ltr">byte[]</code> object header) fits in whole OS pages in ART's large object space, reducing sample buffer memory usage by ~6% on 4 KiB-page devices and ~20% on 16 KiB-page devices.</li>
+   <li>Replace <code translate="no" dir="ltr">androidx.media3.common.util.NullableType</code> with JSpecify <code translate="no" dir="ltr">org.jspecify.annotations.Nullable</code>.</li>
+   <li>Remove <code translate="no" dir="ltr">androidx.media3.common.util.UnknownNull</code> in favor of JSpecify nullness annotations. Kotlin subclasses of <code translate="no" dir="ltr">RunnableFutureTask</code> with a nullable result type (such as <code translate="no" dir="ltr">Void?</code>) must specify a nullable type argument (for example, <code translate="no" dir="ltr">RunnableFutureTask&lt;Void?, Exception&gt;</code>).</li>
+   <li>Add <code translate="no" dir="ltr">AdViewProvider.getAdVideoView()</code> to provide the video container <code translate="no" dir="ltr">View</code> that can be resized during ad playback.</li>
+   <li>Map the <code translate="no" dir="ltr">mlpa</code> RFC 6381 codec string to <code translate="no" dir="ltr">MimeTypes.AUDIO_TRUEHD</code> in <code translate="no" dir="ltr">MimeTypes.getMediaMimeType</code>, fixing missing muxed Dolby TrueHD audio tracks during HLS chunkless preparation (<a href="https://github.com/androidx/media/issues/3485">#3485</a>).</li>
+   <li>Fix <code translate="no" dir="ltr">AdPlaybackState.withAdDurationsUs</code> to copy the passed array and <code translate="no" dir="ltr">AdPlaybackState.fromAdPlaybackState</code> to copy all array fields of the ad groups, so that an instance can no longer be modified through retained or shared arrays.</li>
+   <li>Fix <code translate="no" dir="ltr">IllegalStateException</code> ("Player is accessed on the wrong thread.") when <code translate="no" dir="ltr">Player.listen</code> or <code translate="no" dir="ltr">Player.listenTo</code> is cancelled from a thread other than the player's application thread (for example, during Compose UI test teardown) (<a href="https://github.com/androidx/media/issues/3005">#3005</a>).</li>
+  </ul></li>
+ <li>ExoPlayer:
+  <ul>
+   <li>Fix an issue where a renderer enabled early for an upcoming media period could start rendering before playback transitions to that period.</li>
+   <li>Kotlin subclasses of <code translate="no" dir="ltr">CompositeMediaSource</code> that use nullable child source IDs (such as <code translate="no" dir="ltr">Void?</code>) must specify a nullable type argument (for example, <code translate="no" dir="ltr">CompositeMediaSource&lt;Void?&gt;</code>).</li>
+   <li>Verify in <code translate="no" dir="ltr">AdsMediaSource</code> that <code translate="no" dir="ltr">AdPlaybackState.removedAdGroupCount</code> does not decrease across <code translate="no" dir="ltr">AdPlaybackState</code> updates.</li>
+   <li>Fix an issue where transitioning between media periods that use different renderers could prematurely enable the incoming renderer before the outgoing renderer finished rendering (for example, throwing <code translate="no" dir="ltr">IllegalStateException</code> ("Multiple renderer media clocks enabled.")) when <code translate="no" dir="ltr">Flags.FLAG_PER_STREAM_MEDIA_PROGRESSION</code> is enabled.</li>
+   <li>Fix an issue where transitioning to an ad at a custom playback speed could delay advancing all renderers to the ad period when <code translate="no" dir="ltr">Flags.FLAG_PER_STREAM_MEDIA_PROGRESSION</code> is enabled.</li>
+   <li>Fix issues with pre-warming renderers during media period transitions and track reselections.</li>
+   <li>Add <code translate="no" dir="ltr">MediaPeriod.supportsStreamPrerollFlags()</code> (defaulting to <code translate="no" dir="ltr">false</code>) so that custom <code translate="no" dir="ltr">MediaPeriod</code> implementations can opt in to reporting initial discontinuities using <code translate="no" dir="ltr">SampleStream.getFlags()</code>, falling back to <code translate="no" dir="ltr">MediaPeriod.readDiscontinuity()</code> when not supported and <code translate="no" dir="ltr">Flags.FLAG_PER_STREAM_MEDIA_PROGRESSION</code> is enabled.</li>
+   <li>Fix an issue where skipping an ad followed by another ad in the same ad group was reported with <code translate="no" dir="ltr">DISCONTINUITY_REASON_AUTO_TRANSITION</code> instead of <code translate="no" dir="ltr">DISCONTINUITY_REASON_SKIP</code>, or not reported at all when <code translate="no" dir="ltr">AdsMediaSource</code> uses lazy content source preparation.</li>
+  </ul></li>
+ <li>Transformer:
+  <ul>
+   <li>Add CodecDB (<code translate="no" dir="ltr">androidx.media3.transformer.codecdb</code>), which recommends video encoder configurations (codec, encoder settings and bitrate) for the current device from measured encoder quality data.</li>
+  </ul></li>
+ <li>Extractors:
+  <ul>
+   <li>ADTS: Fix <code translate="no" dir="ltr">AdtsExtractor</code> deriving the audio format from a false sync word in the payload of a partial first frame, which could cause playback of live AAC streams joined mid-frame to fail or stall (<a href="https://github.com/androidx/media/issues/3464">#3464</a>).</li>
+   <li>Fix <code translate="no" dir="ltr">ArrayIndexOutOfBoundsException</code> in <code translate="no" dir="ltr">FragmentedMp4Extractor</code> when a fragment contains a <code translate="no" dir="ltr">trun</code> box with no samples (<a href="https://github.com/androidx/media/issues/3471">#3471</a>).</li>
+   <li>ADTS: Add <code translate="no" dir="ltr">FLAG_DISABLE_ID3_METADATA</code> to <code translate="no" dir="ltr">AdtsExtractor</code> to stop ID3 data in the stream from being output as an <code translate="no" dir="ltr">application/id3</code> track.</li>
+   <li>MP4: Fix gapless playback of AAC tracks whose muxer (such as FFmpeg) shortens the last <code translate="no" dir="ltr">stts</code> entry to exclude the encoder padding, which caused the padding to be derived as 0 from the <code translate="no" dir="ltr">elst</code> edit list and the end of the last frame to be played (<a href="https://github.com/androidx/media/issues/3489">#3489</a>).</li>
+   <li>Fix large upfront peek buffer allocations and <code translate="no" dir="ltr">OutOfMemoryError</code> when sniffing corrupt or non-media files that start with <code translate="no" dir="ltr">ID3</code> (<a href="https://github.com/androidx/media/issues/3502">#3502</a>).</li>
+  </ul></li>
+ <li>Inspector:
+  <ul>
+   <li>Fix an issue where cancelling the future returned by <code translate="no" dir="ltr">MetadataRetriever.retrieveDurationUs()</code> prevented <code translate="no" dir="ltr">close()</code> from releasing the underlying <code translate="no" dir="ltr">MediaSource</code> (<a href="https://github.com/androidx/media/issues/3468">#3468</a>).</li>
+   <li>Fix <code translate="no" dir="ltr">MediaExtractorCompat</code> to return <code translate="no" dir="ltr">MediaFormat.KEY_FRAME_RATE</code> as an integer, matching the platform <code translate="no" dir="ltr">MediaExtractor</code>.</li>
+  </ul></li>
+ <li>Audio:
+  <ul>
+   <li>Fix an issue where buffered skipped silence was included in <code translate="no" dir="ltr">AudioSink.getCurrentPositionUs(boolean)</code> and reported using <code translate="no" dir="ltr">AudioSink.Listener.onSilenceSkipped()</code> before playback reached the skipped region (<a href="https://github.com/androidx/media/issues/3472">#3472</a>).</li>
+   <li>Set codec provenance using <code translate="no" dir="ltr">AudioTrack.Builder.setCodecProvenance</code> on API 37+ when playing spatialized multichannel PCM audio decoded from a compressed format.</li>
+   <li>Fix <code translate="no" dir="ltr">AudioTrack</code> initialization retries being skipped when 1 second of audio is at least as large as the initial buffer size, which made DTS-HD passthrough fail on devices with limited audio memory (<a href="https://github.com/androidx/media/issues/3487">#3487</a>).</li>
+  </ul></li>
+ <li>Video:
+  <ul>
+   <li>Allow falling back to an H.265/HEVC decoder for backward-compatible Dolby Vision Profile 7 streams, and no longer fall back to an AV1 decoder for Profile 10 streams whose base layer signals full range with unspecified transfer characteristics (<a href="https://github.com/androidx/media/issues/3486">#3486</a>).</li>
+   <li>Fix decoder selection in <code translate="no" dir="ltr">MediaCodecUtil</code> to avoid selecting primary decoders that don't functionally support the format's profile (such as a Dolby Vision decoder for a different profile) when no decoder fully supports the format (<a href="https://github.com/androidx/media/issues/3486">#3486</a>).</li>
+  </ul></li>
+ <li>Text:
+  <ul>
+   <li>Reduce memory usage in <code translate="no" dir="ltr">DvbParser</code> by rendering subtitle regions directly into region-sized bitmaps instead of retaining a full-screen scratch bitmap.</li>
+  </ul></li>
+ <li>Effect:
+  <ul>
+   <li>Fix a <code translate="no" dir="ltr">NullPointerException</code> in <code translate="no" dir="ltr">DefaultVideoFrameProcessor</code> when flushing (for example, while seeking or scrubbing in <code translate="no" dir="ltr">CompositionPlayer</code>) (<a href="https://github.com/androidx/media/pull/3470">#3470</a>).</li>
+   <li>Fix <code translate="no" dir="ltr">DefaultGlObjectsProvider.release</code> throwing a <code translate="no" dir="ltr">GlException</code> when the provider is reused after a release (<a href="https://github.com/androidx/media/issues/2016">#2016</a>).</li>
+  </ul></li>
+ <li>Muxers:
+  <ul>
+   <li>Validate the track <code translate="no" dir="ltr">Format</code> when adding a track to <code translate="no" dir="ltr">Mp4Muxer</code> or <code translate="no" dir="ltr">FragmentedMp4Muxer</code>, instead of failing later when writing samples or closing the muxer.</li>
+   <li>Make repeated calls to <code translate="no" dir="ltr">Muxer.close()</code> a no-op in all library <code translate="no" dir="ltr">Muxer</code> implementations, and treat the muxer as closed even if <code translate="no" dir="ltr">close()</code> throws. Calling any other method after <code translate="no" dir="ltr">close()</code> now throws an <code translate="no" dir="ltr">IllegalStateException</code>.</li>
+  </ul></li>
+ <li>IMA extension:
+  <ul>
+   <li>Support the IMA SDK's <code translate="no" dir="ltr">ResizablePlayer</code> interface to allow interactive ads to resize and reposition the video player view within the ad container, and add <code translate="no" dir="ltr">ImaAdsLoader.requestAds(DataSpec, Object, AdViewProvider)</code> (deprecating <code translate="no" dir="ltr">ImaAdsLoader.requestAds(DataSpec, Object, ViewGroup)</code>).</li>
+  </ul></li>
+ <li>Session:
+  <ul>
+   <li>Stabilize media button preferences APIs.</li>
+   <li>Reduce memory usage by no longer retaining compressed artwork data in <code translate="no" dir="ltr">CacheBitmapLoader</code>.</li>
+   <li>Avoid redundant <code translate="no" dir="ltr">MediaSession.setQueue(null)</code> calls on timeline updates when the platform session queue is already <code translate="no" dir="ltr">null</code> (for example, when <code translate="no" dir="ltr">Player.COMMAND_GET_TIMELINE</code> is unavailable).</li>
+   <li>Fix an issue where <code translate="no" dir="ltr">MediaSessionService</code> did not let a service implementation the option to recover properly by not attempting to create a new session (<a href="https://github.com/androidx/media/issues/3490">#3490</a>).</li>
+   <li>Report <code translate="no" dir="ltr">Player.TIMELINE_CHANGE_REASON_SOURCE_UPDATE</code> instead of <code translate="no" dir="ltr">Player.TIMELINE_CHANGE_REASON_PLAYLIST_CHANGED</code> when a legacy <code translate="no" dir="ltr">MediaSessionCompat</code> metadata update modifies the active queue item's metadata or duration without changing the queue.</li>
+   <li>Fix missing artwork for legacy sessions that set a <code translate="no" dir="ltr">null</code> <code translate="no" dir="ltr">METADATA_KEY_DISPLAY_ICON</code> (or artwork URI) alongside a valid <code translate="no" dir="ltr">METADATA_KEY_ALBUM_ART</code>: null artwork values are now skipped when converting legacy metadata.</li>
+  </ul></li>
+ <li>UI:
+  <ul>
+   <li>Add a <code translate="no" dir="ltr">subtitles</code> Composable slot to <code translate="no" dir="ltr">ContentFrame</code> and <code translate="no" dir="ltr">Player</code>, with default support in <code translate="no" dir="ltr">media3-ui-compose-material3</code> for rendering bitmap and horizontal text subtitle cues.</li>
+   <li>Add <code translate="no" dir="ltr">SubtitleView.setTextDirectionHeuristic</code> to allow customizing the text direction heuristic used for bidirectional subtitle text wrapping (<a href="https://github.com/androidx/media/issues/3454">#3454</a>).</li>
+   <li>Animate all control slots in <code translate="no" dir="ltr">Player</code> in <code translate="no" dir="ltr">media3-ui-compose-material3</code>, including custom ones, and remove the <code translate="no" dir="ltr">visible</code> parameter from <code translate="no" dir="ltr">PlayerDefaults.TopControls</code>, <code translate="no" dir="ltr">CenterControls</code> and <code translate="no" dir="ltr">BottomControls</code>. This is a breaking change on an unstable API.</li>
+   <li>Support <code translate="no" dir="ltr">AdViewProvider.getAdVideoView()</code> in <code translate="no" dir="ltr">PlayerView</code> by wrapping <code translate="no" dir="ltr">exo_content_frame</code> in <code translate="no" dir="ltr">exo_content_frame_container</code>.</li>
+   <li>Reduce memory usage in <code translate="no" dir="ltr">SubtitleView</code> by releasing cached subtitle bitmaps and text layouts when cues are cleared, and fix an issue where stale subtitle text could remain visible when a cue has insufficient width to lay out.</li>
+  </ul></li>
+ <li>HLS extension:
+  <ul>
+   <li>Fix issues where reloading a failed or canceled HLS media chunk could retain partially buffered samples without discarding or splicing, or reset the load position to an outdated seek position (<a href="https://github.com/androidx/media/issues/3362">#3362</a>).</li>
+   <li>Fix <code translate="no" dir="ltr">IllegalStateException</code> when seeking to the start of a buffered segment after an adaptive track switch.</li>
+   <li>Fix several playback issues when switching pathways with HLS Content Steering (<a href="https://github.com/androidx/media/issues/3465">#3465</a>).</li>
+  </ul></li>
+ <li>DASH extension:
+  <ul>
+   <li>Fix duplicated or garbled CEA-608 subtitles when a stream has multiple embedded caption tracks (<a href="https://github.com/androidx/media/issues/887">#887</a>).</li>
+  </ul></li>
+ <li>Cast extension:
+  <ul>
+   <li>Fix an issue where <code translate="no" dir="ltr">RemoteCastPlayer</code> load requests were dropped by Android TV receivers (<a href="https://github.com/androidx/media/issues/3462">#3462</a>).</li>
+   <li>Update <code translate="no" dir="ltr">com.google.android.gms:play-services-cast-framework</code> dependency to <code translate="no" dir="ltr">23.0.0</code>.</li>
+   <li>Add <code translate="no" dir="ltr">CastParams.Builder.setSystemOutputSwitcherEnabled(boolean)</code> to configure whether Cast devices appear in the system output switcher without requiring <code translate="no" dir="ltr">MediaTransferReceiver</code> to be declared in <code translate="no" dir="ltr">AndroidManifest.xml</code>, and enable the system output switcher by default for apps targeting API 37+ on devices running API 37+.</li>
+   <li>Support predefined Cast <code translate="no" dir="ltr">MediaMetadata</code> fields in <code translate="no" dir="ltr">DefaultMediaItemConverter</code> by mapping fields without a dedicated <code translate="no" dir="ltr">MediaItem.mediaMetadata</code> property to and from <code translate="no" dir="ltr">MediaItem.mediaMetadata.extras</code>, and preserve custom extras in <code translate="no" dir="ltr">MediaInfo.customData</code>.</li>
+   <li>Stop throwing exceptions in <code translate="no" dir="ltr">DefaultMediaItemConverter</code> when a playback URI is missing or conversion fails, preserving the media ID and metadata in the <code translate="no" dir="ltr">CastPlayer</code> timeline for Cast queue items without a playback URI.</li>
+   <li>Add <code translate="no" dir="ltr">SessionAvailabilityListener.onCastSessionAvailable(boolean)</code> to indicate whether an available Cast session was started using <a href="https://developers.google.com/cast/docs/android_sender/intent_to_join">Intent to Join</a>, and preserve remote playback state instead of overwriting it with local player state when joining a Cast session using Intent to Join in <code translate="no" dir="ltr">CastPlayer</code>.</li>
+   <li>Populate <code translate="no" dir="ltr">MediaInfo</code> and timeline durations from <code translate="no" dir="ltr">MediaMetadata.durationMs</code> for non-live items in <code translate="no" dir="ltr">DefaultMediaItemConverter</code> and <code translate="no" dir="ltr">RemoteCastPlayer</code>, and retain receiver-resolved durations and livestream status across queue seeks.</li>
+  </ul></li>
+ <li>Demo app:
+  <ul>
+   <li>Allow reordering playlist items by dragging in the session demo app.</li>
+  </ul></li>
+ <li>Remove deprecated symbols:
+  <ul>
+   <li>Remove <code translate="no" dir="ltr">androidx.media3.transformer.TextureAssetLoader</code>. Use <code translate="no" dir="ltr">androidx.media3.transformer.RawAssetLoader</code> instead.</li>
+   <li>Remove public <code translate="no" dir="ltr">DefaultDecoderFactory</code> constructors. Use <code translate="no" dir="ltr">DefaultDecoderFactory.Builder</code> instead.</li>
+   <li>Remove <code translate="no" dir="ltr">DefaultLoadErrorHandlingPolicy.DEFAULT_TRACK_BLACKLIST_MS</code>. Use <code translate="no" dir="ltr">DefaultLoadErrorHandlingPolicy.DEFAULT_TRACK_EXCLUSION_MS</code> instead.</li>
+   <li>Remove <code translate="no" dir="ltr">DefaultVideoFrameProcessor.Factory.Builder.setRequireRegisteringAllInputFrames(boolean)</code>. Use <code translate="no" dir="ltr">VideoFrameProcessor.INPUT_TYPE_SURFACE_AUTOMATIC_FRAME_REGISTRATION</code> instead.</li>
+   <li>Remove <code translate="no" dir="ltr">EditedMediaItemSequence.Builder.experimentalSetForceAudioTrack(boolean)</code> and <code translate="no" dir="ltr">EditedMediaItemSequence.Builder.experimentalSetForceVideoTrack(boolean)</code>. Use <code translate="no" dir="ltr">EditedMediaItemSequence.Builder(Set)</code> instead.</li>
+   <li>Remove <code translate="no" dir="ltr">EditedMediaItemSequence.forceAudioTrack</code>. Use <code translate="no" dir="ltr">trackTypes.contains(C.TRACK_TYPE_AUDIO)</code> instead.</li>
+   <li>Remove <code translate="no" dir="ltr">EditedMediaItemSequence.forceVideoTrack</code>. Use <code translate="no" dir="ltr">trackTypes.contains(C.TRACK_TYPE_VIDEO)</code> instead.</li>
+   <li>Remove <code translate="no" dir="ltr">ExportResult.durationMs</code> and <code translate="no" dir="ltr">ExportResult.Builder.setDurationMs</code>. Use <code translate="no" dir="ltr">ExportResult.approximateDurationMs</code> and <code translate="no" dir="ltr">ExportResult.Builder.setApproximateDurationMs</code> instead.</li>
+   <li>Remove <code translate="no" dir="ltr">SilenceSkippingAudioProcessor.DEFAULT_PADDING_SILENCE_US</code>. Specify silence behavior using <code translate="no" dir="ltr">silenceRetentionRatio</code> instead.</li>
+   <li>Remove <code translate="no" dir="ltr">Timeline.getPeriodPosition(Window, Period, int, long, long)</code>. Use <code translate="no" dir="ltr">Timeline.getPeriodPositionUs(Window, Period, int, long, long)</code> instead.</li>
+  </ul></li>
 </ul>
-
-<h2>Test: </h2>
-
-
-<h2>Monitor 1.9.0: monitor 1.9.0-alpha05</h2>
-<p>November 09, 2026</p>
-<p><code translate="no" dir="ltr">androidx.test:monitor:1.9.0-alpha05</code> is released.</p>
-
-<h2>Orchestrator 1.7.0: orchestrator 1.7.0-alpha04</h2>
-<p>November 09, 2026</p>
-<p><code translate="no" dir="ltr">androidx.test:orchestrator:1.7.0-alpha04</code> is released.</p>
-
-<h2>Rules 1.8.0: rules 1.8.0-alpha04</h2>
-<p>November 09, 2026</p>
-<p><code translate="no" dir="ltr">androidx.test:rules:1.8.0-alpha04</code> is released.</p>
-
-<h2>Runner 1.8.0: runner 1.8.0-alpha04</h2>
-<p>November 09, 2026</p>
-<p><code translate="no" dir="ltr">androidx.test:runner:1.8.0-alpha04</code> is released.</p>
-<p><strong>Bug Fixes</strong></p>
-<ul>
- <li>Report <code translate="no" dir="ltr">@Ignore</code> reason in <code translate="no" dir="ltr">InstrumentationResultPrinter#testIgnored</code>. (b/559750770)</li>
-</ul>
-
-<h2>Services 1.7.0: services 1.7.0-alpha04</h2>
-<p>November 09, 2026</p>
-<p><code translate="no" dir="ltr">androidx.test.services:test-services:1.7.0-alpha04</code> <code translate="no" dir="ltr">androidx.test.services:storage:1.7.0-alpha04</code> are released.</p>
-
-<h2>Test: </h2>
 </body>
 </html>
