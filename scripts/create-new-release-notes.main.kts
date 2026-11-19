@@ -35,32 +35,56 @@ val feed = SyndFeedInput().build(reader)
 val latestRelease = feed.entries.first()
 val latestReleaseItems = latestRelease.contents.first().value
 
-// Specifies the base URL for relative links in the document
-writer.write("""<base href="https://developer.android.com/" target="_blank"/>""")
-writer.write("\n\n")
+// release-notes.html is the file uploaded as the GitHub release body
+val header = """<base href="https://developer.android.com/" target="_blank"/>""" + "\n\n"
+val truncationNotice = "\n\n\n<h2>Note: Release notes were truncated to stay within GitHub's 125,000-character limit.<h2>"
 
-// To prevent GitHub release body from exceeding 125000 chars
-// because GitHub does not allow that
+// GitHub release body hard cap is 125,000 characters; keep a buffer for normalization/safety
 val gitHubReleaseMaxAllowedChars = 125_000
-var releaseCharCount = 0
+val safetyBuffer = 100
+val safeBudget = gitHubReleaseMaxAllowedChars - truncationNotice.length - safetyBuffer
 
-Jsoup
+writer.write(header)
+var writtenChars = header.length
+var wasTruncated = false
+
+val links = Jsoup
     .parse(latestReleaseItems)
     .select("a")
-    .asSequence()
     .map(Element::toLink)
-    .map(LinkString::toLinkDocument)
-    .map(LinkDocument::toReleaseNote)
-    .forEach {
-        if (releaseCharCount + it.length < gitHubReleaseMaxAllowedChars) {
-            releaseCharCount += it.length
-            writer.write(it)
-        } else {
-            // TODO: Do something
-        }
+
+for (link in links) {
+    val remaining = safeBudget - writtenChars
+    if (remaining <= 0) {
+        wasTruncated = true
+        break
     }
-    .also { writer.close() }
-    .also { reader.close() }
+
+    val releaseNote = link.toLinkDocument().toReleaseNote()
+
+    if (releaseNote.length <= remaining) {
+        writer.write(releaseNote)
+        writtenChars += releaseNote.length
+    } else {
+        wasTruncated = true
+        if (remaining > 300) {
+            val rawSlice = releaseNote.take(remaining)
+            val cutIndex = rawSlice.lastIndexOf('\n').takeIf { it > 100 } ?: rawSlice.length
+            val partial = rawSlice.substring(0, cutIndex)
+            writer.write(partial)
+            writtenChars += partial.length
+        }
+        break
+    }
+}
+
+if (wasTruncated) {
+    writer.write(truncationNotice)
+    writtenChars += truncationNotice.length
+}
+
+writer.close()
+reader.close()
 
 // Creates a raw text version as well in case someone needs it
 val text = Jsoup.parse(resultFile).wholeText()
